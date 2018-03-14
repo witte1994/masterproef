@@ -20,6 +20,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-search/paper-search-bar.html">
 <link rel="import" href="my-icons.html">
 
 <link rel="lazy-import" href="my-view1.html">
@@ -46,6 +47,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       app-header paper-icon-button {
         --paper-icon-button-ink-color: white;
+      }
+
+      paper-search-bar {
+        margin: auto;
+        padding-left: 20px;
+        padding-right: 20px;
+        display: flex;
       }
 
       .drawer-list {
@@ -89,11 +97,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       <!-- Main content -->
       <app-header-layout has-scrolling-region>
-
         <app-header slot="header" condenses reveals effects="waterfall">
           <app-toolbar>
-            <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
-            <div main-title>My App</div>
+            <paper-icon-button icon="my-icons:home"></paper-icon-button>
+            <paper-icon-button icon="my-icons:arrow-back"></paper-icon-button>
+            <paper-search-bar hide-filter-button="true"></paper-search-bar>
+            <paper-icon-button icon="my-icons:notification"></paper-icon-button>
           </app-toolbar>
         </app-header>
 
