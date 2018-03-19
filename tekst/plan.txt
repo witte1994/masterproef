@@ -1,0 +1,48 @@
+1) intro
+-----
+    - problem:  - monolith MIS
+                - no overview, long searching
+                - what happened inbetween
+            -> fix:     - dashboard
+                        - customize, end-user programming
+                        - per patient
+                        - default tags
+    - aim & scope:  - what measure at home
+                    - general practice
+                    - proof of concept: limitations
+                    - no HL7, only basic JSON
+                    - no privacy
+    - overview: - what is described when
+                - MuiCSeR
+
+2) background
+-----
+    - current MIS:  - description
+                    - problems due to no customizability, finding info...
+                -> why dashboard
+    - e-health: - types of devices to measure paramaters at home
+                - send measured data to app/doctor
+                - telemonitoring
+    - effect customization on user performance/satisfaction (# clicks/pages)
+    - data visualization
+
+3) design
+-----
+    - research questions
+    - scenarios & personas: versions
+    - low fidelity: - mockups
+                    - modules/features
+                    - structure of pages
+                    - versions
+    - high fidelity:    - choice of frameworks/data format
+                        - evolution
+                        - difficulties
+                        - changes compared to high fidelity
+
+4) evaluation
+-----
+    - test: - structure
+            - course
+            - results
+    - discussion: implications
+    - conclusion
