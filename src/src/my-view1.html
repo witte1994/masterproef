@@ -11,6 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="my-summary.html">
+<link rel="import" href="my-patients.html">
 
 
 <dom-module id="my-view1">
@@ -19,19 +20,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
 
-        padding: 10px;
+        padding: 0px;
+      }
+      my-summary {
+        margin: auto;
+      }
+      my-patients {
+        max-width: 1400px;
+        margin-left: auto;
+        margin-right: auto;
       }
     </style>
 
-    <div class="card">
-      <div class="circle">1</div>
-      <h1>View One</h1>
-      
-      <p>Ut labores minimum atomorum pro. Laudem tibique ut has.</p>
-      <p>Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Cu mei vide viris gloriatur, at populo eripuit sit.</p>
-    </div>
     <my-summary></my-summary>
-    
+    <my-patients></my-patients>
   </template>
 
   <script>

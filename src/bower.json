@@ -15,7 +15,8 @@
     "paper-icon-button": "PolymerElements/paper-icon-button#^2.0.0",
     "polymer": "Polymer/polymer#^2.0.0",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0",
-    "paper-search": "^2.0.9"
+    "paper-search": "^2.0.9",
+    "vaadin-grid": "^4.1.7"
   },
   "resolutions": {
     "polymer": "^2.0.0"
