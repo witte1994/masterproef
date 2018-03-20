@@ -9,6 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="my-summary.html">
 <link rel="import" href="my-patients.html">
@@ -16,7 +17,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <dom-module id="my-view1">
   <template>
-    <style include="shared-styles">
+    <style include="shared-styles iron-flex iron-flex-alignment">
       :host {
         display: block;
 
@@ -26,14 +27,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin: auto;
       }
       my-patients {
-        max-width: 1400px;
         margin-left: auto;
         margin-right: auto;
       }
     </style>
 
-    <my-summary></my-summary>
-    <my-patients></my-patients>
+    <div class="layout horizontal wrap">
+      <my-summary></my-summary>
+      <my-patients></my-patients>
+    </div>
+    
   </template>
 
   <script>
