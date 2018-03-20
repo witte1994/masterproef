@@ -12,6 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../bower_components/vaadin-grid/vaadin-grid.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="my-patients">
@@ -22,30 +23,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         padding: 0px;
       }
 
-      vaadin-grid {
-      }
     </style>
 
     <div class="card">
-        <vaadin-grid aria-label="Basic Binding Example" items="">
+        <iron-ajax 
+            auto 
+            url="json/test.json" 
+            handle-as="json" 
+            last-response="{{patients}}">
+        </iron-ajax>
+
+        <vaadin-grid aria-label="Basic Binding Example" items="[[patients]]">
+
             <vaadin-grid-column>
                 <template class="header">Name</template>
-                <template>a</template>
+                <template>[[item.name]]</template>
             </vaadin-grid-column>
         
             <vaadin-grid-column>
                 <template class="header">Last Activity</template>
-                <template>b</template>
+                <template>[[item.lastActivity]]</template>
             </vaadin-grid-column>
         
             <vaadin-grid-column>
                 <template class="header">Last Visit</template>
-                <template>c</template>
+                <template>[[item.lastVisit]]</template>
             </vaadin-grid-column>
 
             <vaadin-grid-column>
                 <template class="header">Next Visit</template>
-                <template>d</template>
+                <template>[[item.nextVisit]]</template>
             </vaadin-grid-column>
 
             <vaadin-grid-column width="60px" flex-grow="0">
@@ -60,7 +67,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <script>
     class MyPatients extends Polymer.Element {
-      static get is() { return 'my-patients'; }
+        static get is() { return 'my-patients'; }
+      
+        json(obj) {
+            return JSON.stringify(obj, null, 2);
+        }
     }
 
     window.customElements.define(MyPatients.is, MyPatients);
