@@ -60,7 +60,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <vaadin-grid-column width="60px" flex-grow="0">
                 <template class="header"></template>
                 <template>
-                    <paper-icon-button icon="my-icons:arrow-next"></paper-icon-button>
+                    <a href="/test-view/[[item.id]]">
+                        <paper-icon-button icon="my-icons:arrow-next"></paper-icon-button>
+                    </a>
+                    
                 </template>
             </vaadin-grid-column>
         </vaadin-grid>
