@@ -1,15 +1,24 @@
 <!-- Load the Polymer.Element base class -->
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="lazy-import" href="my-summary.html">
 
 <dom-module id="my-user">
   <!-- Defines the element's style and local DOM -->
   <template>
-    <style>
+    <style include="iron-flex iron-flex-alignment">
       :host {
         display: block;
 
         padding: 16px;
+      }
+      my-summary {
+        margin: auto;
+      }
+
+      h1 {
+        text-align: center;
       }
     </style>
 
@@ -34,7 +43,9 @@
     </app-route>
 
     <h1>[[user.firstName]] [[user.lastName]]</h1>
-
+    <div id="dynamic" class="layout horizontal wrap">
+      
+    </div>
   </template>
   <script>
     // Your new element extends the Polymer.Element base class
@@ -60,6 +71,11 @@
         mapResponse(data) {
           var dummy = data.detail.response;
           this.set('user', dummy.users[this.subrouteData.id]);
+          
+          var el = document.createElement("my-summary");
+          var el2 = document.createElement("my-summary");
+          this.$.dynamic.appendChild(el);
+          this.$.dynamic.appendChild(el2);
         }
     }
 
