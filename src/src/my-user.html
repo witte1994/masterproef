@@ -1,0 +1,68 @@
+<!-- Load the Polymer.Element base class -->
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="my-user">
+  <!-- Defines the element's style and local DOM -->
+  <template>
+    <style>
+      :host {
+        display: block;
+
+        padding: 16px;
+      }
+    </style>
+
+    <iron-ajax 
+      auto 
+      url="json/users.json" 
+      handle-as="json"
+      last-response="{{users}}" on-response="mapResponse">
+    </iron-ajax>
+
+    <app-location route="{{route}}"></app-location>
+    <app-route
+        route="{{route}}"
+        pattern="/:page"
+        data="{{routeData}}"
+        tail="{{subroute}}">
+    </app-route>
+    <app-route
+        route="{{subroute}}"
+        pattern="/:id"
+        data="{{subrouteData}}">
+    </app-route>
+
+    <h1>[[user.firstName]] [[user.lastName]]</h1>
+
+  </template>
+  <script>
+    // Your new element extends the Polymer.Element base class
+    class MyUser extends Polymer.Element {
+        static get is() { return 'my-user'; }
+
+        static get properties() {
+          return {
+            user: {
+              type: Array,
+              notify: true,
+              reflectToAttribute: true,
+              value: []
+            }
+          }
+        }
+
+        constructor() {
+          super();
+          this.user = [];
+        }
+
+        mapResponse(data) {
+          var dummy = data.detail.response;
+          this.set('user', dummy.users[this.subrouteData.id]);
+        }
+    }
+
+    customElements.define(MyUser.is, MyUser);
+  </script>
+</dom-module>

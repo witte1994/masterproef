@@ -30,16 +30,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="card">
         <iron-ajax 
             auto 
-            url="json/test.json" 
+            url="json/users.json" 
             handle-as="json" 
-            last-response="{{patients}}">
+            last-response="{{users}}">
         </iron-ajax>
 
-        <vaadin-grid aria-label="Basic Binding Example" items="[[patients]]">
+        <vaadin-grid aria-label="Basic Binding Example" items="[[users.users]]">
 
             <vaadin-grid-column>
                 <template class="header">Name</template>
-                <template>[[item.name]]</template>
+                <template>[[item.firstName]] [[item.lastName]]</template>
             </vaadin-grid-column>
         
             <vaadin-grid-column>
@@ -60,7 +60,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <vaadin-grid-column width="60px" flex-grow="0">
                 <template class="header"></template>
                 <template>
-                    <a href="/test-view/[[item.id]]">
+                    <a href="/user/[[item.id]]">
                         <paper-icon-button icon="my-icons:arrow-next"></paper-icon-button>
                     </a>
                     
@@ -74,9 +74,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     class MyPatients extends Polymer.Element {
         static get is() { return 'my-patients'; }
       
-        json(obj) {
-            return JSON.stringify(obj, null, 2);
-        }
+   
     }
 
     window.customElements.define(MyPatients.is, MyPatients);

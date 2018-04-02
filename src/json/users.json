@@ -1,16 +1,19 @@
-[
+{"users":[
     {
       "id":0,
-      "name":"Foo Bar",
+      "firstName":"Foo",
+      "lastName":"Bar",
       "lastActivity":"22/02/18",
       "lastVisit":"12/02/18",
       "nextVisit":"04/03/18"
     },
     {
       "id":1,
-      "name":"Jane Doe",
+      "firstName":"Jane",
+      "lastName":"Doe",
       "lastActivity":"12/02/18",
       "lastVisit":"01/01/18",
       "nextVisit":"22/02/18"
     }
   ]
+}
