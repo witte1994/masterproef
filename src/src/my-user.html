@@ -20,7 +20,29 @@
     <style include="iron-flex iron-flex-alignment">
       :host {
         display: block;
-        padding: 16px;
+        padding: 8px;
+      }
+      
+      .container {
+        height: 91vh;
+      }
+      #small {
+        width: 400px;
+        background-color: red;
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+
+      #main {
+        background-color: blue;
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+
+      #info {
+        width: 300px;
+        overflow-y: auto;
+        overflow-x: hidden;
       }
 
       h1 {
@@ -48,10 +70,13 @@
         data="{{subrouteData}}">
     </app-route>
 
-    <h1>[[user.firstName]] [[user.lastName]]</h1>
-    <div id="dynamic" class="horizontal wrap around-justified layout">
-      
+    <div class="container horizontal layout">
+      <div id="small"></div>
+      <div id="main" class="flex">test</div>
+      <div id="info"></div>
     </div>
+   
+
   </template>
   <script>
     // Your new element extends the Polymer.Element base class
@@ -84,7 +109,10 @@
           this.set('user', dummy.users[this.subrouteData.id]);
           
           var el = document.createElement("my-summary");
-          this.$.dynamic.appendChild(el);
+          this.$.info.appendChild(el);
+          el = document.createElement("my-info");
+          this.$.info.appendChild(el);
+          /*
           el = document.createElement("my-hr");
           this.$.dynamic.appendChild(el);
           el = document.createElement("my-bp");
@@ -97,6 +125,11 @@
           this.$.dynamic.appendChild(el);
           el = document.createElement("my-info");
           this.$.dynamic.appendChild(el);
+          
+          <div id="dynamic" class="horizontal wrap around-justified layout">
+          </div>
+          */
+
         }
     }
 
