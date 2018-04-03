@@ -12,7 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../shared-styles.html">
 
-<dom-module id="my-bp">
+<dom-module id="my-activity">
   <template>
     <style include="shared-styles">
       :host {
@@ -24,15 +24,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
 
     <div class="card">
-      <h1>Blood pressure</h1>
+      <h1>Activity</h1>
     </div>
   </template>
 
   <script>
-    class MyBp extends Polymer.Element {
-      static get is() { return 'my-bp'; }
+    class MyActivity extends Polymer.Element {
+      static get is() { return 'my-activity'; }
     }
 
-    window.customElements.define(MyBp.is, MyBp);
+    window.customElements.define(MyActivity.is, MyActivity);
   </script>
 </dom-module>

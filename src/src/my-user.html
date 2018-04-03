@@ -9,6 +9,10 @@
 <link rel="import" href="modules/my-patients.html">
 <link rel="import" href="modules/my-hr.html">
 <link rel="import" href="modules/my-bp.html">
+<link rel="import" href="modules/my-activity.html">
+<link rel="import" href="modules/my-medication.html">
+<link rel="import" href="modules/my-sleep.html">
+<link rel="import" href="modules/my-info.html">
 
 <dom-module id="my-user">
   <!-- Defines the element's style and local DOM -->
@@ -16,18 +20,9 @@
     <style include="iron-flex iron-flex-alignment">
       :host {
         display: block;
-
         padding: 16px;
       }
-      my-summary {
-        margin: auto;
-      }
-      my-hr {
-        margin: auto;
-      }
-      my-bp {
-        margin: auto;
-      }
+
       h1 {
         text-align: center;
       }
@@ -89,9 +84,19 @@
           this.set('user', dummy.users[this.subrouteData.id]);
           
           var el = document.createElement("my-summary");
-          var el2 = document.createElement("my-bp");
           this.$.dynamic.appendChild(el);
-          this.$.dynamic.appendChild(el2);
+          el = document.createElement("my-hr");
+          this.$.dynamic.appendChild(el);
+          el = document.createElement("my-bp");
+          this.$.dynamic.appendChild(el);
+          el = document.createElement("my-activity");
+          this.$.dynamic.appendChild(el);
+          el = document.createElement("my-medication");
+          this.$.dynamic.appendChild(el);
+          el = document.createElement("my-sleep");
+          this.$.dynamic.appendChild(el);
+          el = document.createElement("my-info");
+          this.$.dynamic.appendChild(el);
         }
     }
 
