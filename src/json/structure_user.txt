@@ -1,0 +1,122 @@
+USER
+---
+- first
+- last
+- dateOfBirth
+- lastActivity
+- lastVisit
+- nextVisit
+- height
+
+- priority
+- layoutId
+
+- HR readings
+- BP readings
+- activity readings
+- medication intake readings
+- sleep readings
+- weight readings
+- blood sugar readings
+
+- constraints
+
+MODULES
+---
+    HR
+    ---
+    - value
+
+    - timestamp
+    - read
+
+    BP
+    ---
+    - systolic
+    - diastolic
+
+    - timestamp
+    - read
+
+    ACTIVITY 
+    ---
+    - # steps
+    - length
+    - type
+
+    - timestamp
+    - read
+
+    MEDICATION
+    ---
+    - name
+
+    - timestamp
+    - read
+
+    SLEEP
+    ---
+    - # hours
+    - start
+    - end 
+
+    - read
+
+    WEIGHT
+    ---
+    - value
+
+    - timestamp
+    - read
+
+    BLOOD SUGAR
+    ---
+    - value
+
+    - timestamp
+    - read
+
+CONSTRAINTS
+---
+    HR
+    ---
+    - warning upper
+    - warning lower
+    - critical upper
+    - critical lower
+
+    BP
+    ---
+    DIASTOLIC:  - warning upper
+                - warning lower
+                - critical upper
+                - critical lower
+
+    SYSTOLIC:   - warning upper
+                - warning lower
+                - critical upper
+                - critical lower
+
+    ACTIVITY
+    ---
+    - minimum daily steps/length
+    - minimum weekly steps/length
+    - goal daily steps/length
+    - goal weekly steps/length
+
+    MEDICATION
+    ---
+    - name
+    - morning: #
+    - noon: #
+    - afternoon: #
+    - evening #
+
+    WEIGHT
+    ---
+    - warning
+    - critical
+
+    BLOOD SUGAR
+    ---
+    ?
