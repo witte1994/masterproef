@@ -8,6 +8,7 @@
 <link rel="lazy-import" href="modules/my-summary.html">
 <link rel="lazy-import" href="modules/my-patients.html">
 <link rel="lazy-import" href="modules/my-hr.html">
+<link rel="lazy-import" href="modules/my-bp.html">
 
 <dom-module id="my-user">
   <!-- Defines the element's style and local DOM -->
@@ -22,6 +23,9 @@
         margin: auto;
       }
       my-hr {
+        margin: auto;
+      }
+      my-bp {
         margin: auto;
       }
       h1 {
@@ -85,7 +89,7 @@
           this.set('user', dummy.users[this.subrouteData.id]);
           
           var el = document.createElement("my-summary");
-          var el2 = document.createElement("my-hr");
+          var el2 = document.createElement("my-bp");
           this.$.dynamic.appendChild(el);
           this.$.dynamic.appendChild(el2);
         }

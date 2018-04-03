@@ -6,6 +6,7 @@
     "src/modules/my-summary.html",
     "src/modules/my-patients.html",
     "src/modules/my-hr.html",
+    "src/modules/my-bp.html",
     "src/my-user.html",
     "src/my-view404.html"
   ],
