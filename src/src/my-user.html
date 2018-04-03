@@ -6,6 +6,8 @@
 <link rel="import" href="../bower_components/app-route/app-route.html">
 
 <link rel="lazy-import" href="modules/my-summary.html">
+<link rel="lazy-import" href="modules/my-patients.html">
+<link rel="lazy-import" href="modules/my-hr.html">
 
 <dom-module id="my-user">
   <!-- Defines the element's style and local DOM -->
@@ -19,7 +21,9 @@
       my-summary {
         margin: auto;
       }
-
+      my-hr {
+        margin: auto;
+      }
       h1 {
         text-align: center;
       }
@@ -81,7 +85,7 @@
           this.set('user', dummy.users[this.subrouteData.id]);
           
           var el = document.createElement("my-summary");
-          var el2 = document.createElement("my-summary");
+          var el2 = document.createElement("my-hr");
           this.$.dynamic.appendChild(el);
           this.$.dynamic.appendChild(el2);
         }

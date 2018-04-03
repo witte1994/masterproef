@@ -3,10 +3,13 @@ USER
 - first
 - last
 - dateOfBirth
+- height
+- blood type
+- donor
+- sex
 - lastActivity
 - lastVisit
 - nextVisit
-- height
 
 - priority
 - layoutId
@@ -16,8 +19,8 @@ USER
 - activity readings
 - medication intake readings
 - sleep readings
-- weight readings
-- blood sugar readings
+- weight readings       -> later
+- blood sugar readings  -> later
 
 - constraints
 
@@ -62,14 +65,14 @@ MODULES
 
     - read
 
-    WEIGHT
+    WEIGHT      -> later
     ---
     - value
 
     - timestamp
     - read
 
-    BLOOD SUGAR
+    BLOOD SUGAR -> later
     ---
     - value
 
@@ -112,11 +115,11 @@ CONSTRAINTS
     - afternoon: #
     - evening #
 
-    WEIGHT
+    WEIGHT      -> later
     ---
     - warning
     - critical
 
-    BLOOD SUGAR
+    BLOOD SUGAR -> later
     ---
     ?
