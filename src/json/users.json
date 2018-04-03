@@ -3,6 +3,10 @@
       "id":0,
       "firstName":"Foo",
       "lastName":"Bar",
+      "dateOfBirth":"14/04/94",
+      "height":"1,84m",
+      "bloodType":"O+",
+      "sex":"M",
       "lastActivity":"22/02/18",
       "lastVisit":"12/02/18",
       "nextVisit":"04/03/18"
@@ -11,6 +15,10 @@
       "id":1,
       "firstName":"Jane",
       "lastName":"Doe",
+      "dateOfBirth":"14/04/94",
+      "height":"1,64m",
+      "bloodType":"A+",
+      "sex":"F",
       "lastActivity":"12/02/18",
       "lastVisit":"01/01/18",
       "nextVisit":"22/02/18"

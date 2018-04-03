@@ -1,8 +1,8 @@
 USER
 ---
-- first
-- last
-- dateOfBirth
+- first --
+- last --
+- dateOfBirth --
 - height
 - blood type
 - donor

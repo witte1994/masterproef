@@ -95,7 +95,7 @@
               value: []
             },
             routeData: Object,
-            subrouteData: Object
+            subrouteData: Object,
           }
         }
 
@@ -107,10 +107,21 @@
         mapResponse(data) {
           var dummy = data.detail.response;
           this.set('user', dummy.users[this.subrouteData.id]);
-          
+          var curUser = dummy.users[this.subrouteData.id];
+
           var el = document.createElement("my-summary");
           this.$.info.appendChild(el);
           el = document.createElement("my-info");
+          el.setAttribute("first-name", curUser.firstName);
+          el.setAttribute("last-name", curUser.lastName);
+          el.setAttribute("date-of-birth", curUser.dateOfBirth);
+          el.setAttribute("height", curUser.height);
+          el.setAttribute("blood-type", curUser.bloodType);
+          el.setAttribute("sex", curUser.sex);
+          el.setAttribute("last-activity", curUser.lastActivity);
+          el.setAttribute("last-visit", curUser.lastVisit);
+          el.setAttribute("next-visit", curUser.nextVisit);
+
           this.$.info.appendChild(el);
           /*
           el = document.createElement("my-hr");

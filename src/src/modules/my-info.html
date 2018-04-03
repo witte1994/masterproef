@@ -28,13 +28,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
 
     <div class="card">
-      <h1>Info</h1>
+      <h1>[[lastName]] [[firstName]]</h1>
+      <p><b>Sex:</b> [[sex]]</p>
+      <p><b>Date of birth:</b> [[dateOfBirth]]</p>
+      <p><b>Bloodtype:</b> [[bloodType]]</p>
+      <p><b>Height:</b> [[height]]</p>
+      <p><b>Last activity:</b> [[lastActivity]]</p>
+      <p><b>Last visit:</b> [[lastVisit]]</p>
+      <p><b>Next visit:</b> [[nextVisit]]</p>
     </div>
   </template>
 
   <script>
     class MyInfo extends Polymer.Element {
       static get is() { return 'my-info'; }
+
+      static get properties() {
+        return {
+          firstName: {type: String},
+          lastName: {type: String},
+          dateOfBirth: {type: String},
+          height: {type: String},
+          bloodType: {type: String},
+          sex: {type: String},
+          lastActivity: {type: String},
+          lastVisit: {type: String},
+          nextVisit: {type: String}
+        }
+      }
     }
 
     window.customElements.define(MyInfo.is, MyInfo);
