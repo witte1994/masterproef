@@ -17,8 +17,10 @@
 
 2) background
 -----
-    - current MIS:  - description
-                    - problems due to no customizability, finding info...
+    - current MIS/EHR:  - description, advantages & disadvantages
+                        - problems due to no customizability, finding info...
+			- privacy
+			- data standards
                 -> why dashboard
     - e-health: - types of devices to measure paramaters at home
                 - send measured data to app/doctor
