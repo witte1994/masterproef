@@ -31,6 +31,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
     class MySleep extends Polymer.Element {
       static get is() { return 'my-sleep'; }
+
+      static get properties() {
+        return {
+          sleepValues: {type: Array}
+        }
+      }
+
+      loadValues(data) {
+        this.set("sleepValues", data);
+      }
     }
 
     window.customElements.define(MySleep.is, MySleep);

@@ -31,6 +31,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
     class MyBp extends Polymer.Element {
       static get is() { return 'my-bp'; }
+
+      static get properties() {
+        return {
+          bpValues: {type: Array}
+        }
+      }
+
+      loadValues(data) {
+        this.set("bpValues", data);
+      }
     }
 
     window.customElements.define(MyBp.is, MyBp);

@@ -126,6 +126,22 @@
           el.loadValues(curUser.hr);
           this.$.small.appendChild(el);
 
+          el = document.createElement("my-bp");
+          el.loadValues(curUser.bp);
+          this.$.small.appendChild(el);
+
+          el = document.createElement("my-activity");
+          el.loadValues(curUser.activity);
+          this.$.small.appendChild(el);
+
+          el = document.createElement("my-medication");
+          el.loadValues(curUser.medication);
+          this.$.small.appendChild(el);
+
+          el = document.createElement("my-sleep");
+          el.loadValues(curUser.sleep);
+          this.$.small.appendChild(el);
+
           /*
           el = document.createElement("my-hr");
           this.$.dynamic.appendChild(el);

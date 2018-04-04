@@ -12,10 +12,10 @@ USER
 
 - priority --
 
-- HR readings
-- BP readings
-- activity readings
-- medication intake readings
+- HR readings --
+- BP readings --
+- activity readings - 
+- medication intake readings -
 - sleep readings
 - weight readings       -> later
 - blood sugar readings  -> later
@@ -40,8 +40,7 @@ MODULES
     ACTIVITY 
     ---
     - # steps
-    - length
-    - type
+    - duration
 
     - timestamp
     - read
@@ -55,10 +54,10 @@ MODULES
 
     SLEEP
     ---
-    - # hours
+    - # minutes
     - start
-    - end 
 
+    - timestamp
     - read
 
     WEIGHT      -> later

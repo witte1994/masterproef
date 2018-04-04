@@ -31,6 +31,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
     class MyActivity extends Polymer.Element {
       static get is() { return 'my-activity'; }
+
+      static get properties() {
+        return {
+          activityValues: {type: Array}
+        }
+      }
+
+      loadValues(data) {
+        this.set("activityValues", data);
+      }
     }
 
     window.customElements.define(MyActivity.is, MyActivity);
