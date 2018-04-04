@@ -3,16 +3,14 @@ USER
 - first --
 - last --
 - dateOfBirth --
-- height
-- blood type
-- donor
-- sex
-- lastActivity
-- lastVisit
-- nextVisit
+- height --
+- blood type --
+- sex --
+- lastActivity --
+- lastVisit --
+- nextVisit --
 
-- priority
-- layoutId
+- priority --
 
 - HR readings
 - BP readings
@@ -21,8 +19,6 @@ USER
 - sleep readings
 - weight readings       -> later
 - blood sugar readings  -> later
-
-- constraints
 
 MODULES
 ---
@@ -78,48 +74,3 @@ MODULES
 
     - timestamp
     - read
-
-CONSTRAINTS
----
-    HR
-    ---
-    - warning upper
-    - warning lower
-    - critical upper
-    - critical lower
-
-    BP
-    ---
-    DIASTOLIC:  - warning upper
-                - warning lower
-                - critical upper
-                - critical lower
-
-    SYSTOLIC:   - warning upper
-                - warning lower
-                - critical upper
-                - critical lower
-
-    ACTIVITY
-    ---
-    - minimum daily steps/length
-    - minimum weekly steps/length
-    - goal daily steps/length
-    - goal weekly steps/length
-
-    MEDICATION
-    ---
-    - name
-    - morning: #
-    - noon: #
-    - afternoon: #
-    - evening #
-
-    WEIGHT      -> later
-    ---
-    - warning
-    - critical
-
-    BLOOD SUGAR -> later
-    ---
-    ?

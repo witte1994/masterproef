@@ -9,7 +9,8 @@
       "sex":"M",
       "lastActivity":"22/02/18",
       "lastVisit":"12/02/18",
-      "nextVisit":"04/03/18"
+      "nextVisit":"04/03/18",
+      "layoutId":""
     },
     {
       "id":1,
@@ -21,7 +22,8 @@
       "sex":"F",
       "lastActivity":"12/02/18",
       "lastVisit":"01/01/18",
-      "nextVisit":"22/02/18"
+      "nextVisit":"22/02/18",
+      "layoutId":""
     }
   ]
 }
