@@ -28,7 +28,6 @@
       }
       #small {
         width: 400px;
-        background-color: red;
         overflow-y: auto;
         overflow-x: hidden;
       }
@@ -121,8 +120,12 @@
           el.setAttribute("last-activity", curUser.lastActivity);
           el.setAttribute("last-visit", curUser.lastVisit);
           el.setAttribute("next-visit", curUser.nextVisit);
-
           this.$.info.appendChild(el);
+
+          el = document.createElement("my-hr");
+          el.loadValues(curUser.hr);
+          this.$.small.appendChild(el);
+
           /*
           el = document.createElement("my-hr");
           this.$.dynamic.appendChild(el);

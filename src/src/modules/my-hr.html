@@ -31,6 +31,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
     class MyHr extends Polymer.Element {
       static get is() { return 'my-hr'; }
+
+      static get properties() {
+        return {
+          hrValues: {type: Array}
+        }
+      }
+
+      loadValues(data) {
+        this.set("hrValues", data);
+      }
     }
 
     window.customElements.define(MyHr.is, MyHr);

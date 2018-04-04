@@ -10,7 +10,19 @@
       "lastActivity":"22/02/18",
       "lastVisit":"12/02/18",
       "nextVisit":"04/03/18",
-      "priority":"2"
+      "priority": 2,
+      "hr": [
+        {
+          "value": 58,
+          "time": "01/01/18 14:00",
+          "read": 0
+        },
+        {
+          "value": 52,
+          "time": "01/01/18 17:00",
+          "read": 0
+        }
+      ]
     },
     {
       "id":1,
@@ -23,7 +35,19 @@
       "lastActivity":"12/02/18",
       "lastVisit":"01/01/18",
       "nextVisit":"22/02/18",
-      "priority":"0"
+      "priority": 0,
+      "hr": [
+        {
+          "value": 63,
+          "time": "03/02/18 14:00",
+          "read": 0
+        },
+        {
+          "value": 68,
+          "time": "03/02/18 16:00",
+          "read": 0
+        }
+      ]
     }
   ]
 }
