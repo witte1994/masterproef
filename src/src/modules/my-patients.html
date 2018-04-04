@@ -33,11 +33,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             auto 
             url="json/users.json" 
             handle-as="json" 
-            last-response="{{users}}">
+            last-response="{{users}}" on-response="checkPriority">
         </iron-ajax>
 
         <vaadin-grid aria-label="Basic Binding Example" items="[[users.users]]">
-
+            <vaadin-grid-column width="40px" flex-grow="0">
+                <template class="header"></template>
+                <template><iron-icon icon="my-icons:priority-[[item.priority]]"></iron-icon></template>
+            </vaadin-grid-column>
             <vaadin-grid-column>
                 <template class="header">Name</template>
                 <template>[[item.lastName]] [[item.firstName]]</template>
@@ -75,7 +78,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     class MyPatients extends Polymer.Element {
         static get is() { return 'my-patients'; }
       
-   
+        static get properties() {
+            return {
+                icon: String
+            }
+        }
+        
+        checkPriority(data) {
+          var dummy = data.detail.response;
+          this.set('icon', 'my-icons:error');
+
+          this.set('user', dummy.users[this.subrouteData.id]);
+
+
+
+        }
     }
 
     window.customElements.define(MyPatients.is, MyPatients);
