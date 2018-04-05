@@ -1,5 +1,5 @@
 {
-  "name": "Dashboard",
+  "name": "dashboard",
   "authors": [
     "Cardinaels Dennis"
   ],
@@ -16,7 +16,8 @@
     "polymer": "Polymer/polymer#^2.0.0",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0",
     "paper-search": "^2.0.9",
-    "vaadin-grid": "^4.1.7"
+    "vaadin-grid": "^4.1.7",
+    "Sortable": "sortablejs#^1.6.0"
   },
   "resolutions": {
     "polymer": "^2.0.0"

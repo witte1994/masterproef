@@ -14,6 +14,8 @@
 <link rel="import" href="modules/my-sleep.html">
 <link rel="import" href="modules/my-info.html">
 
+<script src="http://rubaxa.github.io/Sortable/Sortable.js"></script>
+
 <dom-module id="my-user">
   <!-- Defines the element's style and local DOM -->
   <template>
@@ -69,7 +71,7 @@
         data="{{subrouteData}}">
     </app-route>
 
-    <div class="container horizontal layout">
+    <div id="container" class="container horizontal layout">
       <div id="small"></div>
       <div id="main" class="flex">test</div>
       <div id="info"></div>
@@ -107,7 +109,7 @@
           var dummy = data.detail.response;
           this.set('user', dummy.users[this.subrouteData.id]);
           var curUser = dummy.users[this.subrouteData.id];
-
+          
           var el = document.createElement("my-summary");
           this.$.info.appendChild(el);
           el = document.createElement("my-info");
@@ -142,6 +144,11 @@
           el.loadValues(curUser.sleep);
           this.$.small.appendChild(el);
 
+          Sortable.create(container, {});
+          Sortable.create(main, {});
+          Sortable.create(small, {});
+          
+          
           /*
           el = document.createElement("my-hr");
           this.$.dynamic.appendChild(el);
