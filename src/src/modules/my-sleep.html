@@ -10,21 +10,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../shared-styles.html">
 
 <dom-module id="my-sleep">
   <template>
-    <style include="shared-styles">
+    <style include="shared-styles iron-flex iron-flex-alignment">
       :host {
         display: block;
-        width: 300px;
+        width: 400px;
         padding: 0px;
+        margin: auto;
+      }
+      .topicons {
         margin: auto;
       }
     </style>
 
-    <div class="card">
-      <h1>Sleep</h1>
+    <div id="top" class="card">
+      <div class="topcontent horizontal layout">
+        <h1 class="flex">Sleep</h1>
+        <div class="topicons">
+          <paper-icon-button icon="icons:expand-more"></paper-icon-button>
+          <paper-icon-button icon="icons:more-vert"></paper-icon-button>
+        </div>
+        </div>
     </div>
   </template>
 
