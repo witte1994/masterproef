@@ -32,8 +32,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div class="topcontent horizontal layout">
           <h1 class="flex">Activity</h1>
           <div class="topicons">
-            <paper-icon-button icon="icons:expand-more"></paper-icon-button>
-            <paper-icon-button icon="icons:more-vert"></paper-icon-button>
+            <paper-icon-button icon="icons:expand-more" on-tap="expandHandler"></paper-icon-button>
+            <paper-icon-button icon="icons:more-vert" on-tap="moreHandler"></paper-icon-button>
           </div>
         </div>
     </div>
@@ -51,6 +51,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       loadValues(data) {
         this.set("activityValues", data);
+      }
+
+      expandHandler() {
+        console.log("expand clicked");
+      }
+
+      moreHandler() {
+        console.log("more clicked");
       }
     }
 
