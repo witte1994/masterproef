@@ -10,11 +10,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../shared-styles.html">
 
 <dom-module id="my-info">
   <template>
-    <style include="shared-styles">
+    <style include="shared-styles iron-flex iron-flex-alignment">
       :host {
         display: block;
         width: 400px;
@@ -22,15 +23,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin: auto;
       }
 
-      h1 {
-        text-align: center;
+      p {
+        margin-left: 10px;
+        margin-right: 10px;
       }
     </style>
 
     <div class="card">
-      <h1>[[lastName]] [[firstName]]</h1>
-      <p><b>Sex:</b> [[sex]]</p>
+      <div class="top horizontal layout">
+        <h1 class="flex">[[lastName]] [[firstName]]</h1>
+        <h1 style="font-size: 18px; margin: auto; margin-right: 10px;">[[sex]]</h1>
+      </div>
+      
       <p><b>Date of birth:</b> [[dateOfBirth]]</p>
+      <p><b>Address:</b> [[address]]</p>
+      <p><b>Phone:</b> [[phone]]</p>
       <p><b>Bloodtype:</b> [[bloodType]]</p>
       <p><b>Height:</b> [[height]]</p>
       <p><b>Last activity:</b> [[lastActivity]]</p>
@@ -48,6 +55,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           firstName: {type: String},
           lastName: {type: String},
           dateOfBirth: {type: String},
+          address: {type: String},
+          phone: {type: String},
           height: {type: String},
           bloodType: {type: String},
           sex: {type: String},
