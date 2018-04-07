@@ -17,8 +17,8 @@ USER
 - activity readings - 
 - medication intake readings -
 - sleep readings
-- weight readings       -> later
-- blood sugar readings  -> later
+- weight readings
+- blood sugar readings
 
 MODULES
 ---
@@ -60,14 +60,14 @@ MODULES
     - timestamp
     - read
 
-    WEIGHT      -> later
+    WEIGHT
     ---
     - value
 
     - timestamp
     - read
 
-    BLOOD SUGAR -> later
+    BLOOD SUGAR
     ---
     - value
 

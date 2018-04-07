@@ -12,6 +12,8 @@
 <link rel="import" href="modules/my-activity.html">
 <link rel="import" href="modules/my-medication.html">
 <link rel="import" href="modules/my-sleep.html">
+<link rel="import" href="modules/my-weight.html">
+<link rel="import" href="modules/my-blood-sugar.html">
 <link rel="import" href="modules/my-info.html">
 
 <script src="http://rubaxa.github.io/Sortable/Sortable.js"></script>
@@ -147,29 +149,15 @@
           el.loadValues(curUser.sleep);
           this.$.small.appendChild(el);
 
-          Sortable.create(container, {});
-          Sortable.create(main, {});
-          Sortable.create(small, {});
-          
-          
-          /*
-          el = document.createElement("my-hr");
-          this.$.dynamic.appendChild(el);
-          el = document.createElement("my-bp");
-          this.$.dynamic.appendChild(el);
-          el = document.createElement("my-activity");
-          this.$.dynamic.appendChild(el);
-          el = document.createElement("my-medication");
-          this.$.dynamic.appendChild(el);
-          el = document.createElement("my-sleep");
-          this.$.dynamic.appendChild(el);
-          el = document.createElement("my-info");
-          this.$.dynamic.appendChild(el);
-          
-          <div id="dynamic" class="horizontal wrap around-justified layout">
-          </div>
-          */
+          el = document.createElement("my-weight");
+          el.loadValues(curUser.weight);
+          this.$.small.appendChild(el);
 
+          el = document.createElement("my-blood-sugar");
+          el.loadValues(curUser.bloodSugar);
+          this.$.small.appendChild(el);
+
+          Sortable.create(small, {});
         }
     }
 
