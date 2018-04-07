@@ -35,7 +35,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </svg> 
         <h1 class="flex">Blood Pressure</h1>
         <div class="topicons">
-          <paper-icon-button icon="icons:expand-more" on-tap="expandHandler"></paper-icon-button>
+          <paper-icon-button icon="icons:[[icon]]" on-tap="expandHandler"></paper-icon-button>
           <paper-icon-button icon="icons:more-vert" on-tap="moreHandler"></paper-icon-button>
         </div>
       </div>
@@ -48,7 +48,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       static get properties() {
         return {
-          bpValues: {type: Array}
+          bpValues: {type: Array},
+          expanded: {type: Boolean, value: false},
+          icon: {type: String, value: "expand-more"}
         }
       }
 
@@ -57,7 +59,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       expandHandler() {
-        console.log("expand clicked");
+        if (this.expanded) {
+          this.$.top.style.height = "56px";
+          this.icon = "expand-more";
+        } else {
+          this.$.top.style.height = "300px";
+          this.icon = "expand-less";
+        }
+        this.expanded = !this.expanded;
       }
 
       moreHandler() {
