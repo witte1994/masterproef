@@ -26,6 +26,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .topicons {
         margin: auto;
       }
+      .indicators {
+        margin: auto;
+        height: 60px;
+      }
+
+      iron-icon {
+        margin: auto;
+        --iron-icon-height: 32px;
+        --iron-icon-width: 32px;
+      }
+
+      .couple {
+        margin: auto;
+        height: 60px;
+      }
+
+      p {
+        margin: auto;
+        margin-left: 10px;
+        font-size: 22px;
+      }
   
       </style>
 
@@ -40,6 +61,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-icon-button icon="icons:more-vert" on-tap="moreHandler"></paper-icon-button>
         </div>
       </div>
+      <div class="indicators horizontal layout" style="display: [[display]];">
+        <div class="couple horizontal layout"><iron-icon icon="my-icons:error"></iron-icon><p>2</p></div>
+        <div class="couple horizontal layout"><iron-icon icon="my-icons:warning"></iron-icon><p>3</p></div>
+        <div class="couple horizontal layout"><iron-icon icon="my-icons:ok"></iron-icon><p>5</p></div>
+      </div>
     </div>
   </template>
 
@@ -51,7 +77,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         return {
           hrValues: {type: Array},
           expanded: {type: Boolean, value: false},
-          icon: {type: String, value: "expand-more"}
+          icon: {type: String, value: "expand-more"},
+          display: {type: String, value: "none"}
         }
       }
 
@@ -61,10 +88,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       expandHandler() {
         if (this.expanded) {
-          this.$.top.style.height = "56px";
+          this.display = "none";
           this.icon = "expand-more";
         } else {
-          this.$.top.style.height = "300px";
+          this.display = "show";
           this.icon = "expand-less";
         }
         this.expanded = !this.expanded;
