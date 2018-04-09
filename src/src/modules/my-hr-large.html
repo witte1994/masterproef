@@ -14,6 +14,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../shared-styles.html">
 
+<script src="../../bower_components/d3/d3.js"></script>
+
 <dom-module id="my-hr-large">
   <template>
     <style include="shared-styles iron-flex iron-flex-alignment">
@@ -31,6 +33,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .list {
         width: 300px;
       }
+      .chart div {
+        font: 10px sans-serif;
+        background-color: steelblue;
+        text-align: right;
+        padding: 3px;
+        margin: 1px;
+        color: white;
+      }
     </style>
 
     <div id="top" class="card">
@@ -39,8 +49,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <paper-icon-button style="margin: auto;" icon="icons:more-vert" on-tap="moreHandler"></paper-icon-button>
       </div>
       <div class="horizontal layout">
-        <div class="chart">
-          test
+        <div id="test" class="chart">
         </div>
         <div class="list">
           fqfqd
@@ -58,9 +67,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           hrValues: {type: Array}
         }
       }
+      constructor() {
+        super();
+      }
 
       loadValues(data) {
         this.set("hrValues", data);
+        var data = [30, 86, 168, 281, 303, 365];
+
+        d3.select(this.$.top)
+          .selectAll("div")
+          .data(data)
+            .enter()
+            .append("div")
+            .style("width", function(d) { return d + "px"; })
+            .text(function(d) { return d; });
       }
     }
 

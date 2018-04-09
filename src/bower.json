@@ -17,7 +17,8 @@
     "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0",
     "paper-search": "^2.0.9",
     "vaadin-grid": "^4.1.7",
-    "Sortable": "sortablejs#^1.6.0"
+    "Sortable": "sortablejs#^1.6.0",
+    "d3": "^5.0.0"
   },
   "resolutions": {
     "polymer": "^2.0.0"
