@@ -47,6 +47,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin-left: 10px;
         font-size: 22px;
       }
+
+      table {
+        border-collapse: collapse;
+        margin: auto;
+        font-size: 20px;
+        margin-bottom: 10px;
+      }
+
+      th, td {
+        width: 90px;
+        padding: 5px;
+      }
+
+      .cell {
+        text-align: center;
+        font-size: 18px;
+      }
+
+      .format {
+        font-size: 12px;
+      }
   
       </style>
 
@@ -65,6 +86,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="couple horizontal layout"><iron-icon icon="my-icons:error"></iron-icon><p>2</p></div>
         <div class="couple horizontal layout"><iron-icon icon="my-icons:warning"></iron-icon><p>3</p></div>
         <div class="couple horizontal layout"><iron-icon icon="my-icons:ok"></iron-icon><p>5</p></div>
+      </div>
+      <div style="display: [[display]];">
+        <table>
+          <tr>
+            <th class="format">BPM</th>
+            <th>All</th>
+            <th>7 days</th>
+          </tr>
+          <tr>
+            <td><b>Low</b></td>
+            <td class="cell">45</td>
+            <td class="cell">52</td>
+          </tr>
+          <tr>
+            <td><b>High</b></td>
+            <td class="cell">112</td>
+            <td class="cell">82</td>
+          </tr>
+          <tr>
+            <td><b>Average</b></td>
+            <td class="cell">82</td>
+            <td class="cell">74</td>
+          </tr>
+        </table>
       </div>
     </div>
   </template>
