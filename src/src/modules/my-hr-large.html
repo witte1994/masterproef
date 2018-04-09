@@ -1,0 +1,69 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="my-hr-large">
+  <template>
+    <style include="shared-styles iron-flex iron-flex-alignment">
+      :host {
+        display: block;
+        width: 1100px;
+        padding: 0px;
+        margin: auto;
+      }
+
+      .chart {
+        width: 800px;
+      }
+
+      .list {
+        width: 300px;
+      }
+    </style>
+
+    <div id="top" class="card">
+      <div class="horizontal layout">
+        <h1 class="flex">Heart Rate</h1>
+        <paper-icon-button style="margin: auto;" icon="icons:more-vert" on-tap="moreHandler"></paper-icon-button>
+      </div>
+      <div class="horizontal layout">
+        <div class="chart">
+          test
+        </div>
+        <div class="list">
+          fqfqd
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <script>
+    class MyHrLarge extends Polymer.Element {
+      static get is() { return 'my-hr-large'; }
+
+      static get properties() {
+        return {
+          hrValues: {type: Array}
+        }
+      }
+
+      loadValues(data) {
+        this.set("hrValues", data);
+      }
+    }
+
+    window.customElements.define(MyHrLarge.is, MyHrLarge);
+  </script>
+</dom-module>

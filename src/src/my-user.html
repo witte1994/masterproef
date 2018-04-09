@@ -8,6 +8,7 @@
 <link rel="import" href="modules/my-summary.html">
 <link rel="import" href="modules/my-patients.html">
 <link rel="import" href="modules/my-hr.html">
+<link rel="import" href="modules/my-hr-large.html">
 <link rel="import" href="modules/my-bp.html">
 <link rel="import" href="modules/my-activity.html">
 <link rel="import" href="modules/my-medication.html">
@@ -37,7 +38,6 @@
       }
 
       #main {
-        background-color: grey;
         overflow-y: auto;
         overflow-x: hidden;
         width: 1000px;
@@ -76,7 +76,7 @@
 
     <div id="container" class="container horizontal layout">
       <div id="small"></div>
-      <div id="main" class="flex">test</div>
+      <div id="main" class="flex"></div>
       <div id="info"></div>
     </div>
    
@@ -156,6 +156,10 @@
           el = document.createElement("my-blood-sugar");
           el.loadValues(curUser.bloodSugar);
           this.$.small.appendChild(el);
+
+          el = document.createElement("my-hr-large");
+          el.loadValues(curUser.hr);
+          this.$.main.appendChild(el);
 
           Sortable.create(small, {});
         }
