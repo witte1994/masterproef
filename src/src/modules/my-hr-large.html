@@ -28,6 +28,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       .chart {
         width: 800px;
+        height: 400px;
       }
 
       .list {
@@ -41,6 +42,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin: 1px;
         color: white;
       }
+
+      path {
+        fill: none;
+        stroke: black;
+        stroke-width: 2px;
+      }
     </style>
 
     <div id="top" class="card">
@@ -49,7 +56,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <paper-icon-button style="margin: auto;" icon="icons:more-vert" on-tap="moreHandler"></paper-icon-button>
       </div>
       <div class="horizontal layout">
-        <div id="test" class="chart">
+        <div id="chart" cl>
+
         </div>
         <div class="list">
           fqfqd
@@ -73,15 +81,57 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       ready() {
         super.ready();
-        var data = [30, 86, 168, 281, 303, 365];
+
+        var margin = {top: 20, right: 20, bottom: 30, left: 50},
+          width = 800 - margin.left - margin.right,
+          height = 400 - margin.top - margin.bottom;
         
-        d3.select(this.$.test)
-          .selectAll("div")
-          .data(data)
-            .enter()
-            .append("div")
-            .style("width", function(d) { return d + "px"; })
-            .text(function(d) { return d; });
+        var parseTime = d3.utcParse("%Y-%m-%dT%H:%M:%S.%LZ");
+
+        var x = d3.scaleTime()
+          .rangeRound([0, width]);
+
+        var y = d3.scaleLinear()
+          .rangeRound([height, 0]);
+
+        var valueline = d3.line()
+          .x(function(d) { return x(d.time); })
+          .y(function(d) { return y(d.value); });
+        
+        var svg = d3.select(this.$.chart).append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+            .attr("transform",
+                  "translate(" + margin.left + "," + margin.top + ")");
+
+        function draw(data) {
+          data.forEach(function(d) {
+            d.time = parseTime(d.time);
+            d.value = +d.value;
+          });
+
+          // Scale the range of the data
+          x.domain(d3.extent(data, function(d) { return d.time; }));
+          y.domain([0, d3.max(data, function(d) { return d.value; })]);
+
+          // Add the valueline path.
+          svg.append("path")
+              .data([data])
+              .attr("class", "line")
+              .attr("d", valueline);
+
+          // Add the X Axis
+          svg.append("g")
+              .attr("transform", "translate(0," + height + ")")
+              .call(d3.axisBottom(x));
+
+          // Add the Y Axis
+          svg.append("g")
+          .call(d3.axisLeft(y));
+        }
+      
+        draw(this.hrValues);
       }
 
       loadValues(data) {
