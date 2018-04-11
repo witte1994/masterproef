@@ -71,11 +71,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         super();
       }
 
-      loadValues(data) {
-        this.set("hrValues", data);
+      ready() {
+        super.ready();
         var data = [30, 86, 168, 281, 303, 365];
-
-        d3.select(this.$.top)
+        
+        d3.select(this.$.test)
           .selectAll("div")
           .data(data)
             .enter()
@@ -83,8 +83,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             .style("width", function(d) { return d + "px"; })
             .text(function(d) { return d; });
       }
+
+      loadValues(data) {
+        this.set("hrValues", data);
+
+      }
     }
 
-    window.customElements.define(MyHrLarge.is, MyHrLarge);
+    customElements.define(MyHrLarge.is, MyHrLarge);
   </script>
 </dom-module>
