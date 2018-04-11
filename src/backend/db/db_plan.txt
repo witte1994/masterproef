@@ -1,0 +1,153 @@
+USER:
+- id primary key auto increment
+- firstName varchar 128
+- lastName varchar 128
+- dateofbirth Date
+- address varchar 256
+- phone varchar 64
+- height varchar 32
+- bloodtype varchar 4
+- sex varchar 2
+- lastActivity datetime
+- lastvisit date
+- nextvisit date
+- priority tinyint
+
+CREATE TABLE user (
+    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(32) NOT NULL,
+    last_name VARCHAR(32) NOT NULL,
+    birth Date NOT NULL,
+    address VARCHAR(128) NOT NULL,
+    phone VARCHAR(32) NOT NULL,
+    height VARCHAR(16) NOT NULL,
+    blood_type VARCHAR(4) NOT NULL,
+    sex VARCHAR(2) NOT NULL,
+    last_activity DATETIME NOT NULL,
+    last_visit DATE NOT NULL,
+    next_visit DATE NOT NULL,
+    priority TINYINT NOT NULL 
+)
+
+HR:
+- id primary key auto increment
+- value smallint
+- time datetime
+- read boolean
+- userid: foreign key user(id)
+
+CREATE TABLE hr (
+    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    value SMALLINT NOT NULL,
+    time DATETIME NOT NULL,
+    is_read BOOLEAN NOT NULL,
+    user_id INT(6) UNSIGNED NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES user(id)
+)
+
+BP:
+- id primary key auto increment
+- systolic smallint
+- diastolic smallint
+- time datetime
+- read boolean
+- userid: foreign key user(id)
+
+CREATE TABLE bp (
+    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    systolic SMALLINT NOT NULL,
+    diastolic SMALLINT NOT NULL,
+    time DATETIME NOT NULL,
+    is_read BOOLEAN NOT NULL,
+    user_id INT(6) UNSIGNED NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES user(id)
+)
+
+ACTIVITY:
+- id primary key auto increment
+- steps mediumint
+- duration smallint
+- time datetime
+- read boolean
+- userid: foreign key user(id)
+
+CREATE TABLE activity (
+    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    steps MEDIUMINT NOT NULL,
+    duration SMALLINT NOT NULL,
+    time DATETIME NOT NULL,
+    is_read BOOLEAN NOT NULL,
+    user_id INT(6) UNSIGNED NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES user(id)
+)
+
+MEDICATION:
+- id primary key auto increment
+- name varchar 256
+- time datetime
+- read boolean
+- userid: foreign key user(id)
+
+CREATE TABLE medication (
+    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(128) NOT NULL,
+    time DATETIME NOT NULL,
+    is_read BOOLEAN NOT NULL,
+    user_id INT(6) UNSIGNED NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES user(id)
+)
+
+SLEEP:
+- id primary key auto increment
+- duration smallint
+- start datetime
+- time datetime
+- read boolean
+- userid: foreign key user(id)
+
+CREATE TABLE sleep (
+    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    duration SMALLINT NOT NULL,
+    start DATETIME NOT NULL,
+    time DATETIME NOT NULL,
+    is_read BOOLEAN NOT NULL,
+    user_id INT(6) UNSIGNED NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES user(id)
+)
+
+WEIGHT:
+- id primary key auto increment
+- value smallint
+- time datetime
+- read boolean
+- userid: foreign key user(id)
+
+CREATE TABLE weight (
+    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    value SMALLINT NOT NULL,
+    time DATETIME NOT NULL,
+    is_read BOOLEAN NOT NULL,
+    user_id INT(6) UNSIGNED NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES user(id)
+)
+
+BLOODSUGAR:
+- id primary key auto increment
+- value float
+- time datetime
+- read boolean
+- userid: foreign key user(id)
+
+CREATE TABLE blood_sugar (
+    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    value FLOAT NOT NULL,
+    time DATETIME NOT NULL,
+    is_read BOOLEAN NOT NULL,
+    user_id INT(6) UNSIGNED NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES user(id)
+)
+
+LAYOUT:
+?
+
+CONSTRAINTS:
