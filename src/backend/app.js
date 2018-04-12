@@ -18,6 +18,14 @@ db.connect((err) => {
 
 const app = express();
 
+app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    next();
+});
+
 // create db
 app.get('/createdb', (req, res) => {
     let sql = 'CREATE DATABASE dashboard';
@@ -25,6 +33,15 @@ app.get('/createdb', (req, res) => {
         if (err) throw err;
         console.log(result);
         res.send('DB created');
+    })
+});
+
+app.get('/getusers', (req, res) => {
+    let sql = 'SELECT * FROM user';
+    let query = db.query(sql, (err, results) => {
+        if (err) throw err;
+        console.log(results);
+        res.send(results);
     })
 });
 

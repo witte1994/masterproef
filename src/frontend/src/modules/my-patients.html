@@ -31,34 +31,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="card">
         <iron-ajax 
             auto 
-            url="json/users.json" 
+            content-type="application/json"
+            method = "GET"
+            url="http://localhost:3000/getusers" 
             handle-as="json" 
             last-response="{{users}}" on-response="checkPriority">
         </iron-ajax>
 
-        <vaadin-grid aria-label="Basic Binding Example" items="[[users.users]]">
+        <vaadin-grid aria-label="Basic Binding Example" items="[[users]]">
             <vaadin-grid-column width="40px" flex-grow="0">
                 <template class="header"></template>
                 <template><iron-icon icon="my-icons:priority-[[item.priority]]"></iron-icon></template>
             </vaadin-grid-column>
             <vaadin-grid-column>
                 <template class="header">Name</template>
-                <template>[[item.lastName]] [[item.firstName]]</template>
+                <template>[[item.last_name]] [[item.first_name]]</template>
             </vaadin-grid-column>
         
             <vaadin-grid-column>
                 <template class="header">Last Activity</template>
-                <template>[[item.lastActivity]]</template>
+                <template>[[item.last_activity]]</template>
             </vaadin-grid-column>
         
             <vaadin-grid-column>
                 <template class="header">Last Visit</template>
-                <template>[[item.lastVisit]]</template>
+                <template>[[item.last_visit]]</template>
             </vaadin-grid-column>
 
             <vaadin-grid-column>
                 <template class="header">Next Visit</template>
-                <template>[[item.nextVisit]]</template>
+                <template>[[item.next_visit]]</template>
             </vaadin-grid-column>
 
             <vaadin-grid-column width="60px" flex-grow="0">
@@ -85,10 +87,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
         
         checkPriority(data) {
-          var dummy = data.detail.response;
-          this.set('icon', 'my-icons:error');
+            console.log("test");
+            var dummy = data.detail.response;
+            console.log(dummy);
+            this.set('icon', 'my-icons:error');
 
-          this.set('user', dummy.users[this.subrouteData.id]);
+            this.set('user', dummy.users[this.subrouteData.id]);
 
 
 
