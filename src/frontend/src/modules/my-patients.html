@@ -87,15 +87,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
         
         checkPriority(data) {
-            console.log("test");
             var dummy = data.detail.response;
             console.log(dummy);
             this.set('icon', 'my-icons:error');
-
-            this.set('user', dummy.users[this.subrouteData.id]);
-
-
-
+            for (var k in dummy) {
+                dummy[k].last_activity = new Date(dummy[k].last_activity).toLocaleDateString();
+                dummy[k].last_visit = new Date(dummy[k].last_visit).toLocaleDateString();
+                dummy[k].next_visit = new Date(dummy[k].next_visit).toLocaleDateString();
+            }
         }
     }
 
