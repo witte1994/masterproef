@@ -116,49 +116,39 @@
           var el = document.createElement("my-summary");
           this.$.info.appendChild(el);
           el = document.createElement("my-info");
-          el.setAttribute("first-name", curUser.firstName);
-          el.setAttribute("last-name", curUser.lastName);
-          el.setAttribute("date-of-birth", curUser.dateOfBirth);
-          el.setAttribute("address", curUser.address);
-          el.setAttribute("phone", curUser.phone);
-          el.setAttribute("height", curUser.height);
-          el.setAttribute("blood-type", curUser.bloodType);
-          el.setAttribute("sex", curUser.sex);
-          el.setAttribute("last-activity", curUser.lastActivity);
-          el.setAttribute("last-visit", curUser.lastVisit);
-          el.setAttribute("next-visit", curUser.nextVisit);
+          el.setAttribute("id", this.subrouteData.id);
           this.$.info.appendChild(el);
 
           el = document.createElement("my-hr");
-          el.loadValues(curUser.hr);
+          //el.loadValues(curUser.hr);
           this.$.small.appendChild(el);
 
           el = document.createElement("my-bp");
-          el.loadValues(curUser.bp);
+          //el.loadValues(curUser.bp);
           this.$.small.appendChild(el);
 
           el = document.createElement("my-activity");
-          el.loadValues(curUser.activity);
+          //el.loadValues(curUser.activity);
           this.$.small.appendChild(el);
 
           el = document.createElement("my-medication");
-          el.loadValues(curUser.medication);
+          //el.loadValues(curUser.medication);
           this.$.small.appendChild(el);
 
           el = document.createElement("my-sleep");
-          el.loadValues(curUser.sleep);
+          //el.loadValues(curUser.sleep);
           this.$.small.appendChild(el);
 
           el = document.createElement("my-weight");
-          el.loadValues(curUser.weight);
+          //el.loadValues(curUser.weight);
           this.$.small.appendChild(el);
 
           el = document.createElement("my-blood-sugar");
-          el.loadValues(curUser.bloodSugar);
+          //el.loadValues(curUser.bloodSugar);
           this.$.small.appendChild(el);
 
           el = document.createElement("my-hr-large");
-          el.loadValues(curUser.hr);
+          //el.loadValues(curUser.hr);
           this.$.main.appendChild(el);
 
           Sortable.create(small, {});
