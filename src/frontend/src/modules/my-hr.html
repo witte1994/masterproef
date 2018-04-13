@@ -12,6 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../shared-styles.html">
 
 <dom-module id="my-hr">
@@ -72,6 +73,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </style>
 
     <div id="top" class="card">
+        <iron-ajax
+        id = "request"
+        auto 
+        content-type="application/json"
+        method = "GET"
+        url="http://localhost:3000/gethrsmall/"
+        handle-as="json" 
+        last-response="{{data}}" on-response="loadData">
+      </iron-ajax>
+
       <div class="topcontent horizontal layout">
         <svg height="30" width="30" style="margin: auto; margin-left:5px;">
           <circle cx="15" cy="15" r="12" stroke="black" stroke-width="2" fill="red" />
@@ -96,18 +107,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </tr>
           <tr>
             <td><b>Low</b></td>
-            <td class="cell">45</td>
-            <td class="cell">52</td>
+            <td class="cell">[[data.low_total]]</td>
+            <td class="cell">[[data.low_week]]</td>
           </tr>
           <tr>
             <td><b>High</b></td>
-            <td class="cell">112</td>
-            <td class="cell">82</td>
+            <td class="cell">[[data.high_total]]</td>
+            <td class="cell">[[data.high_week]]</td>
           </tr>
           <tr>
             <td><b>Average</b></td>
-            <td class="cell">82</td>
-            <td class="cell">74</td>
+            <td class="cell">[[data.avg_total]]</td>
+            <td class="cell">[[data.avg_week]]</td>
           </tr>
         </table>
       </div>
@@ -120,15 +131,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       static get properties() {
         return {
-          hrValues: {type: Array},
+          id: {type: String},
+          data: {type: Array},
           expanded: {type: Boolean, value: false},
           icon: {type: String, value: "expand-more"},
           display: {type: String, value: "none"}
         }
       }
 
-      loadValues(data) {
-        this.set("hrValues", data);
+      ready() {
+        super.ready();
+        this.$.request.url = this.$.request.url + this.id;
+      }
+
+      loadData(data) {
+        this.data = data.detail.response;
+        console.log(this.data.high_total);
       }
 
       expandHandler() {
