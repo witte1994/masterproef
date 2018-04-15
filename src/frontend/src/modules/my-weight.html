@@ -30,15 +30,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <div id="top" class="card">
       <div class="topcontent horizontal layout">
-          <svg height="30" width="30" style="margin: auto; margin-left:5px;">
-            <circle cx="15" cy="15" r="12" stroke="black" stroke-width="2" fill="red"/>
-          </svg> 
-          <h1 class="flex">Weight</h1>
-          <div class="topicons">
-            <paper-icon-button icon="icons:[[icon]]" on-tap="expandHandler"></paper-icon-button>
-            <paper-icon-button icon="icons:more-vert" on-tap="moreHandler"></paper-icon-button>
-          </div>
+        <svg height="30" width="30" style="margin: auto; margin-left:5px;">
+          <circle cx="15" cy="15" r="12" stroke="black" stroke-width="2" fill="red"/>
+        </svg> 
+        <h1 class="flex">Weight</h1>
+        <div class="topicons">
+          <paper-icon-button icon="icons:[[icon]]" on-tap="expandHandler"></paper-icon-button>
+          <paper-icon-button icon="icons:more-vert" on-tap="moreHandler"></paper-icon-button>
         </div>
+      </div>
+      <div style="display: [[display]];">
+        weight
+      
+      </div>
     </div>
   </template>
 
@@ -48,9 +52,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       static get properties() {
         return {
-          weightValues: {type: Array},
+          id: {type: String},
+          data: {type: Array},
           expanded: {type: Boolean, value: false},
-          icon: {type: String, value: "expand-more"}
+          icon: {type: String, value: "expand-more"},
+          display: {type: String, value: "none"}
         }
       }
 
@@ -60,14 +66,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       expandHandler() {
         if (this.expanded) {
-          this.$.top.style.height = "56px";
+          this.display = "none";
           this.icon = "expand-more";
         } else {
-          this.$.top.style.height = "300px";
+          this.display = "show";
           this.icon = "expand-less";
         }
         this.expanded = !this.expanded;
       }
+
 
       moreHandler() {
         console.log("more clicked");
