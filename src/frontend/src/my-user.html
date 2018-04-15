@@ -121,7 +121,6 @@
 
           el = document.createElement("my-hr");
           el.setAttribute("id", this.subrouteData.id);
-          //el.loadValues(curUser.hr);
           this.$.small.appendChild(el);
 
           el = document.createElement("my-bp");
@@ -149,7 +148,7 @@
           this.$.small.appendChild(el);
 
           el = document.createElement("my-hr-large");
-          //el.loadValues(curUser.hr);
+          el.setAttribute("id", this.subrouteData.id);
           this.$.main.appendChild(el);
 
           Sortable.create(small, {});

@@ -1,5 +1,6 @@
 const express = require('express');
-const mysql = require('mysql')
+const mysql = require('mysql');
+var cors = require('cors');
 
 // DB
 const db = mysql.createConnection({
@@ -18,13 +19,7 @@ db.connect((err) => {
 
 const app = express();
 
-app.use(function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    next();
-});
+app.use(cors({credentials: true, origin: true}));
 
 // create db
 app.get('/createdb', (req, res) => {
@@ -95,6 +90,15 @@ app.get('/gethrsmall/:id', (req, res) => {
 
         var stats = {"avg_total": avgTotal, "low_total": lowTotal, "high_total": highTotal, "avg_week": avgWeek, "low_week": lowWeek, "high_week": highWeek};
         res.send(stats);
+    })
+});
+
+app.get('/gethrlarge/:id', (req, res) => {
+    let sql = `SELECT value, time, is_read FROM hr WHERE user_id = ${req.params.id}`;
+    let query = db.query(sql, (err, results) => {
+        if (err) throw err;
+
+        res.send(results);
     })
 });
 

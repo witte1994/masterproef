@@ -51,6 +51,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
 
     <div id="top" class="card">
+      <iron-ajax
+        id = "request"
+        auto 
+        content-type="application/json"
+        method = "GET"
+        url="http://localhost:3000/gethrlarge/"
+        handle-as="json" 
+        last-response="{{data}}" on-response="loadData">
+      </iron-ajax>
       <div class="horizontal layout">
         <h1 class="flex">Heart Rate</h1>
         <paper-icon-button style="margin: auto;" icon="icons:more-vert" on-tap="moreHandler"></paper-icon-button>
@@ -72,7 +81,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       static get properties() {
         return {
-          hrValues: {type: Array}
+          id: {type: String},
+          data: {type: Array}
         }
       }
       constructor() {
@@ -81,6 +91,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       ready() {
         super.ready();
+        this.$.request.url = this.$.request.url + this.id;
         /*
         var margin = {top: 20, right: 20, bottom: 30, left: 50},
           width = 800 - margin.left - margin.right,
@@ -134,9 +145,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         draw(this.hrValues);*/
       }
 
-      loadValues(data) {
-        this.set("hrValues", data);
-
+      loadData(data) {
+        this.data = data.detail.response;
+        console.log(this.data);
       }
     }
 
