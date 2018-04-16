@@ -159,7 +159,7 @@ CREATE TABLE `user` (
   `birth` date NOT NULL,
   `address` varchar(128) NOT NULL,
   `phone` varchar(32) NOT NULL,
-  `height` varchar(16) NOT NULL,
+  `height` float NOT NULL,
   `blood_type` varchar(4) NOT NULL,
   `sex` varchar(2) NOT NULL,
   `last_activity` datetime NOT NULL,
@@ -173,8 +173,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `first_name`, `last_name`, `birth`, `address`, `phone`, `height`, `blood_type`, `sex`, `last_activity`, `last_visit`, `next_visit`, `priority`) VALUES
-(1, 'Foo', 'Bar', '2018-04-04', 'adress 9, 3590 Diepenbeek', '089/223344', '1,84m', 'O+', 'M', '2018-03-06 00:00:00', '2018-03-01', '2018-04-04', 2),
-(2, 'Jane', 'Doe', '2017-07-03', 'Agoralaan 2, 3590 DPB', '089/111111', '1,64m', 'A-', 'F', '2018-04-10 00:00:00', '2018-04-02', '2018-04-26', 0);
+(1, 'Foo', 'Bar', '2018-04-04', 'adress 9, 3590 Diepenbeek', '089/223344', '1.84', 'O+', 'M', '2018-03-06 00:00:00', '2018-03-01', '2018-04-04', 2),
+(2, 'Jane', 'Doe', '2017-07-03', 'Agoralaan 2, 3590 DPB', '089/111111', '1.64', 'A-', 'F', '2018-04-10 00:00:00', '2018-04-02', '2018-04-26', 0);
 
 -- --------------------------------------------------------
 
