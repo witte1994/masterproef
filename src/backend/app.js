@@ -102,6 +102,15 @@ app.get('/gethrlarge/:id', (req, res) => {
     })
 });
 
+app.get('/getweightlarge/:id', (req, res) => {
+    let sql = `SELECT value, time, is_read FROM weight WHERE user_id = ${req.params.id}`;
+    let query = db.query(sql, (err, results) => {
+        if (err) throw err;
+
+        res.send(results);
+    })
+});
+
 app.listen('3000', () => {
     console.log('Server started on port 3000');
 });

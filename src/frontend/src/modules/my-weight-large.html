@@ -17,7 +17,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <script src="../../bower_components/d3/d3.js"></script>
 
-<dom-module id="my-hr-large">
+<dom-module id="my-weight-large">
   <template>
     <style include="shared-styles iron-flex iron-flex-alignment">
       :host {
@@ -62,12 +62,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         auto 
         content-type="application/json"
         method = "GET"
-        url="http://localhost:3000/gethrlarge/"
+        url="http://localhost:3000/getweightlarge/"
         handle-as="json" 
         last-response="{{data}}" on-response="loadData">
       </iron-ajax>
       <div class="horizontal layout">
-        <h1 class="flex">Heart Rate</h1>
+        <h1 class="flex">Weight</h1>
         <paper-icon-button style="margin: auto;" icon="icons:more-vert" on-tap="moreHandler"></paper-icon-button>
       </div>
       <div class="horizontal layout">
@@ -82,7 +82,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 </vaadin-grid-column>
             
                 <vaadin-grid-column width="60px" flex-grow="0">
-                    <template class="header">Value (BPM)</template>
+                    <template class="header">Value (kg)</template>
                     <template>[[item.value]]</template>
                 </vaadin-grid-column>
             </vaadin-grid>
@@ -92,8 +92,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </template>
 
   <script>
-    class MyHrLarge extends Polymer.Element {
-      static get is() { return 'my-hr-large'; }
+    class MyWeightLarge extends Polymer.Element {
+      static get is() { return 'my-weight-large'; }
 
       static get properties() {
         return {
@@ -171,6 +171,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     }
 
-    customElements.define(MyHrLarge.is, MyHrLarge);
+    customElements.define(MyWeightLarge.is, MyWeightLarge);
   </script>
 </dom-module>

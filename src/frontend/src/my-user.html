@@ -14,6 +14,7 @@
 <link rel="import" href="modules/my-medication.html">
 <link rel="import" href="modules/my-sleep.html">
 <link rel="import" href="modules/my-weight.html">
+<link rel="import" href="modules/my-weight-large.html">
 <link rel="import" href="modules/my-blood-sugar.html">
 <link rel="import" href="modules/my-info.html">
 
@@ -148,6 +149,10 @@
           this.$.small.appendChild(el);
 
           el = document.createElement("my-hr-large");
+          el.setAttribute("id", this.subrouteData.id);
+          this.$.main.appendChild(el);
+
+          el = document.createElement("my-weight-large");
           el.setAttribute("id", this.subrouteData.id);
           this.$.main.appendChild(el);
 
