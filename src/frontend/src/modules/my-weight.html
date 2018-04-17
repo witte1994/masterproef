@@ -26,9 +26,39 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .topicons {
         margin: auto;
       }
+
+      table {
+        border-collapse: collapse;
+        margin: auto;
+        font-size: 20px;
+        margin-bottom: 10px;
+      }
+
+      th, td {
+        width: 90px;
+        padding: 5px;
+      }
+
+      .cell {
+        text-align: center;
+        font-size: 18px;
+      }
+
+      .format {
+        font-size: 12px;
+      }
     </style>
 
     <div id="top" class="card">
+      <iron-ajax
+        id = "request"
+        auto 
+        content-type="application/json"
+        method = "GET"
+        url="http://localhost:3000/getweightsmall/"
+        handle-as="json" 
+        last-response="{{data}}" on-response="loadData">
+      </iron-ajax>
       <div class="topcontent horizontal layout">
         <svg height="30" width="30" style="margin: auto; margin-left:5px;">
           <circle cx="15" cy="15" r="12" stroke="black" stroke-width="2" fill="red"/>
@@ -40,8 +70,35 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
       </div>
       <div style="display: [[display]];">
-        weight
-      
+        <table>
+          <tr>
+            <th></th>
+            <th>Start</th>
+            <th>Current</th>
+          </tr>
+          <tr>
+            <td><b>Weight</b></td>
+            <td class="cell">[[data.start_weight]] kg</td>
+            <td class="cell">[[data.current_weight]] kg</td>
+          </tr>
+          <tr>
+            <td><b>BMI</b></td>
+            <td class="cell">[[data.bmi_start]]</td>
+            <td class="cell">[[data.bmi_current]]</td>
+          </tr>
+          
+        </table>
+        <table>
+          <tr>
+            <td style="width: 160px;"><b>Week difference</b></td>
+            <td class="cell">[[data.lost_week]] kg</td>
+          </tr>
+          <tr>
+            <td style="width: 160px;"><b>Month Difference</b></td>
+            <td class="cell">[[data.lost_month]] kg</td>
+          </tr>
+        </table>
+        
       </div>
     </div>
   </template>
@@ -60,8 +117,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       }
 
-      loadValues(data) {
-        this.set("weightValues", data);
+      ready() {
+        super.ready();
+        this.$.request.url = this.$.request.url + this.id;
+      }
+
+      loadData(data) {
+        this.data = data.detail.response;
       }
 
       expandHandler() {

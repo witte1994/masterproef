@@ -138,7 +138,10 @@ app.get('/getweightsmall/:id', (req, res) => {
                 lastMonthWeight = value;
         }
 
-        var stats = {"start_weight": startWeight, "current_weight": currentWeight, "last_week": lastWeekWeight, "last_month": lastMonthWeight, "bmi_start": bmiStart, "bmi_current": bmiCurrent};
+        if (lastMonthWeight == 0)
+            lastMonthWeight = startWeight;
+
+        var stats = {"start_weight": startWeight, "current_weight": currentWeight, "lost_week": (currentWeight - lastWeekWeight), "lost_month": (currentWeight - lastMonthWeight), "bmi_start": bmiStart.toFixed(2), "bmi_current": bmiCurrent.toFixed(2)};
         res.send(stats);
     })
 });
