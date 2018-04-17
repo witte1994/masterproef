@@ -102,6 +102,47 @@ app.get('/gethrlarge/:id', (req, res) => {
     })
 });
 
+app.get('/getweightsmall/:id', (req, res) => {
+    let sql = `SELECT weight.value, weight.time, user.height FROM weight JOIN user ON weight.user_id = user.id WHERE weight.user_id = ${req.params.id}`;
+    let query = db.query(sql, (err, results) => {
+        if (err) throw err;
+        var today = new Date();
+        today.setMilliseconds(0);
+        today.setSeconds(0);
+        today.setMinutes(0);
+        today.setHours(0);
+        var lastWeek = new Date(today.getTime() - (7 * 24 * 60 * 60 * 1000));
+        var lastMonth = new Date(today.getTime() - (30 * 24 * 60 * 60 * 1000));
+
+        var startWeight = 0, currentWeight = 0;
+        var lastWeekWeight = 0, lastMonthWeight = 0;
+        var bmiStart = 0; bmiCurrent = 0;
+        var height = 0;
+        
+        for (var i = 0; i < results.length; i++) {
+            var value = results[i].value;
+            var date = new Date(results[i].time);
+
+            if (i == 0) {
+                startWeight = value;
+                height = results[i].height;
+                bmiStart = value / (height * height);
+            }
+            if (i == results.length - 1) {
+                currentWeight = value;
+                bmiCurrent = value / (height * height);
+            }
+            if (date < lastWeek)
+                lastWeekWeight = value;
+            if (date < lastMonth)
+                lastMonthWeight = value;
+        }
+
+        var stats = {"start_weight": startWeight, "current_weight": currentWeight, "last_week": lastWeekWeight, "last_month": lastMonthWeight, "bmi_start": bmiStart, "bmi_current": bmiCurrent};
+        res.send(stats);
+    })
+});
+
 app.get('/getweightlarge/:id', (req, res) => {
     let sql = `SELECT value, time, is_read FROM weight WHERE user_id = ${req.params.id}`;
     let query = db.query(sql, (err, results) => {
