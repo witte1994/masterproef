@@ -102,6 +102,70 @@ app.get('/gethrlarge/:id', (req, res) => {
     })
 });
 
+app.get('/getbpsmall/:id', (req, res) => {
+    let sql = `SELECT * FROM bp WHERE user_id = ${req.params.id}`;
+    let query = db.query(sql, (err, results) => {
+        if (err) throw err;
+
+        var today = new Date();
+        today.setMilliseconds(0);
+        today.setSeconds(0);
+        today.setMinutes(0);
+        today.setHours(0);
+        var lastWeek = new Date(today.getTime() - (7 * 24 * 60 * 60 * 1000));
+
+        var avgTotalSys = 0, avgWeekSys = 0;
+        var lowTotalSys = 99999, lowWeekSys = 99999;
+        var highTotalSys = -1, highWeekSys = -1;
+
+        var avgTotalDia = 0, avgWeekDia = 0;
+        var lowTotalDia = 99999, lowWeekDia = 99999;
+        var highTotalDia = -1, highWeekDia = -1;
+        
+        var numWeekValues = 0;
+        for (var i = 0; i < results.length; i++) {
+            var systolic = results[i].systolic;
+            var diastolic = results[i].diastolic;
+            var date = new Date(results[i].time);
+            avgTotalSys += systolic;
+            avgTotalDia += diastolic;
+
+            if (systolic < lowTotalSys)
+                lowTotalSys = systolic;
+            if (systolic > highTotalSys)
+                highTotalSys = systolic;
+
+            if (diastolic < lowTotalDia)
+                lowTotalDia = diastolic;
+            if (diastolic > highTotalDia)
+                highTotalDia = diastolic;
+            
+            if (date > lastWeek) {
+                numWeekValues++;
+                avgWeekSys += systolic;
+                avgWeekDia += diastolic;
+
+                if (systolic < lowWeekSys)
+                    lowWeekSys = systolic;
+                if (systolic > highWeekSys)
+                    highWeekSys = systolic;
+
+                if (diastolic < lowWeekDia)
+                    lowWeekDia = diastolic;
+                if (diastolic > highWeekDia)
+                    highWeekDia = diastolic;
+            }
+        }
+        avgTotalSys = Math.round(avgTotalSys / results.length);
+        avgWeekSys = Math.round(avgWeekSys / numWeekValues);
+        avgTotalDia = Math.round(avgTotalDia / results.length);
+        avgWeekDia = Math.round(avgWeekDia / numWeekValues);
+
+        var stats = {"avg_total_sys": avgTotalSys, "avg_total_dia": avgTotalDia, "low_total_sys": lowTotalSys, "low_total_dia": lowTotalDia, "high_total_sys": highTotalSys, "high_total_dia": highTotalDia, "avg_week_sys": avgWeekSys, "avg_week_dia": avgWeekDia, "low_week_sys": lowWeekSys, "low_week_dia": lowWeekDia, "high_week_sys": highWeekSys, "high_week_dia": highWeekDia};
+        res.send(stats);
+    })
+});
+
 app.get('/getweightsmall/:id', (req, res) => {
     let sql = `SELECT weight.value, weight.time, user.height FROM weight JOIN user ON weight.user_id = user.id WHERE weight.user_id = ${req.params.id}`;
     let query = db.query(sql, (err, results) => {

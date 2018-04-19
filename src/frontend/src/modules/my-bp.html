@@ -12,6 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../shared-styles.html">
 
 <dom-module id="my-bp">
@@ -26,9 +27,60 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .topicons {
         margin: auto;
       }
+      indicators {
+        margin: auto;
+        height: 60px;
+      }
+
+      iron-icon {
+        margin: auto;
+        --iron-icon-height: 32px;
+        --iron-icon-width: 32px;
+      }
+
+      .couple {
+        margin: auto;
+        height: 60px;
+      }
+
+      p {
+        margin: auto;
+        margin-left: 10px;
+        font-size: 22px;
+      }
+
+      table {
+        border-collapse: collapse;
+        margin: auto;
+        font-size: 20px;
+        margin-bottom: 10px;
+      }
+
+      th, td {
+        width: 90px;
+        padding: 5px;
+      }
+
+      .cell {
+        text-align: center;
+        font-size: 18px;
+      }
+
+      .format {
+        font-size: 12px;
+      }
     </style>
 
     <div id="top" class="card">
+      <iron-ajax
+        id = "request"
+        auto 
+        content-type="application/json"
+        method = "GET"
+        url="http://localhost:3000/getbpsmall/"
+        handle-as="json" 
+        last-response="{{data}}" on-response="loadData">
+      </iron-ajax>
       <div class="topcontent horizontal layout">
         <svg height="30" width="30" style="margin: auto; margin-left:5px;">
           <circle cx="15" cy="15" r="12" stroke="black" stroke-width="2" fill="green" />
@@ -39,6 +91,35 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-icon-button icon="icons:more-vert" on-tap="moreHandler"></paper-icon-button>
         </div>
       </div>
+      <div class="indicators horizontal layout" style="display: [[display]];">
+        <div class="couple horizontal layout"><iron-icon icon="my-icons:error"></iron-icon><p>2</p></div>
+        <div class="couple horizontal layout"><iron-icon icon="my-icons:warning"></iron-icon><p>3</p></div>
+        <div class="couple horizontal layout"><iron-icon icon="my-icons:ok"></iron-icon><p>5</p></div>
+      </div>
+      <div style="display: [[display]];">
+          <table>
+            <tr>
+              <th class="format">mmHg</th>
+              <th>All</th>
+              <th>7 days</th>
+            </tr>
+            <tr>
+              <td><b>Low</b></td>
+              <td class="cell">[[data.low_total_sys]]/[[data.low_total_dia]]</td>
+              <td class="cell">[[data.low_week_sys]]/[[data.low_week_dia]]</td>
+            </tr>
+            <tr>
+              <td><b>High</b></td>
+              <td class="cell">[[data.high_total_sys]]/[[data.high_total_dia]]</td>
+              <td class="cell">[[data.high_week_sys]]/[[data.high_week_dia]]</td>
+            </tr>
+            <tr>
+              <td><b>Average</b></td>
+              <td class="cell">[[data.avg_total_sys]]/[[data.avg_total_dia]]</td>
+              <td class="cell">[[data.avg_week_sys]]/[[data.avg_week_dia]]</td>
+            </tr>
+          </table>
+        </div>
     </div>
   </template>
 
@@ -48,22 +129,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       static get properties() {
         return {
-          bpValues: {type: Array},
+          id: {type: String},
+          data: {type: Array},
           expanded: {type: Boolean, value: false},
-          icon: {type: String, value: "expand-more"}
+          icon: {type: String, value: "expand-more"},
+          display: {type: String, value: "none"}
         }
       }
 
-      loadValues(data) {
-        this.set("bpValues", data);
+      ready() {
+        super.ready();
+        this.$.request.url = this.$.request.url + this.id;
+      }
+
+      loadData(data) {
+        this.data = data.detail.response;
       }
 
       expandHandler() {
         if (this.expanded) {
-          this.$.top.style.height = "56px";
+          this.display = "none";
           this.icon = "expand-more";
         } else {
-          this.$.top.style.height = "300px";
+          this.display = "show";
           this.icon = "expand-less";
         }
         this.expanded = !this.expanded;
