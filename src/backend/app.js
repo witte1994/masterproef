@@ -219,6 +219,50 @@ app.get('/getweightlarge/:id', (req, res) => {
     })
 });
 
+app.get('/getactivitysmall/:id', (req, res) => {
+    let sql = `SELECT steps, time FROM activity WHERE user_id = ${req.params.id}`;
+    let query = db.query(sql, (err, results) => {
+        if (err) throw err;
+        var today = new Date();
+        today.setMilliseconds(0);
+        today.setSeconds(0);
+        today.setMinutes(0);
+        today.setHours(0);
+        var lastWeek = new Date(today.getTime() - (7 * 24 * 60 * 60 * 1000));
+        var lastMonth = new Date(today.getTime() - (28 * 24 * 60 * 60 * 1000));
+
+
+        var dayAvgMonth = 0, dayAvgWeek = 0;
+        var weekAvgMonth = 0, weekAvgWeek = 0;
+        var sessionsMonth = 0; sessionsWeek = 0;
+        var stepsMonth = 0, stepsWeek = 0;
+        
+        for (var i = 0; i < results.length; i++) {
+            var steps = results[i].steps;
+            var date = new Date(results[i].time);
+
+            if (date > lastMonth) {
+                dayAvgMonth += steps;
+                weekAvgMonth += steps;
+                sessionsMonth += 1;
+                stepsMonth += steps;
+            }
+            if (date > lastWeek) {
+                dayAvgWeek += steps;
+                weekAvgWeek += steps;
+                sessionsWeek += 1;
+                stepsWeek += steps;
+            }
+        }
+        dayAvgMonth /= 28;
+        dayAvgWeek /= 7;
+        weekAvgMonth /= 4;
+        
+        var stats = {"day_avg_month": dayAvgMonth.toFixed(2), "day_avg_week": dayAvgWeek.toFixed(2), "week_avg_month": weekAvgMonth.toFixed(2), "week_avg_week": weekAvgWeek.toFixed(2), "sessions_month": sessionsMonth, "sessions_week": sessionsWeek, "steps_month": stepsMonth, "steps_week": stepsWeek};
+        res.send(stats);
+    })
+});
+
 app.listen('3000', () => {
     console.log('Server started on port 3000');
 });
