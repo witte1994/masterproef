@@ -129,7 +129,7 @@
           this.$.small.appendChild(el);
 
           el = document.createElement("my-activity");
-          //el.loadValues(curUser.activity);
+          el.setAttribute("id", this.subrouteData.id);
           this.$.small.appendChild(el);
 
           el = document.createElement("my-medication");

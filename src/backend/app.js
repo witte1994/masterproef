@@ -231,7 +231,6 @@ app.get('/getactivitysmall/:id', (req, res) => {
         var lastWeek = new Date(today.getTime() - (7 * 24 * 60 * 60 * 1000));
         var lastMonth = new Date(today.getTime() - (28 * 24 * 60 * 60 * 1000));
 
-
         var dayAvgMonth = 0, dayAvgWeek = 0;
         var weekAvgMonth = 0, weekAvgWeek = 0;
         var sessionsMonth = 0; sessionsWeek = 0;

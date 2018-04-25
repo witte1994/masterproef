@@ -11,7 +11,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../shared-styles.html">
 
 <dom-module id="my-activity">
@@ -26,19 +27,106 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .topicons {
         margin: auto;
       }
+
+      indicators {
+        margin: auto;
+        height: 60px;
+      }
+
+      iron-icon {
+        margin: auto;
+        --iron-icon-height: 32px;
+        --iron-icon-width: 32px;
+      }
+
+      .couple {
+        margin: auto;
+        height: 60px;
+      }
+
+      p {
+        margin: auto;
+        margin-left: 10px;
+        font-size: 22px;
+      }
+
+      table {
+        border-collapse: collapse;
+        margin: auto;
+        font-size: 18px;
+        margin-bottom: 10px;
+      }
+
+      th, td {
+        width: 90px;
+        padding: 5px;
+      }
+
+      .cell {
+        text-align: center;
+        font-size: 18px;
+      }
+
+      .format {
+        font-size: 12px;
+      }
     </style>
 
     <div id="top" class="card">
+        <iron-ajax
+        id = "request"
+        auto 
+        content-type="application/json"
+        method = "GET"
+        url="http://localhost:3000/getactivitysmall/"
+        handle-as="json" 
+        last-response="{{data}}" on-response="loadData">
+      </iron-ajax>
+
       <div class="topcontent horizontal layout">
-          <svg height="30" width="30" style="margin: auto; margin-left:5px;">
-            <circle cx="15" cy="15" r="12" stroke="black" stroke-width="2" fill="orange" />
-          </svg> 
-          <h1 class="flex">Activity</h1>
-          <div class="topicons">
-            <paper-icon-button icon="icons:[[icon]]" on-tap="expandHandler"></paper-icon-button>
-            <paper-icon-button icon="icons:more-vert" on-tap="moreHandler"></paper-icon-button>
-          </div>
+        <svg height="30" width="30" style="margin: auto; margin-left:5px;">
+          <circle cx="15" cy="15" r="12" stroke="black" stroke-width="2" fill="orange" />
+        </svg> 
+        <h1 class="flex">Activity</h1>
+        <div class="topicons">
+          <paper-icon-button icon="icons:[[icon]]" on-tap="expandHandler"></paper-icon-button>
+          <paper-icon-button icon="icons:more-vert" on-tap="moreHandler"></paper-icon-button>
         </div>
+      </div>
+      <div class="indicators horizontal layout" style="display: [[display]];">
+        <div class="couple horizontal layout"><iron-icon icon="my-icons:error"></iron-icon><p>2</p></div>
+        <div class="couple horizontal layout"><iron-icon icon="my-icons:warning"></iron-icon><p>3</p></div>
+        <div class="couple horizontal layout"><iron-icon icon="my-icons:ok"></iron-icon><p>5</p></div>
+      </div>
+      <div style="display: [[display]];">
+        <table>
+          <tr>
+            <th class="format"></th>
+            <th>28 days</th>
+            <th>7 days</th>
+          </tr>
+          <tr>
+            <td><b>Day avg.</b></td>
+            <td class="cell">[[data.day_avg_month]]</td>
+            <td class="cell">[[data.day_avg_week]]</td>
+          </tr>
+          <tr>
+            <td><b>Week avg.</b></td>
+            <td class="cell">[[data.week_avg_month]]</td>
+            <td class="cell">[[data.week_avg_week]]</td>
+          </tr>
+          <tr>
+            <td><b># sessions</b></td>
+            <td class="cell">[[data.sessions_month]]</td>
+            <td class="cell">[[data.sessions_week]]</td>
+          </tr>
+          <tr>
+            <td><b># steps</b></td>
+            <td class="cell">[[data.steps_month]]</td>
+            <td class="cell">[[data.steps_week]]</td>
+          </tr>
+        </table>
+      </div>
     </div>
   </template>
 
@@ -48,22 +136,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       static get properties() {
         return {
-          activityValues: {type: Array},
+          id: {type: String},
+          data: {type: Array},
           expanded: {type: Boolean, value: false},
-          icon: {type: String, value: "expand-more"}
+          icon: {type: String, value: "expand-more"},
+          display: {type: String, value: "none"}
         }
       }
 
-      loadValues(data) {
-        this.set("activityValues", data);
+      ready() {
+        super.ready();
+        this.$.request.url = this.$.request.url + this.id;
+      }
+
+      loadData(data) {
+        this.data = data.detail.response;
       }
 
       expandHandler() {
         if (this.expanded) {
-          this.$.top.style.height = "56px";
+          this.display = "none";
           this.icon = "expand-more";
         } else {
-          this.$.top.style.height = "300px";
+          this.display = "show";
           this.icon = "expand-less";
         }
         this.expanded = !this.expanded;
