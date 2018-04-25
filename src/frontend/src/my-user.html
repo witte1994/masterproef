@@ -7,16 +7,24 @@
 
 <link rel="import" href="modules/my-summary.html">
 <link rel="import" href="modules/my-patients.html">
-<link rel="import" href="modules/my-hr.html">
-<link rel="import" href="modules/my-hr-large.html">
-<link rel="import" href="modules/my-bp.html">
+<link rel="import" href="modules/my-info.html">
+
+<link rel="import" href="modules/my-activity-large.html"
 <link rel="import" href="modules/my-activity.html">
+<link rel="import" href="modules/my-blood-sugar-large.html">
+<link rel="import" href="modules/my-blood-sugar.html">
+<link rel="import" href="modules/my-bp-large.html">
+<link rel="import" href="modules/my-bp.html">
+<link rel="import" href="modules/my-hr-large.html">
+<link rel="import" href="modules/my-hr.html">
+<link rel="import" href="modules/my-medication-large.html">
 <link rel="import" href="modules/my-medication.html">
 <link rel="import" href="modules/my-sleep.html">
+<link rel="import" href="modules/my-sleep-large.html">
 <link rel="import" href="modules/my-weight.html">
 <link rel="import" href="modules/my-weight-large.html">
-<link rel="import" href="modules/my-blood-sugar.html">
-<link rel="import" href="modules/my-info.html">
+
+
 
 <script src="http://rubaxa.github.io/Sortable/Sortable.js"></script>
 
@@ -152,7 +160,7 @@
           el.setAttribute("id", this.subrouteData.id);
           this.$.main.appendChild(el);
 
-          el = document.createElement("my-weight-large");
+          el = document.createElement("my-sleep-large");
           el.setAttribute("id", this.subrouteData.id);
           this.$.main.appendChild(el);
 
