@@ -75,8 +75,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         </div>
         <div class="list">
-            
-        </div>
+          <vaadin-grid aria-label="Basic Binding Example" items="[[data]]">
+              <vaadin-grid-column>
+                  <template class="header">Date</template>
+                  <template>[[item.time]]</template>
+              </vaadin-grid-column>
+          
+              <vaadin-grid-column width="80px" flex-grow="0">
+                  <template class="header">Value</template>
+                  <template>[[item.systolic]]/[[item.diastolic]]</template>
+              </vaadin-grid-column>
+          </vaadin-grid>
+      </div>
       </div>
     </div>
   </template>
@@ -102,6 +112,72 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       loadData(data) {
         this.data = data.detail.response;
+
+        var margin = {top: 20, right: 20, bottom: 30, left: 50},
+          width = 800 - margin.left - margin.right,
+          height = 340 - margin.top - margin.bottom;
+        
+        var parseTime = d3.utcParse("%Y-%m-%dT%H:%M:%S.%LZ");
+
+        var x = d3.scaleTime()
+          .rangeRound([0, width]);
+
+        var y = d3.scaleLinear()
+          .rangeRound([height, 0]);
+
+        var valueline = d3.line()
+          .x(function(d) { return x(d.time); })
+          .y(function(d) { return y(d.systolic); });
+        
+        var valueline2 = d3.line()
+          .x(function(d) { return x(d.time); })
+          .y(function(d) { return y(d.diastolic); });
+
+        var svg = d3.select(this.$.chart).append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform",
+                  "translate(" + margin.left + "," + margin.top + ")");
+
+        function draw(data) {
+          data.forEach(function(d) {
+            d.time = parseTime(d.time);
+            d.systolic = +d.systolic;
+            d.diastolic = +d.diastolic;
+          });
+
+          // Scale the range of the data
+          x.domain(d3.extent(data, function(d) { return d.time; }));
+          y.domain([0, d3.max(data, function(d) { return d.systolic; })]);
+
+          // Add the valueline path.
+          svg.append("path")
+              .data([data])
+              .attr("class", "line")
+              .attr("d", valueline);
+            
+          svg.append("path")
+              .data([data])
+              .attr("class", "line")
+              .attr("d", valueline2);
+
+          // Add the X Axis
+          svg.append("g")
+              .attr("transform", "translate(0," + height + ")")
+              .call(d3.axisBottom(x));
+
+          // Add the Y Axis
+          svg.append("g")
+          .call(d3.axisLeft(y));
+        }
+      
+        draw(this.data);
+
+        for (var k in this.data) {
+          var date = new Date(this.data[k].time);
+          this.data[k].time = date.toLocaleDateString() + " " + date.getHours() + ":" + (date.getMinutes()<10?'0':'') + date.getMinutes();
+        }
       }
     }
 

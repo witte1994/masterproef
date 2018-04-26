@@ -166,6 +166,15 @@ app.get('/getbpsmall/:id', (req, res) => {
     })
 });
 
+app.get('/getbplarge/:id', (req, res) => {
+    let sql = `SELECT systolic, diastolic, time, is_read FROM bp WHERE user_id = ${req.params.id}`;
+    let query = db.query(sql, (err, results) => {
+        if (err) throw err;
+
+        res.send(results);
+    })
+});
+
 app.get('/getweightsmall/:id', (req, res) => {
     let sql = `SELECT weight.value, weight.time, user.height FROM weight JOIN user ON weight.user_id = user.id WHERE weight.user_id = ${req.params.id}`;
     let query = db.query(sql, (err, results) => {
