@@ -25,6 +25,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       .topicons {
         margin: auto;
+        position: absolute;
+        right: 10px;
+        top: 20px;
+      }
+
+      .topcontent {
+        height: 50px;
       }
 
       table {
@@ -60,10 +67,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         last-response="{{data}}" on-response="loadData">
       </iron-ajax>
       <div class="topcontent horizontal layout">
-        <svg height="30" width="30" style="margin: auto; margin-left:5px;">
+        <svg height="30" width="30" style="margin-top: 10px; margin-left:5px;">
           <circle cx="15" cy="15" r="12" stroke="black" stroke-width="2" fill="red"/>
         </svg> 
-        <h1 class="flex">Weight</h1>
+        <h1 class="flex" style="position: absolute; left: 50px; top: 13px;">Weight</h1>
         <div class="topicons">
           <paper-icon-button icon="icons:[[icon]]" on-tap="expandHandler"></paper-icon-button>
           <paper-icon-button icon="icons:more-vert" on-tap="moreHandler"></paper-icon-button>

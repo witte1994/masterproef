@@ -25,15 +25,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       .topicons {
         margin: auto;
+        position: absolute;
+        right: 10px;
+        top: 20px;
+      }
+
+      .topcontent {
+        height: 50px;
       }
     </style>
 
     <div id="top" class="card">
       <div class="topcontent horizontal layout">
-        <svg height="30" width="30" style="margin: auto; margin-left:5px;">
+        <svg height="30" width="30" style="margin-top: 10px; margin-left:5px;">
           <circle cx="15" cy="15" r="12" stroke="black" stroke-width="2" fill="green" />
         </svg> 
-        <h1 class="flex">Medication</h1>
+        <h1 class="flex" style="position: absolute; left: 50px; top: 13px;">Medication</h1>
         <div class="topicons">
           <paper-icon-button icon="icons:[[icon]]" on-tap="expandHandler"></paper-icon-button>
           <paper-icon-button icon="icons:more-vert" on-tap="moreHandler"></paper-icon-button>
