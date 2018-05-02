@@ -24,7 +24,7 @@
 <link rel="import" href="modules/my-weight.html">
 <link rel="import" href="modules/my-weight-large.html">
 
-
+<link rel="import" href="../the-grid.html">
 
 <dom-module id="my-user">
   <!-- Defines the element's style and local DOM -->
@@ -42,7 +42,7 @@
       #main {
         overflow-y: auto;
         overflow-x: hidden;
-        width: 1500px;
+        width: 1600px;
       }
 
       #info {
@@ -54,6 +54,7 @@
       h1 {
         text-align: center;
       }
+
     </style>
 
     <iron-ajax 
@@ -77,7 +78,12 @@
     </app-route>
 
     <div id="container" class="container horizontal layout">
-      <div id="main"></div>
+      <div id="main">
+        <the-grid draggable id="grid">
+          
+        </the-grid>
+      </div>
+      
       <div id="info"></div>
     </div>
    
@@ -109,17 +115,32 @@
           this.user = [];
         }
 
+        ready() {
+          super.ready();
+        } 
+
         mapResponse(data) {
+          
           var dummy = data.detail.response;
           this.set('user', dummy.users[this.subrouteData.id]);
           var curUser = dummy.users[this.subrouteData.id];
           
           var el = document.createElement("my-summary");
           this.$.info.appendChild(el);
+          
           el = document.createElement("my-info");
           el.setAttribute("id", this.subrouteData.id);
           this.$.info.appendChild(el);
 
+          el = document.createElement("my-hr-large");
+          el.setAttribute("id", this.subrouteData.id);
+          this.$.grid.appendChild(el);
+
+          el = document.createElement("my-hr");
+          el.setAttribute("id", this.subrouteData.id);
+          this.$.grid.appendChild(el);
+
+          /*
           el = document.createElement("my-hr");
           el.setAttribute("id", this.subrouteData.id);
           this.$.main.appendChild(el);
@@ -155,9 +176,9 @@
           el = document.createElement("my-activity-large");
           el.setAttribute("id", this.subrouteData.id);
           this.$.main.appendChild(el);
+          */
         }
     }
-
     window.customElements.define(MyUser.is, MyUser);
   </script>
 </dom-module>
