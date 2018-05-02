@@ -26,8 +26,6 @@
 
 
 
-<script src="http://rubaxa.github.io/Sortable/Sortable.js"></script>
-
 <dom-module id="my-user">
   <!-- Defines the element's style and local DOM -->
   <template>
@@ -40,16 +38,11 @@
       .container {
         height: 91vh;
       }
-      #small {
-        width: 400px;
-        overflow-y: auto;
-        overflow-x: hidden;
-      }
 
       #main {
         overflow-y: auto;
         overflow-x: hidden;
-        width: 1000px;
+        width: 1500px;
       }
 
       #info {
@@ -84,8 +77,7 @@
     </app-route>
 
     <div id="container" class="container horizontal layout">
-      <div id="small"></div>
-      <div id="main" class="flex"></div>
+      <div id="main"></div>
       <div id="info"></div>
     </div>
    
@@ -130,31 +122,31 @@
 
           el = document.createElement("my-hr");
           el.setAttribute("id", this.subrouteData.id);
-          this.$.small.appendChild(el);
+          this.$.main.appendChild(el);
 
           el = document.createElement("my-bp");
           el.setAttribute("id", this.subrouteData.id);
-          this.$.small.appendChild(el);
+          this.$.main.appendChild(el);
 
           el = document.createElement("my-activity");
           el.setAttribute("id", this.subrouteData.id);
-          this.$.small.appendChild(el);
+          this.$.main.appendChild(el);
 
           el = document.createElement("my-medication");
           //el.loadValues(curUser.medication);
-          this.$.small.appendChild(el);
+          this.$.main.appendChild(el);
 
           el = document.createElement("my-sleep");
           //el.loadValues(curUser.sleep);
-          this.$.small.appendChild(el);
+          this.$.main.appendChild(el);
 
           el = document.createElement("my-weight");
           el.setAttribute("id", this.subrouteData.id);
-          this.$.small.appendChild(el);
+          this.$.main.appendChild(el);
 
           el = document.createElement("my-blood-sugar");
           //el.loadValues(curUser.bloodSugar);
-          this.$.small.appendChild(el);
+          this.$.main.appendChild(el);
 
           el = document.createElement("my-hr-large");
           el.setAttribute("id", this.subrouteData.id);
@@ -163,9 +155,6 @@
           el = document.createElement("my-activity-large");
           el.setAttribute("id", this.subrouteData.id);
           this.$.main.appendChild(el);
-
-          Sortable.create(small, {});
-          Sortable.create(main, {});
         }
     }
 
