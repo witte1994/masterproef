@@ -51,6 +51,14 @@
         overflow-x: hidden;
       }
 
+      #grid tile {
+        background-color: limegreen;
+      }
+      
+      #grid [placeholder] {
+        background-color: lightgray;
+      }
+
       h1 {
         text-align: center;
       }
@@ -79,8 +87,8 @@
 
     <div id="container" class="container horizontal layout">
       <div id="main">
-        <the-grid draggable id="grid">
-          
+        <the-grid draggable id="grid" cell-height="40" cell-width="50" cell-margin="0" col-count="30" row-count="21">
+          <div placeholder></div>
         </the-grid>
       </div>
       
@@ -132,19 +140,22 @@
           el.setAttribute("id", this.subrouteData.id);
           this.$.info.appendChild(el);
 
-          el = document.createElement("my-sleep");
+          el = document.createElement("my-hr-large");
           el.setAttribute("id", this.subrouteData.id);
+          el.setAttribute("col", "8");
+          el.setAttribute("row", "0");
+          el.setAttribute("height", "11");
+          el.setAttribute("width", "22");
           this.$.grid.appendChild(el);
-
+          
           el = document.createElement("my-hr");
           el.setAttribute("id", this.subrouteData.id);
+          el.setAttribute("col", "0");
+          el.setAttribute("row", "0");
+          el.setAttribute("height", "2");
+          el.setAttribute("width", "8");
           this.$.grid.appendChild(el);
-
           /*
-          el = document.createElement("my-hr");
-          el.setAttribute("id", this.subrouteData.id);
-          this.$.main.appendChild(el);
-
           el = document.createElement("my-bp");
           el.setAttribute("id", this.subrouteData.id);
           this.$.main.appendChild(el);
