@@ -147,7 +147,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           data: {type: Array},
           expanded: {type: Boolean, value: false},
           icon: {type: String, value: "expand-more"},
-          display: {type: String, value: "none"}
+          display: {type: String, value: "none"},
+          height: {type: String, reflectToAttribute: true}
         }
       }
 
@@ -164,9 +165,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if (this.expanded) {
           this.display = "none";
           this.icon = "expand-more";
+          this.height = 2;
         } else {
           this.display = "show";
           this.icon = "expand-less";
+          this.height = 8;
         }
         this.expanded = !this.expanded;
       }

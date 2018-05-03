@@ -50,6 +50,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-icon-button icon="icons:more-vert" on-tap="moreHandler"></paper-icon-button>
         </div>
       </div>
+      <div style="display: [[display]];"></div>
     </div>
   </template>
 
@@ -59,23 +60,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       static get properties() {
         return {
-          bloodSugarValues: {type: Array},
+          id: {type: String},
+          data: {type: Array},
           expanded: {type: Boolean, value: false},
-          icon: {type: String, value: "expand-more"}
+          icon: {type: String, value: "expand-more"},
+          display: {type: String, value: "none"},
+          height: {type: String, reflectToAttribute: true}
         }
       }
 
-      loadValues(data) {
-        this.set("bloodSugarValues", data);
+      ready() {
+        super.ready();
+        //this.$.request.url = this.$.request.url + this.id;
+      }
+
+      loadData(data) {
+        this.data = data.detail.response;
       }
 
       expandHandler() {
         if (this.expanded) {
-          this.$.top.style.height = "56px";
+          this.display = "none";
           this.icon = "expand-more";
+          this.height = 2;
         } else {
-          this.$.top.style.height = "300px";
+          this.display = "show";
           this.icon = "expand-less";
+          this.height = 2;
         }
         this.expanded = !this.expanded;
       }

@@ -87,7 +87,7 @@
 
     <div id="container" class="container horizontal layout">
       <div id="main">
-        <the-grid draggable id="grid" cell-height="40" cell-width="50" cell-margin="0" col-count="30" row-count="21">
+        <the-grid draggable overlappable id="grid" row-autogrow cell-height="40" cell-width="50" cell-margin="0" col-count="30" row-count="21">
           <div placeholder></div>
         </the-grid>
       </div>
@@ -155,38 +155,69 @@
           el.setAttribute("height", "2");
           el.setAttribute("width", "8");
           this.$.grid.appendChild(el);
-          /*
+          
           el = document.createElement("my-bp");
           el.setAttribute("id", this.subrouteData.id);
-          this.$.main.appendChild(el);
-
+          el.setAttribute("col", "0");
+          el.setAttribute("row", "2");
+          el.setAttribute("height", "2");
+          el.setAttribute("width", "8");
+          this.$.grid.appendChild(el);
+          
           el = document.createElement("my-activity");
           el.setAttribute("id", this.subrouteData.id);
-          this.$.main.appendChild(el);
+          el.setAttribute("col", "0");
+          el.setAttribute("row", "4");
+          el.setAttribute("height", "2");
+          el.setAttribute("width", "8");
+          this.$.grid.appendChild(el);
 
+          
           el = document.createElement("my-medication");
-          //el.loadValues(curUser.medication);
-          this.$.main.appendChild(el);
-
+          el.setAttribute("id", this.subrouteData.id);
+          el.setAttribute("col", "0");
+          el.setAttribute("row", "6");
+          el.setAttribute("height", "2");
+          el.setAttribute("width", "8");
+          this.$.grid.appendChild(el);
+          
           el = document.createElement("my-sleep");
-          //el.loadValues(curUser.sleep);
-          this.$.main.appendChild(el);
+          el.setAttribute("id", this.subrouteData.id);
+          el.setAttribute("col", "0");
+          el.setAttribute("row", "8");
+          el.setAttribute("height", "2");
+          el.setAttribute("width", "8");
+          this.$.grid.appendChild(el);
 
+          
           el = document.createElement("my-weight");
           el.setAttribute("id", this.subrouteData.id);
-          this.$.main.appendChild(el);
-
+          el.setAttribute("col", "0");
+          el.setAttribute("row", "10");
+          el.setAttribute("height", "2");
+          el.setAttribute("width", "8");
+          this.$.grid.appendChild(el);
+          
           el = document.createElement("my-blood-sugar");
-          //el.loadValues(curUser.bloodSugar);
-          this.$.main.appendChild(el);
-
-          el = document.createElement("my-hr-large");
           el.setAttribute("id", this.subrouteData.id);
-          this.$.main.appendChild(el);
-
+          el.setAttribute("col", "0");
+          el.setAttribute("row", "12");
+          el.setAttribute("height", "2");
+          el.setAttribute("width", "8");
+          this.$.grid.appendChild(el);
+          
+          
+          el = document.createElement("my-weight-large");
+          el.setAttribute("id", this.subrouteData.id);
+          el.setAttribute("col", "8");
+          el.setAttribute("row", "11");
+          el.setAttribute("height", "11");
+          el.setAttribute("width", "22");
+          this.$.grid.appendChild(el);
+          /*
           el = document.createElement("my-activity-large");
           el.setAttribute("id", this.subrouteData.id);
-          this.$.main.appendChild(el);
+          this.$.grid.appendChild(el);
           */
         }
     }
