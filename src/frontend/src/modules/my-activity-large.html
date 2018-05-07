@@ -68,7 +68,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div class="horizontal layout">
         <h1 class="flex">Activity</h1>
         <paper-icon-button style="margin: auto;" icon="icons:visibility" on-tap="readHandler"></paper-icon-button>
-        <paper-icon-button style="margin: auto;" icon="icons:more-vert" on-tap="moreHandler"></paper-icon-button>
+        <paper-icon-button style="margin: auto;" icon="icons:close" on-tap="removeHandler"></paper-icon-button>
       </div>
       <div class="horizontal layout">
         <div id="chart">
@@ -125,6 +125,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             .append("g")
             .attr("transform",
                   "translate(" + margin.left + "," + margin.top + ")")
+      }
+
+      removeHandler() {
+        this.remove();
       }
     }
 

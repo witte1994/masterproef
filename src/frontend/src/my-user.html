@@ -44,7 +44,7 @@
       
       .container {
         height: 91vh;
-      }-button></paper-icon>
+      }
 
       #main {
         overflow-y: auto;
@@ -213,13 +213,15 @@
               el.setAttribute("width", "22");
               break;
           }
+
+          console.log(el);
           this.modules.push(el);
           this.$.grid.appendChild(el);
         }
 
         saveLayout() {
           for (var i = 0; i < this.modules.length; i++) {
-            console.log(this.modules[0].getAttribute("col"));
+            console.log(this.modules[i].getAttribute("col"));
           }
           //console.log("clicky");
         }

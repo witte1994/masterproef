@@ -95,7 +95,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <h1 class="flex" style="position: absolute; left: 50px; top: 13px;">Blood Pressure</h1>
         <div class="topicons">
           <paper-icon-button icon="icons:[[icon]]" on-tap="expandHandler"></paper-icon-button>
-          <paper-icon-button icon="icons:more-vert" on-tap="moreHandler"></paper-icon-button>
+          <paper-icon-button icon="icons:close" on-tap="removeHandler"></paper-icon-button>
         </div>
       </div>
       <div class="indicators horizontal layout" style="display: [[display]];">
@@ -167,8 +167,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.expanded = !this.expanded;
       }
 
-      moreHandler() {
-        console.log("more clicked");
+      removeHandler() {
+        this.remove();
       }
     }
 

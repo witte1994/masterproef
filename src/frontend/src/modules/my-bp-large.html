@@ -68,7 +68,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div class="horizontal layout">
         <h1 class="flex">Blood Pressure</h1>
         <paper-icon-button style="margin: auto;" icon="icons:visibility" on-tap="readHandler"></paper-icon-button>
-        <paper-icon-button style="margin: auto;" icon="icons:more-vert" on-tap="moreHandler"></paper-icon-button>
+        <paper-icon-button style="margin: auto;" icon="icons:close" on-tap="removeHandler"></paper-icon-button>
       </div>
       <div class="horizontal layout">
         <div id="chart">
@@ -178,6 +178,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           var date = new Date(this.data[k].time);
           this.data[k].time = date.toLocaleDateString() + " " + date.getHours() + ":" + (date.getMinutes()<10?'0':'') + date.getMinutes();
         }
+      }
+      
+      removeHandler() {
+        this.remove();
       }
     }
 
