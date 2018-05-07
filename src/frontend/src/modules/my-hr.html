@@ -143,7 +143,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           expanded: {type: Boolean, value: false},
           icon: {type: String, value: "expand-more"},
           display: {type: String, value: "none"},
-          height: {type: String, reflectToAttribute: true}
+          height: {type: String, reflectToAttribute: true},
+          col: {type: Number},
+          row: {type: Number},
         }
       }
 
@@ -170,6 +172,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       removeHandler() {
+        this.dispatchEvent(new CustomEvent('remove', {bubbles: true, composed: true, detail: {col: this.col, row: this.row, type: "my-hr"}}));
         this.remove();
       }
     }

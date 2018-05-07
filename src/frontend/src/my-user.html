@@ -154,7 +154,19 @@
 
         ready() {
           super.ready();
+          this.addEventListener("remove", this._removedChild);
         } 
+
+        // col, row, type
+        _removedChild(event) {
+          for (var i = 0; i < this.modules.length; i++) {
+            var module = this.modules[i];
+            if (module.col == event.detail.col && module.row == event.detail.row && module.tagName.toLowerCase() == event.detail.type) {
+              this.modules.splice(i, 1);
+              this.$.grid.removeChild(module);
+            }
+          }
+        }
 
         addModule() {
           this.$.dialog.toggle();
@@ -213,8 +225,6 @@
               el.setAttribute("width", "22");
               break;
           }
-
-          console.log(el);
           this.modules.push(el);
           this.$.grid.appendChild(el);
         }
