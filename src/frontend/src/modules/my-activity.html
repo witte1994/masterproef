@@ -175,6 +175,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       removeHandler() {
+        this.dispatchEvent(new CustomEvent('remove', {bubbles: true, composed: true, detail: {col: this.col, row: this.row, type: "my-activity"}}));
         this.remove();
       }
     }
