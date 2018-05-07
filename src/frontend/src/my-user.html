@@ -4,6 +4,13 @@
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/neon-animation/web-animations.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
 
 <link rel="import" href="modules/my-summary.html">
 <link rel="import" href="modules/my-patients.html">
@@ -37,12 +44,12 @@
       
       .container {
         height: 91vh;
-      }
+      }-button></paper-icon>
 
       #main {
         overflow-y: auto;
         overflow-x: hidden;
-        width: 1600px;
+        width: 1540px;
       }
 
       #info {
@@ -86,16 +93,33 @@
     </app-route>
 
     <div id="container" class="container horizontal layout">
+      <div id="info">
+        <paper-icon-button icon="icons:add" on-tap="addModule"></paper-icon-button>
+      </div>
       <div id="main">
         <the-grid draggable overlappable id="grid" row-autogrow cell-height="40" cell-width="50" cell-margin="0" col-count="30" row-count="21">
           <div placeholder></div>
         </the-grid>
       </div>
       
-      <div id="info"></div>
+      <paper-dialog id="dialog">
+        <h2>Add module</h2>
+        <p>Select the module you wish to add:</p>
+        <paper-dropdown-menu label="Module">
+          <paper-listbox attr-for-selected="value" slot="dropdown-content" id="selector">
+            <paper-item value="hr-s">Heart rate (small)</paper-item>
+            <paper-item value="hr-l">Heart rate (large)</paper-item>
+            <paper-item value="bp-s">Blood pressure (small)</paper-item>
+            <paper-item value="a-s">Activity (small)</paper-item>
+            <paper-item value="w-s">Weight (small)</paper-item>
+            <paper-item value="w-l">Weight (large)</paper-item>
+          </paper-listbox>
+        </paper-dropdown-menu>
+        <paper-button dialog-dismiss>Cancel</paper-button>
+        <paper-button dialog-confirm on-tap="addSelectedModule">Accept</paper-button>
+      </paper-dialog>
     </div>
-   
-
+  
   </template>
   <script>
     // Your new element extends the Polymer.Element base class
@@ -127,98 +151,74 @@
           super.ready();
         } 
 
+        addModule() {
+          this.$.dialog.toggle();
+        }
+
+        addSelectedModule() {
+          var el;
+
+          switch(this.$.selector.selected) {
+            case "hr-s":
+              el = document.createElement("my-hr");
+              el.setAttribute("id", this.subrouteData.id);
+              el.setAttribute("col", "0");
+              el.setAttribute("row", "0");
+              el.setAttribute("height", "2");
+              el.setAttribute("width", "8");
+              break;
+            case "hr-l":
+              el = document.createElement("my-hr-large");
+              el.setAttribute("id", this.subrouteData.id);
+              el.setAttribute("col", "0");
+              el.setAttribute("row", "0");
+              el.setAttribute("height", "11");
+              el.setAttribute("width", "22");
+              break;
+            case "bp-s":
+              el = document.createElement("my-bp");
+              el.setAttribute("id", this.subrouteData.id);
+              el.setAttribute("col", "0");
+              el.setAttribute("row", "0");
+              el.setAttribute("height", "2");
+              el.setAttribute("width", "8");
+              break;
+            case "a-s":
+              el = document.createElement("my-activity");
+              el.setAttribute("id", this.subrouteData.id);
+              el.setAttribute("col", "0");
+              el.setAttribute("row", "0");
+              el.setAttribute("height", "2");
+              el.setAttribute("width", "8");
+              break;
+            case "w-s":
+              el = document.createElement("my-weight");
+              el.setAttribute("id", this.subrouteData.id);
+              el.setAttribute("col", "0");
+              el.setAttribute("row", "0");
+              el.setAttribute("height", "2");
+              el.setAttribute("width", "8");
+              break;
+            case "w-l":
+              el = document.createElement("my-weight-large");
+              el.setAttribute("id", this.subrouteData.id);
+              el.setAttribute("col", "0");
+              el.setAttribute("row", "0");
+              el.setAttribute("height", "11");
+              el.setAttribute("width", "22");
+              break;
+          }
+          this.$.grid.appendChild(el);
+        }
+
         mapResponse(data) {
-          
           var dummy = data.detail.response;
           this.set('user', dummy.users[this.subrouteData.id]);
           var curUser = dummy.users[this.subrouteData.id];
-          
-          var el = document.createElement("my-summary");
-          this.$.info.appendChild(el);
-          
-          el = document.createElement("my-info");
+                    
+          var el = document.createElement("my-info");
           el.setAttribute("id", this.subrouteData.id);
           this.$.info.appendChild(el);
-
-          el = document.createElement("my-hr-large");
-          el.setAttribute("id", this.subrouteData.id);
-          el.setAttribute("col", "8");
-          el.setAttribute("row", "0");
-          el.setAttribute("height", "11");
-          el.setAttribute("width", "22");
-          this.$.grid.appendChild(el);
-          
-          el = document.createElement("my-hr");
-          el.setAttribute("id", this.subrouteData.id);
-          el.setAttribute("col", "0");
-          el.setAttribute("row", "0");
-          el.setAttribute("height", "2");
-          el.setAttribute("width", "8");
-          this.$.grid.appendChild(el);
-          
-          el = document.createElement("my-bp");
-          el.setAttribute("id", this.subrouteData.id);
-          el.setAttribute("col", "0");
-          el.setAttribute("row", "2");
-          el.setAttribute("height", "2");
-          el.setAttribute("width", "8");
-          this.$.grid.appendChild(el);
-          
-          el = document.createElement("my-activity");
-          el.setAttribute("id", this.subrouteData.id);
-          el.setAttribute("col", "0");
-          el.setAttribute("row", "4");
-          el.setAttribute("height", "2");
-          el.setAttribute("width", "8");
-          this.$.grid.appendChild(el);
-
-          
-          el = document.createElement("my-medication");
-          el.setAttribute("id", this.subrouteData.id);
-          el.setAttribute("col", "0");
-          el.setAttribute("row", "6");
-          el.setAttribute("height", "2");
-          el.setAttribute("width", "8");
-          this.$.grid.appendChild(el);
-          
-          el = document.createElement("my-sleep");
-          el.setAttribute("id", this.subrouteData.id);
-          el.setAttribute("col", "0");
-          el.setAttribute("row", "8");
-          el.setAttribute("height", "2");
-          el.setAttribute("width", "8");
-          this.$.grid.appendChild(el);
-
-          
-          el = document.createElement("my-weight");
-          el.setAttribute("id", this.subrouteData.id);
-          el.setAttribute("col", "0");
-          el.setAttribute("row", "10");
-          el.setAttribute("height", "2");
-          el.setAttribute("width", "8");
-          this.$.grid.appendChild(el);
-          
-          el = document.createElement("my-blood-sugar");
-          el.setAttribute("id", this.subrouteData.id);
-          el.setAttribute("col", "0");
-          el.setAttribute("row", "12");
-          el.setAttribute("height", "2");
-          el.setAttribute("width", "8");
-          this.$.grid.appendChild(el);
-          
-          
-          el = document.createElement("my-weight-large");
-          el.setAttribute("id", this.subrouteData.id);
-          el.setAttribute("col", "8");
-          el.setAttribute("row", "11");
-          el.setAttribute("height", "11");
-          el.setAttribute("width", "22");
-          this.$.grid.appendChild(el);
-          /*
-          el = document.createElement("my-activity-large");
-          el.setAttribute("id", this.subrouteData.id);
-          this.$.grid.appendChild(el);
-          */
         }
     }
     window.customElements.define(MyUser.is, MyUser);

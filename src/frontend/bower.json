@@ -18,7 +18,11 @@
     "paper-search": "^2.0.9",
     "vaadin-grid": "^4.1.7",
     "Sortable": "sortablejs#^1.6.0",
-    "d3": "^5.0.0"
+    "d3": "^5.0.0",
+    "paper-dropdown-menu": "^2.1.0",
+    "web-animations-js": "^2.3.1",
+    "neon-animation": "^2.2.1",
+    "paper-listbox": "^2.1.1"
   },
   "resolutions": {
     "polymer": "^2.0.0"
