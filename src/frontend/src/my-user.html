@@ -95,6 +95,7 @@
     <div id="container" class="container horizontal layout">
       <div id="info">
         <paper-icon-button icon="icons:add" on-tap="addModule"></paper-icon-button>
+        <paper-icon-button icon="icons:save" on-tap="saveLayout"></paper-icon-button>
       </div>
       <div id="main">
         <the-grid draggable overlappable id="grid" row-autogrow cell-height="40" cell-width="50" cell-margin="0" col-count="30" row-count="21">
@@ -139,12 +140,16 @@
             },
             routeData: Object,
             subrouteData: Object,
+            modules: {
+              type: Array
+            }
           }
         }
 
         constructor() {
           super();
           this.user = [];
+          this.modules = [];
         }
 
         ready() {
@@ -208,7 +213,15 @@
               el.setAttribute("width", "22");
               break;
           }
+          this.modules.push(el);
           this.$.grid.appendChild(el);
+        }
+
+        saveLayout() {
+          for (var i = 0; i < this.modules.length; i++) {
+            console.log(this.modules[0].getAttribute("col"));
+          }
+          //console.log("clicky");
         }
 
         mapResponse(data) {
