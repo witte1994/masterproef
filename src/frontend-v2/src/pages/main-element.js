@@ -39,7 +39,6 @@ class MainElement extends PolymerElement {
     
       <!-- Collapsible content -->
     </nav>
-    <a href="[[rootPath]]second-element">test</a>
     <iron-pages selected="[[page]]" attr-for-selected="name" role="main">
       <patients-element name="patients-element" route={{subroute}}></patients-element>
       <second-element name="second-element" route={{subroute}}></second-element>
@@ -63,7 +62,6 @@ class MainElement extends PolymerElement {
     ];
   }
   _routePageChanged(page) {
-    console.log(page);
     if (!page) {
       this.page = 'patients-element';
     } else if (page == 'second-element') {
