@@ -2,6 +2,8 @@
   "name": "my-app",
   "description": "test",
   "dependencies": {
+    "@polymer/app-route": "^3.0.0-pre.18",
+    "@polymer/iron-pages": "^3.0.0-pre.18",
     "@polymer/paper-button": "^3.0.0-pre.18",
     "@polymer/polymer": "^3.0.0",
     "paper-button": "0.0.0"

@@ -1,7 +1,14 @@
-import '@polymer/paper-button/paper-button.js'
+import '@polymer/app-route/app-location.js'
+import '@polymer/app-route/app-route.js'
+import '@polymer/iron-pages/iron-pages.js'
 import 'second-element.js'
-import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
 
+import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
+import { setPassiveTouchGestures, setRootPath } from '@polymer/polymer/lib/utils/settings.js';
+
+
+setPassiveTouchGestures(true);
+setRootPath(MyAppGlobals.rootPath);
 /**
  * @customElement
  * @polymer
@@ -9,6 +16,11 @@ import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
 class MainElement extends PolymerElement {
   static get template() {
     return html`
+    <app-location route="{{route}}" url-space-regex="^[[rootPath]]">
+    </app-location>
+
+    <app-route route="{{route}}" pattern="[[rootPath]]:page" data="{{routeData}}" tail="{{subroute}}">
+    </app-route>
     <!--Navbar-->
     <nav class="navbar navbar-expand-lg navbar-dark primary-color">
   
@@ -23,24 +35,51 @@ class MainElement extends PolymerElement {
         </form>
       </div>
       
-  
+    
       <!-- Collapsible content -->
     </nav>
-
-    <second-element></second-element>
+    <a href="[[rootPath]]second-element">test</a>
+    <iron-pages selected="[[page]]" attr-for-selected="name" role="main">
+      <second-element name="second-element" route={{subroute}}></second-element>
+    </iron-pages>
     `;
   }
   static get properties() {
     return {
-      prop1: {
+      page: {
         type: String,
-        value: 'main-element'
-      }
+        reflectToAttribute: true,
+        observer: '_pageChanged'
+      },
+      routeData: Object,
+      subroute: Object
     };
   }
-
-  onTap() {
-    console.log("clicky");
+  static get observers() {
+    return [
+      '_routePageChanged(routeData.page)'
+    ];
+  }
+  _routePageChanged(page) {
+    console.log(page);
+    if (!page) {
+      //this.page = 'view1';
+    } else if (page == 'second-element') {
+      this.page = page;
+    } else {
+      this.page = 'view404';
+    }
+  }
+  _pageChanged(page) {
+    // Import the page component on demand.
+    //
+    // Note: `polymer build` doesn't like string concatenation in the import
+    // statement, so break it up.
+    switch (page) {
+      case 'second-element':
+        import('second-element.js');
+        break;
+    }
   }
 }
 
