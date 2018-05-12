@@ -2,6 +2,7 @@ import '@polymer/app-route/app-location.js'
 import '@polymer/app-route/app-route.js'
 import '@polymer/iron-pages/iron-pages.js'
 import 'second-element.js'
+import '../modules/patients-element.js'
 
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
 import { setPassiveTouchGestures, setRootPath } from '@polymer/polymer/lib/utils/settings.js';
@@ -40,6 +41,7 @@ class MainElement extends PolymerElement {
     </nav>
     <a href="[[rootPath]]second-element">test</a>
     <iron-pages selected="[[page]]" attr-for-selected="name" role="main">
+      <patients-element name="patients-element" route={{subroute}}></patients-element>
       <second-element name="second-element" route={{subroute}}></second-element>
     </iron-pages>
     `;
@@ -63,7 +65,7 @@ class MainElement extends PolymerElement {
   _routePageChanged(page) {
     console.log(page);
     if (!page) {
-      //this.page = 'view1';
+      this.page = 'patients-element';
     } else if (page == 'second-element') {
       this.page = page;
     } else {
@@ -78,6 +80,9 @@ class MainElement extends PolymerElement {
     switch (page) {
       case 'second-element':
         import('second-element.js');
+        break;
+      case 'patients-element':
+        import('../modules/patients-element.js');
         break;
     }
   }
