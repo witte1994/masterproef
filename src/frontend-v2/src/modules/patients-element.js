@@ -39,15 +39,12 @@ class PatientsElement extends PolymerElement {
     for (var k in dummy) {
       var el = document.createElement("li");
       el.classList.add("list-group-item");
-      el.innerHTML = String(dummy[k].last_name) + " " + dummy[k].first_name;
-      el.addEventListener('click', this.openDashboard);
-      el.userId = dummy[k].id;
+      var elLink = document.createElement("a");
+      elLink.href = "/user/" + dummy[k].id;;
+      elLink.innerHTML = String(dummy[k].last_name) + " " + dummy[k].first_name;
+      el.appendChild(elLink);
       this.$.listbox.appendChild(el);
     }
-  }
-
-  openDashboard(event) {
-    console.log(event.target.userId);
   }
 }
 

@@ -1,7 +1,7 @@
 import '@polymer/app-route/app-location.js'
 import '@polymer/app-route/app-route.js'
 import '@polymer/iron-pages/iron-pages.js'
-import 'second-element.js'
+import 'user-element.js'
 import '../modules/patients-element.js'
 
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
@@ -41,7 +41,7 @@ class MainElement extends PolymerElement {
     </nav>
     <iron-pages selected="[[page]]" attr-for-selected="name" role="main">
       <patients-element name="patients-element" route={{subroute}}></patients-element>
-      <second-element name="second-element" route={{subroute}}></second-element>
+      <user-element name="user-element" route={{subroute}}></user-element>
     </iron-pages>
     `;
   }
@@ -62,10 +62,11 @@ class MainElement extends PolymerElement {
     ];
   }
   _routePageChanged(page) {
+    console.log(page);
     if (!page) {
       this.page = 'patients-element';
-    } else if (page == 'second-element') {
-      this.page = page;
+    } else if (page == 'user') {
+      this.page = 'user-element';
     } else {
       this.page = 'view404';
     }
@@ -76,8 +77,8 @@ class MainElement extends PolymerElement {
     // Note: `polymer build` doesn't like string concatenation in the import
     // statement, so break it up.
     switch (page) {
-      case 'second-element':
-        import('second-element.js');
+      case 'user':
+        import('user-element.js');
         break;
       case 'patients-element':
         import('../modules/patients-element.js');

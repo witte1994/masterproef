@@ -3,7 +3,7 @@ import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
  * @customElement
  * @polymer
  */
-class SecondElement extends PolymerElement {
+class UserElement extends PolymerElement {
   static get template() {
     return html`
       <style>
@@ -18,10 +18,10 @@ class SecondElement extends PolymerElement {
     return {
       prop1: {
         type: String,
-        value: 'second-element'
+        value: 'user-element'
       }
     };
   }
 }
 
-window.customElements.define('second-element', SecondElement);
+window.customElements.define('user-element', UserElement);
