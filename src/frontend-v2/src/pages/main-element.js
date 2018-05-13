@@ -62,7 +62,6 @@ class MainElement extends PolymerElement {
     ];
   }
   _routePageChanged(page) {
-    console.log(page);
     if (!page) {
       this.page = 'patients-element';
     } else if (page == 'user') {
