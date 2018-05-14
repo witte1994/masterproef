@@ -1,7 +1,7 @@
 import '@polymer/app-route/app-location.js'
 import '@polymer/app-route/app-route.js'
 import '@polymer/iron-pages/iron-pages.js'
-import 'user-element.js'
+import '../pages/user-element.js'
 import '../modules/patients-element.js'
 
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
@@ -23,22 +23,7 @@ class MainElement extends PolymerElement {
     <app-route route="{{route}}" pattern="[[rootPath]]:page" data="{{routeData}}" tail="{{subroute}}">
     </app-route>
     <!--Navbar-->
-    <nav class="navbar navbar-expand-lg navbar-dark primary-color">
-  
-      <!-- Navbar brand -->
-      <a class="navbar-brand mr-auto" href="#">Dashboard</a>
-  
-      <div class="d-flex justify-content-center">
-        <form class="form-inline">
-          <div class="md-form my-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-          </div>
-        </form>
-      </div>
-      
     
-      <!-- Collapsible content -->
-    </nav>
     <iron-pages selected="[[page]]" attr-for-selected="name" role="main">
       <patients-element name="patients-element" route={{subroute}}></patients-element>
       <user-element name="user-element" route={{subroute}}></user-element>

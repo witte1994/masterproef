@@ -2,6 +2,7 @@ import '@polymer/app-route/app-route.js'
 import '@polymer/iron-ajax/iron-ajax.js'
 import 'interactjs/dist/interact.js'
 import '../modules/patients-element.js'
+import Draggable from '@shopify/draggable/lib/draggable';
 
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
 /**
@@ -12,11 +13,17 @@ class UserElement extends PolymerElement {
   static get template() {
     return html`
     <style> 
-    #resizable {
+    .resizable {
       padding: 20px;
       resize: both;
       overflow: auto;
     }
+    #dragme { 
+      position:  absolute;
+      left: 50;
+      top: 200;
+    }
+	</style>
     </style>
       <app-route route="{{route}}" pattern="[[rootPath]]:user_id" data="{{routeData}}" tail="{{subroute}}">
       </app-route>
@@ -29,13 +36,10 @@ class UserElement extends PolymerElement {
         handle-as="json" 
         last-response="{{data}}" on-response="loadData">
       </iron-ajax>
-      <div id="holder" style="height: 800px;">
-      <div id="resizable" class="card m-2" draggable="true" style="position: absolute;">
-        <patients-element></patients-element>
-      </div>
-      <div id="resizable" class="card m-2" draggable="true" style="position: absolute;">
-        <patients-element></patients-element>
-      </div>
+      <div id="holder" style="width: 400px; height: 400px;">
+        <div id="dragme" draggable="true" class="resizable d-flex justify-content-center m-3 card p-4">
+          <h2>yo [[data.last_name]] [[data.first_name]]</h2>
+        </div>
       </div>
       
     `;
@@ -49,29 +53,9 @@ class UserElement extends PolymerElement {
 
   ready() {
     super.ready();
-    var el = this.$.resizable;
-    el.addEventListener('dragstart',drag_start,false);
-    console.log(document.body);
-    this.$.holder.addEventListener('dragover',drag_over,false);
-    this.$.holder.addEventListener('drop',this.drop,false);
   }
 
-  
-
-  
-
-  drop(event) {
-    console.log("drop");
-    var offset = event.dataTransfer.getData("text/plain").split(',');
-    var dm = this.$.resizable;
-    dm.style.left = (event.clientX + parseInt(offset[0],10)) + 'px';
-    dm.style.top = (event.clientY + parseInt(offset[1],10)) + 'px';/*
-    event.preventDefault();
-    return false;*/
-  } 
-
   loadData(data) {
-    console.log(data.detail.response[0]);
     this.data = data.detail.response[0];/*
     this.birth = (new Date(this.data.birth)).toLocaleDateString();
     this.last_activity = new Date(this.data.last_activity).toLocaleDateString();
@@ -80,18 +64,8 @@ class UserElement extends PolymerElement {
   }
 }
 
-function drag_start(event) {
-  console.log("start drag");
-  var style = window.getComputedStyle(event.target, null);
-  event.dataTransfer.setData("text/plain",
-  (parseInt(style.getPropertyValue("left"),10) - event.clientX) + ',' + (parseInt(style.getPropertyValue("top"),10) - event.clientY));
-}
 
-function drag_over(event) {
-    
-  console.log("drag over");
-  event.preventDefault(); 
-  return false; 
-}
+
+
 
 window.customElements.define('user-element', UserElement);

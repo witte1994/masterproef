@@ -7,6 +7,13 @@ import '@polymer/iron-ajax/iron-ajax.js'
 class PatientsElement extends PolymerElement {
   static get template() {
     return html`
+    <style> 
+    #resizable {
+      padding: 20px;
+      resize: both;
+      overflow: auto;
+    }
+    </style>
     <iron-ajax 
       auto 
       content-type="application/json"
@@ -15,16 +22,13 @@ class PatientsElement extends PolymerElement {
       handle-as="json" 
       last-response="{{users}}" on-response="checkPriority">
     </iron-ajax>
+    <div id="resizable" class="d-flex justify-content-center card">
+      <h3 class="">Patient list</h3>
 
-    <div class="d-flex justify-content-center m-3">
-      <div class="card p-4">
-        <h3 class="">Patient list</h3>
-
-      <ul id="listbox" class="list-group">
-      </ul>
-              
-      </div>
-    <div>
+    <ul id="listbox" class="list-group">
+    </ul>
+            
+    </div>
     `;
   }
   static get properties() {
@@ -35,7 +39,6 @@ class PatientsElement extends PolymerElement {
   }
   checkPriority(data) {
     var dummy = data.detail.response;
-    console.log()
     for (var k in dummy) {
       var el = document.createElement("li");
       el.classList.add("list-group-item");
