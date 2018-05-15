@@ -1,8 +1,6 @@
 import '@polymer/app-route/app-route.js'
 import '@polymer/iron-ajax/iron-ajax.js'
-import 'interactjs/dist/interact.js'
 import '../modules/patients-element.js'
-import Draggable from '@shopify/draggable/lib/draggable';
 
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
 /**
@@ -18,13 +16,7 @@ class UserElement extends PolymerElement {
       resize: both;
       overflow: auto;
     }
-    #dragme { 
-      position:  absolute;
-      left: 50;
-      top: 200;
-    }
-	</style>
-    </style>
+	  </style>
       <app-route route="{{route}}" pattern="[[rootPath]]:user_id" data="{{routeData}}" tail="{{subroute}}">
       </app-route>
       <iron-ajax
@@ -36,11 +28,9 @@ class UserElement extends PolymerElement {
         handle-as="json" 
         last-response="{{data}}" on-response="loadData">
       </iron-ajax>
-      <div id="holder" style="width: 400px; height: 400px;">
-        <div id="dragme" draggable="true" class="resizable d-flex justify-content-center m-3 card p-4">
-          <h2>yo [[data.last_name]] [[data.first_name]]</h2>
-        </div>
-      </div>
+
+      <h2>yo user</h2>
+
       
     `;
   }

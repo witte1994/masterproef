@@ -1,5 +1,8 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-ajax/iron-ajax.js'
+import '@vaadin/vaadin-grid/vaadin-grid.js'
+import '@polymer/iron-icons/iron-icons.js'
+import '@polymer/paper-icon-button/paper-icon-button.js'
 /**
  * @customElement
  * @polymer
@@ -9,9 +12,10 @@ class PatientsElement extends PolymerElement {
     return html`
     <style> 
     #resizable {
-      padding: 20px;
       resize: both;
       overflow: auto;
+      height: 200px;
+      width: 600px;
     }
     </style>
     <iron-ajax 
@@ -23,14 +27,49 @@ class PatientsElement extends PolymerElement {
       last-response="{{users}}" on-response="checkPriority">
     </iron-ajax>
     <div id="resizable" class="d-flex justify-content-center card">
-      <h3 class="">Patient list</h3>
+      <vaadin-grid aria-label="Basic Binding Example" items="[[users]]">
+        <vaadin-grid-column>
+            <template class="header">Name</template>
+            <template>[[item.last_name]] [[item.first_name]]</template>
+        </vaadin-grid-column>
+    
+        <vaadin-grid-column>
+            <template class="header">Last Activity</template>
+            <template>[[item.last_activity]]</template>
+        </vaadin-grid-column>
+    
+        <vaadin-grid-column>
+            <template class="header">Last Visit</template>
+            <template>[[item.last_visit]]</template>
+        </vaadin-grid-column>
 
-    <ul id="listbox" class="list-group">
-    </ul>
-            
+        <vaadin-grid-column>
+            <template class="header">Next Visit</template>
+            <template>[[item.next_visit]]</template>
+        </vaadin-grid-column>
+
+        <vaadin-grid-column width="60px" flex-grow="0">
+            <template class="header"></template>
+            <template>
+                <a href="/user/[[item.id]]">
+                    <paper-icon-button icon="icons:arrow-forward"></paper-icon-button>
+                </a>
+            </template>
+        </vaadin-grid-column>
+      </vaadin-grid>
     </div>
     `;
   }
+/*
+
+  <h3 class="">Patient list</h3>
+
+  <ul id="listbox" class="list-group">
+  </ul>
+            
+
+*/
+
   static get properties() {
     return {
       
@@ -40,14 +79,11 @@ class PatientsElement extends PolymerElement {
   checkPriority(data) {
     var dummy = data.detail.response;
     for (var k in dummy) {
-      var el = document.createElement("li");
-      el.classList.add("list-group-item");
-      var elLink = document.createElement("a");
-      elLink.href = "/user/" + dummy[k].id;;
-      elLink.innerHTML = String(dummy[k].last_name) + " " + dummy[k].first_name;
-      el.appendChild(elLink);
-      this.$.listbox.appendChild(el);
+        dummy[k].last_activity = new Date(dummy[k].last_activity).toLocaleDateString();
+        dummy[k].last_visit = new Date(dummy[k].last_visit).toLocaleDateString();
+        dummy[k].next_visit = new Date(dummy[k].next_visit).toLocaleDateString();
     }
+    
   }
 }
 

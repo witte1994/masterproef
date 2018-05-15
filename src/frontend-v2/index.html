@@ -13,11 +13,8 @@
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/mdb.min.css" rel="stylesheet">
 	<link href="css/style.css" rel="stylesheet">
-
-	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/gridstack.js/0.4.0/gridstack.min.css" />
 	
 	<script src="/node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.7/lib/draggable.bundle.js"></script>
 	<script type="module" src="/src/modules/patients-element.js"></script>
 	<script type="module" src="/src/pages/main-element.js"></script>
 
@@ -48,7 +45,8 @@
 	aside { 
 		position:  absolute;
 		left: 50;
-		top: 200; /* set these so Chrome doesn't return 'auto' from getComputedStyle */
+		top: 200;
+ /* set these so Chrome doesn't return 'auto' from getComputedStyle */
 	}
 	.resizable {
       padding: 20px;
@@ -147,11 +145,6 @@
 
 	document.body.addEventListener('dragover',drag_over,false); 
 	document.body.addEventListener('drop',drop,false); 
-
-
-	function clicky() {
-		console.log("clicky");
-	}
 	</script>
 </body>
 </html>
