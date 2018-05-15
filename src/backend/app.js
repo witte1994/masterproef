@@ -35,6 +35,19 @@ app.get('/getusers', (req, res) => {
     let sql = 'SELECT * FROM user';
     let query = db.query(sql, (err, results) => {
         if (err) throw err;
+        for (var i in results) {
+            var date = new Date(results[i].last_activity);
+            var dateStr = date.getDay() + "-" + date.getMonth() + "-" + date.getFullYear() + " " + (date.getHours()<10?'0':'') + date.getHours() + ":" + (date.getMinutes()<10?'0':'') + date.getMinutes();
+            results[i].last_activity = dateStr;
+            
+            date = new Date(results[i].last_visit);
+            dateStr = date.getDay() + "-" + date.getMonth() + "-" + date.getFullYear();
+            results[i].last_visit = dateStr;
+
+            date = new Date(results[i].next_visit);
+            dateStr = date.getDay() + "-" + date.getMonth() + "-" + date.getFullYear();
+            results[i].next_visit = dateStr;
+        }
         console.log(results);
         res.send(results);
     })

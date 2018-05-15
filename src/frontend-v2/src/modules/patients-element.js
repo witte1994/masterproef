@@ -24,7 +24,7 @@ class PatientsElement extends PolymerElement {
       method = "GET"
       url="http://localhost:3000/getusers" 
       handle-as="json" 
-      last-response="{{users}}" on-response="checkPriority">
+      last-response="{{users}}">
     </iron-ajax>
     <div id="resizable" class="d-flex justify-content-center card">
       <vaadin-grid aria-label="Basic Binding Example" items="[[users]]">
@@ -60,29 +60,11 @@ class PatientsElement extends PolymerElement {
     </div>
     `;
   }
-/*
-
-  <h3 class="">Patient list</h3>
-
-  <ul id="listbox" class="list-group">
-  </ul>
-            
-
-*/
 
   static get properties() {
     return {
       
     };
-    
-  }
-  checkPriority(data) {
-    var dummy = data.detail.response;
-    for (var k in dummy) {
-        dummy[k].last_activity = new Date(dummy[k].last_activity).toLocaleDateString();
-        dummy[k].last_visit = new Date(dummy[k].last_visit).toLocaleDateString();
-        dummy[k].next_visit = new Date(dummy[k].next_visit).toLocaleDateString();
-    }
     
   }
 }

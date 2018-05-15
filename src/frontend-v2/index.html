@@ -16,7 +16,6 @@
 	
 	<script src="/node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
 	<script type="module" src="/src/modules/patients-element.js"></script>
-	<script type="module" src="/src/pages/main-element.js"></script>
 
 	<script>
 	/**
@@ -46,7 +45,6 @@
 		position:  absolute;
 		left: 50;
 		top: 200;
- /* set these so Chrome doesn't return 'auto' from getComputedStyle */
 	}
 	.resizable {
       padding: 20px;
@@ -57,36 +55,35 @@
 </head>
 <body style="height:800px;">
 	<nav class="navbar navbar-expand-lg navbar-dark primary-color">
-
-		<!-- Navbar brand -->
 		<a class="navbar-brand mr-auto" href="#">Dashboard</a>
+
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav" aria-controls="basicExampleNav"
         aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
-    </button>
+    	</button>
 
     <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="basicExampleNav">
+    	<div class="collapse navbar-collapse" id="basicExampleNav">
 
-        <!-- Links -->
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item ml-3">
-                <a class="nav-link" data-toggle="collapse" href="#" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Patients
-                </a>
-            </li>
-			<li class="nav-item ml-3">
-                <a class="nav-link" href="#">+
-                </a>
-            </li>
-        </ul>
+			<!-- Links -->
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item ml-3">
+					<a class="nav-link" data-toggle="collapse" href="#" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Patients
+					</a>
+				</li>
+				<li class="nav-item ml-3">
+					<a class="nav-link" href="#">+
+					</a>
+				</li>
+			</ul>
 
-		<form class="form-inline">
-			<div class="md-form my-0">
-				<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-			</div>
-			<button class="btn btn-outline-white btn-sm my-0" type="submit">Search</button>
-		</form>
-
+			<form class="form-inline">
+				<div class="md-form my-0">
+					<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+				</div>
+				<button class="btn btn-outline-white btn-sm my-0" type="submit">Search</button>
+			</form>
+		</div>
 	</nav>
 
 	<div class="collapse" id="collapseExample">

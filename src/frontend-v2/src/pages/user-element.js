@@ -30,8 +30,6 @@ class UserElement extends PolymerElement {
       </iron-ajax>
 
       <h2>yo user</h2>
-
-      
     `;
   }
   static get properties() {
