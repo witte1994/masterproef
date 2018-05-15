@@ -62,15 +62,40 @@
 
 		<!-- Navbar brand -->
 		<a class="navbar-brand mr-auto" href="#">Dashboard</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav" aria-controls="basicExampleNav"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-		<div class="d-flex justify-content-center">
-			<form class="form-inline">
-				<div class="md-form my-0">
-					<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-				</div>
-			</form>
-		</div>
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="basicExampleNav">
+
+        <!-- Links -->
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item ml-3">
+                <a class="nav-link" data-toggle="collapse" href="#" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Patients
+                </a>
+            </li>
+			<li class="nav-item ml-3">
+                <a class="nav-link" href="#">+
+                </a>
+            </li>
+        </ul>
+
+		<form class="form-inline">
+			<div class="md-form my-0">
+				<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+			</div>
+			<button class="btn btn-outline-white btn-sm my-0" type="submit">Search</button>
+		</form>
+
 	</nav>
+
+	<div class="collapse" id="collapseExample">
+		<div class="m-3 d-flex justify-content-center">
+			patient list
+		</div>
+	</div>
 
 	<!-- SCRIPTS -->
 	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
