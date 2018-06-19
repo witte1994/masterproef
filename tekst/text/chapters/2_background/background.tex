@@ -4,13 +4,26 @@
 
     \subsection{Electronic health record systems}
 
-    Health information systems are now part of most, if not all, health care institutions. They not only support patient care, but also administrative and financial tools. But at the heart of these systems lies the electronic health record. An electronic health record (EHR) is a repository of electronically maintained information about an individual's health status and health care, stored such that it can serve multiple legitimate uses and users of the record \cite{biomedical_informatics}. An electronic health record system (EHRS) provides tools to manage these records. These tools include providing reminders, data analysis and organization. It helps the clinician to organize, interpret and react to data.
+    Health information systems are now part of most, if not all, health care institutions. They not only support patient care, but also administrative and financial tools. But at the heart of these systems lies the electronic health record. An electronic health record (EHR) is a repository of electronically maintained information about an individual's health status and health care, stored such that it can serve multiple legitimate uses and users of the record \cite{biomedical_informatics}. An electronic health record system (EHRS) provides tools to manage and interact with these records. These tools include providing reminders, data analysis and decision support. It helps the clinician to organize, interpret and react to data.
 
-    The following sections provide information on the typical components present in an EHRS, the problems when migrating from paper to a digital format and a comparison between monolithic EHRS and combining multiple EHRS. 
+    First, the advantages of EHRS over paper-based records is described to signify its importance. Secondly, the main components present in these systems is summarized. The functionality of an EHRS can be categorized into two types: a monolithic system tries to provide more general care, while other systems cater to more specific care. The latter however, lacks certain functionalities or data, which requires the combined use of multiple systems. The last section compares the two types and highlights the benefits and drawbacks of both.
 
-    \subsubsection{Components of an EHRS}
+        % signify importance
+        \subsubsection{Moving away from paper} \label{2_ehrs_paper}
 
-        As mentioned before, an EHRS does not simply store a patient record, but it also provides other functionalities. These functionalities can be summarized in five components \cite{biomedical_informatics}:\\
+        For modern medicine, the traditional paper-based medical records are not suited in today's world filled with technology. The drawbacks of information on paper are obvious when compared to digitally stored information.
+
+        % functionality
+        Paper merely records information and provides no functionality, whereas digital records flexible and adaptable that EHRS can interact with. It allows storage of many different file types used by many health care branches, such as x-ray images. Furthermore, the EHR can check the validity of manually entered data and can enforce the capture of certain data elements. This results in better and more complete data capture, which is not guaranteed with paper records, due to data fields left blank. Because of the many tools and automation integrated in EHRS, caregiver productivity increases \cite{ehrs_efficiency} while overall health care costs decreases .
+
+        % storage
+        A second drawback is the inaccessibility of a paper record. Because only one copy of the record exists, only one person can use it at the location where it is stored. As a result, transferring data to other health care institutions or branches becomes a tedious and difficult task. Digital records suffer from this to a lesser extent as multiple users can read and interact with them. However, due to different data structures or standards, transferring the record to another institution can still be difficult. Also, digital records can easily be backed up to multiple storage spaces. Paper records, on the other hand, can be irrecoverably lost due to misfiling, flooding and fires.
+
+        Moving the data from a paper record to a digital format requires some effort. All the data fields from the documents need to find a place in the EHR, which frequently not possible. Also, what do we do with unreadable data due to poor handwriting? Parts of the data transferring process can be automated by scanning the documents and letting software parse it, but again this is prone to errors.
+
+        \subsubsection{Components of an EHRS}
+
+        As mentioned before, EHRS do not simply store patient records. They consist of many components which ultimately define how well they perform in health care. Literature gives us multiple definitions of which components are essential. However, we summarize them in the following five \cite{biomedical_informatics}:\\
 
         \noindent\textbf{Integrated view of patient data} An EHR must allow storage of a wide range of data types. This can be text, numbers, images, video and others. Some data can still be on paper due to lacking support of the EHRS, as mentioned in section \ref{2_ehrs_paper}. To display more complex data types, such as x-ray images, standards are used. A brief overview of such standards can be found in section \ref{2_standards}.\\
 
@@ -22,17 +35,7 @@
 
         \noindent\textbf{Integrated communication and reporting support} Communication is an important part in health care. Often clinicians of multiple institutions provide care for a particular patient. The effectiveness of patient care therefore is directly affected by communication which is why EHRS should provide tools to assist the clinicians. Most institutions are bounded by their own EHRS, which requires them to ask the other institutions for necessary data. A solution to this problem are Health Information Exchanges, which allows institutions to reach data beyond their own EHRS.\\
         
-        \noindent Throughout the years, many EHRS have been developed which may or may not integrate all of the above components. For the missing components, a separate application can be used.
-
-        \subsubsection{Moving away from paper} \label{2_ehrs_paper}
-
-        For modern medicine, the traditional paper-based medical records are not suited in today's world filled with technology. The drawbacks of information on paper become obvious if it is compared to digitally stored information.
-
-        Paper merely records information and provides no functionality, whereas an EHR is flexible and adaptable. It allows storage of multimedia files and can organize and analyze the record. Furthermore, the EHR can check the validity of data that is entered by the clinician and can enforce the capture of certain data elements. This results in better and more complete data capture, which is not guaranteed with paper records.
-
-        A second drawback is the inaccessibility of a paper record. Because there exists only one copy of the record, only one person can use it at the location where it is stored. Communicating and transferring data to other health care institutions can become a tedious and difficult task. Digital records do not suffer from this, as they are readily available for multiple users to read and interact with. While digital records are frequently backed up, paper records are prone to irrecoverable loss, such as misfiling, floods and fires.
-
-        Moving the data from a paper record to a digital format requires some effort. All the data fields from the documents need to find a place in the EHR, which frequently not possible. Also, what do we do with unreadable data due to poor handwriting? Parts of the data transferring process can be automated by scanning the documents and letting software parse it, but again this is prone to errors.
+        \noindent Throughout the years, many EHRS have been developed which may or may not integrate all of the above components. If an essential component is missing, an institution may use another system. Although this has its benefits and drawbacks.
 
         \subsubsection{Monolithic vs. multiple EHRS} \label{ehrs_comparison}
 
