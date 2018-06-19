@@ -153,9 +153,7 @@ _minted*
 *.mw
 
 # nomencl
-*.nlg
 *.nlo
-*.nls
 
 # pax
 *.pax
@@ -198,9 +196,6 @@ pythontex-files-*/
 # easy-todo
 *.lod
 
-# xmpincl
-*.xmpi
-
 # xindy
 *.xdy
 
@@ -237,6 +232,3 @@ TSWLatexianTemp*
 
 # standalone packages
 *.sta
-
-# generated if using elsarticle.cls
-*.spl

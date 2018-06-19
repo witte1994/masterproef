@@ -1,0 +1,62 @@
+\documentclass{article}
+\setcounter{secnumdepth}{3}
+\usepackage{dblfloatfix}
+\usepackage{graphicx}
+
+\begin{document}
+	\begin{titlepage}
+
+		\centering
+		
+		
+		\includegraphics[scale=0.5]{logo_uhasselt}		
+		\vspace{1cm}
+		
+		\Huge Placeholder title
+		\vspace{0.4cm}
+		
+		\large Master thesis Computer Science
+		\vspace{1cm}
+		
+		\LARGE Dennis Cardinaels
+		\vspace{1cm}
+		
+		\large Promotor: Professor Mieke Haesen
+		\vspace{0.2cm}
+		
+		Assistant: Jens Brulmans
+		
+		\vspace{1.2cm}
+		
+		
+		\Large 2017 - 2018
+		
+	\end{titlepage}
+
+	\cleardoublepage
+	\pagenumbering{roman}
+	
+	\include{chapters/00_preface/preface}
+	
+	\include{chapters/01_abstract/abstract}
+	
+	\tableofcontents
+	\newpage
+	\pagenumbering{arabic}
+	
+	
+	\include{chapters/1_introduction/introduction}
+	
+	\include{chapters/2_background/background}
+
+	\include{chapters/3_design/design}
+
+	\include{chapters/4_test_results/test_results}
+
+	\include{chapters/5_discussion/discussion}
+
+	\include{chapters/6_conclusion/conclusion}
+	\bibliographystyle{unsrt}
+	\bibliography{refs}
+\end{document}
+

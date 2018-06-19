@@ -3,6 +3,7 @@
     - problem:  - monolith MIS
                 - no overview, long searching
                 - what happened inbetween
+		- each patient different needs
             -> fix:     - dashboard
                         - customize, end-user programming
                         - per patient
@@ -21,10 +22,11 @@
                         - problems due to no customizability, finding info...
 			- privacy
 			- data standards
+			- plugging in -> reduced health care cost
                 -> why dashboard
-    - e-health: - types of devices to measure paramaters at home
+    - e-health: - types of devices to measure parameters at home
                 - send measured data to app/doctor
-                - telemonitoring
+                - telemonitoring -> what happened between 2 consultations
     - effect customization on user performance/satisfaction (# clicks/pages)
     - data visualization
 
