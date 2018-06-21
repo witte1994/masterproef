@@ -1,10 +1,10 @@
 \section{Background} \label{background}
 
-
+Multiple subjects lay at the base of the design described in section \ref{design}.
 
     \subsection{Electronic health record systems}
 
-    Health information systems are now part of most, if not all, health care institutions. They not only support patient care, but also administrative and financial tools. But at the heart of these systems lies the electronic health record. An electronic health record (EHR) is a repository of electronically maintained information about an individual's health status and health care, stored such that it can serve multiple legitimate uses and users of the record \cite{biomedical_informatics}. An electronic health record system (EHRS) provides tools to manage and interact with these records. These tools include providing reminders, data analysis and decision support. It helps the clinician to organize, interpret and react to data.
+    Health information systems are becoming an important part of health care. They not only support patient care, but also administrative and financial tools. But at the heart of these systems lies the electronic health record. An electronic health record (EHR) is a repository of electronically maintained information about an individual's health status and health care, stored such that it can serve multiple legitimate uses and users of the record \cite{biomedical_informatics}. An electronic health record system (EHRS) provides tools to manage and interact with these records. These tools include providing reminders, data analysis and decision support. It helps the clinician to organize, interpret and react to data.
 
     First, the advantages of EHRS over paper-based records is described to signify its importance. Secondly, the main components present in these systems is summarized. The functionality of an EHRS can be categorized into two types: a monolithic system tries to provide more general care, while other systems cater to more specific care. The latter however, lacks certain functionalities or data, which requires the combined use of multiple systems. The last section compares the two types and highlights the benefits and drawbacks of both.
 
@@ -26,9 +26,9 @@
         Because digital storage increases accessibility significantly, security measurements have to be taken. If not, data can be stolen, deleted or even altered. This also adds to the complexity of developing EHRS.\\
 
         % wip
-        \noindent\textbf{Efficiency and costs} An early study saw a 6\% increase in productivity when EHRS were deployed in health care institutions \cite{ehrs_efficiency}. Digital records improve
+        \noindent\textbf{Efficiency} An important task of an EHRS is to facilitate efficient care. An early study saw a 6\% increase in productivity when EHRS were deployed in health care institutions \cite{ehrs_efficiency}. However, other factors are at play. One of these factors is adoption rate. The transition from paper-based documenting to digital is accompanied with a learning curve, which can be steep. After the switch, the productivity will be lower and as the users become more accustomed it will increase.
 
-        Moving the data from a paper record to a digital format requires some effort. All the data fields from the documents need to find a place in the EHR, which frequently not possible. Also, what do we do with unreadable data due to poor handwriting? Parts of the data transferring process can be automated by scanning the documents and letting software parse it, but again this is prone to errors.
+        The process of moving data on paper to a digital format requires a lot of manual work. While some aspects can be automated, such as scanning and processing paper forms, verification is still required. All the data fields from the documents need to find a place in the EHR, which frequently not possible. Also, what do we do with unreadable data due to poor handwriting? What happens with duplicate forms with slightly different values? Because of these reasons, adopting an EHRS is a significant undertaking for an institution. As such, the benefits are not immediately apparent.
 
         \subsubsection{Components of an EHRS}
 
@@ -48,19 +48,11 @@
 
         \subsubsection{Monolithic vs. multiple EHRS} \label{ehrs_comparison}
 
-        Health care institutions can opt for a monolithic EHRS or combine multiple EHRS to achieve all required functionality. To both there advantages and drawbacks \cite{multiple_ehrs}. Elements influencing this choice include IT infrastructure, safety risks, volume of care and frequency with which patients move facilities. However, sometimes an organization does not have much choice requiring them to use multiple EHRS. The reasons include: lacking functionality of current EHRS, some facilities require specially tailored EHRS for their specific clinical practice, two organizations with their separate EHRS merge.
+        Health care institutions can opt for a monolithic EHRS or combine multiple EHRS to achieve all required functionality. To both there advantages and drawbacks \cite{multiple_ehrs}. Elements influencing this choice include IT infrastructure, safety risks, volume of care and frequency with which patients move facilities. However, it's possible that a single EHRS does not satisfy the requirements of an institution. A reason for this is that certain branches require specially tailored software for their clinical practice, which a general EHRS lacks. 
 
-        Functionality wise, a monolithic EHRS tends to appeal to more general types of care, whereas it lacks in very specific ones. Also, vendors that offer these all-in-one solutions have less experience with these specialties which reduces the chance it will be added to the system. Vendors of specific EHRS do have this expertise and can tailor the system to the needs of the customer. Combining for example a system that supports many general types of care with systems for the more special ones will yield in more overall functionality.
+        Functionality wise, a monolithic EHRS tends to appeal to more general types of care, whereas it lacks in very specific ones. Also, vendors that offer these all-in-one solutions have less experience with these specialties which reduces the chance it will be added to the system. Vendors of specific EHRS do have this expertise and can tailor the system to the needs of the customer. In this case, combining a system that supports general care with special care systems will seem like the best choice. However, other considerations have to be made.
 
-        The data of a monolithic system will probably be stored at a single location. This ensures that all data can be accessible anywhere in the system and that it can be easier maintained. When multiple EHRS are present, they have to interact with each other to share data or the clinician needs to search the systems for the data. The data of each system is saved in its own database which in turn requires more maintenance. A potential solution would be to create a new EHRS, solely for data aggregation. This as well is difficult, due to the different database structures. How would 
-
-
-
-    \subsection{Standards} \label{2_standards}
-
-    \subsection{Dashboards}
-
-
+        The advantages of a monolithic system is that the data it uses is centralized. This ensures that all data can be accessible anywhere in the system and that it can be easier maintained. When multiple systems are in place, data has to be exchanged and can lead to difficulties finding certain pieces of information. The exchange of data is difficult, as each system probably has its own data structures. A potential solution is to create a new EHRS, solely for the purpose data collection and transformation with which all systems interface with. This leads to another system, requiring development and maintenance time.
     \subsection{Telemonitoring} \label{2_telemonitoring}
     % between consultations
     % devices, parameters
@@ -77,11 +69,18 @@
     % parameters
     % data trustworthy?
 
-    \subsection{Privacy}
-    % not focus, brief description of issues
+    
+
+    \subsection{Dashboards}
 
     \subsection{Customization}
     % effect on user satisfaction
+
+    \subsection{Standards} \label{2_standards}
+
+    \subsection{Privacy}
+    % not focus, brief description of issues
+    Although privacy is not a main focus, it is important to describe the topic concerning health informatics.
 
     \subsection{MuiCSer} \label{2_muicser}
     % description of process
