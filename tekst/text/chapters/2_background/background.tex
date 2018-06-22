@@ -54,17 +54,16 @@ Multiple subjects lay at the base of the design described in section \ref{design
 
         Functionality wise, a monolithic EHRS tends to appeal to more general types of care, whereas it lacks in very specific ones. Also, vendors that offer these all-in-one solutions have less experience with these specialties which reduces the chance it will be added to the system. Vendors of specific EHRS do have this expertise and can tailor the system to the needs of the customer. In this case, combining a system that supports general care with special care systems will seem like the best choice. However, other considerations have to be made.
 
-        The advantages of a monolithic system is that the data it uses is centralized. This ensures that all data can be accessible anywhere in the system and that it can be easier maintained. When multiple systems are in place, data has to be exchanged and can lead to difficulties finding certain pieces of information. The exchange of data is difficult, as each system probably has its own data structures. A potential solution is to create a new EHRS, solely for the purpose data collection and transformation with which all systems interface with. This leads to another system, requiring development and maintenance time.
+        The advantages of a monolithic system is that the data it uses is centralized. This ensures that all data can be accessible anywhere in the system and that it can be easier maintained. When multiple systems are in place, data has to be exchanged and can lead to difficulties finding certain pieces of information. The exchange of data is difficult, as each system probably has its own data structures. A potential solution is to create a new EHRS, solely for the purpose data collection and transformation with which all systems interface with. This leads to another system, requiring additional development and maintenance time.
     
     \subsection{Telemonitoring} \label{2_telemonitoring}
     % between consultations
     % devices, parameters, locations
     Monitoring patients at a distance with the use of information technology is called telemonitoring \cite{systematic_review}. The patient uses special monitoring devices to gather data which is sent to the health care provider. Telemonitoring allows the reduction of chronic disease complications as a result of better followup, provides health care without using hospital beds. It also reduces patient travel, time away from work and overall costs \cite{telemonitoring_current_state}. While many health conditions can be monitored, telemonitoring is most prevalent in chronic diseases. These diseases are the major cause of death in most countries and require many health care resources and costs.
 
-    
-        \subsubsection{Devices \& parameters}
+        \subsubsection{Devices \& health parameters}
 
-        testtest
+
 
     % integrate in EHRS
     % devices
@@ -74,6 +73,16 @@ Multiple subjects lay at the base of the design described in section \ref{design
     
 
     \subsection{Dashboards} \label{2_dashboards}
+
+    The primary goal of a dashboard is clear communication, which is achieved with an effective design. A formal definition is as follows: ``A dashboard is a visual display of the most important information need to achieve one or more objectives; consolidated and arranged on a single screen so information can be monitored at a glance.'' \cite{dashboard}. This definition mentions four key points:\\
+
+    \noindent\textbf{Dashboards are visual displays.} It is important that data is represented visually. Displaying charts and other graphics allows more efficient communication compared to textual information. For example, trends and outliers are easier to spot in a line chart compared to a table with the same values.\\
+
+    \noindent\textbf{Dashboards display information needed to achieve specific objectives.} The data that is shown, must be of use for the job that needs to be done. It is possible that the data needs to be gathered from multiple sources and tailored to the specific context so an efficient visualization can be created.
+
+    \noindent\textbf{A dashboard fits on a single computer screen.} In order to see all information at a glance, scrolling must be prevented. If multiple screens are present, then it is no longer a single dashboard. This leads to another consideration: what type of display is the information shown on?
+
+    \noindent\textbf{Dashboards are used to monitor information at a glance.} fdsqfdsq
 
     % wide range of dashboard types: monitoring stocks, network management...
     % examples of EHRS -> visually difficult
