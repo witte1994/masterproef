@@ -6,7 +6,7 @@ A literature study has been conducted to situate the topic. Multiple subjects la
 
     Health information systems are becoming an important part of health care. They not only support patient care, but also administrative and financial tools. At the heart of these systems lies the electronic health record. An electronic health record (EHR) is a repository of electronically maintained information about an individual's health status and health care, stored such that it can serve multiple legitimate uses and users of the record \cite{biomedical_informatics}. An electronic health record system (EHRS) provides tools to manage and interact with these records. These tools include providing reminders, data analysis and decision support. It helps the clinician to organize, interpret and react to data.
 
-    First, the advantages of EHRS over paper-based records are described to signify its importance. Secondly, the main components present in these systems is summarized. The functionality of an EHRS can be categorized into two types: a monolithic system tries to provide more general care, while other systems cater to more specific care. The latter however, lacks certain functionalities or data, which requires the combined use of multiple systems. The last section compares the two types and highlights the benefits and drawbacks of both.
+    First, the advantages of EHRS over paper-based records are described to signify its importance. Secondly, the main components present in these systems is summarized. The functionality of an EHRS can be categorized into two types: a monolithic system tries to provide more general care, while smaller and more specialized systems cater to more specific types of care. The latter however, lacks certain functionalities and data, which requires the combined use of multiple systems. The last section compares the two types and highlights the benefits and drawbacks of both.
 
         % signify importance
         \subsubsection{Moving away from paper} \label{2_ehrs_paper}
@@ -28,9 +28,7 @@ A literature study has been conducted to situate the topic. Multiple subjects la
         Because digital storage increases accessibility significantly, security measurements have to be taken. If not, data can be stolen, deleted or even altered. This also adds to the complexity of developing EHRS.
 
         % wip
-        \paragraph{Efficiency} An important task of an EHRS is to facilitate efficient care. An early study saw a 6\% increase in productivity when EHRS were deployed in health care institutions \cite{ehrs_efficiency}. However, other factors are at play. One of these factors is adoption rate. The transition from paper-based documenting to digital is accompanied with a learning curve, which can be steep. After the switch, the productivity will be lower and as the users become more accustomed it will increase.
-
-        
+        \paragraph{Efficiency} An important task of an EHRS is to facilitate efficient care. An early study saw a 6\% increase in productivity when EHRS were deployed in health care institutions \cite{ehrs_efficiency}. However, other factors are at play, such as adoption rate. The transition from paper-based documenting to digital is accompanied with a learning curve, which can be steep. After the switch, the productivity will be lower at the start and as the users become more experienced with the software, it will increase.
 
         \subsubsection{Components of an EHRS}
 
@@ -76,9 +74,11 @@ A literature study has been conducted to situate the topic. Multiple subjects la
 
     \paragraph{Dashboards display information needed to achieve specific objectives.} The data that is shown, must be of use for the job that needs to be done. It is possible that the data needs to be gathered from multiple sources and tailored to the specific context so an efficient visualization can be created.
 
-    \paragraph{A dashboard fits on a single computer screen.} In order to see all information at a glance, scrolling must be prevented. If multiple screens are present, then it is no longer a single dashboard. This leads to another consideration: what type of display is the information shown on?
+    \paragraph{A dashboard fits on a single computer screen.} In order to see all information at a glance, scrolling must be prevented. If multiple screens are present, then it is no longer a single dashboard. This leads to another question: what type of display is the information shown on? Due to the wide variety of screen sizes and aspect ratios, a responsive dashboard would be most beneficial.
 
-    \paragraph{Dashboards are used to monitor information at a glance.} fdsqfdsq
+    \paragraph{Dashboards are used to monitor information at a glance.} Data that is important should be immediately noticed, whereas very specific details should be hidden. This means data must be summarized or aggregated in order to be effectively shown. However, if the user wishes to view the detailed data, the dashboard should provide a way to do so.\\
+
+    \noindent Many EHRS fail to provide a meaningful dashboard. We can only look at open-source systems as most health software is purchased and licensed.
 
     % wide range of dashboard types: monitoring stocks, network management...
     % examples of EHRS -> visually difficult
@@ -104,7 +104,7 @@ A literature study has been conducted to situate the topic. Multiple subjects la
 
         \paragraph{Low fidelity prototyping} When the actions have been specified using the task models, low fidelity prototypes can be designed. Paper sketches and mockups are such examples and are ideal for visualizing the layout of the software its user interface. Without spending too much time and resources, presenting such prototypes can yield valuable feedback from the end-user or customer. However, there is no interaction present. Typically multiple versions of these prototypes will be created until the customer is satisfied after which high fidelity prototypes can be developed.
 
-        \paragraph{High fidelity prototyping} Creating high fidelity prototypes requires a lot more effort compared to low fidelity prototypes, as they offer functionality closely resembling the final product. However, the feedback given by the testers can be more elaborate. Not only design, but also functionality can be tested and criticized.
+        \paragraph{High fidelity prototyping} Creating high fidelity prototypes requires a lot more effort compared to low fidelity prototypes, as they offer functionality closely resembling the final product. However, the feedback will be much more valuable as not only design, but also functionality is tested.
 
         \paragraph{Final user interface} When the latest iteration of the high fidelity prototype satisfies all user requirements, the final user interface can be created. It would be beneficial to reuse the code from the prototype in order to save time and resources. As a final step, the task models are checked against the interface to check if all required functionality is present.\\
 
