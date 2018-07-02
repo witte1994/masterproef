@@ -6,9 +6,46 @@ A design has been created using the MuiCSer framework explained in section \ref{
 
     \subsection{Proposal}
     % dashboard -> problems monolithic, multiple apps
+    % dashboard mockups and iterations -> know users, reason for MUICSER
     % modules according to telemonitoring parameters
 
     \subsection{Personas \& scenarios}
+
+    Based on the proposal mentioned in the previous section, personas and scenarios have been created to get a better understanding of how the system will work and its users. Each of these try to highlight the problems the users face and how a new system tries to solve them.
+
+        \subsubsection{Jake}
+
+        \paragraph{Persona} Jake is a 25-year-old male who currently works as a nurse at the hospital in his city. He has been working for 4 years for the hospital and lives alone in his apartment. Still being a young adult, Jake grew up with technology. As such he experiences no difficulties when using new software on his computer or smartphone. His hobbies include music, playing the guitar and video gaming.
+
+        Currently, the workflow at the hospital is dated. A new health information system was introduced to summarize and gather all medical data in a singular space. Because this is a monolithic system, a lot of features that Jake does not need still clutter the screen. Navigating the system is a pain and customization is not present. Jake wishes to only see the features he uses most, while hiding the features he does not need.
+        
+        \paragraph{Scenario} Jake starts his first day using the new system by reading the manual that is accompanied with it. He starts the application and for each patient he is presented with a few standard layouts to choose from, based on illnesses: cardiovascular diseases, respiratory diseases, diabetes and few others.
+
+        After selecting a standard layout, Jake is given the opportunity to customize the dashboard. The dashboard contains all the wanted functionality of the system, where each ``block'' represents a module that can be added or deleted. Jake enters the edit mode enabling him to move the blocks around and arrange the order. He deletes a few modules and now he wants to add other modules. Jake opens the modules window where he is presented with all the available modules. A module is added to the dashboard when Jake selects it.
+
+        By examining the new module Jake quickly notices that on the dashboard a summary is given. But when Jake clicks on the module, the block expands to fill the whole screen where detailed information is given. Jake feels he is in control of the system and that it will improve his productivity.\\
+
+        \noindent This scenario highlights the benefits of customization. Hiding unwanted components, while adding the useful ones allow for a clear dashboard to be displayed. The user is in control and is able to quickly view data of importance. It is also possible to view detailed data.
+        
+        \subsubsection{Dan}
+
+        \paragraph{Persona} Dan is a general practitioner since he graduated from university. He is on the job for 21 years and he is the preferred doctor in his town. Throughout the years Dan has used a multitude of systems and he always tries new ones to improve his workflow. Because he has been practitioning for such a long time, he has 500 patients that visit him at least twice a year. Some patients, especially the elderly, visit as much as once a month.
+
+        Most of Dan's patients visit for illnesses such as fever and a cold. To diagnose these illnesses no data is necessarily needed, just a description of what the patient feels will suffice most of the time. If Dan performs such a diagnosis, he promptly adds it to the information system and to the electronic health record of the patient.
+
+        However, if a patient visits that has a lot of problems regarding his blood pressure, then Dan has to perform a more complex diagnosis using historical data. In the current system that Dan uses, it is very difficult to search for this data. But what bugs Dan the most is that he has to do it every time this patient visits.
+
+        \paragraph{Scenario} Because of Dan's ongoing curiosity, he tries a new health information system which allows customization for each specific patient. Because the diagnoses of most patients can be very different from time to time, Dan creates a default module group which is displayed for each patient, unless that patient has a specific module configuration. The default module group includes: past diagnoses, known allergies, patient information (blood type, last weight, height\ldots) and medication list.
+
+        The first patient of the day describes what sounds like a fever. Dan confirms this and prescribes the patient some medicine. The diagnosis is added to the `past diagnoses' module and the prescribed medication to the `medication list' module. Dan did not need other health data to perform the diagnosis. Therefore, Dan does not change the configuration of this patient.
+
+        The next patient, an elderly woman, came for her second visit of this month. Dan knows from the past that it will probably be a heart problem. Dan searches for other modules labeled as `heart problems' and adds them to the configuration of the elderly woman. Now both the default module group and the heart rate modules are present, which is unnecessary according to Dan. He removes some modules of the default module group. Now, the next time the elderly woman visits, that configuration will be loaded.
+
+        One specific patient had broken his arm three times in less than a year. When the patient came for a routine visit, Dan immediately added a module to easily view x-ray photos and view them in a timeline.\\
+
+        \noindent Again, the benefits of system customization for each patient are obvious. Initially, it will take some time to configure each dashboard for all of the patients, but the system will try to provide default layouts useful for certain types of care. Once the configuration is done, the time spent during a consultation will decrease.
+        
+        
 
     \subsection{Modules}
 
