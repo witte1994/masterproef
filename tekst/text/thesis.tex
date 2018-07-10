@@ -4,34 +4,7 @@
 \usepackage{graphicx}
 
 \begin{document}
-	\begin{titlepage}
-
-		\centering
-		
-		
-		\includegraphics[scale=0.5]{logo_uhasselt}		
-		\vspace{1cm}
-		
-		\Huge Placeholder title
-		\vspace{0.4cm}
-		
-		\large Master thesis Computer Science
-		\vspace{1cm}
-		
-		\LARGE Dennis Cardinaels
-		\vspace{1cm}
-		
-		\large Promotor: Professor Mieke Haesen
-		\vspace{0.2cm}
-		
-		Assistant: Jens Brulmans
-		
-		\vspace{1.2cm}
-		
-		
-		\Large 2017 - 2018
-		
-	\end{titlepage}
+	\include{chapters/title_page/title_page}
 
 	\cleardoublepage
 	\pagenumbering{roman}
@@ -43,7 +16,6 @@
 	\tableofcontents
 	\newpage
 	\pagenumbering{arabic}
-	
 	
 	\include{chapters/1_introduction/introduction}
 	
@@ -59,11 +31,8 @@
 
 	\include{chapters/7_conclusion/conclusion}
 	
-	\newpage
-	\appendix
-	\section{Appendix}
-	appendix
-
+	\include{chapters/appendix/appendix}
+	
 	\newpage
 	\bibliographystyle{unsrt}
 	\bibliography{refs}
