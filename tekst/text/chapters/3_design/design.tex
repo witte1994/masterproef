@@ -13,6 +13,7 @@ A design has been created using the MuiCSer framework explained in section \ref{
 
     Based on the proposal mentioned in the previous section, personas and scenarios have been created to get a better understanding of how the system will work and its users. Each of these try to highlight the problems the users face and how a new system tries to solve them.
 
+        % highlights customization and dashboard
         \subsubsection{Jake}
 
         \paragraph{Persona} Jake is a 25-year-old male who currently works as a nurse at the hospital in his city. He has been working for 4 years for the hospital and lives alone in his apartment. Still being a young adult, Jake grew up with technology. As such he experiences no difficulties when using new software on his computer or smartphone. His hobbies include music, playing the guitar and video gaming.
@@ -27,6 +28,7 @@ A design has been created using the MuiCSer framework explained in section \ref{
 
         \noindent This scenario highlights the benefits of customization. Hiding unwanted components, while adding the useful ones allow for a clear dashboard to be displayed. The user is in control and is able to quickly view data of importance. It is also possible to view detailed data.
         
+        % highlights customization
         \subsubsection{Dan}
 
         \paragraph{Persona} Dan is a general practitioner since he graduated from university. He is on the job for 21 years and he is the preferred doctor in his town. Throughout the years Dan has used a multitude of systems and he always tries new ones to improve his workflow. Because he has been practitioning for such a long time, he has 500 patients that visit him at least twice a year. Some patients, especially the elderly, visit as much as once a month.
@@ -45,8 +47,23 @@ A design has been created using the MuiCSer framework explained in section \ref{
 
         \noindent Again, the benefits of system customization for each patient are obvious. Initially, it will take some time to configure each dashboard for all of the patients, but the system will try to provide default layouts useful for certain types of care. Once the configuration is done, the time spent during a consultation will decrease.
         
-        
+        % highlights telemonitoring
+        \subsubsection{Emily}
 
+        \paragraph{Persona} Just as Dan, Emily has been a successful general practitioner for quite some time. However, she has different needs of an EHRS. Between each patient visit there is a period of time in which Emily does not know what happens to patients regarding certain parameters. For example, if a person has to regularly  measure his heart rate and blood pressure because of cardiac disease, it is imperative that the doctor is made aware of these values. If Emily sees that these values are not looking well, she can contact the patient to come in for a checkup.
+
+        If a patient has sleep issues, Emily wishes to not see detailed measurement values, but regular descriptions of the night’s sleep. This includes the hours of sleep, amount of wake-ups, subjective feeling of tiredness. Currently Emily has no way of regularly receiving this information without having the patient visit, because it needs to be documented at the practice.
+        
+        \paragraph{Scenario} Emily has recently received notice of a new platform that includes telemonitoring support. Several mobile applications are developed that can send data using an API to the platform, which in turn processes the values and can notify Emily of any anomalies. It includes customization for certain parameters in which Emily can individually assign thresholds for each patient.
+
+        A patient which has recently had a cardiac arrest is continuing rehabilitation at home. However, the patient has chest pains and pays Emily a visit. She tells the patient to regularly measure his blood pressure and heart rate and take note of these values in a mobile application. This application also allows to take general notes, such as feeling pain or having caught a cold. After they have scheduled the next visit, the patient is sent home.
+        
+        As the next few weeks pass by, Emily is notified that this patient has crossed a threshold regarding his blood pressure. Immediately Emily checks the measured data and sees a graph of all measured values. This dataset delivers insight into the history of the patient and Emily sees that there is currently no need to panic. She decides to not take action and configures a weekly reminder to keep monitoring the blood pressure.
+        
+        The next week, Emily receives a notification that the patient has made a note. It reads that he experienced chest pains. Again, Emily takes a look at the blood pressure data and sees an worsening trend leading to hypertension. Emily decides to call the patient to schedule an early visit. The system helped Emily to intervene as soon as the situation seemed to worsen, while avoiding having the patient visit too early which in turn saves Emily time.
+        
+        Another patient has sleep issues. Emily encourages the patient to use a sleep monitor, which is a wristband. This device is connected a smartphone which communicates the quantitative data to the new platform. The application on the smartphone allows the patient to take note of qualitative data such as a general description of the night or what food he/she ate. One night the patient has slept only three hours and took note that he went out and drank a lot of alcohol. This could explain for example the bad sleeping rhythm for the next few days. Emily wishes to keep track of this patient on a weekly basis and configures the platform to notify her. 
+        
     \subsection{Modules}
 
     
