@@ -1,10 +1,74 @@
+FOCUS
+- chronic diseases
+- telemonitoring
+- dashboard design
+- customization
+
 1) intro
------
 
+2) background
+    - thesis schetsen
+    - welke onderwerpen key
+    - wat wanneer
 
+    2.1) EHRS summary
+        - evolution: from paper to digital
+        - capabilities
+            - wat met patienten die thuis moeten opgevolgd worden?
+        - general EHRS, specialized EHRS
+            - veel patienten verschillende eisen: customization nodig
 
+            -> als ref dat telemonitoring dashboard kan toegepast/geintegreerd worden in EHRS
 
+    2.2) Chronic diseases
+        - algemene beschrijving
+        - welke 4 + varianten...
+        - beschrijving met behandeling en problemen, oorzaken, cijfers, kosten...
 
+    2.3) telemonitoring
+        - beschrijving
+        - hoe chronic diseases helpen: vb'en van studies, uitkomsten...
+        - summary van studies: overeenkomsten, pros & cons
+
+    2.4) Dashboard design
+        - wat is een dashboard, typische vb'en
+        - medische literatuur
+        - designtechnieken
+
+    2.5) Customization
+        - wat inhoudt precies: typische technieken
+        - vb'en
+        - effect in literatuur
+
+    2.6) Data privacy & standards           -> later
+        
+        2.6.1) Privacy
+            - HIE, delen van data
+            - breaches
+            - controle over data
+
+        2.6.2) Standards
+            - waarom
+            - vb'en
+
+3) Design
+    - op basis van background
+    - MuiCSeR uitleggen
+
+    3.1) MuiCSeR
+        - wat, waarom
+        - process
+
+    3.2) Proposal
+        - dashboard mogelijkheden
+            - default profielen voor chronic diseases
+            - mogelijkheid eigen profielen te maken -> fit voor algemeen EHRS
+            - modules taggen met kernwoorden?
+
+        - data API
+            - plugin van vreemde data
+
+        - modules: gemeenschappelijke uit chronic diseases
 
 
 1) intro
