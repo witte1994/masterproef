@@ -4,6 +4,9 @@ FOCUS
 - dashboard design
 - customization
 
+PROBLEEM
+
+
 1) intro
 
 2) background
@@ -38,10 +41,12 @@ FOCUS
     2.5) Customization
         - wat inhoudt precies: typische technieken
         - vb'en
-        - effect in literatuur
+        - effect in literatuur + medische voorbeelden
 
     2.6) Data privacy & standards           -> later
-        
+        - voor systemen die gebruikt gaan worden
+        - buiten scope van prototype
+
         2.6.1) Privacy
             - HIE, delen van data
             - breaches
@@ -60,15 +65,47 @@ FOCUS
         - process
 
     3.2) Proposal
-        - dashboard mogelijkheden
-            - default profielen voor chronic diseases
-            - mogelijkheid eigen profielen te maken -> fit voor algemeen EHRS
-            - modules taggen met kernwoorden?
+        - goals of system
+        - customize for each patient
+        - view useful info at a glance
+        
+        3.2.1) Dashboard functionality
+            - kiezen profiel bij eerste gebruik, saven van eigen profiel
+                - default profielen naargelang chronic diseases
+            - add/remove modules, elke module grote en kleine versie
+            - drag and drop modules
+            - save layout
+            
 
-        - data API
-            - plugin van vreemde data
+        3.2.2) Module functionality
+            - welke modules wel en niet, en waarom
+            - zien wat tussen 2 visites is gebeurd
+            - core features & tasks: detailed view, set thresholds...
+            - specific features & tasks
+            
+        3.2.3) Other functionality
+            - data API
+                - handle unknown data
+                - uitbreidbaar
 
-        - modules: gemeenschappelijke uit chronic diseases
+            - notifications
+
+    3.3) Personas & scenarios
+        - highlight components and effects of system
+
+        3.3.1) customization effect
+
+        3.3.2) telemonitoring effect
+        
+        3.3.3) dashboard effect
+
+    3.4) Low fidelity mockups
+        
+        3.4.1) Modules
+
+        3.4.2) Dashboard
+
+4) Implementation
 
 
 1) intro
