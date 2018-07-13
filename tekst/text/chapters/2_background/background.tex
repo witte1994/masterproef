@@ -1,6 +1,6 @@
 \section{Background} \label{background}
 
-A literature study has been conducted to situate the thesis topic. Multiple subjects lay at the base of the design described in section \ref{design}. Of these subjects, three are key which are explained first: electronic health record systems, telemonitoring and dashboard design. The process followed to create the final prototype is explained hereafter. Finally, topics that should be kept in mind when developing health software are briefly described, as they are not part of the scope of the prototype.
+A literature study has been conducted to situate the thesis topic. Multiple subjects lay at the base of the design described in section \ref{design}. Of these subjects, three are key and are explained first: electronic health record systems, telemonitoring and dashboard design. The process followed to create the final prototype is explained hereafter. Finally, topics that should be kept in mind when developing health software are briefly described, as they are not part of the scope of the prototype.
 
     \subsection{Electronic health record systems}
 
@@ -58,16 +58,15 @@ A literature study has been conducted to situate the thesis topic. Multiple subj
     % between consultations
     % in relation to EHRS
     % transfers burden partly to patient
-    Monitoring patients at a distance with the use of information technology is called telemonitoring \cite{systematic_review}. The patient uses special monitoring devices to gather data which is sent to the health care provider. While many health conditions can be monitored, telemonitoring is most prevalent in chronic diseases due to their long-lasting nature and necessity to self-manage. Two of these diseases, heart disease and cancer, accounted for 46\% of all deaths in the United States \cite{national2016health}. Also, 86\% of all health care spending is for patients with one or more chronic conditions \cite{gerteis2014multiple}. A study has shown that not only the complications of chronic conditions and costs can be reduced by the use of telemonitoring: care can be provided without the use of hospital beds and the time spent managing the disease is lower \cite{telemonitoring_current_state}.
+    Monitoring patients at a distance with the use of information technology is called telemonitoring \cite{systematic_review}. The patient uses special monitoring devices to gather data which is sent to the health care provider. While many health conditions can be monitored, telemonitoring is most prevalent in chronic diseases due to their long-lasting nature and necessity to self-manage. Two chronic diseases, heart disease and cancer, accounted for 46\% of all deaths in the United States \cite{national2016health}. Also, 86\% of all health care spending is for patients with one or more chronic conditions \cite{gerteis2014multiple}. A study has shown that not only the complications of chronic conditions and costs can be reduced by the use of telemonitoring: care can be provided without the use of hospital beds and the time spent managing the disease is lower \cite{telemonitoring_current_state}.
 
-    First, an overview of how telemonitoring has been applied to chronic conditions treatment is given. Second, the difficulties surrounding telemonitoring are mentioned.
+    First, an overview of the application of telemonitoring to chronic disease treatment is given. Second, the difficulties surrounding telemonitoring are mentioned.
 
-        % 4 WHO categories -> no cancer
-        \subsubsection{Chronic conditions}
+        \subsubsection{Chronic disease}
 
-        A chronic condition can be defined as a long-lasting human health condition. If the length of the condition is at least three months, the term chronic is used. The WHO defines four major categories of chronic diseases: cardiovascular diseases, cancer, diabetes and chronic respiratory diseases \cite{world2017noncommunicable}. Due to a lack of literature on telemonitoring in relation to cancer, only the other categories will be discussed. The respiratory disease category focusses on chronic obstructive pulmonary disease.
+        A chronic disease can be defined as a long-lasting human health condition. If the length of the condition is at least three months, the term chronic is used. The WHO defines four major categories of chronic diseases: cardiovascular diseases, cancer, diabetes and chronic respiratory diseases \cite{world2017noncommunicable}. Due to a lack of literature on telemonitoring in relation to cancer, only the other categories will be discussed. The respiratory disease category focusses on chronic obstructive pulmonary disease.
 
-        \paragraph{Cardiovascular diseases} A study recruited 390 patients to test the effect of telemonitoring to reduce hospital days and total costs \cite{tompkins2010randomized}. 193 individuals were in the intervention group and were to take daily measurements using specialized hardware. The hardware was capable of recording the weight, blood pressure, heart rate and blood oxygen levels. If the patient had diabetes, an additional blood glucose meter was provided. Patients were also required to fill in a predetermined set of questions every week. On the clinician's end, nurses were shown a summarizing table indicating if the sent results were good, bad or missing. Based on these results, the nurses would decide to contact the patient if extra care was needed.
+        \paragraph{Cardiovascular diseases} A study recruited 390 patients to test the effect of telemonitoring to reduce hospital days and total costs \cite{tompkins2010randomized}. 193 individuals were in the intervention group and were to take daily measurements using specialized hardware. The hardware recorded the weight, blood pressure, heart rate and blood oxygen levels. Diabetes patients received an additional blood glucose meter. Patients were also required to fill in a predetermined set of questions every week. On the clinician's end, nurses were shown a summarizing table indicating if the sent results were good, bad or missing. Based on these results, the nurses would decide to contact the patient if extra care was needed.
 
         The study concluded that telemonitoring appears to facilitate more efficient outpatient care and potentially reduce costs. The total numbers of hospital days for the patients in the intervention group showed a tendency to be lower and fewer emergency department visits. However, there were more urgent care and primary care visits.
 
@@ -85,13 +84,24 @@ A literature study has been conducted to situate the thesis topic. Multiple subj
 
         Lastly, medication management is also linked to telemonitoring and diabetes. A study asked 64 patients (the telemonitoring group) to measure their blood glucose, blood pressure and weight on a daily basis \cite{stone2009active}. A nurse would receive these measurements and adjust the medication intake five times a week. The control group consisted of 73 patients who took measurements of the same parameters, but they only received a phone call once a month to have their medication schedule adjusted. The results noted a significant decrease in HbA\textsubscript{1C} for the telemonitoring group after three and six months, compared to the control group.
 
-        \paragraph{Chronic obstructive pulmonary disease} resp
+        \paragraph{Chronic obstructive pulmonary disease} Chronic obstructive pulmonary disease (COPD) is a chronic lung disease that is characterized by persistent respiratory symptoms and airflow problems \cite{vogelmeier2017global}. Examples of these symptoms are shortness of breath and coughing. The worsening of these symptoms for a period of time is called an acute exacerbation.
+
+        A 2003 study investigated the feasibility of telemonitoring for patients with COPD \cite{maiolo2003home}. In the first phase of the study 23 patients were observed for 12 months during their medical visits. For the second phase, patients were given a device which uses a finger clip to measure the oxygen saturation and heart rate. This device sends the data towards the caregivers. The caregivers analyzed the measurements and communicated comments on the symptoms and prescription changes to the patients. Results noted decreases in the numbers of hospital admissions (50\%) and acute home exacerbations (55\%). The hospitalization costs were 17\% lower compared to the first phase and 96\% of the patients were satisfied with the telemonitoring equipment.
+
+        Another study observed the quality of life of telemonitoring compared to usual care \cite{lewis2010home}. The control group received standard care for 52 weeks. The telemonitoring group received devices asking them questions about their symptoms twice a day. Also, the temperature and oxygen saturation were recorded by the device. If two of these measurements crossed a threshold, the respiratory nurses received an alert and called the patient. Between the two groups there were no significant differences seen in the quality of life, meaning that telemonitoring had no effect on this outcome.
+
+
+
+        % explain exacerbation
 
         \noindent Test
 
 
         % data accuracy, adherence, integration EHRS, training of users...
+        % technology awareness, intrusiveness, training of users
         \subsubsection{Difficulties}
+
+        Many of the aforementioned studies described problems which they faced during their trail.
 
     \subsection{Dashboards} \label{2_dashboards}
 
