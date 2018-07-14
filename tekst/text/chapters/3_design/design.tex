@@ -4,6 +4,30 @@
 
 A design has been created using the MuiCSer framework explained in section \ref{2_muicser}. The final design went through multiple iterations based on received feedback.
 
+    \subsection{MuiCSer} \label{2_muicser}
+    % description of process
+    This section describes the MuiCSer framework, made for user-centered software engineering processes in a multidisciplinary context \cite{muicser}, which will be used to create the prototype. This framework focuses on optimizing the user experience during the entire software engineering cycle to ensure that the end-user's needs are fulfilled. By combining user-centered design and software engineering principles the user experience of the final product can be improved substantially of the final product.
+
+        \subsubsection{Process}
+        
+        \begin{figure}[!t]
+            \centering
+            \includegraphics[width=0.8\textwidth]{chapters/3_design/muicser}
+            \caption{MuiCSer process}\label{fig:muicser}
+        \end{figure}
+
+        The MuiCSer process is summarized in figure \ref{fig:muicser}. After each phase, the result is evaluated, verified and validated to ensure that the required functionality is present. The received feedback can, in turn, be used to reiterate over the previous phase. On the figure, this is denoted with the light arrows, while the dark one represents the overall process direction.
+
+        \paragraph{New or legacy system} At the start of the process an existing system in need of improvement is either evaluated or a new one has to be designed. This requires an analysis of the tasks and needs of the user, as well as the objects and resources required to perform these tasks. Personas and scenarios are the resulting artifacts of this phase. First, personas describe the personalities of the potential end users including hobbies, skills and the environment they surround themselves in \cite{persona_scenario}. Its goal is to uncover behavior patterns which can be of use when designing a user interface. Second, a scenario is a story describing the use of a fictitious system from the persona's point of view \cite{persona_scenario}. It tries to sketch the usage of the system for which a design must be made.
+
+        \paragraph{Structured interaction analysis} During this phase, the results of the analysis are used to create task models. These models specify concrete tasks and goals which can be dissected into specific actions or steps the user has to take. These artifacts lay the foundation for designing a user interface which supports these tasks and goals.
+
+        \paragraph{Low fidelity prototyping} When the actions have been specified using the task models, low fidelity prototypes can be designed. Paper sketches and mockups are such examples and are ideal for visualizing the layout of the software its user interface. Without spending too much time and resources, presenting such prototypes can yield valuable feedback from the end-user or customer. However, there is no interaction present. Typically multiple versions of these prototypes will be created until the customer is satisfied after which high fidelity prototypes can be developed.
+
+        \paragraph{High fidelity prototyping} Creating high fidelity prototypes requires a lot more effort compared to low fidelity prototypes, as they offer functionality closely resembling the final product. However, the feedback will be much more valuable as not only design, but also functionality is tested.
+
+        \paragraph{Final user interface} When the latest iteration of the high fidelity prototype satisfies all user requirements, the final user interface can be created. It would be beneficial to reuse the code from the prototype in order to save time and resources. As a final step, the task models are checked against the interface to check if all required functionality is present.
+
     \subsection{Proposal}
     % dashboard -> problems monolithic, multiple apps
     % dashboard mockups and iterations -> know users, reason for MUICSER

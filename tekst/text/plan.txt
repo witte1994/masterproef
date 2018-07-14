@@ -5,6 +5,8 @@ FOCUS
 - customization
 
 PROBLEEM
+    - lack of effect of customization of health software in literature
+    - most of the time new application developed, instead of integrating with existing application
 
 
 1) intro
@@ -106,6 +108,23 @@ PROBLEEM
         3.4.2) Dashboard
 
 4) Implementation
+    - uitleggen wat, waarom
+    - changes met mockups...
+
+    4.1) Overview
+        - web app, waarom
+        - delen van app
+
+    4.2) Backend
+        - technologie, rest api, nodejs...
+        - API reference -> bijlage
+
+    4.3) Frontend
+        - technologie
+        - screenshots
+        - veranderingen
+
+5) Usability test
 
 
 1) intro
