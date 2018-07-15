@@ -1,6 +1,6 @@
 \section{Background} \label{background}
 
-A literature study has been conducted to situate the thesis topic. Multiple subjects lay at the base of the design described in section \ref{design}. First, the switch to, the components, and types of electronic health record systems are described. Next four key subjects are explained in the following order: chronic diseases, telemonitoring, dashboard design, and customization. The last section mentions the issues surrounding medical data privacy and standards. 
+A literature study has been conducted to situate the thesis topic. Multiple subjects lay at the base of the design described in section \ref{design}. First, the switch to, the components, and types of electronic health record systems are described. Next three key subjects are explained in the following order: chronic diseases, telemonitoring, and dashboard design. The last section mentions the issues surrounding medical data privacy and standards. 
 
     % waarom belangrijk om te beschrijven
     \subsection{Electronic health record systems}
@@ -62,18 +62,16 @@ A literature study has been conducted to situate the thesis topic. Multiple subj
     % welke 4 + varianten
     % beschrijving met behandeling en problemen, oorzaken, cijfers, kosten...
     \subsection{Chronic diseases} \label{chronic_diseases}
-    A chronic disease can be defined as a long-lasting human health condition. If the length of the condition is at least three months, the term chronic is used. The World Health Organization defines four major categories of chronic diseases: cardiovascular diseases, cancer, diabetes and chronic respiratory diseases \cite{world2017noncommunicable}. In 2015, the categories cardiovascular disease and cancer, accounted for 46\% of all deaths in the United States \cite{national2016health}. Also, 86\% of all health care spending of 2014 was for patients with one or more chronic conditions \cite{gerteis2014multiple}.
+    A chronic disease can be defined as a long-lasting human health condition. If the length of the condition is at least three months, the term chronic is used. The World Health Organization defines four major categories of chronic diseases: cardiovascular diseases, cancer, diabetes and chronic obstructive pulmonary disease \cite{world2017noncommunicable}. Cardiovascular disease is the leading cause of death worldwide \cite{mendis2011global}. Combined with cancer, they accounted for 46\% of all deaths in the United States in 2015 \cite{national2016health}. Also, 86\% of all health care spending of 2014 was for patients with one or more chronic conditions \cite{gerteis2014multiple}.
+
+    We now briefly define each disease category. All diseases that involve the heart or blood vessels belong to the cardiovascular disease group. Typical examples of such diseases are stroke and coronary artery disease. Cancer has many different variants, but all of them share the same behavior. This is when some cells of the human body start to divide without stopping and that it spreads to surrounding tissues \cite{cancer_def}. Diabetes is a disease group in which there are high blood sugar levels for a long period. There are three types of diabetes: type 1, type 2, and gestational diabetes. Lastly, chronic obstructive pulmonary disease (COPD) is a chronic lung disease that is characterized by persistent respiratory symptoms and airflow problems \cite{vogelmeier2017global}. Examples of these symptoms are shortness of breath and coughing. The worsening of these symptoms for a period of time is called an acute exacerbation.
     
-    The following sections give more information on each chronic disease category. A definition, few examples of diseases belonging to the category, and prevention and treatment plans will be covered.
+    The following sections give more information on the prevention and management of these diseases.
 
-        \subsubsection{Cardiovascular diseases} All diseases that involve the heart or blood vessels belong to the cardiovascular disease group. Typical examples of such diseases are stroke and coronary artery disease. Globally, cardiovascular disease is the leading cause of death \cite{mendis2011global}.
+        \subsubsection{Prevention}
 
-        \subsubsection{Cancer} cancer
-
-        \subsubsection{Diabetes} diabetes
-
-        \subsubsection{Chronic respiratory diseases}
-        Chronic obstructive pulmonary disease (COPD) is a chronic lung disease that is characterized by persistent respiratory symptoms and airflow problems \cite{vogelmeier2017global}. Examples of these symptoms are shortness of breath and coughing. The worsening of these symptoms for a period of time is called an acute exacerbation.
+        \subsubsection{Management}
+        
 
 
     % TODO: remove chronic disease explanation -> only discuss studies
@@ -87,7 +85,7 @@ A literature study has been conducted to situate the thesis topic. Multiple subj
 
         % remove & rework
         \subsubsection{Chronic disease management}
-        A lot of studies have been conducted to test the effect of telemonitoring on chronic disease management. For all but one of the four disease categories mentioned in section \ref{chronic_diseases} general literature was found: the literature found on cancer focussed on very specific types of the disease and not in the general sense. Consequently, only the application of telemonitoring on the other categories will be discussed. Also, the respiratory disease category focusses on chronic obstructive pulmonary disease, as that was the subject of the found studies.
+        A lot of studies have been conducted to test the effect of telemonitoring on chronic disease management. For all but one of the four disease categories mentioned in section \ref{chronic_diseases} general literature was found: the literature found on cancer focussed on very specific types of the disease and not in the general sense. Consequently, only the application of telemonitoring on the other categories will be discussed.
 
         \paragraph{Cardiovascular diseases} One study recruited 390 patients to test the effect of telemonitoring to reduce hospital days and total costs \cite{tompkins2010randomized}. 193 individuals in the intervention group were to take daily measurements using special hardware. The hardware recorded the weight, blood pressure, heart rate and blood oxygen levels. Diabetes patients received an additional blood glucose meter. Patients were also required to fill in a predetermined set of questions every week. On the clinician's end, nurses were shown a summarizing table indicating if the sent results were good, bad or missing. Based on these results, the nurses decided to contact the patient if extra care was required.
 
@@ -110,10 +108,6 @@ A literature study has been conducted to situate the thesis topic. Multiple subj
         \paragraph{Chronic obstructive pulmonary disease} A 2003 study investigated the feasibility of telemonitoring for patients with COPD \cite{maiolo2003home}. In the first phase of the study 23 patients were observed for 12 months during their medical visits. For the second phase, patients were given a device which uses a finger clip to measure the oxygen saturation and heart rate. This device sends the data towards the caregivers. The caregivers analyzed the measurements and communicated comments on the symptoms and prescription changes to the patients. Results noted decreases in the numbers of hospital admissions (50\%) and acute home exacerbations (55\%). The hospitalization costs were 17\% lower compared to the first phase and 96\% of the patients were satisfied with the telemonitoring equipment.
 
         Another study observed the quality of life of telemonitoring compared to usual care \cite{lewis2010home}. The control group received standard care for 52 weeks. The telemonitoring group received devices asking them questions about their symptoms twice a day. Also, the temperature and oxygen saturation were recorded by the device. If two of these measurements crossed a threshold, the respiratory nurses received an alert and called the patient. Between the two groups there were no significant differences seen in the quality of life, meaning that telemonitoring had no effect on this outcome.
-
-
-
-        % explain exacerbation
 
         \noindent Test
 
@@ -144,16 +138,11 @@ A literature study has been conducted to situate the thesis topic. Multiple subj
     % examples of EHRS -> visually difficult
     % what makes a dashboard effective
 
-    
-    \subsection{Customization}
-    % effect on user satisfaction
-    % lack of reporting in EHRS
-
     \subsection{Data privacy \& standards}
         
-        \subsection{Privacy} \label{2_privacy}
+        \subsubsection{Privacy} \label{2_privacy}
 
-        \subsection{Standards} \label{2_standards}
+        \subsubsection{Standards} \label{2_standards}
 
     
 
