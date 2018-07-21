@@ -32,7 +32,7 @@ A literature study has been conducted to situate the thesis topic. Multiple subj
 
         \paragraph{Efficiency} An important task of an EHRS is to facilitate effective care. An early study saw a 6\% increase in productivity when EHRS were deployed in health care institutions \cite{ehrs_efficiency}. However, other factors are at play, such as the adoption rate. The transition from paper-based documenting to digital is accompanied by a learning curve, which can be steep. After the switch, the productivity will most likely be lower at the start. As the users become more experienced with the software, it will increase. Today most institutions have already made the transition to an EHRS, so this has become less of an issue.
 
-        \subsubsection{Components of an EHRS}
+        \subsubsection{Components of an EHRS} \label{ehrs_components}
 
         As mentioned before, EHRS do not simply store patient records. They consist of many components which ultimately defines how well they perform in health care. Literature defines many lists of components which should be essential. However, we list the following five components as key \cite{biomedical_informatics}:
 
@@ -78,28 +78,41 @@ A literature study has been conducted to situate the thesis topic. Multiple subj
                 \item Eat a healthy diet: prevent cardiovascular disease, diabetes type 2, and some types of cancer. Some factors that attribute to a healthy diet are as follows: consume healthy fats, eat plenty of fruit and vegetables, replace refined grains with whole grains, limit sugar intake, limit excessive calories, and limit sodium intake.
             \end{itemize}
 
-        The aforementioned lifestyle and dietary changes are closely coupled as they affect one another. Eating healthy is an important step of losing weight. However, solely changing diet without exercising can limit progress. 
+        \noindent The aforementioned lifestyle and dietary changes are closely coupled as they affect one another. Eating healthy is an important step of losing weight. However, solely changing diet without exercising can limit progress. 
 
         Although one can argue that the incidence of chronic diseases is largely dependent on genetics, it was estimated that 90\% of cardiovascular disease can be prevented \cite{mcgill2008preventing}. This calls for the need to make the general public aware of implementing these lifestyle changes. Programs that promote cycling or walking to school or the workplace are, for example, a manner to engage in physical activity.
 
-
-
         % patient education
         \subsubsection{Management}
-        
 
+        \begin{figure}[!t]
+            \centering
+            \includegraphics[width=0.8\textwidth]{chapters/2_background/chronic_model}
+            \caption{Chronic Care Model}\label{fig:chronic_care}
+        \end{figure}
 
-    % TODO: remove chronic disease explanation -> only discuss studies
+        The Chronic Care Model was designed to improve the quality of chronic disease management for primary care \cite{bodenheimer2002improving}. The model recognizes six essential elements in chronic care, which figure  summarizes:
+        \begin{itemize}
+            \item Community resources and policies: mobilize community resources to meet the needs of patients. Education classes, self-help groups, and exercise programs are examples of such resources.
+            \item Health care organization: create an organization that provides safe and high quality care. 
+            \item Self-management support: patients need to be trained and given the necessary tools to effectively self-manage their chronic disease.
+            \item Delivery system design: alter the structure of the medical practice to assure effective care and self-management support.
+            \item Decision support: promote care consistent with scientific data and patient preferences.
+            \item Clinical information system: organize data to facilitate effective care.
+        \end{itemize}
+
+        \noindent Improvements in chronic disease management and reduced health care costs have been observed after implementing this model. \cite{bodenheimer2002improving_2}. Of these elements, most studies focus on self-management support interventions \cite{reynolds2018systematic}. The same lifestyle and dietary changes mentioned in the previous section are applied by the patients, paired with following a medication plan. However, one key aspect of self-management is patient education as it affects the patients perception of effectiveness of the intervention \cite{wallace2010influence}. Self-management is heavily facilitated through telemonitoring, which the next section covers.
+
     \subsection{Telemonitoring} \label{2_telemonitoring}
     % between consultations
     % in relation to EHRS
     % transfers burden partly to patient
-    Monitoring patients at a distance through the use of information technology is called telemonitoring \cite{systematic_review}. Here, the patient uses special monitoring devices to gather data which in turn is sent to the health care provider. While many health conditions can be monitored, telemonitoring is most prevalent in chronic diseases discussed in the previous section. A study showed that not only the complications of chronic diseases and costs can be reduced by the use of telemonitoring, but also care can be provided without the use of hospital beds and the time spent managing the disease is lower \cite{telemonitoring_current_state}.
+    Monitoring patients at a distance through the use of information technology is called telemonitoring \cite{systematic_review}. Here, the patient uses special monitoring devices to gather data which in turn is sent to the health care provider. While many health conditions can be monitored, telemonitoring is most prevalent in chronic disease management discussed in the previous section. A study showed that the complications of chronic diseases and costs can be reduced by the use of telemonitoring. Also, care can be provided without the use of hospital beds and the time spent managing the disease is lower \cite{telemonitoring_current_state}.
 
     To get a better understanding of telemonitoring, an overview of the its application to chronic disease management is given. Second, the difficulties surrounding telemonitoring are mentioned.
 
         \subsubsection{Chronic disease management}
-        A lot of studies have been conducted to test the effect of telemonitoring on chronic disease management. For all but one of the four disease categories mentioned in section \ref{chronic_diseases} general literature was found: the literature found on cancer focussed on very specific types of the disease and not in the general sense. Consequently, only the application of telemonitoring on the other categories will be discussed.
+        A lot of studies have been conducted to test the effect of telemonitoring on chronic disease management. For all but one of the four disease categories mentioned in section \ref{chronic_diseases}, general literature was found: the literature found on cancer focussed on very specific types of the disease and not in the general sense. Consequently, only the application of telemonitoring on the other categories is discussed.
 
         \paragraph{Cardiovascular diseases} One study recruited 390 patients to test the effect of telemonitoring to reduce hospital days and total costs \cite{tompkins2010randomized}. 193 individuals in the intervention group were to take daily measurements using special hardware. The hardware recorded the weight, blood pressure, heart rate and blood oxygen levels. Diabetes patients received an additional blood glucose meter. Patients were also required to fill in a predetermined set of questions every week. On the clinician's end, nurses were shown a summarizing table indicating if the sent results were good, bad or missing. Based on these results, the nurses decided to contact the patient if extra care was required.
 
