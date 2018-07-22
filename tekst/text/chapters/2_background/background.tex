@@ -160,9 +160,9 @@ A literature study has been conducted to situate the thesis topic. Multiple subj
 
     \subsection{Dashboards} \label{2_dashboards}
 
-    The primary goal of a dashboard is clear communication, which is achieved with an effective design. A formal definition is as follows: ``A dashboard is a visual display of the most important information need to achieve one or more objectives; consolidated and arranged on a single screen so information can be monitored at a glance.'' \cite{dashboard}. This definition mentions four key characteristics:
+    Dashboards are used in many contexts. The most common examples include a car speedometer and stock analysis. In computer networking, dashboards are used to quickly interpret network traffic.  While some dashboards provide fancy graphics, many miss the key point of what it is supposed to accomplish. The primary goal of a dashboard is clear communication, which is achieved through effective design. A formal definition is as follows: ``A dashboard is a visual display of the most important information need to achieve one or more objectives; consolidated and arranged on a single screen so information can be monitored at a glance.'' \cite{dashboard}. This definition contains four key characteristics:
 
-    \paragraph{Dashboards are visual displays.} It is important that data is represented visually. Displaying charts and other graphics allows more efficient communication compared to textual information. For example, trends and outliers are easier to spot in a line chart compared to a table with the same values.
+    \paragraph{Dashboards are visual displays.} It is important that data is represented visually. Displaying charts and other graphics allows more efficient communication compared to textual information. For example, trends and outliers are easier to spot in a line chart compared to a table with the same values. Instead of using a different visualization for the sake of variety, one should always use the visualization which is best suited to effectively communicate the data \cite{few2005intelligent}.
 
     \paragraph{Dashboards display information needed to achieve specific objectives.} The data that is shown, must be of use for the job that needs to be done. It is possible that the data needs to be gathered from multiple sources and tailored to the specific context so an efficient visualization can be created.
 
@@ -170,14 +170,20 @@ A literature study has been conducted to situate the thesis topic. Multiple subj
 
     \paragraph{Dashboards are used to monitor information at a glance.} Important data should be immediately noticed, whereas very specific details should be hidden. This means data must be summarized or aggregated in order to be effectively shown. However, if the user wishes to view the detailed data, the dashboard should provide a way to do so.\\
 
-    \noindent To create an effective dashboard, the user-base must be known and well understood. What type of users are we dealing with? What are their characteristics? This is an important question to ask, as one user may not comprehend one visualization while another one can. This means that the focus should be put on the user \cite{brath2004dashboard}.
-        
-    % wide range of dashboard types: monitoring stocks, network management...
-    % examples of EHRS -> visually difficult
-    % what makes a dashboard effective
+    \noindent To create an effective dashboard, the user-base must be well known and understood. What type of users are we dealing with? What are their characteristics? This is an important question to ask, as one user may not comprehend one visualization while another one can. This means that the focus should be put on the user \cite{brath2004dashboard}. We can ask the following question to better understand the user's needs:
+    
+    \begin{itemize}
+        \item What metrics does the user need to see?
+        \item What context does each metric require to make it meaningful? Do we need to visualize the variance, target to reach, trend\ldots?
+        \item What visualization best communicates the metric?
+    \end{itemize}
+
+    \noindent On that end, sketches and mockups can significantly help the design process. Multiple iterations, each incorporating feedback from the users, ensure that the end result is satisfactory. In section \ref{design} created paper mockups are showcased together with an explanation on the design choices.
 
     \subsection{Data privacy \& standards}
         
+    Although it is out of the scope of this thesis, it is important to mention that data privacy and the use of health standards are important components of health software. From the onset of the design phase, data security and standard choices need to be kept in mind.
+
         \subsubsection{Privacy} \label{2_privacy}
 
         \subsubsection{Standards} \label{2_standards}
