@@ -96,11 +96,38 @@ After the literature study, a design for the dashboard solution was made. What f
         % highlights integration
         \subsubsection{Anna}
 
-        \paragraph{Persona} Anna is a software engineer working at the local hospital. From the early 2000's, she was responsible for the integration of health software systems. As such, she has experienced the continuous change associated with health software. Each unit of the hospital uses different software, while they all share a general system to view patient records. The interaction between these applications is one of the responsibilities of Anna.
-        
+        \paragraph{Persona} Anna is a software engineer working at the local hospital. From the early 2000's, she was responsible for the integration of health software systems. As such, she has experienced the continuous change associated with health software. Each unit of the hospital uses different software, while they all share a general system to view patient records. The interaction between these applications is one of Anna's responsibilities.
+
+        As time goes on, new software and medical instruments that improve workflow are purchased. Sometimes these replace old systems, otherwise they are added to work alongside them. Both are becoming increasingly difficult to do, as the codebase of the EHRS grows. When an older system gets replaced, Anna has to weed through the code and delete little pieces, hoping other parts wont break. It is a frustrating task as often band-aid solutions are applied.
+
+        \paragraph{Scenario} A new EHRS was installed that should improve integration of other applications. Anna skims through the documentation and starts the transition process. She quickly notices that for each device or application she needs to create a backend data structure and a module that represents it in the EHRS. The new EHRS is designed that these modules can serve as complete standalone applications or be part of a set of modules.
+
+        After the initial transition period, everything is put into place. Not soon after, a new bedside monitors with accompanying software was purchased. These replace the old bedside monitors and consequently, the software. Thanks to the new EHRS, Anna deletes the old module without much hassle. Also, she refit the backend data structure to work with the new device's readings. This ensures that the old device data is still intact. Anna designed the new module to be similar in appearance and functionality. After implementing the module, the staff barely notices any change and workflow resumes with minor disruption.
+
     \subsection{Modules} \label{design_modules}
     
     As mentioned in the proposal, the dashboard will feature a module-based design. This section will describe the modules that will be built in the prototype. For each module, the reasons behind the design choices are given, as well as a low-fidelity paper mockup. Keep in mind that all modules are primarily chosen to aid with chronic disease management.
+
+    Each module has its own design, which is in line with the principles mentioned in section \ref{2_dashboards}. For each module we ask the following questions:
+    \begin{itemize}
+        \item What functionality does the module offer?
+        \item What data will it represent?
+        \item How do we show as much data as possible at a glance?
+        \item How are summaries generated?
+        \item How are the detailed values shown?
+    \end{itemize}
+
+    Some functionality is present in all modules. These include resizing the module to a larger or smaller version with varying amounts of detail, increasing the customization options. The smaller the module, the more data is aggregated to a summary. Each module can be freely placed anywhere on the dashboard. Also, all modules can navigate through historical data either by week or by month. The ability to set thresholds for each patient is always present, which is necessary to generate appropriate alerts.
+
+    Based on the telemonitoring literature review from section \ref{2_telemonitoring}, the following modules will be created:
+    \begin{itemize}
+        \item Heart rate: cardiovascular disease, diabetes, and COPD.
+        \item Blood pressure: cardiovascular disease and diabetes.
+        \item Blood sugar: diabetes.
+        \item Weight: cardiovascular disease and diabetes.
+        \item Oxygen saturation: cardiovascular disease and COPD.
+        \item Medication: cardiovascular disease and diabetes.
+    \end{itemize}
 
     % dashboard
     \subsection{Other components}
