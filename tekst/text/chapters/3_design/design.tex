@@ -4,7 +4,7 @@ After the literature study, a design for the dashboard solution was made. What f
 
     \subsection{MuiCSer} \label{2_muicser}
     % description of process
-    This section describes the MuiCSer framework, made for user-centered software engineering processes in a multidisciplinary context \cite{muicser}, which will be used to create the prototype. This framework focuses on optimizing the user experience during the entire software engineering cycle to ensure that the end-user's needs are fulfilled. By combining user-centered design and software engineering principles the user experience of the final product can be improved substantially of the final product.
+    This section describes the MuiCSer framework, made for user-centered software engineering processes in a multidisciplinary context \cite{muicser}, which was used to create the prototype. This framework focuses on optimizing the user experience during the entire software engineering cycle to ensure that the end-user's needs are fulfilled. By combining user-centered design and software engineering principles the user experience of the final product can be improved substantially of the final product.
 
         \subsubsection{Process}
         
@@ -27,9 +27,14 @@ After the literature study, a design for the dashboard solution was made. What f
         \paragraph{Final user interface} When the latest iteration of the high fidelity prototype satisfies all user requirements, the final user interface can be created. It would be beneficial to reuse the code from the prototype in order to save time and resources. As a final step, the task models are checked against the interface to check if all required functionality is present.
 
     \subsection{Proposal}
-    % dashboard -> problems monolithic, multiple apps
-    % dashboard mockups and iterations -> know users, reason for MUICSER
-    % modules according to telemonitoring parameters
+    
+    The proposal features three core concepts which will be combined to form one cohesive solution: a dashboard, telemonitoring of chronic diseases, and customization. As mentioned in the introduction, multiple applications and integrating them pose several difficulties: data is spread and stored multiple times. Interaction between these applications is not present and integrating them requires work from the IT staff from the institution. This becomes increasingly difficult as more applications are added. To remedy this problem, a dashboard solution can gather all relevant data into one place.
+
+    A module-based approach towards the dashboard allows easy customization and integration. Each module will serve its own purpose by showing data for one particular health parameter. As mentioned in section \ref{2_telemonitoring}, parameters such as heart rate and blood pressure are often measured to monitor multiple chronic diseases. Integration is handled by the fact that each module is independent and does not require other modules to work properly. This also helps with customization as a clinician can choose which modules are relevant for the patient in question.
+
+    The modules that will be developed are for use in chronic disease monitoring. However, modules can be developed for purposes more fit for in-patient care. Examples are real-time monitoring, documenting diagnoses, and viewing of lab results. Which modules will be implemented and what each one of them tries to achieve is described in section \ref{design_modules}. The implementation section will provide more insight on how this independence is achieved and how future modules can be easily integrated.
+
+    This combination allows the clinician to customize the dashboard according to each patient's needs, facilitating effective care. Data is found rapidly, albeit summarized or detailed, and not hidden away behind multiple screens. future applications should be able to create modules that will fit into the dashboard, negating the use of multiple applications. The following section describes how the system will work and how the users interact with it.
 
     \subsection{Personas \& scenarios}
 
@@ -38,7 +43,7 @@ After the literature study, a design for the dashboard solution was made. What f
         % highlights customization and dashboard
         \subsubsection{Jake}
 
-        \paragraph{Persona} Jake is a 25-year-old male who currently works as a nurse at the hospital in his city. He has been working for 4 years for the hospital and lives alone in his apartment. Still being a young adult, Jake grew up with technology. As such he experiences no difficulties when using new software on his computer or smartphone. His hobbies include music, playing the guitar and video gaming.
+        \paragraph{Persona} Jake is a 25-year-old male who currently works as a nurse at the hospital in his city. He has been working for 4 years for the hospital and lives alone in his apartment. Still being a young adult, Jake grew up with technology. As such he experiences no difficulties when using new software on his computer or smartphone. His hobbies include music, playing the guitar, and video gaming.
 
         Currently, the workflow at the hospital is dated. A new health information system was introduced to summarize and gather all medical data in a singular space. Because this is a monolithic system, a lot of features that Jake does not need still clutter the screen. Navigating the system is a pain and customization is not present. Jake wishes to only see the features he uses most while hiding the features he does not need.
         
@@ -63,7 +68,7 @@ After the literature study, a design for the dashboard solution was made. What f
 
         The first patient of the day describes what sounds like a fever. Dan confirms this and prescribes the patient some medicine. The diagnosis is added to the `past diagnoses' module and the prescribed medication to the `medication list' module. Dan did not need other health data to perform the diagnosis. Therefore, Dan does not change the configuration of this patient.
 
-        The next patient, an elderly woman, came for her second visit of this month. Dan knows from the past that it will probably be a heart problem. Dan searches for other modules labeled as `heart problems' and adds them to the configuration of the elderly woman. Now both the default module group and the heart rate modules are present, which is unnecessary according to Dan. He removes some modules of the default module group. Now, the next time the elderly woman visits, that configuration will be loaded.
+        The next patient, an elderly woman, came for her second visit of this month. Dan knows from the past that it will probably be a heart problem. Dan searches for a `heart' module and adds it to the configuration of the elderly woman. Now both the default module group and a heart rate module are present, which is unnecessary according to Dan. He removes some modules of the default module group. Now, the next time the elderly woman visits, that configuration will be loaded.
 
         One specific patient had broken his arm three times in less than a year. When the patient came for a routine visit, Dan immediately added a module to easily view x-ray photos and view them in a timeline.\\
 
@@ -76,19 +81,27 @@ After the literature study, a design for the dashboard solution was made. What f
 
         If a patient has sleep issues, Emily wishes to not see detailed measurement values, but regular descriptions of the night’s sleep. This includes the hours of sleep, amount of wake-ups, subjective feeling of tiredness. Currently, Emily has no way of regularly receiving this information without having the patient visit, because it needs to be documented at the practice.
         
-        \paragraph{Scenario} Emily has recently received notice of a new platform that includes telemonitoring support. Several mobile applications are developed that can send data using an API to the platform, which in turn processes the values and can notify Emily of any anomalies. It includes customization for certain parameters in which Emily can individually assign thresholds for each patient.
+        \paragraph{Scenario} Emily recently received notice of a new platform that includes telemonitoring support. Several mobile applications are developed that can send data using an API to the platform, which in turn processes the values and can notify Emily of any anomalies. It includes customization for certain parameters in which Emily can individually assign thresholds for each patient.
 
-        A patient which has recently had a cardiac arrest is continuing rehabilitation at home. However, the patient has chest pains and pays Emily a visit. She tells the patient to regularly measure his blood pressure and heart rate and take note of these values in a mobile application. This application also allows taking general notes, such as feeling pain or having caught a cold. After they have scheduled the next visit, the patient is sent home.
+        A patient who recently had a cardiac arrest is continuing rehabilitation at home. However, the patient has chest pains and pays Emily a visit. She tells the patient to regularly measure his blood pressure and heart rate, and to take note of these values in a mobile application. This application also allows taking general notes, such as feeling pain or having caught a cold. After they have scheduled the next visit, the patient is sent home.
         
         As the next few weeks pass by, Emily is notified that this patient has crossed a threshold regarding his blood pressure. Immediately Emily checks the measured data and sees a graph of all measured values. This dataset delivers insight into the history of the patient and Emily sees that there is currently no need to panic. She decides to not take action and configures a weekly reminder to keep monitoring the blood pressure.
         
         The next week, Emily receives a notification that the patient has made a note. It reads that he experienced chest pains. Again, Emily takes a look at the blood pressure data and sees a worsening trend leading to hypertension. Emily decides to call the patient to schedule an early visit. The system helped Emily to intervene as soon as the situation seemed to worsen while avoiding having the patient visit too early which in turn saves Emily time.
         
-        Another patient has sleep issues. Emily encourages the patient to use a sleep monitor, which is a wristband. This device is connected to a smartphone which communicates the quantitative data to the new platform. The application on the smartphone allows the patient to take note of qualitative data such as a general description of the night or what food he/she ate. One night the patient has slept only three hours and took note that he went out and drank a lot of alcohol. This could explain for example the bad sleeping rhythm for the next few days. Emily wishes to keep track of this patient on a weekly basis and configures the platform to notify her. 
+        Another patient has sleep issues. Emily encourages the patient to use a sleep monitor, which is a wristband. This device is connected to a smartphone which communicates the quantitative data to the new platform. The application on the smartphone allows the patient to take note of qualitative data such as a general description of the night or what food he/she ate. One night the patient slept only three hours and took note that he went out and drank a lot of alcohol. This could explain for example the bad sleeping rhythm for the next few days. Emily wishes to keep track of this patient on a weekly basis and configures the platform to notify her.\\
+
+        \noindent Here, the effects of telemonitoring are highlighted. By generating reports and alerts, the caregiver can intervene when necessary. Combine this with the aforementioned dashboard platform, greater efficiency of care can be accomplished.
+
+        % highlights integration
+        \subsubsection{Anna}
+
+        \paragraph{Persona} Anna is a software engineer working at the local hospital. From the early 2000's, she was responsible for the integration of health software systems. As such, she has experienced the continuous change associated with health software. Each unit of the hospital uses different software, while they all share a general system to view patient records. The interaction between these applications is one of the responsibilities of Anna.
         
-    \subsection{Modules}
+    \subsection{Modules} \label{design_modules}
     
-        As mentioned in the proposal, the dashboard will feature a module-based design. This section will describe the modules that will be built in the prototype. For each module, the reasons behind the design choices are given, as well as a low-fidelity paper mockup. Keep in mind that all modules are primarily chosen to aid with chronic disease management.
+    As mentioned in the proposal, the dashboard will feature a module-based design. This section will describe the modules that will be built in the prototype. For each module, the reasons behind the design choices are given, as well as a low-fidelity paper mockup. Keep in mind that all modules are primarily chosen to aid with chronic disease management.
 
     % dashboard
     \subsection{Other components}
+
