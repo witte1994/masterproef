@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>Test</title>
+    <meta name="description" content="testing">
+
+    <!-- See https://goo.gl/OOhYW5 -->
+    <link rel="manifest" href="/manifest.json">
+
+    <script src="/node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    
+    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="/node_modules/packery/dist/packery.pkgd.min.js"></script>
+    <script src="/node_modules/draggabilly/dist/draggabilly.pkgd.js"></script>
+    
+    <script src="/js/setup.js"></script>
+
+    <script type="module" src="/node_modules/@polymer/app-layout/app-header-layout/app-header-layout.js"></script>
+    <script type="module" src="/node_modules/@polymer/app-layout/app-drawer-layout/app-drawer-layout.js"></script>
+    <script type="module" src="/node_modules/@polymer/app-layout/app-scroll-effects/app-scroll-effects.js"></script>
+    <script type="module" src="/node_modules/@polymer/app-layout/app-header/app-header.js"></script>
+    <script type="module" src="/node_modules/@polymer/app-layout/app-toolbar/app-toolbar.js"></script>
+    <script type="module" src="/node_modules/@polymer/app-layout/app-drawer/app-drawer.js"></script>
+    <script type="module" src="/node_modules/@polymer/paper-icon-button/paper-icon-button.js"></script>
+    <script type="module" src="/node_modules/@polymer/iron-icons/iron-icons.js"></script>
+    
+    <script type="module" src="/src/main-element/main-element.js"></script>
+
+    <custom-style>
+      <style>
+        body {
+          /* No margin on body so toolbar can span the screen */
+          margin: 0;
+          font-family: "Roboto", "Noto", sans-serif;
+        }
+        app-toolbar {
+          /* Toolbar is the main header, so give it some color */
+          background-color: #1E88E5;
+          font-family: 'Roboto', Helvetica, sans-serif;
+          color: white;
+          --app-toolbar-font-size: 24px;
+        }
+
+        app-drawer-layout:not([narrow]) [drawer-toggle] {
+          display: none;
+        }
+
+        app-drawer {
+          --app-drawer-content-container: {
+            box-shadow: 1px 0 0px 0px rgba(0,0,0,0.30);
+          }
+        }
+      </style>
+    </custom-style>
+  </head>
+  <body>
+    
+    
+    <app-drawer-layout fullbleed="" narrow="{{narrow}}">
+      <!-- Drawer content -->
+      <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
+        <app-toolbar>Patient info</app-toolbar>
+
+        <main-element class="grid-item"></main-element>
+      </app-drawer>
+    
+      <!-- Main content -->
+      <app-header-layout has-scrolling-region="">
+        <app-header slot="header" condenses="" reveals="" effects="waterfall">
+          <app-toolbar>
+            <paper-icon-button icon="menu" drawer-toggle=""></paper-icon-button>
+            <div main-title="">Dashboard</div>
+          </app-toolbar>
+        </app-header>
+
+      <div class="grid" style="margin: 8px;">
+        <main-element class="grid-item"></main-element>
+        <main-element class="grid-item"></main-element>
+        <main-element class="grid-item"></main-element>
+        <main-element class="grid-item"></main-element>
+      </div>
+
+      </app-header-layout>
+    </app-drawer-layout>
+    
+  </body>
+</html>

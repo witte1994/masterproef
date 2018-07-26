@@ -1,0 +1,17 @@
+{
+  "name": "Test",
+  "description": "testing",
+  "dependencies": {
+    "@polymer/app-layout": "^3.0.0-pre.21",
+    "@polymer/iron-icons": "^3.0.0-pre.21",
+    "@polymer/paper-icon-button": "^3.0.0-pre.21",
+    "@polymer/polymer": "^3.0.0",
+    "draggabilly": "^2.2.0",
+    "jquery": "^3.3.1",
+    "packery": "^2.1.2"
+  },
+  "devDependencies": {
+    "@webcomponents/webcomponentsjs": "^2.0.0",
+    "wct-browser-legacy": "^1.0.0"
+  }
+}
