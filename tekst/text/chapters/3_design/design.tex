@@ -119,7 +119,7 @@ After the literature study, a design for the dashboard solution was made. What f
         \item How are the detailed values shown?
     \end{itemize}
 
-    Some functionality is present in all modules. These include resizing the module to a larger or smaller version with varying amounts of detail, increasing the customization options. The smaller the module, the more data is aggregated to a summary. Each module can be freely placed anywhere on the dashboard. Also, all modules can navigate through historical data either by week or by month. The ability to set thresholds for each patient is always present, which is necessary to generate appropriate alerts.
+    Some functionality is present in all modules. These include resizing the module to a larger or smaller version with varying amounts of detail, increasing the customization options. The smaller the module, the more data is aggregated to a summary. Each module can be freely placed anywhere on the dashboard. Also, all modules can navigate through historical data either by three days, week or by month. The ability to set thresholds for each patient is always present, which is necessary to generate appropriate alerts.
 
     Based on the telemonitoring literature review from section \ref{2_telemonitoring}, the following modules will be created:
     \begin{itemize}
@@ -133,6 +133,11 @@ After the literature study, a design for the dashboard solution was made. What f
 
         \subsubsection{Heart rate}
 
+        The small summarizing module tries to indicate how well the last three, seven, or 30 days went. Three buttons are present to choose the time period. Navigating the time period is done by pressing the arrow buttons. Based on thresholds, a count is generated of the measurements: good values lay between the recommended values, warning values lay between the danger and recommended values, and dangerous values have crossed the danger threshold. These are all color coded as green, yellow, and red respectively. Below the count, the lowest, average, and highest values for the selected time period are found. These values are again color coded to situate them in the threshold zones. A settings button is present where the user can find the menu to change the thresholds for the current patient. Also, there are options to remove or enlarge the module.
+
+        A larger module provides more detail. The left hand side features a line chart which plots the heart rate measurements over time. Areas on the chart are highlighted green, yellow, or red to indicate the thresholds. Just as the small module, time periods can be selected. To the right of the chart area, the same count and summarizing values are found as in the small module.
+
+        % maybe largest -> both list and graph
 
         \subsubsection{Blood pressure}
 
@@ -149,6 +154,6 @@ After the literature study, a design for the dashboard solution was made. What f
         \subsubsection{Medication}
 
 
-    % dashboard: saving layouts, adding modules...
+    % dashboard: saving layouts, adding modules, patient info...
     \subsection{Other components}
 
