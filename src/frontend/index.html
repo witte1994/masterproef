@@ -10,6 +10,7 @@
     <!-- See https://goo.gl/OOhYW5 -->
     <link rel="manifest" href="/manifest.json">
 
+    <script src="/node_modules/web-animations-js/web-animations-next-lite.min.js"></script>
     <script src="/node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
     
     <script src="/node_modules/jquery/dist/jquery.min.js"></script>
@@ -26,7 +27,12 @@
     <script type="module" src="/node_modules/@polymer/app-layout/app-drawer/app-drawer.js"></script>
     <script type="module" src="/node_modules/@polymer/paper-icon-button/paper-icon-button.js"></script>
     <script type="module" src="/node_modules/@polymer/iron-icons/iron-icons.js"></script>
-    
+    <script type="module" src="/node_modules/@polymer/paper-dialog/paper-dialog.js"></script>
+    <script type="module" src="/node_modules/@polymer/paper-button/paper-button.js"></script>
+    <script type="module" src="/node_modules/@polymer/paper-dropdown-menu/paper-dropdown-menu.js"></script>
+    <script type="module" src="/node_modules/@polymer/paper-listbox/paper-listbox.js"></script>
+    <script type="module" src="/node_modules/@polymer/paper-item/paper-item.js"></script>
+
     <script type="module" src="/src/main-element/main-element.js"></script>
     <script type="module" src="/src/user-element/user-element.js"></script>
 
@@ -74,6 +80,7 @@
           <app-toolbar>
             <paper-icon-button icon="menu" drawer-toggle=""></paper-icon-button>
             <div main-title="">Dashboard</div>
+            <paper-icon-button icon="add" onclick="addModule.open()"></paper-icon-button>
           </app-toolbar>
         </app-header>
 
@@ -84,5 +91,33 @@
       </app-header-layout>
     </app-drawer-layout>
     
+    <paper-dialog id="addModule">
+      <h2>Add module</h2>
+      <p>Select the module and its size that you want to add:</p>
+
+      <paper-dropdown-menu id="moduleMenu" label="Module">
+        <paper-listbox slot="dropdown-content">
+          <paper-item value="patient_info">Patient info</paper-item>
+          <paper-item>fqefqf</paper-item>
+        </paper-listbox>
+      </paper-dropdown-menu>
+
+      <paper-dropdown-menu id="sizeMenu" label="Size">
+        <paper-listbox slot="dropdown-content">
+          <paper-item value="s">Small</paper-item>
+          <paper-item value="m">Large</paper-item>
+        </paper-listbox>
+      </paper-dropdown-menu>
+
+      <paper-button dialog-dismiss autofocus>Decline</paper-button>
+      <paper-button dialog-confirm onclick="clicky()">Accept</paper-button>
+    </paper-dialog>
   </body>
+
+  <script>
+    function clicky() {
+      var module = document.getElementById("moduleMenu").selectedItem.getAttribute("value");
+      var size = document.getElementById("sizeMenu").selectedItem.getAttribute("value");
+    }
+  </script>
 </html>
