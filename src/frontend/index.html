@@ -28,6 +28,7 @@
     <script type="module" src="/node_modules/@polymer/iron-icons/iron-icons.js"></script>
     
     <script type="module" src="/src/main-element/main-element.js"></script>
+    <script type="module" src="/src/user-element/user-element.js"></script>
 
     <custom-style>
       <style>
@@ -64,7 +65,7 @@
       <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
         <app-toolbar>Patient info</app-toolbar>
 
-        <main-element class="grid-item"></main-element>
+        <user-element></user-element>
       </app-drawer>
     
       <!-- Main content -->
@@ -77,10 +78,7 @@
         </app-header>
 
       <div class="grid" style="margin: 8px;">
-        <main-element class="grid-item"></main-element>
-        <main-element class="grid-item"></main-element>
-        <main-element class="grid-item"></main-element>
-        <main-element class="grid-item"></main-element>
+        <user-element class="grid-item"></user-element>
       </div>
 
       </app-header-layout>
