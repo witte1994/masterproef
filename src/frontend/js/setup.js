@@ -1,8 +1,9 @@
+var $grid;
+
 $(document).ready(function() {
-    $("#demo").html("Hello, World!");
     var elem = document.querySelector('.draggable');
     
-    var $grid = $('.grid').packery({
+    $grid = $('.grid').packery({
         itemSelector: '.grid-item',
         // columnWidth helps with drop positioning
         columnWidth: 100
@@ -14,6 +15,22 @@ $(document).ready(function() {
         // bind drag events to Packery
         $grid.packery('bindDraggabillyEvents', draggie);
     });
-
-   
 });
+
+function add() {
+    var module = document.getElementById("moduleMenu").selectedItem.getAttribute("value");
+    var size = document.getElementById("sizeMenu").selectedItem.getAttribute("value");
+
+    var mainGrid = document.getElementById("mainGrid");
+
+    var newModule = document.createElement("user-element");
+    newModule.classList.add("grid-item");
+    $grid.packery()
+        .append(newModule)
+        .packery('appended', newModule)
+        // layout
+        .packery();
+
+    var draggie = new Draggabilly(newModule);
+    $grid.packery('bindDraggabillyEvents', draggie);
+}

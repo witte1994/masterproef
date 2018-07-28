@@ -84,7 +84,7 @@
           </app-toolbar>
         </app-header>
 
-      <div class="grid" style="margin: 8px;">
+      <div id="mainGrid" class="grid" style="margin: 8px;">
         <user-element class="grid-item"></user-element>
       </div>
 
@@ -110,14 +110,8 @@
       </paper-dropdown-menu>
 
       <paper-button dialog-dismiss autofocus>Decline</paper-button>
-      <paper-button dialog-confirm onclick="clicky()">Accept</paper-button>
+      <paper-button dialog-confirm onclick="add()">Accept</paper-button>
     </paper-dialog>
   </body>
 
-  <script>
-    function clicky() {
-      var module = document.getElementById("moduleMenu").selectedItem.getAttribute("value");
-      var size = document.getElementById("sizeMenu").selectedItem.getAttribute("value");
-    }
-  </script>
 </html>
