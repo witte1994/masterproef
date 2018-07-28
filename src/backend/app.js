@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 
 const userRoutes = require('./routes/user')
 
-mongoose.connect('mongodb+srv://dashboard:'+ process.env.MONGO_DB_PW + '@node-rest-dashboard-pztoc.mongodb.net/test?retryWrites=true', {
+mongoose.connect('mongodb://localhost:27017/dashboard', {
     useNewUrlParser: true
 });
 
