@@ -28,7 +28,6 @@ function add() {
     $grid.packery()
         .append(newModule)
         .packery('appended', newModule)
-        // layout
         .packery();
 
     var draggie = new Draggabilly(newModule);

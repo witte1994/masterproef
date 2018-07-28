@@ -43,10 +43,6 @@ class UserElement extends PolymerElement {
     }
     static get properties() {
         return {
-            prop1: {
-                type: String,
-                value: 'user-element'
-            },
             userId: {
                 type: String,
                 value: '5b5c65e3ad30264506380dd1'
@@ -70,7 +66,7 @@ class UserElement extends PolymerElement {
     handleResponse(event) {
         this.user = event.detail.response;
         var newDate = new Date(this.user.birth);
-        this.date = newDate.getFullYear() + "-" + ("0" + newDate.getMonth()).slice(-2) + "-" + ("0" + newDate.getDate()).slice(-2); 
+        this.date = ("0" + newDate.getDate()).slice(-2) + "-" + ("0" + newDate.getMonth()).slice(-2) + "-" + newDate.getFullYear(); 
     }
 }
 
