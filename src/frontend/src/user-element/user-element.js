@@ -60,11 +60,17 @@ class UserElement extends PolymerElement {
         };
     }
 
+    ready() {
+        super.ready();
+        var split = document.URL.split("/");
+        var param = split[split.length-1];
+        this.userId = param;
+    }
+
     handleResponse(event) {
         this.user = event.detail.response;
         var newDate = new Date(this.user.birth);
         this.date = newDate.getFullYear() + "-" + ("0" + newDate.getMonth()).slice(-2) + "-" + ("0" + newDate.getDate()).slice(-2); 
-        console.log(this.date);
     }
 }
 
