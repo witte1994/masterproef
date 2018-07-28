@@ -6,7 +6,7 @@ $(document).ready(function() {
     $grid = $('.grid').packery({
         itemSelector: '.grid-item',
         // columnWidth helps with drop positioning
-        columnWidth: 100
+        columnWidth: 20
     });
 
     // make all grid-items draggable
