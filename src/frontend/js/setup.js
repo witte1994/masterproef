@@ -23,13 +23,19 @@ function add() {
 
     var mainGrid = document.getElementById("mainGrid");
 
-    var newModule = document.createElement("user-element");
-    newModule.classList.add("grid-item");
-    $grid.packery()
-        .append(newModule)
-        .packery('appended', newModule)
-        .packery();
+    var newModule = null;
+    if (module === "heart") {
+        if (size === "s") newModule = document.createElement("heart-element-small");
+    }
 
-    var draggie = new Draggabilly(newModule);
-    $grid.packery('bindDraggabillyEvents', draggie);
+    if (newModule != null) {
+        newModule.classList.add("grid-item");
+        $grid.packery()
+            .append(newModule)
+            .packery('appended', newModule)
+            .packery();
+
+        var draggie = new Draggabilly(newModule);
+        $grid.packery('bindDraggabillyEvents', draggie);
+    }
 }

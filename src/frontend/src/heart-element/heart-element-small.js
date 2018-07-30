@@ -5,6 +5,8 @@ import '@polymer/paper-icon-button/paper-icon-button'
 import '@polymer/paper-menu-button/paper-menu-button'
 import '@polymer/paper-listbox/paper-listbox'
 import '@polymer/paper-item/paper-item'
+import '@polymer/paper-dialog/paper-dialog'
+import '@polymer/paper-input/paper-input'
 import '../shared-styles.js';
 
 /**
@@ -52,12 +54,25 @@ class HeartElementSmall extends PolymerElement {
                 <paper-menu-button class="block" style="margin-left: 50px; padding: 0px;">
                     <paper-icon-button icon="more-vert" slot="dropdown-trigger"></paper-icon-button>
                     <paper-listbox slot="dropdown-content">
-                        <paper-item>Remove module</paper-item>
-                        <paper-item>Set thresholds</paper-item>
+                        <paper-item on-click="removeModule">Remove module</paper-item>
+                        <paper-item on-click="setThresholds">Set thresholds</paper-item>
                     </paper-listbox>
                 </paper-menu-button>
                 
             </div>
+
+            <paper-dialog id="thresholdsDialog">
+                <h2>Set heart rate thresholds</h2>
+                <p>Select the ranges in which heart rate values should be flagged:</p>
+                <paper-input id="warningLess" type="number" label="warning if less than"></paper-input>
+                <paper-input id="warningHigher" type="number" label="warning if higher than"></paper-input>
+                <paper-input id="dangerLess" type="number" label="danger if less than"></paper-input>
+                <paper-input id="dangerHigher" type="number" label="danger if higher than"></paper-input>
+
+                <paper-button dialog-dismiss autofocus>Decline</paper-button>
+                <paper-button dialog-confirm on-click="updateThresholds">Accept</paper-button>
+            </paper-dialog>
+
             <table class="row">
                 <tr>
                     <td><paper-button id="day" toggles on-click="dateClick">3 days</paper-button></td>
@@ -244,6 +259,21 @@ class HeartElementSmall extends PolymerElement {
         this.low = stats.low;
         this.avg = stats.avg;
         this.high = stats.high;
+    }
+
+    removeModule(e) {
+        this.remove();
+    }
+
+    setThresholds(e) {
+        this.$.thresholdsDialog.open();
+    }
+
+    updateThresholds(e) {
+        var warningLess = this.$.warningLess.value;
+        var warningHigher = this.$.warningHigher.value;
+        var dangerLess = this.$.dangerLess.value;
+        var dangerHigher = this.$.dangerHigher.value;
     }
 }
 
