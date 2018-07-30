@@ -39,9 +39,10 @@ class HeartElementSmall extends PolymerElement {
 
         <iron-ajax
             id="ajaxHeart"
-            url="http://localhost:3000/user/[[userId]]/heart/small/[[]]\&[[]]"
+            url="http://localhost:3000/user/[[userId]]/heart/small/[[startInt]]\&[[endInt]]"
             method="GET"
             handle-as="json"
+            on-response="dataReceived"
         ></iron-ajax>
 
         <div class="card">
@@ -92,9 +93,9 @@ class HeartElementSmall extends PolymerElement {
                     <th>High</th>
                 </tr>
                 <tr>
-                    <td>?</td>
-                    <td>?</td>
-                    <td>?</td>
+                    <td>[[low]]</td>
+                    <td>[[avg]]</td>
+                    <td>[[high]]</td>
                 </tr>
             </table>
             </div>
@@ -127,9 +128,27 @@ class HeartElementSmall extends PolymerElement {
             endDateStr: {
                 type: String
             },
+            startInt: {
+                type: Number
+            },
+            endInt: {
+                type: Number
+            },
             curPressed: {
                 type: String,
                 value: "day"
+            },
+            low: {
+                type: String,
+                value: "?"
+            },
+            avg: {
+                type: String,
+                value: "?"
+            },
+            high: {
+                type: String,
+                value: "?"
             }
         };
     }
@@ -150,6 +169,11 @@ class HeartElementSmall extends PolymerElement {
 
         this.startDateStr = ("0" + this.startDate.getDate()).slice(-2) + "/" + ("0" + (this.startDate.getMonth()+1)).slice(-2) + "/" + this.startDate.getFullYear();
         this.endDateStr = ("0" + this.endDate.getDate()).slice(-2) + "/" + ("0" + (this.endDate.getMonth() + 1)).slice(-2) + "/" + this.endDate.getFullYear();
+
+        this.startInt = this.startDate.getTime();
+        this.endInt = this.endDate.getTime();
+
+        this.$.ajaxHeart.generateRequest();
     }
 
     dateClick(e) {
@@ -177,6 +201,11 @@ class HeartElementSmall extends PolymerElement {
             this.startDate.setTime(newDate.getTime());
             this.startDateStr = ("0" + this.startDate.getDate()).slice(-2) + "/" + ("0" + (this.startDate.getMonth() + 1)).slice(-2) + "/" + this.startDate.getFullYear();
         }
+
+        this.startInt = this.startDate.getTime();
+        this.endInt = this.endDate.getTime();
+
+        this.$.ajaxHeart.generateRequest();
     }
 
     changeDate(e) {
@@ -203,6 +232,18 @@ class HeartElementSmall extends PolymerElement {
             this.endDate.setTime(this.endDate.getTime() + (24 * 60 * 60 * 1000 * operator));
             this.endDateStr = ("0" + this.endDate.getDate()).slice(-2) + "/" + ("0" + (this.endDate.getMonth() + 1)).slice(-2) + "/" + this.endDate.getFullYear();
         }
+
+        this.startInt = this.startDate.getTime();
+        this.endInt = this.endDate.getTime();
+
+        this.$.ajaxHeart.generateRequest();
+    }
+
+    dataReceived(event) {
+        var stats = event.detail.response;
+        this.low = stats.low;
+        this.avg = stats.avg;
+        this.high = stats.high;
     }
 }
 
