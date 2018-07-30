@@ -37,6 +37,13 @@ class HeartElementSmall extends PolymerElement {
 
         </style>
 
+        <iron-ajax
+            id="ajaxHeart"
+            url="http://localhost:3000/user/[[userId]]/heart/small/[[]]\&[[]]"
+            method="GET"
+            handle-as="json"
+        ></iron-ajax>
+
         <div class="card">
             
             <div>
@@ -137,7 +144,7 @@ class HeartElementSmall extends PolymerElement {
         this.endDate = new Date(this.endDate);
         
         var startDate = new Date(this.endDate);
-        startDate.setDate(this.endDate.getDate()-3);
+        startDate.setTime(this.endDate.getTime() - (24*60*60*1000*3));
         
         this.startDate = startDate;
 
@@ -156,18 +163,18 @@ class HeartElementSmall extends PolymerElement {
         this.curPressed = id;
         if (id === "day") {
             var newDate = new Date();
-            newDate.setDate(this.endDate.getDate() - 3);
-            this.startDate.setDate(newDate.getDate());
+            newDate.setTime(this.endDate.getTime() - (24*60*60*1000*3));
+            this.startDate.setTime(newDate.getTime());
             this.startDateStr = ("0" + this.startDate.getDate()).slice(-2) + "/" + ("0" + (this.startDate.getMonth() + 1)).slice(-2) + "/" + this.startDate.getFullYear();
         } else if (id === "week") {
             var newDate = new Date();
-            newDate.setDate(this.endDate.getDate() - 7);
-            this.startDate.setDate(newDate.getDate());
+            newDate.setTime(this.endDate.getTime() - (24 * 60 * 60 * 1000 * 7));
+            this.startDate.setTime(newDate.getTime());
             this.startDateStr = ("0" + this.startDate.getDate()).slice(-2) + "/" + ("0" + (this.startDate.getMonth() + 1)).slice(-2) + "/" + this.startDate.getFullYear();
         } else if (id === "month") {
             var newDate = new Date();
-            newDate.setDate(this.endDate.getDate() - 28);
-            this.startDate.setDate(newDate.getDate());
+            newDate.setTime(this.endDate.getTime() - (24 * 60 * 60 * 1000 * 28));
+            this.startDate.setTime(newDate.getTime());
             this.startDateStr = ("0" + this.startDate.getDate()).slice(-2) + "/" + ("0" + (this.startDate.getMonth() + 1)).slice(-2) + "/" + this.startDate.getFullYear();
         }
     }
@@ -186,14 +193,14 @@ class HeartElementSmall extends PolymerElement {
         }
 
         if (id === "back") {
-            this.startDate.setDate(this.startDate.getDate() - operator);
+            this.startDate.setTime(this.startDate.getTime() - (24*60*60*1000*operator));
             this.startDateStr = ("0" + this.startDate.getDate()).slice(-2) + "/" + ("0" + (this.startDate.getMonth() + 1)).slice(-2) + "/" + this.startDate.getFullYear();
-            this.endDate.setDate(this.endDate.getDate() - operator);
+            this.endDate.setTime(this.endDate.getTime() - (24 * 60 * 60 * 1000 * operator));
             this.endDateStr = ("0" + this.endDate.getDate()).slice(-2) + "/" + ("0" + (this.endDate.getMonth() + 1)).slice(-2) + "/" + this.endDate.getFullYear();
         } else if (id === "forward") {
-            this.startDate.setDate(this.startDate.getDate() + operator);
+            this.startDate.setTime(this.startDate.getTime() + (24 * 60 * 60 * 1000 * operator));
             this.startDateStr = ("0" + this.startDate.getDate()).slice(-2) + "/" + ("0" + (this.startDate.getMonth() + 1)).slice(-2) + "/" + this.startDate.getFullYear();
-            this.endDate.setDate(this.endDate.getDate() + operator);
+            this.endDate.setTime(this.endDate.getTime() + (24 * 60 * 60 * 1000 * operator));
             this.endDateStr = ("0" + this.endDate.getDate()).slice(-2) + "/" + ("0" + (this.endDate.getMonth() + 1)).slice(-2) + "/" + this.endDate.getFullYear();
         }
     }
