@@ -47,9 +47,9 @@ class HeartElementSmall extends PolymerElement {
 
         <div class="card">
             
-            <div>
-                <h1 class="block">Heart rate (BPM)</h1>
-                <paper-menu-button style="align: right;"class="block">
+            <div class="row">
+                <h1 class="block" style="margin-right: 20px;">Heart rate (BPM)</h1>
+                <paper-menu-button class="block" style="margin-left: 50px; padding: 0px;">
                     <paper-icon-button icon="more-vert" slot="dropdown-trigger"></paper-icon-button>
                     <paper-listbox slot="dropdown-content">
                         <paper-item>Remove module</paper-item>
