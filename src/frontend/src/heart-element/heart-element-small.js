@@ -60,9 +60,9 @@ class HeartElementSmall extends PolymerElement {
 
             <table class="row">
                 <tr>
-                    <td><paper-icon-button icon="arrow-back"></paper-icon-button></td>
+                    <td><paper-icon-button id="back" icon="arrow-back" on-click="changeDate"></paper-icon-button></td>
                     <td><p>[[startDateStr]] - [[endDateStr]]</p></td>
-                    <td><paper-icon-button icon="arrow-forward"></paper-icon-button></td>
+                    <td><paper-icon-button id="forward" icon="arrow-forward" on-click="changeDate"></paper-icon-button></td>
                 </tr>
             </table>
 
@@ -119,6 +119,10 @@ class HeartElementSmall extends PolymerElement {
             },
             endDateStr: {
                 type: String
+            },
+            curPressed: {
+                type: String,
+                value: "day"
             }
         };
     }
@@ -141,18 +145,57 @@ class HeartElementSmall extends PolymerElement {
         this.endDateStr = ("0" + this.endDate.getDate()).slice(-2) + "/" + ("0" + (this.endDate.getMonth() + 1)).slice(-2) + "/" + this.endDate.getFullYear();
     }
 
-    handleResponse(event) {
-        this.user = event.detail.response;
-        var newDate = new Date(this.user.birth);
-        this.date = newDate.getFullYear() + "-" + ("0" + newDate.getMonth()).slice(-2) + "-" + ("0" + newDate.getDate()).slice(-2);
-    }
-
     dateClick(e) {
         this.$.day.style.background = "#e0e0e0";
         this.$.week.style.background = "#e0e0e0";
         this.$.month.style.background = "#e0e0e0";
 
         e.srcElement.style.background = "#cac9c9";
+
+        var id = e.srcElement.id;
+        this.curPressed = id;
+        if (id === "day") {
+            var newDate = new Date();
+            newDate.setDate(this.endDate.getDate() - 3);
+            this.startDate.setDate(newDate.getDate());
+            this.startDateStr = ("0" + this.startDate.getDate()).slice(-2) + "/" + ("0" + (this.startDate.getMonth() + 1)).slice(-2) + "/" + this.startDate.getFullYear();
+        } else if (id === "week") {
+            var newDate = new Date();
+            newDate.setDate(this.endDate.getDate() - 7);
+            this.startDate.setDate(newDate.getDate());
+            this.startDateStr = ("0" + this.startDate.getDate()).slice(-2) + "/" + ("0" + (this.startDate.getMonth() + 1)).slice(-2) + "/" + this.startDate.getFullYear();
+        } else if (id === "month") {
+            var newDate = new Date();
+            newDate.setDate(this.endDate.getDate() - 28);
+            this.startDate.setDate(newDate.getDate());
+            this.startDateStr = ("0" + this.startDate.getDate()).slice(-2) + "/" + ("0" + (this.startDate.getMonth() + 1)).slice(-2) + "/" + this.startDate.getFullYear();
+        }
+    }
+
+    changeDate(e) {
+        var id = e.srcElement.id;
+
+        var operator = 0;
+
+        if (this.curPressed === "day") {
+            operator = 3;
+        } else if (this.curPressed === "week") {
+            operator = 7;
+        } else if (this.curPressed === "month") {
+            operator = 28;
+        }
+
+        if (id === "back") {
+            this.startDate.setDate(this.startDate.getDate() - operator);
+            this.startDateStr = ("0" + this.startDate.getDate()).slice(-2) + "/" + ("0" + (this.startDate.getMonth() + 1)).slice(-2) + "/" + this.startDate.getFullYear();
+            this.endDate.setDate(this.endDate.getDate() - operator);
+            this.endDateStr = ("0" + this.endDate.getDate()).slice(-2) + "/" + ("0" + (this.endDate.getMonth() + 1)).slice(-2) + "/" + this.endDate.getFullYear();
+        } else if (id === "forward") {
+            this.startDate.setDate(this.startDate.getDate() + operator);
+            this.startDateStr = ("0" + this.startDate.getDate()).slice(-2) + "/" + ("0" + (this.startDate.getMonth() + 1)).slice(-2) + "/" + this.startDate.getFullYear();
+            this.endDate.setDate(this.endDate.getDate() + operator);
+            this.endDateStr = ("0" + this.endDate.getDate()).slice(-2) + "/" + ("0" + (this.endDate.getMonth() + 1)).slice(-2) + "/" + this.endDate.getFullYear();
+        }
     }
 }
 
