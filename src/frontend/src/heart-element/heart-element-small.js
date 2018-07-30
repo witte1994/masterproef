@@ -22,15 +22,18 @@ class HeartElementSmall extends PolymerElement {
             .row {
                 width: 100%;
                 text-align: center;
+                margin-bottom: 5px;
             }
 
             .block {
                 display: inline-block;
+                margin: auto;
             }
 
             paper-button { 
                 background: #e0e0e0;
             }
+
 
         </style>
 
@@ -38,7 +41,7 @@ class HeartElementSmall extends PolymerElement {
             
             <div>
                 <h1 class="block">Heart rate (BPM)</h1>
-                <paper-menu-button class="block">
+                <paper-menu-button style="align: right;"class="block">
                     <paper-icon-button icon="more-vert" slot="dropdown-trigger"></paper-icon-button>
                     <paper-listbox slot="dropdown-content">
                         <paper-item>Remove module</paper-item>
@@ -47,18 +50,47 @@ class HeartElementSmall extends PolymerElement {
                 </paper-menu-button>
                 
             </div>
-            <div class="row">
-                <paper-button class="block">3 days</paper-button>
-                <paper-button class="block">week</paper-button>
-                <paper-button class="block">month</paper-button>
-            </div>
+            <table class="row">
+                <tr>
+                    <td><paper-button id="day" toggles on-click="dateClick">3 days</paper-button></td>
+                    <td><paper-button id="week" toggles on-click="dateClick">week</paper-button></td>
+                    <td><paper-button id="month" toggles on-click="dateClick">month</paper-button></td>
+                </tr>
+            </table>
 
-            <div class="row">
-                <paper-icon-button class="block" icon="arrow-back"></paper-icon-button>
-                <p class="block">08/06/2018 - 08/06/2018</p>
-                <paper-icon-button class="block" icon="arrow-forward"></paper-icon-button>
-            </div>
+            <table class="row">
+                <tr>
+                    <td><paper-icon-button icon="arrow-back"></paper-icon-button></td>
+                    <td><p>[[startDateStr]] - [[endDateStr]]</p></td>
+                    <td><paper-icon-button icon="arrow-forward"></paper-icon-button></td>
+                </tr>
+            </table>
 
+
+            <table class="row">
+                <tr>
+                    <td><img src="img/red_error.png"></td>
+                    <td><p>val</p></td>
+                    <td><img src="img/yellow_warning.png"></td>
+                    <td><p>val</p></td>
+                    <td><img src="img/green_ok.png"></td>
+                    <td><p>val</p></td>
+                </tr>
+            </table>
+
+            <table class="row">
+                <tr>
+                    <th>Low</th>
+                    <th>Avg</th>
+                    <th>High</th>
+                </tr>
+                <tr>
+                    <td>?</td>
+                    <td>?</td>
+                    <td>?</td>
+                </tr>
+            </table>
+            </div>
         </div>
     `;
     }
@@ -69,10 +101,24 @@ class HeartElementSmall extends PolymerElement {
                 value: '5b5c65e3ad30264506380dd1'
             },
             user: {
-                value: Object
+                type: Object
             },
             data: {
-                value: String
+                type: String
+            },
+            startDate: {
+                type: Date,
+                value: "2018-07-27"
+            },
+            endDate: {
+                type: Date,
+                value: "2018-07-30"
+            },
+            startDateStr: {
+                type: String
+            },
+            endDateStr: {
+                type: String
             }
         };
     }
@@ -82,12 +128,31 @@ class HeartElementSmall extends PolymerElement {
         var split = document.URL.split("/");
         var param = split[split.length - 1];
         this.userId = param;
+        this.$.day.style.background = "#cac9c9";
+
+        this.endDate = new Date(this.endDate);
+        
+        var startDate = new Date(this.endDate);
+        startDate.setDate(this.endDate.getDate()-3);
+        
+        this.startDate = startDate;
+
+        this.startDateStr = ("0" + this.startDate.getDate()).slice(-2) + "/" + ("0" + (this.startDate.getMonth()+1)).slice(-2) + "/" + this.startDate.getFullYear();
+        this.endDateStr = ("0" + this.endDate.getDate()).slice(-2) + "/" + ("0" + (this.endDate.getMonth() + 1)).slice(-2) + "/" + this.endDate.getFullYear();
     }
 
     handleResponse(event) {
         this.user = event.detail.response;
         var newDate = new Date(this.user.birth);
         this.date = newDate.getFullYear() + "-" + ("0" + newDate.getMonth()).slice(-2) + "-" + ("0" + newDate.getDate()).slice(-2);
+    }
+
+    dateClick(e) {
+        this.$.day.style.background = "#e0e0e0";
+        this.$.week.style.background = "#e0e0e0";
+        this.$.month.style.background = "#e0e0e0";
+
+        e.srcElement.style.background = "#cac9c9";
     }
 }
 

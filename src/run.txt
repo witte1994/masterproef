@@ -1,0 +1,7 @@
+backend:    nodemon server.js
+            
+frontend:   polymer serve
+
+
+users:  5b5c65e3ad30264506380dd1
+        

@@ -66,7 +66,7 @@ class UserElement extends PolymerElement {
     handleResponse(event) {
         this.user = event.detail.response;
         var newDate = new Date(this.user.birth);
-        this.date = ("0" + newDate.getDate()).slice(-2) + "-" + ("0" + newDate.getMonth()).slice(-2) + "-" + newDate.getFullYear(); 
+        this.date = ("0" + newDate.getDate()).slice(-2) + "/" + ("0" + (newDate.getMonth()+1)).slice(-2) + "/" + newDate.getFullYear(); 
     }
 }
 
