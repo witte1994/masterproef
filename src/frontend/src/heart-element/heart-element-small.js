@@ -64,8 +64,8 @@ class HeartElementSmall extends PolymerElement {
                 <paper-menu-button class="block" style="margin-left: 50px; padding: 0px;">
                     <paper-icon-button icon="more-vert" slot="dropdown-trigger"></paper-icon-button>
                     <paper-listbox slot="dropdown-content">
-                        <paper-item on-click="removeModule">Remove module</paper-item>
-                        <paper-item on-click="setThresholds">Set thresholds</paper-item>
+                        <paper-item on-tap="removeModule">Remove module</paper-item>
+                        <paper-item on-tap="setThresholds">Set thresholds</paper-item>
                     </paper-listbox>
                 </paper-menu-button>
                 
@@ -80,22 +80,22 @@ class HeartElementSmall extends PolymerElement {
                 <paper-input id="dangerHigher" type="number" label="danger if higher than"></paper-input>
 
                 <paper-button dialog-dismiss autofocus>Decline</paper-button>
-                <paper-button dialog-confirm on-click="updateThresholds">Accept</paper-button>
+                <paper-button dialog-confirm on-tap="updateThresholds">Accept</paper-button>
             </paper-dialog>
 
             <table class="row">
                 <tr>
-                    <td><paper-button id="day" toggles on-click="dateClick">3 days</paper-button></td>
-                    <td><paper-button id="week" toggles on-click="dateClick">week</paper-button></td>
-                    <td><paper-button id="month" toggles on-click="dateClick">month</paper-button></td>
+                    <td><paper-button id="day" toggles on-tap="dateClick">3 days</paper-button></td>
+                    <td><paper-button id="week" toggles on-tap="dateClick">week</paper-button></td>
+                    <td><paper-button id="month" toggles on-tap="dateClick">month</paper-button></td>
                 </tr>
             </table>
 
             <table class="row">
                 <tr>
-                    <td><paper-icon-button id="back" icon="arrow-back" on-click="changeDate"></paper-icon-button></td>
+                    <td><paper-icon-button id="back" icon="arrow-back" on-tap="changeDate"></paper-icon-button></td>
                     <td><p>[[startDateStr]] - [[endDateStr]]</p></td>
-                    <td><paper-icon-button id="forward" icon="arrow-forward" on-click="changeDate"></paper-icon-button></td>
+                    <td><paper-icon-button id="forward" icon="arrow-forward" on-tap="changeDate"></paper-icon-button></td>
                 </tr>
             </table>
 
