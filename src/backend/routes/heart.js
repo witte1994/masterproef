@@ -21,80 +21,79 @@ router.get('/small/:start&:end', (req, res, next) => {
     var endDate = new Date();
     endDate.setTime(req.params.end);
 
-    var thresholds = null;
+
     HeartThreshold.find({ user: userId, })
         .select("warningLess warningHigher dangerLess dangerHigher")
         .exec()
         .then(doc => {
-            thresholds = doc[0];
+            var thresholds = doc[0];
+            Heart.find({ user: userId, date: { $gte: startDate, $lt: endDate } })
+                .select("value date")
+                .exec()
+                .then(doc => {
+                    var low = 99999, avg = 0, high = -1;
+                    var dangerVals = 0;
+                    var warningVals = 0;
+                    var okVals = 0;
+                    count = 0;
+                    for (i in doc) {
+                        if (doc[i].value < low) low = doc[i].value;
+                        if (doc[i].value > high) high = doc[i].value;
+                        avg += doc[i].value;
+                        count++;
+
+                        if (doc[i].value <= thresholds.dangerLess || doc[i].value >= thresholds.dangerHigher) dangerVals++;
+                        else if (doc[i].value <= thresholds.warningLess || doc[i].value >= thresholds.warningHigher) warningVals++;
+                        else okVals++;
+                    }
+
+                    var lowCol = "";
+                    var avgCol = "";
+                    var highCol = "";
+                    if (count > 0) {
+                        avg /= count;
+
+                        if (low <= thresholds.dangerLess || low >= thresholds.dangerHigher) lowCol = "red";
+                        else if (low <= thresholds.warningLess || low >= thresholds.warningHigher) lowCol = "yellow";
+                        else lowCol = "green";
+
+                        if (avg <= thresholds.dangerLess || avg >= thresholds.dangerHigher) avgCol = "red";
+                        else if (avg <= thresholds.warningLess || avg >= thresholds.warningHigher) avgCol = "yellow";
+                        else avgCol = "green";
+
+                        if (high <= thresholds.dangerLess || high >= thresholds.dangerHigher) highCol = "red";
+                        else if (high <= thresholds.warningLess || high >= thresholds.warningHigher) highCol = "yellow";
+                        else highCol = "green";
+
+                        avg = avg.toFixed(1);
+                    } else {
+                        low = "?";
+                        high = "?";
+                        avg = "?";
+                        dangerVals = "?";
+                        warningVals = "?";
+                        okVals = "?";
+                    }
+
+                    res.status(200).json({
+                        low: low.toString(),
+                        high: high.toString(),
+                        avg: avg,
+                        dangerVals: dangerVals,
+                        warningVals: warningVals,
+                        okVals: okVals,
+                        lowCol: lowCol,
+                        avgCol: avgCol,
+                        highCol: highCol
+                    });
+                })
+                .catch();
         })
         .catch(err => {
             console.log(err);
         });
 
-    Heart.find({ user: userId, date: { $gte: startDate, $lt: endDate}})
-        .select("value date")
-        .exec()
-        .then(doc => {
-            console.log(doc);
-            console.log(thresholds);
-            var low = 99999, avg = 0, high = -1;
-            var dangerVals = 0;
-            var warningVals = 0;
-            var okVals = 0;
-            count = 0;
-            for (i in doc) {
-                if (doc[i].value < low) low = doc[i].value;
-                if (doc[i].value > high) high = doc[i].value;
-                avg += doc[i].value;
-                count++;
-
-                if (doc[i].value <= thresholds.dangerLess || doc[i].value >= thresholds.dangerHigher) dangerVals++;
-                else if (doc[i].value <= thresholds.warningLess || doc[i].value >= thresholds.warningHigher) warningVals++;
-                else okVals++;
-            }
-
-            var lowCol = "";
-            var avgCol = "";
-            var highCol = "";
-            if (count > 0) {
-                avg /= count;
-
-                if (low <= thresholds.dangerLess || low >= thresholds.dangerHigher) lowCol = "red";
-                else if (low <= thresholds.warningLess || low >= thresholds.warningHigher) lowCol = "yellow";
-                else lowCol = "green";
-
-                if (avg <= thresholds.dangerLess || avg >= thresholds.dangerHigher) avgCol = "red";
-                else if (avg <= thresholds.warningLess || avg >= thresholds.warningHigher) avgCol = "yellow";
-                else avgCol = "green";
-
-                if (high <= thresholds.dangerLess || high >= thresholds.dangerHigher) highCol = "red";
-                else if (high <= thresholds.warningLess || high >= thresholds.warningHigher) highCol = "yellow";
-                else highCol = "green";
-                
-                avg = avg.toFixed(1);
-            } else {
-                low = "?";
-                high = "?";
-                avg = "?";
-                dangerVals = "?";
-                warningVals = "?";
-                okVals = "?";
-            }
-
-            res.status(200).json({
-                low: low.toString(),
-                high: high.toString(),
-                avg: avg,
-                dangerVals: dangerVals,
-                warningVals: warningVals,
-                okVals: okVals,
-                lowCol: lowCol,
-                avgCol: avgCol,
-                highCol: highCol
-            });
-        })
-        .catch();
+    
 });
 
 router.post('/', (req, res, next) => {
