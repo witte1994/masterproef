@@ -47,6 +47,16 @@ class HeartElementSmall extends PolymerElement {
             on-response="dataReceived"
         ></iron-ajax>
 
+        <iron-ajax
+            id="ajaxThreshold"
+            url="http://localhost:3000/user/[[userId]]/heart/threshold"
+            body="[[body]]"
+            method="PATCH"
+            handle-as="json"
+            content-type="application/json"
+            on-response="dataUpdated"
+        ></iron-ajax>
+
         <div class="card">
             
             <div class="row">
@@ -176,6 +186,9 @@ class HeartElementSmall extends PolymerElement {
             okVals: {
                 type: Number,
                 value: 0
+            },
+            body: {
+                type: Object
             }
         };
     }
@@ -334,6 +347,18 @@ class HeartElementSmall extends PolymerElement {
         var warningHigher = this.$.warningHigher.value;
         var dangerLess = this.$.dangerLess.value;
         var dangerHigher = this.$.dangerHigher.value;
+
+        this.body = {
+            "warningLess": warningLess,
+            "warningHigher": warningHigher,
+            "dangerLess": dangerLess,
+            "dangerHigher": dangerHigher
+        };
+
+        this.$.ajaxThreshold.generateRequest();
+    }
+
+    dataUpdated(e) {
     }
 }
 
