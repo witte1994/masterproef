@@ -93,24 +93,24 @@ class HeartElementSmall extends PolymerElement {
             <table class="row">
                 <tr>
                     <td><img src="img/red_error.png"></td>
-                    <td><p>val</p></td>
+                    <td><p>[[dangerVals]]</p></td>
                     <td><img src="img/yellow_warning.png"></td>
-                    <td><p>val</p></td>
+                    <td><p>[[warningVals]]</p></td>
                     <td><img src="img/green_ok.png"></td>
-                    <td><p>val</p></td>
+                    <td><p>[[okVals]]</p></td>
                 </tr>
             </table>
 
             <table class="row">
                 <tr>
-                    <th>Low</th>
-                    <th>Avg</th>
-                    <th>High</th>
+                    <th id="lowHead">Low</th>
+                    <th id="avgHead">Avg</th>
+                    <th id="highHead">High</th>
                 </tr>
                 <tr>
-                    <td>[[low]]</td>
-                    <td>[[avg]]</td>
-                    <td>[[high]]</td>
+                    <td id="lowCell">[[low]]</td>
+                    <td id="avgCell">[[avg]]</td>
+                    <td id="highCell">[[high]]</td>
                 </tr>
             </table>
             </div>
@@ -164,6 +164,18 @@ class HeartElementSmall extends PolymerElement {
             high: {
                 type: String,
                 value: "?"
+            },
+            dangerVals: {
+                type: Number,
+                value: 0
+            },
+            warningVals: {
+                type: Number,
+                value: 0
+            },
+            okVals: {
+                type: Number,
+                value: 0
             }
         };
     }
@@ -259,6 +271,54 @@ class HeartElementSmall extends PolymerElement {
         this.low = stats.low;
         this.avg = stats.avg;
         this.high = stats.high;
+        this.dangerVals = stats.dangerVals;
+        this.warningVals = stats.warningVals;
+        this.okVals = stats.okVals;
+        this.lowCol = stats.lowCol;
+        this.avgCol = stats.avgCol;
+        this.highCol = stats.highCol;
+
+        if (stats.lowCol === "red") {
+            this.$.lowCell.style.backgroundColor = "#ff9999";
+            this.$.lowHead.style.backgroundColor = "#ff9999";
+        } else if (stats.lowCol === "yellow") {
+            this.$.lowCell.style.backgroundColor = "#ffff80";
+            this.$.lowHead.style.backgroundColor = "#ffff80";
+        } else if (stats.lowCol === "green") {
+            this.$.lowCell.style.backgroundColor = "#4dff88";
+            this.$.lowHead.style.backgroundColor = "#4dff88";
+        } else {
+            this.$.lowCell.style.backgroundColor = "";
+            this.$.lowHead.style.backgroundColor = "";
+        }
+
+        if (stats.avgCol === "red") {
+            this.$.avgCell.style.backgroundColor = "#ff9999";
+            this.$.avgHead.style.backgroundColor = "#ff9999";
+        } else if (stats.avgCol === "yellow") {
+            this.$.avgCell.style.backgroundColor = "#ffff80";
+            this.$.avgHead.style.backgroundColor = "#ffff80";
+        } else if (stats.avgCol === "green") {
+            this.$.avgCell.style.backgroundColor = "#4dff88";
+            this.$.avgHead.style.backgroundColor = "#4dff88";
+        } else {
+            this.$.avgCell.style.backgroundColor = "";
+            this.$.avgHead.style.backgroundColor = "";
+        }
+
+        if (stats.highCol === "red") {
+            this.$.highCell.style.backgroundColor = "#ff9999";
+            this.$.highHead.style.backgroundColor = "#ff9999";
+        } else if (stats.highCol === "yellow") {
+            this.$.highCell.style.backgroundColor = "#ffff80";
+            this.$.highHead.style.backgroundColor = "#ffff80";
+        } else if (stats.highCol === "green") {
+            this.$.highCell.style.backgroundColor = "#4dff88";
+            this.$.highHead.style.backgroundColor = "#4dff88";
+        } else {
+            this.$.highCell.style.backgroundColor = "";
+            this.$.highHead.style.backgroundColor = "";
+        }
     }
 
     removeModule(e) {
