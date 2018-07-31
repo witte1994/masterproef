@@ -53,6 +53,13 @@ class HeartElement extends PolymerElement {
                     <paper-button id="week" toggles on-tap="dateClick">week</paper-button>
                     <paper-button id="month" toggles on-tap="dateClick">month</paper-button>
                 </div>
+                <div style="width:20%; display:inline-block;">
+                    <paper-icon-button id="back" icon="arrow-back" on-tap="changeDate"></paper-icon-button>
+                </div><div style="width:60%; display:inline-block;">
+                    <p>[[startDateStr]] - [[endDateStr]]</p>
+                </div><div style="width:20%; display:inline-block;">
+                    <paper-icon-button id="forward" icon="arrow-forward" on-tap="changeDate"></paper-icon-button>
+                </div>
                           
             
             
@@ -76,6 +83,12 @@ class HeartElement extends PolymerElement {
             userId: {
                 type: String,
                 value: '5b5c65e3ad30264506380dd1'
+            },
+            startDateStr: {
+                type: String
+            },
+            endDateStr: {
+                type: String
             }
         };
     }
