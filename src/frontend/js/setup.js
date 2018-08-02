@@ -12,6 +12,7 @@ $(document).ready(function() {
     // make all grid-items draggable
     $grid.find('.grid-item').each(function (i, gridItem) {
         var draggie = new Draggabilly(gridItem);
+
         // bind drag events to Packery
         $grid.packery('bindDraggabillyEvents', draggie);
         addListeners(gridItem);
@@ -24,7 +25,6 @@ function add() {
 
     var newModule = null;
     if (module === "heart") {
-        console.log(size);
         if (size === "s") newModule = document.createElement("heart-element-small");
         else if (size === "l") newModule = document.createElement("heart-element");
     }
