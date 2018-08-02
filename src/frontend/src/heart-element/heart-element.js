@@ -152,33 +152,7 @@ class HeartElement extends PolymerElement {
         this.startInt = this.startDate.getTime();
         this.endInt = this.endDate.getTime();
 
-        this.chart = c3.generate({
-            bindto: this.$.chart,
-            padding: {
-                right: 10
-            },
-            legend: {
-                show: false
-            },
-            data: {
-                x: 'x',
-                xFormat: '%d/%m/%Y',
-                columns: [
-                    
-                ]
-            },
-            axis: {
-                x: {
-                    type: 'timeseries',
-                    tick: {
-                        format: '%d/%m'
-                    }
-                },
-                y: {
-                    min: 0
-                }
-            }
-        });
+        
 
         this.$.ajaxHeart.generateRequest();
     }
@@ -208,6 +182,10 @@ class HeartElement extends PolymerElement {
             this.startDate.setTime(newDate.getTime());
             this.startDateStr = this.getDateString(this.startDate);
         }
+
+        this.chart.axis.min({ x: this.startDateStr });
+        this.chart.axis.max({ x: this.endDateStr });
+
 
         this.startInt = this.startDate.getTime();
         this.endInt = this.endDate.getTime();
@@ -240,9 +218,6 @@ class HeartElement extends PolymerElement {
             this.endDateStr = this.getDateString(this.endDate);
         }
 
-        this.startInt = this.startDate.getTime();
-        this.endInt = this.endDate.getTime();
-
         this.$.ajaxHeart.generateRequest();
     }
 
@@ -259,12 +234,76 @@ class HeartElement extends PolymerElement {
             dateArray.push(this.getDateString(date));
         }
 
-        this.chart.load({
-            unload: true,
-            columns: [dateArray, valArray]
-        });
+        var ticks = this.getTicks();
 
-        this.chart.regions([{ axis: 'y', start: thresholds.warningLess, end: thresholds.warningHigher, class: 'green' }, { axis: 'y', start: thresholds.dangerLess, end: thresholds.warningLess, class: 'yellow' }, { axis: 'y', start: thresholds.warningHigher, end: thresholds.dangerHigher, class: 'yellow' }, { axis: 'y', end: thresholds.dangerLess, class: 'red' }, { axis: 'y', start: thresholds.dangerHigher, class: 'red' }]);
+        this.chart = c3.generate({
+            bindto: this.$.chart,
+            padding: {
+                right: 10
+            },
+            legend: {
+                show: false
+            },
+            data: {
+                x: 'x',
+                xFormat: '%d/%m/%Y',
+                columns: [dateArray, valArray]
+            },
+            axis: {
+                x: {
+                    min: this.startDateStr,
+                    max: this.endDateStr,
+                    type: 'timeseries',
+                    tick: {
+                        format: '%d/%m',
+                        values: ticks
+                    }
+                },
+                y: {
+                    min: 0
+                }
+            },
+            regions: [
+                { axis: 'y', start: thresholds.warningLess, end: thresholds.warningHigher, class: 'green' },
+                { axis: 'y', start: thresholds.dangerLess, end: thresholds.warningLess, class: 'yellow' },
+                { axis: 'y', start: thresholds.warningHigher, end: thresholds.dangerHigher, class: 'yellow' },
+                { axis: 'y', end: thresholds.dangerLess, class: 'red' },
+                { axis: 'y', start: thresholds.dangerHigher, class: 'red' }
+            ]
+        });   
+    }
+
+    getTicks() {
+        var curType = this.curPressed;
+
+        var ticks = [];
+        // 3 days
+        if (curType === "day") {
+            for (var i = 0; i < 3; i++) {
+                var date = new Date();
+                date.setTime(this.startDate.getTime() + (24 * 60 * 60 * 1000 * i));
+                ticks.push(this.getDateString(date));
+            }
+            return ticks;
+        } 
+        
+        if (curType === "week") {
+            for (var i = 0; i < 7; i++) {
+                var date = new Date();
+                date.setTime(this.startDate.getTime() + (24 * 60 * 60 * 1000 * i));
+                ticks.push(this.getDateString(date));
+            }
+            return ticks;
+        }
+
+        for (var i = 0; i < 4; i++) {
+            var date = new Date();
+            date.setTime(this.startDate.getTime() + (24 * 60 * 60 * 1000 * 7 * i));
+            ticks.push(this.getDateString(date));
+        }
+        ticks.push(this.getDateString(this.endDate));
+
+        return ticks;
     }
 
     getDateString(date) {
