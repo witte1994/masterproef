@@ -14,6 +14,9 @@ $(document).ready(function() {
         var draggie = new Draggabilly(gridItem);
         // bind drag events to Packery
         $grid.packery('bindDraggabillyEvents', draggie);
+        gridItem.addEventListener('delete', function (e) {
+            $grid.packery('remove', gridItem).packery('shiftLayout');
+        });
     });
 });
 
@@ -37,5 +40,9 @@ function add() {
 
         var draggie = new Draggabilly(newModule);
         $grid.packery('bindDraggabillyEvents', draggie);
+
+        newModule.addEventListener('delete', function (e) {
+            $grid.packery('remove', newModule).packery('shiftLayout');
+        });
     }
 }

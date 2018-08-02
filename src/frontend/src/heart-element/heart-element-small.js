@@ -289,9 +289,6 @@ class HeartElementSmall extends PolymerElement {
         this.dangerVals = stats.dangerVals;
         this.warningVals = stats.warningVals;
         this.okVals = stats.okVals;
-        this.lowCol = stats.lowCol;
-        this.avgCol = stats.avgCol;
-        this.highCol = stats.highCol;
 
         if (stats.lowCol === "red") {
             this.$.lowCell.style.backgroundColor = "#ff9999";
@@ -337,7 +334,7 @@ class HeartElementSmall extends PolymerElement {
     }
 
     removeModule(e) {
-        this.remove();
+        this.dispatchEvent(new CustomEvent('delete', { composed: true }));
     }
 
     setThresholds(e) {

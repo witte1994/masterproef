@@ -7,7 +7,6 @@ import '@polymer/paper-listbox/paper-listbox'
 import '@polymer/paper-item/paper-item'
 import '@polymer/paper-dialog/paper-dialog'
 import '@polymer/paper-input/paper-input'
-
 import '../shared-styles.js';
 
 /**
@@ -45,6 +44,11 @@ class HeartElement extends PolymerElement {
             .c3-region.green {
                 fill: green;
             }
+            
+            .cell {
+                font-size: 22px;
+                padding: 10px;
+            }
 
             paper-button { 
                 background: #e0e0e0;
@@ -57,6 +61,24 @@ class HeartElement extends PolymerElement {
             method="GET"
             handle-as="json"
             on-response="dataReceived"
+        ></iron-ajax>
+
+        <iron-ajax
+            id="ajaxHeartSmall"
+            url="http://localhost:3000/user/[[userId]]/heart/small/[[startInt]]\&[[endInt]]"
+            method="GET"
+            handle-as="json"
+            on-response="dataReceivedSmall"
+        ></iron-ajax>
+
+        <iron-ajax
+            id="ajaxThreshold"
+            url="http://localhost:3000/user/[[userId]]/heart/threshold"
+            body="[[body]]"
+            method="PATCH"
+            handle-as="json"
+            content-type="application/json"
+            on-response="dataUpdated"
         ></iron-ajax>
 
         <div class="card">
@@ -88,6 +110,52 @@ class HeartElement extends PolymerElement {
                             <paper-item on-tap="setThresholds">Set thresholds</paper-item>
                         </paper-listbox>
                     </paper-menu-button>
+                </div>
+
+                <paper-dialog id="thresholdsDialog">
+                    <h2>Set heart rate thresholds</h2>
+                    <p>Select the ranges in which heart rate values should be flagged:</p>
+                    <paper-input id="warningLess" type="number" label="warning if less than"></paper-input>
+                    <paper-input id="warningHigher" type="number" label="warning if higher than"></paper-input>
+                    <paper-input id="dangerLess" type="number" label="danger if less than"></paper-input>
+                    <paper-input id="dangerHigher" type="number" label="danger if higher than"></paper-input>
+
+                    <paper-button dialog-dismiss autofocus>Decline</paper-button>
+                    <paper-button dialog-confirm on-tap="updateThresholds">Accept</paper-button>
+                </paper-dialog>
+
+                <div style="width: 100%; margin-top: 40px;">
+                    <table class="row">
+                        <tr>
+                            <td><img src="img/red_error.png"></td>
+                            <td><p>[[dangerVals]]</p></td>
+                            <td><img src="img/yellow_warning.png"></td>
+                            <td><p>[[warningVals]]</p></td>
+                            <td><img src="img/green_ok.png"></td>
+                            <td><p>[[okVals]]</p></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div style="width: 100%; margin-top: 20px;">
+                    <h1 class="row">Summary</h1>
+                </div>
+
+                <div style="width: 100%;">
+                    <table class="row" style="padding: 20px 50px 50px 50px;">
+                        <tr>
+                            <th class="cell" id="lowHead">Low</th>
+                            <td class="cell" id="lowCell">[[low]]</td>
+                        </tr>
+                        <tr>
+                            <th class="cell" id="avgHead">Avg</th>
+                            <td class="cell" id="avgCell">[[avg]]</td>
+                        </tr>
+                        <tr>
+                            <th class="cell" id="highHead">High</th>
+                            <td class="cell" id="highCell">[[high]]</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
@@ -125,6 +193,30 @@ class HeartElement extends PolymerElement {
             },
             chart: {
                 type: Object
+            },
+            low: {
+                type: String,
+                value: "?"
+            },
+            avg: {
+                type: String,
+                value: "?"
+            },
+            high: {
+                type: String,
+                value: "?"
+            },
+            dangerVals: {
+                type: Number,
+                value: 0
+            },
+            warningVals: {
+                type: Number,
+                value: 0
+            },
+            okVals: {
+                type: Number,
+                value: 0
             }
         };
     }
@@ -152,6 +244,7 @@ class HeartElement extends PolymerElement {
         this.endInt = this.endDate.getTime();
 
         this.$.ajaxHeart.generateRequest();
+        this.$.ajaxHeartSmall.generateRequest();
     }
 
     dateClick(e) {
@@ -188,6 +281,7 @@ class HeartElement extends PolymerElement {
         this.endInt = this.endDate.getTime();
 
         this.$.ajaxHeart.generateRequest();
+        this.$.ajaxHeartSmall.generateRequest();
     }
 
     changeDate(e) {
@@ -215,7 +309,11 @@ class HeartElement extends PolymerElement {
             this.endDateStr = this.getDateString(this.endDate);
         }
 
+        this.startInt = this.startDate.getTime();
+        this.endInt = this.endDate.getTime();
+
         this.$.ajaxHeart.generateRequest();
+        this.$.ajaxHeartSmall.generateRequest();
     }
 
     dataReceived(event) {
@@ -270,6 +368,58 @@ class HeartElement extends PolymerElement {
         });   
     }
 
+    dataReceivedSmall(event) {
+        var stats = event.detail.response;
+        this.low = stats.low;
+        this.avg = stats.avg;
+        this.high = stats.high;
+        this.dangerVals = stats.dangerVals;
+        this.warningVals = stats.warningVals;
+        this.okVals = stats.okVals;
+
+        if (stats.lowCol === "red") {
+            this.$.lowCell.style.backgroundColor = "#ff9999";
+            //this.$.lowHead.style.backgroundColor = "#ff9999";
+        } else if (stats.lowCol === "yellow") {
+            this.$.lowCell.style.backgroundColor = "#ffff80";
+            //this.$.lowHead.style.backgroundColor = "#ffff80";
+        } else if (stats.lowCol === "green") {
+            this.$.lowCell.style.backgroundColor = "#4dff88";
+            //this.$.lowHead.style.backgroundColor = "#4dff88";
+        } else {
+            this.$.lowCell.style.backgroundColor = "";
+            //this.$.lowHead.style.backgroundColor = "";
+        }
+
+        if (stats.avgCol === "red") {
+            this.$.avgCell.style.backgroundColor = "#ff9999";
+            //this.$.avgHead.style.backgroundColor = "#ff9999";
+        } else if (stats.avgCol === "yellow") {
+            this.$.avgCell.style.backgroundColor = "#ffff80";
+            //this.$.avgHead.style.backgroundColor = "#ffff80";
+        } else if (stats.avgCol === "green") {
+            this.$.avgCell.style.backgroundColor = "#4dff88";
+            //this.$.avgHead.style.backgroundColor = "#4dff88";
+        } else {
+            this.$.avgCell.style.backgroundColor = "";
+            //this.$.avgHead.style.backgroundColor = "";
+        }
+
+        if (stats.highCol === "red") {
+            this.$.highCell.style.backgroundColor = "#ff9999";
+            //this.$.highHead.style.backgroundColor = "#ff9999";
+        } else if (stats.highCol === "yellow") {
+            this.$.highCell.style.backgroundColor = "#ffff80";
+            //this.$.highHead.style.backgroundColor = "#ffff80";
+        } else if (stats.highCol === "green") {
+            this.$.highCell.style.backgroundColor = "#4dff88";
+            //this.$.highHead.style.backgroundColor = "#4dff88";
+        } else {
+            this.$.highCell.style.backgroundColor = "";
+            //this.$.highHead.style.backgroundColor = "";
+        }
+    }
+
     getTicks() {
         var curType = this.curPressed;
 
@@ -301,6 +451,35 @@ class HeartElement extends PolymerElement {
         ticks.push(this.getDateString(this.endDate));
 
         return ticks;
+    }
+
+    removeModule(e) {
+        this.dispatchEvent(new CustomEvent('delete', {composed: true}));
+    }
+
+    setThresholds(e) {
+        this.$.thresholdsDialog.open();
+    }
+
+    updateThresholds(e) {
+        var warningLess = this.$.warningLess.value;
+        var warningHigher = this.$.warningHigher.value;
+        var dangerLess = this.$.dangerLess.value;
+        var dangerHigher = this.$.dangerHigher.value;
+
+        this.body = {
+            "warningLess": warningLess,
+            "warningHigher": warningHigher,
+            "dangerLess": dangerLess,
+            "dangerHigher": dangerHigher
+        };
+
+        this.$.ajaxThreshold.generateRequest();
+    }
+
+    dataUpdated(e) {
+        this.$.ajaxHeart.generateRequest();
+        this.$.ajaxHeartSmall.generateRequest();
     }
 
     getDateString(date) {
