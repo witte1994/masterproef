@@ -141,7 +141,6 @@ class HeartElement extends PolymerElement {
         this.endDate.setMinutes(59);
         this.endDate.setSeconds(59);
 
-
         var startDate = new Date(this.endDate);
         startDate.setTime(this.endDate.getTime() - (24 * 60 * 60 * 1000 * 3) + (1000));
         this.startDate = startDate;
@@ -151,8 +150,6 @@ class HeartElement extends PolymerElement {
 
         this.startInt = this.startDate.getTime();
         this.endInt = this.endDate.getTime();
-
-        
 
         this.$.ajaxHeart.generateRequest();
     }

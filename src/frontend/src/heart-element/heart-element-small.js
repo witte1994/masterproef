@@ -361,6 +361,7 @@ class HeartElementSmall extends PolymerElement {
     }
 
     dataUpdated(e) {
+        this.$.ajaxHeart.generateRequest();
     }
 }
 
