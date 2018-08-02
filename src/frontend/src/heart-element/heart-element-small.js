@@ -201,10 +201,12 @@ class HeartElementSmall extends PolymerElement {
         this.$.day.style.background = "#cac9c9";
 
         this.endDate = new Date(this.endDate);
+        this.endDate.setHours(23);
+        this.endDate.setMinutes(59);
+        this.endDate.setSeconds(59);
         
         var startDate = new Date(this.endDate);
-        startDate.setTime(this.endDate.getTime() - (24*60*60*1000*3));
-        
+        startDate.setTime(this.endDate.getTime() - (24 * 60 * 60 * 1000 * 3) + (1000));
         this.startDate = startDate;
 
         this.startDateStr = ("0" + this.startDate.getDate()).slice(-2) + "/" + ("0" + (this.startDate.getMonth()+1)).slice(-2) + "/" + this.startDate.getFullYear();
@@ -227,17 +229,17 @@ class HeartElementSmall extends PolymerElement {
         this.curPressed = id;
         if (id === "day") {
             var newDate = new Date();
-            newDate.setTime(this.endDate.getTime() - (24*60*60*1000*3));
+            newDate.setTime(this.endDate.getTime() - (24*60*60*1000*3)+1000);
             this.startDate.setTime(newDate.getTime());
             this.startDateStr = ("0" + this.startDate.getDate()).slice(-2) + "/" + ("0" + (this.startDate.getMonth() + 1)).slice(-2) + "/" + this.startDate.getFullYear();
         } else if (id === "week") {
             var newDate = new Date();
-            newDate.setTime(this.endDate.getTime() - (24 * 60 * 60 * 1000 * 7));
+            newDate.setTime(this.endDate.getTime() - (24 * 60 * 60 * 1000 * 7)+1000);
             this.startDate.setTime(newDate.getTime());
             this.startDateStr = ("0" + this.startDate.getDate()).slice(-2) + "/" + ("0" + (this.startDate.getMonth() + 1)).slice(-2) + "/" + this.startDate.getFullYear();
         } else if (id === "month") {
             var newDate = new Date();
-            newDate.setTime(this.endDate.getTime() - (24 * 60 * 60 * 1000 * 28));
+            newDate.setTime(this.endDate.getTime() - (24 * 60 * 60 * 1000 * 28)+1000);
             this.startDate.setTime(newDate.getTime());
             this.startDateStr = ("0" + this.startDate.getDate()).slice(-2) + "/" + ("0" + (this.startDate.getMonth() + 1)).slice(-2) + "/" + this.startDate.getFullYear();
         }

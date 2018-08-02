@@ -13,6 +13,35 @@ router.get('/', (req, res, next) => {
     });
 });
 
+router.get('/:start&:end', (req, res, next) => {
+    var userId = req.originalUrl.split('/')[2];
+
+    var startDate = new Date();
+    startDate.setTime(req.params.start);
+    var endDate = new Date();
+    endDate.setTime(req.params.end);
+
+    HeartThreshold.find({ user: userId, })
+        .select("warningLess warningHigher dangerLess dangerHigher")
+        .exec()
+        .then(doc => {
+            var thresholds = doc[0];
+            Heart.find({ user: userId, date: { $gte: startDate, $lt: endDate } })
+                .select("value date")
+                .exec()
+                .then(doc => {    
+                    res.status(200).json({
+                        thresholds: thresholds,
+                        values: doc
+                    });
+                })
+                .catch();
+        })
+        .catch(err => {
+            console.log(err);
+        });
+});
+
 router.get('/small/:start&:end', (req, res, next) => {
     var userId = req.originalUrl.split('/')[2];
 
