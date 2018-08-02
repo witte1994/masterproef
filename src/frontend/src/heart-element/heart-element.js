@@ -154,10 +154,29 @@ class HeartElement extends PolymerElement {
 
         this.chart = c3.generate({
             bindto: this.$.chart,
+            padding: {
+                right: 10
+            },
+            legend: {
+                show: false
+            },
             data: {
+                x: 'x',
+                xFormat: '%d/%m/%Y',
                 columns: [
                     
                 ]
+            },
+            axis: {
+                x: {
+                    type: 'timeseries',
+                    tick: {
+                        format: '%d/%m'
+                    }
+                },
+                y: {
+                    min: 0
+                }
             }
         });
 
@@ -189,7 +208,7 @@ class HeartElement extends PolymerElement {
             this.startDate.setTime(newDate.getTime());
             this.startDateStr = this.getDateString(this.startDate);
         }
-        
+
         this.startInt = this.startDate.getTime();
         this.endInt = this.endDate.getTime();
 
@@ -232,9 +251,20 @@ class HeartElement extends PolymerElement {
         var thresholds = data.thresholds;
         var values = data.values;
 
+        var valArray = ['Heart rate (BPM)'];
+        var dateArray = ['x'];
         for (var i = 0; i < values.length; i++) {
-            console.log(values[i].value);
+            valArray.push(values[i].value);
+            var date = new Date(values[i].date);
+            dateArray.push(this.getDateString(date));
         }
+
+        this.chart.load({
+            unload: true,
+            columns: [dateArray, valArray]
+        });
+
+        this.chart.regions([{ axis: 'y', start: thresholds.warningLess, end: thresholds.warningHigher, class: 'green' }, { axis: 'y', start: thresholds.dangerLess, end: thresholds.warningLess, class: 'yellow' }, { axis: 'y', start: thresholds.warningHigher, end: thresholds.dangerHigher, class: 'yellow' }, { axis: 'y', end: thresholds.dangerLess, class: 'red' }, { axis: 'y', start: thresholds.dangerHigher, class: 'red' }]);
     }
 
     getDateString(date) {
