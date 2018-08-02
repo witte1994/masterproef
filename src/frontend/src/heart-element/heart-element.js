@@ -101,15 +101,11 @@ class HeartElement extends PolymerElement {
                 </div>
 
             </div><div style="width:30%; display:inline-block;">
-                <div style="width:80%; display:inline-block;">
-                </div><div style="width:20%; display:inline-block;">
-                    <paper-menu-button style="padding: 0px;">
-                        <paper-icon-button icon="more-vert" slot="dropdown-trigger"></paper-icon-button>
-                        <paper-listbox slot="dropdown-content">
-                            <paper-item on-tap="removeModule">Remove module</paper-item>
-                            <paper-item on-tap="setThresholds">Set thresholds</paper-item>
-                        </paper-listbox>
-                    </paper-menu-button>
+                <div style="width:40%; display:inline-block;">
+                </div><div style="width:60%; display:inline-block;">
+                    <paper-icon-button icon="fullscreen-exit" on-tap="resize"></paper-icon-button>
+                    <paper-icon-button icon="settings" on-tap="setThresholds"></paper-icon-button>
+                    <paper-icon-button icon="close" on-tap="removeModule"></paper-icon-button>
                 </div>
 
                 <paper-dialog id="thresholdsDialog">
@@ -276,7 +272,6 @@ class HeartElement extends PolymerElement {
         this.chart.axis.min({ x: this.startDateStr });
         this.chart.axis.max({ x: this.endDateStr });
 
-
         this.startInt = this.startDate.getTime();
         this.endInt = this.endDate.getTime();
 
@@ -365,8 +360,9 @@ class HeartElement extends PolymerElement {
                 { axis: 'y', end: thresholds.dangerLess, class: 'red' },
                 { axis: 'y', start: thresholds.dangerHigher, class: 'red' }
             ]
-        });   
+        });
     }
+
 
     dataReceivedSmall(event) {
         var stats = event.detail.response;
@@ -379,44 +375,32 @@ class HeartElement extends PolymerElement {
 
         if (stats.lowCol === "red") {
             this.$.lowCell.style.backgroundColor = "#ff9999";
-            //this.$.lowHead.style.backgroundColor = "#ff9999";
         } else if (stats.lowCol === "yellow") {
             this.$.lowCell.style.backgroundColor = "#ffff80";
-            //this.$.lowHead.style.backgroundColor = "#ffff80";
         } else if (stats.lowCol === "green") {
             this.$.lowCell.style.backgroundColor = "#4dff88";
-            //this.$.lowHead.style.backgroundColor = "#4dff88";
         } else {
             this.$.lowCell.style.backgroundColor = "";
-            //this.$.lowHead.style.backgroundColor = "";
         }
 
         if (stats.avgCol === "red") {
             this.$.avgCell.style.backgroundColor = "#ff9999";
-            //this.$.avgHead.style.backgroundColor = "#ff9999";
         } else if (stats.avgCol === "yellow") {
             this.$.avgCell.style.backgroundColor = "#ffff80";
-            //this.$.avgHead.style.backgroundColor = "#ffff80";
         } else if (stats.avgCol === "green") {
             this.$.avgCell.style.backgroundColor = "#4dff88";
-            //this.$.avgHead.style.backgroundColor = "#4dff88";
         } else {
             this.$.avgCell.style.backgroundColor = "";
-            //this.$.avgHead.style.backgroundColor = "";
         }
 
         if (stats.highCol === "red") {
             this.$.highCell.style.backgroundColor = "#ff9999";
-            //this.$.highHead.style.backgroundColor = "#ff9999";
         } else if (stats.highCol === "yellow") {
             this.$.highCell.style.backgroundColor = "#ffff80";
-            //this.$.highHead.style.backgroundColor = "#ffff80";
         } else if (stats.highCol === "green") {
             this.$.highCell.style.backgroundColor = "#4dff88";
-            //this.$.highHead.style.backgroundColor = "#4dff88";
         } else {
             this.$.highCell.style.backgroundColor = "";
-            //this.$.highHead.style.backgroundColor = "";
         }
     }
 
@@ -451,6 +435,10 @@ class HeartElement extends PolymerElement {
         ticks.push(this.getDateString(this.endDate));
 
         return ticks;
+    }
+
+    resize(e) {
+        this.dispatchEvent(new CustomEvent('resize', { composed: true, detail: { resizeTo: "heart-element-small" }}));
     }
 
     removeModule(e) {

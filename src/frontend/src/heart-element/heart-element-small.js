@@ -18,7 +18,7 @@ class HeartElementSmall extends PolymerElement {
         return html`
         <style include="shared-styles">
             :host {
-                width: 340px;
+                width: 380px;
             }
             
             .row {
@@ -59,16 +59,12 @@ class HeartElementSmall extends PolymerElement {
 
         <div class="card">
             
-            <div class="row">
-                <h1 class="block" style="margin-right: 20px;">Heart rate (BPM)</h1>
-                <paper-menu-button class="block" style="margin-left: 50px; padding: 0px;">
-                    <paper-icon-button icon="more-vert" slot="dropdown-trigger"></paper-icon-button>
-                    <paper-listbox slot="dropdown-content">
-                        <paper-item on-tap="removeModule">Remove module</paper-item>
-                        <paper-item on-tap="setThresholds">Set thresholds</paper-item>
-                    </paper-listbox>
-                </paper-menu-button>
-                
+            <div style="width:62%; display:inline-block;">
+                <h1>Heart rate (BPM)</h1>
+            </div><div style="width:38%; display:inline-block;">
+                <paper-icon-button icon="fullscreen" on-tap="resize"></paper-icon-button>
+                <paper-icon-button icon="settings" on-tap="setThresholds"></paper-icon-button>
+                <paper-icon-button icon="close" on-tap="removeModule"></paper-icon-button>
             </div>
 
             <paper-dialog id="thresholdsDialog">
@@ -83,46 +79,47 @@ class HeartElementSmall extends PolymerElement {
                 <paper-button dialog-confirm on-tap="updateThresholds">Accept</paper-button>
             </paper-dialog>
 
-            <table class="row">
-                <tr>
-                    <td><paper-button id="day" toggles on-tap="dateClick">3 days</paper-button></td>
-                    <td><paper-button id="week" toggles on-tap="dateClick">week</paper-button></td>
-                    <td><paper-button id="month" toggles on-tap="dateClick">month</paper-button></td>
-                </tr>
-            </table>
+            <div style="width:100%; display:inline-block; text-align:center; margin-top: 5px;">
+                    <paper-button id="day" toggles on-tap="dateClick">3 days</paper-button>
+                    <paper-button id="week" toggles on-tap="dateClick">week</paper-button>
+                    <paper-button id="month" toggles on-tap="dateClick">month</paper-button>
+            </div>
+            
+            <div style="width:20%; display:inline-block; text-align: center;">
+                <paper-icon-button id="back" icon="arrow-back" on-tap="changeDate"></paper-icon-button>
+            </div><div style="width:60%; display:inline-block; text-align: center;">
+                <p>[[startDateStr]] - [[endDateStr]]</p>
+            </div><div style="width:20%; display:inline-block; text-align: center;">
+                <paper-icon-button id="forward" icon="arrow-forward" on-tap="changeDate"></paper-icon-button>
+            </div>
 
-            <table class="row">
-                <tr>
-                    <td><paper-icon-button id="back" icon="arrow-back" on-tap="changeDate"></paper-icon-button></td>
-                    <td><p>[[startDateStr]] - [[endDateStr]]</p></td>
-                    <td><paper-icon-button id="forward" icon="arrow-forward" on-tap="changeDate"></paper-icon-button></td>
-                </tr>
-            </table>
+            <div style="width: 100%;">
+                <table class="row">
+                    <tr>
+                        <td><img src="img/red_error.png"></td>
+                        <td><p>[[dangerVals]]</p></td>
+                        <td><img src="img/yellow_warning.png"></td>
+                        <td><p>[[warningVals]]</p></td>
+                        <td><img src="img/green_ok.png"></td>
+                        <td><p>[[okVals]]</p></td>
+                    </tr>
+                </table>
+            </div>
 
-
-            <table class="row">
-                <tr>
-                    <td><img src="img/red_error.png"></td>
-                    <td><p>[[dangerVals]]</p></td>
-                    <td><img src="img/yellow_warning.png"></td>
-                    <td><p>[[warningVals]]</p></td>
-                    <td><img src="img/green_ok.png"></td>
-                    <td><p>[[okVals]]</p></td>
-                </tr>
-            </table>
-
-            <table class="row">
-                <tr>
-                    <th id="lowHead">Low</th>
-                    <th id="avgHead">Avg</th>
-                    <th id="highHead">High</th>
-                </tr>
-                <tr>
-                    <td id="lowCell">[[low]]</td>
-                    <td id="avgCell">[[avg]]</td>
-                    <td id="highCell">[[high]]</td>
-                </tr>
-            </table>
+            <div style="width: 100%;">
+                <table class="row">
+                    <tr>
+                        <th id="lowHead">Low</th>
+                        <th id="avgHead">Avg</th>
+                        <th id="highHead">High</th>
+                    </tr>
+                    <tr>
+                        <td id="lowCell">[[low]]</td>
+                        <td id="avgCell">[[avg]]</td>
+                        <td id="highCell">[[high]]</td>
+                    </tr>
+                </table>
+            </div>
             </div>
         </div>
     `;
@@ -292,45 +289,37 @@ class HeartElementSmall extends PolymerElement {
 
         if (stats.lowCol === "red") {
             this.$.lowCell.style.backgroundColor = "#ff9999";
-            this.$.lowHead.style.backgroundColor = "#ff9999";
         } else if (stats.lowCol === "yellow") {
             this.$.lowCell.style.backgroundColor = "#ffff80";
-            this.$.lowHead.style.backgroundColor = "#ffff80";
         } else if (stats.lowCol === "green") {
             this.$.lowCell.style.backgroundColor = "#4dff88";
-            this.$.lowHead.style.backgroundColor = "#4dff88";
         } else {
             this.$.lowCell.style.backgroundColor = "";
-            this.$.lowHead.style.backgroundColor = "";
         }
 
         if (stats.avgCol === "red") {
             this.$.avgCell.style.backgroundColor = "#ff9999";
-            this.$.avgHead.style.backgroundColor = "#ff9999";
         } else if (stats.avgCol === "yellow") {
             this.$.avgCell.style.backgroundColor = "#ffff80";
-            this.$.avgHead.style.backgroundColor = "#ffff80";
         } else if (stats.avgCol === "green") {
             this.$.avgCell.style.backgroundColor = "#4dff88";
-            this.$.avgHead.style.backgroundColor = "#4dff88";
         } else {
             this.$.avgCell.style.backgroundColor = "";
-            this.$.avgHead.style.backgroundColor = "";
         }
 
         if (stats.highCol === "red") {
             this.$.highCell.style.backgroundColor = "#ff9999";
-            this.$.highHead.style.backgroundColor = "#ff9999";
         } else if (stats.highCol === "yellow") {
             this.$.highCell.style.backgroundColor = "#ffff80";
-            this.$.highHead.style.backgroundColor = "#ffff80";
         } else if (stats.highCol === "green") {
             this.$.highCell.style.backgroundColor = "#4dff88";
-            this.$.highHead.style.backgroundColor = "#4dff88";
         } else {
             this.$.highCell.style.backgroundColor = "";
-            this.$.highHead.style.backgroundColor = "";
         }
+    }
+
+    resize(e) {
+        this.dispatchEvent(new CustomEvent('resize', { composed: true, detail: { resizeTo: "heart-element" } }));
     }
 
     removeModule(e) {

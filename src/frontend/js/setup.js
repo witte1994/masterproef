@@ -5,8 +5,8 @@ $(document).ready(function() {
     
     $grid = $('.grid').packery({
         itemSelector: '.grid-item',
-        // columnWidth helps with drop positioning
-        columnWidth: 20
+        columnWidth: 20,
+        transitionDuration: 0
     });
 
     // make all grid-items draggable
@@ -14,9 +14,7 @@ $(document).ready(function() {
         var draggie = new Draggabilly(gridItem);
         // bind drag events to Packery
         $grid.packery('bindDraggabillyEvents', draggie);
-        gridItem.addEventListener('delete', function (e) {
-            $grid.packery('remove', gridItem).packery('shiftLayout');
-        });
+        addListeners(gridItem);
     });
 });
 
@@ -24,11 +22,11 @@ function add() {
     var module = document.getElementById("moduleMenu").selectedItem.getAttribute("value");
     var size = document.getElementById("sizeMenu").selectedItem.getAttribute("value");
 
-    var mainGrid = document.getElementById("mainGrid");
-
     var newModule = null;
     if (module === "heart") {
+        console.log(size);
         if (size === "s") newModule = document.createElement("heart-element-small");
+        else if (size === "l") newModule = document.createElement("heart-element");
     }
 
     if (newModule != null) {
@@ -41,8 +39,30 @@ function add() {
         var draggie = new Draggabilly(newModule);
         $grid.packery('bindDraggabillyEvents', draggie);
 
-        newModule.addEventListener('delete', function (e) {
-            $grid.packery('remove', newModule).packery('shiftLayout');
-        });
+        addListeners(newModule);
     }
+}
+
+function addListeners(module) {
+    module.addEventListener('delete', function (e) {
+        $grid.packery('remove', module).packery('shiftLayout');
+    });
+
+    module.addEventListener('resize', function (e) {
+        $grid.packery('remove', module).packery('shiftLayout');
+
+        var resizeTo = e.detail.resizeTo;
+        var newModule = document.createElement(resizeTo);
+
+        newModule.classList.add("grid-item");
+        $grid.packery()
+            .append(newModule)
+            .packery('appended', newModule)
+            .packery();
+
+        var draggie = new Draggabilly(newModule);
+        $grid.packery('bindDraggabillyEvents', draggie);
+
+        addListeners(newModule);
+    });
 }
