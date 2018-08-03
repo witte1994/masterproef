@@ -27,16 +27,9 @@ class HeartElementSmall extends PolymerElement {
                 margin-bottom: 5px;
             }
 
-            .block {
-                display: inline-block;
-                margin: auto;
-            }
-
             paper-button { 
                 background: #e0e0e0;
             }
-
-
         </style>
 
         <iron-ajax
@@ -58,7 +51,6 @@ class HeartElementSmall extends PolymerElement {
         ></iron-ajax>
 
         <div class="card">
-            
             <div style="width:62%; display:inline-block;">
                 <h1>Heart rate (BPM)</h1>
             </div><div style="width:38%; display:inline-block;">
@@ -120,7 +112,6 @@ class HeartElementSmall extends PolymerElement {
                     </tr>
                 </table>
             </div>
-            </div>
         </div>
     `;
     }
@@ -129,12 +120,6 @@ class HeartElementSmall extends PolymerElement {
             userId: {
                 type: String,
                 value: '5b5c65e3ad30264506380dd1'
-            },
-            user: {
-                type: Object
-            },
-            data: {
-                type: String
             },
             startDate: {
                 type: Date,
@@ -192,22 +177,57 @@ class HeartElementSmall extends PolymerElement {
 
     ready() {
         super.ready();
+
+        this.setUserId();
+        this.setDates();
+        
+        this.$.day.style.background = "#cac9c9";
+
+        this.$.ajaxHeart.generateRequest();
+    }
+
+    setUserId() {
         var split = document.URL.split("/");
         var param = split[split.length - 1];
         this.userId = param;
-        this.$.day.style.background = "#cac9c9";
+    }
 
+    setDates() {
         this.endDate = new Date(this.endDate);
         this.endDate.setHours(23);
         this.endDate.setMinutes(59);
         this.endDate.setSeconds(59);
-        
+
         var startDate = new Date(this.endDate);
         startDate.setTime(this.endDate.getTime() - (24 * 60 * 60 * 1000 * 3) + (1000));
         this.startDate = startDate;
 
-        this.startDateStr = ("0" + this.startDate.getDate()).slice(-2) + "/" + ("0" + (this.startDate.getMonth()+1)).slice(-2) + "/" + this.startDate.getFullYear();
-        this.endDateStr = ("0" + this.endDate.getDate()).slice(-2) + "/" + ("0" + (this.endDate.getMonth() + 1)).slice(-2) + "/" + this.endDate.getFullYear();
+        this.startDateStr = this.getDateString(this.startDate);
+        this.endDateStr = this.getDateString(this.endDate);
+
+        this.startInt = this.startDate.getTime();
+        this.endInt = this.endDate.getTime();
+    }
+
+    dateClick(e) {
+        this.setActiveButton(e.srcElement);
+
+        var id = e.srcElement.id;
+        this.curPressed = id;
+        var newDate = new Date();
+        if (id === "day") {
+            newDate.setTime(this.endDate.getTime() - (24*60*60*1000*3)+1000);
+            this.startDate.setTime(newDate.getTime());
+            this.startDateStr = this.getDateString(this.startDate);
+        } else if (id === "week") {
+            newDate.setTime(this.endDate.getTime() - (24 * 60 * 60 * 1000 * 7)+1000);
+            this.startDate.setTime(newDate.getTime());
+            this.startDateStr = this.getDateString(this.startDate);
+        } else if (id === "month") {
+            newDate.setTime(this.endDate.getTime() - (24 * 60 * 60 * 1000 * 28)+1000);
+            this.startDate.setTime(newDate.getTime());
+            this.startDateStr = this.getDateString(this.startDate);
+        }
 
         this.startInt = this.startDate.getTime();
         this.endInt = this.endDate.getTime();
@@ -215,61 +235,32 @@ class HeartElementSmall extends PolymerElement {
         this.$.ajaxHeart.generateRequest();
     }
 
-    dateClick(e) {
+    setActiveButton(element) {
         this.$.day.style.background = "#e0e0e0";
         this.$.week.style.background = "#e0e0e0";
         this.$.month.style.background = "#e0e0e0";
 
-        e.srcElement.style.background = "#cac9c9";
-
-        var id = e.srcElement.id;
-        this.curPressed = id;
-        if (id === "day") {
-            var newDate = new Date();
-            newDate.setTime(this.endDate.getTime() - (24*60*60*1000*3)+1000);
-            this.startDate.setTime(newDate.getTime());
-            this.startDateStr = ("0" + this.startDate.getDate()).slice(-2) + "/" + ("0" + (this.startDate.getMonth() + 1)).slice(-2) + "/" + this.startDate.getFullYear();
-        } else if (id === "week") {
-            var newDate = new Date();
-            newDate.setTime(this.endDate.getTime() - (24 * 60 * 60 * 1000 * 7)+1000);
-            this.startDate.setTime(newDate.getTime());
-            this.startDateStr = ("0" + this.startDate.getDate()).slice(-2) + "/" + ("0" + (this.startDate.getMonth() + 1)).slice(-2) + "/" + this.startDate.getFullYear();
-        } else if (id === "month") {
-            var newDate = new Date();
-            newDate.setTime(this.endDate.getTime() - (24 * 60 * 60 * 1000 * 28)+1000);
-            this.startDate.setTime(newDate.getTime());
-            this.startDateStr = ("0" + this.startDate.getDate()).slice(-2) + "/" + ("0" + (this.startDate.getMonth() + 1)).slice(-2) + "/" + this.startDate.getFullYear();
-        }
-
-        this.startInt = this.startDate.getTime();
-        this.endInt = this.endDate.getTime();
-
-        this.$.ajaxHeart.generateRequest();
+        element.style.background = "#cac9c9";
     }
 
     changeDate(e) {
         var id = e.srcElement.id;
 
         var operator = 0;
-
-        if (this.curPressed === "day") {
-            operator = 3;
-        } else if (this.curPressed === "week") {
-            operator = 7;
-        } else if (this.curPressed === "month") {
-            operator = 28;
-        }
+        if (this.curPressed === "day")          operator = 3;
+        else if (this.curPressed === "week")    operator = 7;
+        else if (this.curPressed === "month")   operator = 28;
 
         if (id === "back") {
-            this.startDate.setTime(this.startDate.getTime() - (24*60*60*1000*operator));
-            this.startDateStr = ("0" + this.startDate.getDate()).slice(-2) + "/" + ("0" + (this.startDate.getMonth() + 1)).slice(-2) + "/" + this.startDate.getFullYear();
+            this.startDate.setTime(this.startDate.getTime() - (24 * 60 * 60 * 1000 * operator));
+            this.startDateStr = this.getDateString(this.startDate);
             this.endDate.setTime(this.endDate.getTime() - (24 * 60 * 60 * 1000 * operator));
-            this.endDateStr = ("0" + this.endDate.getDate()).slice(-2) + "/" + ("0" + (this.endDate.getMonth() + 1)).slice(-2) + "/" + this.endDate.getFullYear();
+            this.endDateStr = this.getDateString(this.endDate);
         } else if (id === "forward") {
             this.startDate.setTime(this.startDate.getTime() + (24 * 60 * 60 * 1000 * operator));
-            this.startDateStr = ("0" + this.startDate.getDate()).slice(-2) + "/" + ("0" + (this.startDate.getMonth() + 1)).slice(-2) + "/" + this.startDate.getFullYear();
+            this.startDateStr = this.getDateString(this.startDate);
             this.endDate.setTime(this.endDate.getTime() + (24 * 60 * 60 * 1000 * operator));
-            this.endDateStr = ("0" + this.endDate.getDate()).slice(-2) + "/" + ("0" + (this.endDate.getMonth() + 1)).slice(-2) + "/" + this.endDate.getFullYear();
+            this.endDateStr = this.getDateString(this.endDate);
         }
 
         this.startInt = this.startDate.getTime();
@@ -287,35 +278,20 @@ class HeartElementSmall extends PolymerElement {
         this.warningVals = stats.warningVals;
         this.okVals = stats.okVals;
 
-        if (stats.lowCol === "red") {
-            this.$.lowCell.style.backgroundColor = "#ff9999";
-        } else if (stats.lowCol === "yellow") {
-            this.$.lowCell.style.backgroundColor = "#ffff80";
-        } else if (stats.lowCol === "green") {
-            this.$.lowCell.style.backgroundColor = "#4dff88";
-        } else {
-            this.$.lowCell.style.backgroundColor = "";
-        }
+        if (stats.lowCol === "red")         this.$.lowCell.style.backgroundColor = "#ff9999"
+        else if (stats.lowCol === "yellow") this.$.lowCell.style.backgroundColor = "#ffff80";
+        else if (stats.lowCol === "green")  this.$.lowCell.style.backgroundColor = "#4dff88";
+        else                                this.$.lowCell.style.backgroundColor = "";
 
-        if (stats.avgCol === "red") {
-            this.$.avgCell.style.backgroundColor = "#ff9999";
-        } else if (stats.avgCol === "yellow") {
-            this.$.avgCell.style.backgroundColor = "#ffff80";
-        } else if (stats.avgCol === "green") {
-            this.$.avgCell.style.backgroundColor = "#4dff88";
-        } else {
-            this.$.avgCell.style.backgroundColor = "";
-        }
+        if (stats.avgCol === "red")         this.$.avgCell.style.backgroundColor = "#ff9999";
+        else if (stats.avgCol === "yellow") this.$.avgCell.style.backgroundColor = "#ffff80";
+        else if (stats.avgCol === "green")  this.$.avgCell.style.backgroundColor = "#4dff88";
+        else                                this.$.avgCell.style.backgroundColor = "";
 
-        if (stats.highCol === "red") {
-            this.$.highCell.style.backgroundColor = "#ff9999";
-        } else if (stats.highCol === "yellow") {
-            this.$.highCell.style.backgroundColor = "#ffff80";
-        } else if (stats.highCol === "green") {
-            this.$.highCell.style.backgroundColor = "#4dff88";
-        } else {
-            this.$.highCell.style.backgroundColor = "";
-        }
+        if (stats.highCol === "red")        this.$.highCell.style.backgroundColor = "#ff9999";
+        else if (stats.highCol === "yellow")this.$.highCell.style.backgroundColor = "#ffff80";
+        else if (stats.highCol === "green") this.$.highCell.style.backgroundColor = "#4dff88";
+        else                                this.$.highCell.style.backgroundColor = "";
     }
 
     resize(e) {
@@ -348,6 +324,11 @@ class HeartElementSmall extends PolymerElement {
 
     dataUpdated(e) {
         this.$.ajaxHeart.generateRequest();
+    }
+
+    getDateString(date) {
+        var str = ("0" + date.getDate()).slice(-2) + "/" + ("0" + (date.getMonth() + 1)).slice(-2) + "/" + date.getFullYear();
+        return str;
     }
 }
 
