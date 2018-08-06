@@ -4,9 +4,11 @@ const mongoose = require('mongoose');
 
 const User = require('../models/user');
 
-const heartRoutes = require('./heart')
+const heartRoutes = require('./heart');
+const bpRoutes = require('./bp');
 
 router.use('/:userId/heart', heartRoutes);
+router.use('/:userId/bp', bpRoutes);
 
 router.get('/', (req, res, next) => {
     res.status(200).json({

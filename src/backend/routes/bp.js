@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 
-const Heart = require('../models/heart');
-const HeartThreshold = require('../models/thresholds/heart');
+const BP = require('../models/bp');
+const BpThreshold = require('../models/thresholds/bp');
 
 router.get('/:start&:end', (req, res, next) => {
     var userId = req.originalUrl.split('/')[2];
@@ -13,15 +13,15 @@ router.get('/:start&:end', (req, res, next) => {
     var endDate = new Date();
     endDate.setTime(req.params.end);
 
-    HeartThreshold.find({ user: userId, })
+    BpThreshold.find({ user: userId, })
         .select("warningLess warningHigher dangerLess dangerHigher")
         .exec()
         .then(doc => {
             var thresholds = doc[0];
-            Heart.find({ user: userId, date: { $gte: startDate, $lt: endDate } })
-                .select("value date")
+            BP.find({ user: userId, date: { $gte: startDate, $lt: endDate } })
+                .select("systolic diastolic date")
                 .exec()
-                .then(doc => {    
+                .then(doc => {
                     res.status(200).json({
                         thresholds: thresholds,
                         values: doc
@@ -42,29 +42,36 @@ router.get('/small/:start&:end', (req, res, next) => {
     var endDate = new Date();
     endDate.setTime(req.params.end);
 
-
-    HeartThreshold.find({ user: userId, })
+    BpThreshold.find({ user: userId, })
         .select("warningLess warningHigher dangerLess dangerHigher")
         .exec()
         .then(doc => {
             var thresholds = doc[0];
-            Heart.find({ user: userId, date: { $gte: startDate, $lt: endDate } })
-                .select("value date")
+            BP.find({ user: userId, date: { $gte: startDate, $lt: endDate } })
+                .select("systolic diastolic date")
                 .exec()
                 .then(doc => {
-                    var low = 99999, avg = 0, high = -1;
+                    var lowSys = 99999, avgSys = 0, highSys = -1;
+                    var lowDia = 99999, avgDia = 0, highDia = -1;
                     var dangerVals = 0;
                     var warningVals = 0;
                     var okVals = 0;
                     count = 0;
                     for (i in doc) {
-                        if (doc[i].value < low) low = doc[i].value;
-                        if (doc[i].value > high) high = doc[i].value;
-                        avg += doc[i].value;
+                        if (doc[i].diastolic < low) {
+                            lowDia = doc[i].diastolic;
+                            lowSys = doc[i].systolic;
+                        }
+                        if (doc[i].systolic > high) {
+                            highSys = doc[i].systolic;
+                            highDia = doc[i].diastolic;
+                        }
+                        avgSys += doc[i].systolic;
+                        avgDia += doc[i].diastolic;
                         count++;
 
-                        if (doc[i].value <= thresholds.dangerLess || doc[i].value >= thresholds.dangerHigher) dangerVals++;
-                        else if (doc[i].value <= thresholds.warningLess || doc[i].value >= thresholds.warningHigher) warningVals++;
+                        if (doc[i].diastolic <= thresholds.dangerLess || doc[i].systolic >= thresholds.dangerHigher) dangerVals++;
+                        else if (doc[i].diastolic <= thresholds.warningLess || doc[i].systolic >= thresholds.warningHigher) warningVals++;
                         else okVals++;
                     }
 
@@ -72,21 +79,23 @@ router.get('/small/:start&:end', (req, res, next) => {
                     var avgCol = "";
                     var highCol = "";
                     if (count > 0) {
-                        avg /= count;
+                        avgSys /= count;
+                        avgDia /= count;
 
-                        if (low <= thresholds.dangerLess || low >= thresholds.dangerHigher) lowCol = "red";
-                        else if (low <= thresholds.warningLess || low >= thresholds.warningHigher) lowCol = "yellow";
+                        if (lowDia <= thresholds.dangerLess || lowSys >= thresholds.dangerHigher) lowCol = "red";
+                        else if (lowDia <= thresholds.warningLess || lowSys >= thresholds.warningHigher) lowCol = "yellow";
                         else lowCol = "green";
 
-                        if (avg <= thresholds.dangerLess || avg >= thresholds.dangerHigher) avgCol = "red";
-                        else if (avg <= thresholds.warningLess || avg >= thresholds.warningHigher) avgCol = "yellow";
+                        if (avgSys <= thresholds.dangerLess || avgDia <= thresholds.dangerLess || avgSys >= thresholds.dangerHigher || avgDia >= thresholds.dangerHigher) avgCol = "red";
+                        else if (avgSys <= thresholds.warningLess || avgDia <= thresholds.warningLess || avgSys >= thresholds.warningHigher || avgDia >= thresholds.warningHigher) avgCol = "yellow";
                         else avgCol = "green";
 
-                        if (high <= thresholds.dangerLess || high >= thresholds.dangerHigher) highCol = "red";
-                        else if (high <= thresholds.warningLess || high >= thresholds.warningHigher) highCol = "yellow";
+                        if (highDia <= thresholds.dangerLess || highSys >= thresholds.dangerHigher) highCol = "red";
+                        else if (highDia <= thresholds.warningLess || highSys >= thresholds.warningHigher) highCol = "yellow";
                         else highCol = "green";
 
-                        avg = avg.toFixed(1);
+                        avgSys = avgSys.toFixed(1);
+                        avgDia = avgDia.toFixed(1);
                     } else {
                         low = "?";
                         high = "?";
@@ -97,9 +106,9 @@ router.get('/small/:start&:end', (req, res, next) => {
                     }
 
                     res.status(200).json({
-                        low: low.toString(),
-                        high: high.toString(),
-                        avg: avg,
+                        low: lowSys.toString() + "/" + lowDia.toString(),
+                        high: highSys.toString() + "/" + highDia.toString(),
+                        avg: avgSys.toString() + "/" + avgDia.toString(),
                         dangerVals: dangerVals,
                         warningVals: warningVals,
                         okVals: okVals,
@@ -114,18 +123,19 @@ router.get('/small/:start&:end', (req, res, next) => {
             console.log(err);
         });
 
-    
+
 });
 
 router.post('/', (req, res, next) => {
     var userId = req.originalUrl.split('/')[2];
-    const heart = new Heart({
+    const bp = new BP({
         _id: mongoose.Types.ObjectId(),
         user: userId,
-        value: req.body.value,
+        systolic: req.body.systolic,
+        diastolic: req.body.diastolic,
         date: req.body.date
     });
-    heart
+    bp
         .save()
         .then(result => {
             console.log(result);
@@ -141,15 +151,15 @@ router.post('/', (req, res, next) => {
 
 router.post('/threshold', (req, res, next) => {
     var userId = req.originalUrl.split('/')[2];
-    const heartThreshold = new HeartThreshold({
+    const bpThreshold = new BpThreshold({
         _id: mongoose.Types.ObjectId(),
         user: userId,
-        warningLess: 55,
-        warningHigher: 75,
-        dangerLess: 45,
-        dangerHigher: 85
+        warningLess: 75,
+        warningHigher: 130,
+        dangerLess: 65,
+        dangerHigher: 140
     });
-    heartThreshold
+    bpThreshold
         .save()
         .then(result => {
             console.log(result);
@@ -165,7 +175,7 @@ router.post('/threshold', (req, res, next) => {
 
 router.patch('/threshold', (req, res, next) => {
     var userId = req.originalUrl.split('/')[2];
-    HeartThreshold.update({ user: userId }, { $set: { warningLess: req.body.warningLess, warningHigher: req.body.warningHigher, dangerLess: req.body.dangerLess, dangerHigher: req.body.dangerHigher }})
+    BpThreshold.update({ user: userId }, { $set: { warningLess: req.body.warningLess, warningHigher: req.body.warningHigher, dangerLess: req.body.dangerLess, dangerHigher: req.body.dangerHigher } })
         .exec()
         .then(result => {
             console.log(result);
@@ -182,7 +192,7 @@ router.patch('/threshold', (req, res, next) => {
 router.get('/threshold', (req, res, next) => {
     var userId = req.originalUrl.split('/')[2];
 
-    HeartThreshold.find({ user: userId, })
+    BpThreshold.find({ user: userId, })
         .select("warningLess warningHigher dangerLess dangerHigher")
         .exec()
         .then(doc => {
