@@ -85,8 +85,8 @@ class HeartElementSmall extends PolymerElement {
                 <paper-icon-button id="forward" icon="arrow-forward" on-tap="changeDate"></paper-icon-button>
             </div>
 
-            <div style="width: 100%;">
-                <table class="row">
+            <div style="width:100%; display:inline-block; text-align: center;">
+                <table class="row" style="width: 260px; margin-left:40px;">
                     <tr>
                         <td><img src="img/red_error.png"></td>
                         <td><p>[[dangerVals]]</p></td>
@@ -98,8 +98,8 @@ class HeartElementSmall extends PolymerElement {
                 </table>
             </div>
 
-            <div style="width: 100%;">
-                <table class="row">
+            <div style="width:100%; display:inline-block; text-align: center;">
+                <table class="row" style="width: 260px; margin-left:40px;">
                     <tr>
                         <th id="lowHead">Low</th>
                         <th id="avgHead">Avg</th>

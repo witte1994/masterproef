@@ -27,6 +27,9 @@ function add() {
     if (module === "heart") {
         if (size === "s") newModule = document.createElement("heart-element-small");
         else if (size === "l") newModule = document.createElement("heart-element");
+    } else if (module === "bp") {
+        if (size === "s") newModule = document.createElement("bp-element-small");
+        else if (size === "l") newModule = document.createElement("bp-element");
     }
 
     if (newModule != null) {
