@@ -7,10 +7,12 @@ const User = require('../models/user');
 const heartRoutes = require('./heart');
 const bpRoutes = require('./bp');
 const bsRoutes = require('./bs');
+const weightRoutes = require('./weight');
 
 router.use('/:userId/heart', heartRoutes);
 router.use('/:userId/bp', bpRoutes);
 router.use('/:userId/bs', bsRoutes);
+router.use('/:userId/weight', weightRoutes);
 
 router.get('/', (req, res, next) => {
     res.status(200).json({
