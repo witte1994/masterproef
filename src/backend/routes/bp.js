@@ -58,11 +58,11 @@ router.get('/small/:start&:end', (req, res, next) => {
                     var okVals = 0;
                     count = 0;
                     for (i in doc) {
-                        if (doc[i].diastolic < low) {
+                        if (doc[i].diastolic < lowDia) {
                             lowDia = doc[i].diastolic;
                             lowSys = doc[i].systolic;
                         }
-                        if (doc[i].systolic > high) {
+                        if (doc[i].systolic > highSys) {
                             highSys = doc[i].systolic;
                             highDia = doc[i].diastolic;
                         }
@@ -96,6 +96,18 @@ router.get('/small/:start&:end', (req, res, next) => {
 
                         avgSys = avgSys.toFixed(1);
                         avgDia = avgDia.toFixed(1);
+
+                        res.status(200).json({
+                            low: lowSys.toString() + "/" + lowDia.toString(),
+                            high: highSys.toString() + "/" + highDia.toString(),
+                            avg: avgSys.toString() + "/" + avgDia.toString(),
+                            dangerVals: dangerVals,
+                            warningVals: warningVals,
+                            okVals: okVals,
+                            lowCol: lowCol,
+                            avgCol: avgCol,
+                            highCol: highCol
+                        });
                     } else {
                         low = "?";
                         high = "?";
@@ -103,19 +115,19 @@ router.get('/small/:start&:end', (req, res, next) => {
                         dangerVals = "?";
                         warningVals = "?";
                         okVals = "?";
-                    }
 
-                    res.status(200).json({
-                        low: lowSys.toString() + "/" + lowDia.toString(),
-                        high: highSys.toString() + "/" + highDia.toString(),
-                        avg: avgSys.toString() + "/" + avgDia.toString(),
-                        dangerVals: dangerVals,
-                        warningVals: warningVals,
-                        okVals: okVals,
-                        lowCol: lowCol,
-                        avgCol: avgCol,
-                        highCol: highCol
-                    });
+                        res.status(200).json({
+                            low: low,
+                            high: high,
+                            avg: avg,
+                            dangerVals: dangerVals,
+                            warningVals: warningVals,
+                            okVals: okVals,
+                            lowCol: lowCol,
+                            avgCol: avgCol,
+                            highCol: highCol
+                        });
+                    }
                 })
                 .catch();
         })
