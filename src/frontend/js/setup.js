@@ -30,6 +30,9 @@ function add() {
     } else if (module === "bp") {
         if (size === "s") newModule = document.createElement("bp-element-small");
         else if (size === "l") newModule = document.createElement("bp-element");
+    } else if (module === "bs") {
+        if (size === "s") newModule = document.createElement("bs-element-small");
+        else if (size === "l") newModule = document.createElement("bs-element");
     }
 
     if (newModule != null) {

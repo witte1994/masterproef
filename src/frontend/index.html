@@ -42,6 +42,7 @@
     <script type="module" src="/src/bp-element/bp-element-small.js"></script>
     <script type="module" src="/src/bp-element/bp-element.js"></script>
     <script type="module" src="/src/bs-element/bs-element-small.js"></script>
+    <script type="module" src="/src/bs-element/bs-element.js"></script>
 
     <custom-style>
       <style>
@@ -92,7 +93,7 @@
         </app-header>
 
       <div id="mainGrid" class="grid" style="margin: 8px;">
-        <bs-element-small class="grid-item"></bs-element-small>
+        <bs-element class="grid-item"></bs-element>
       </div>
 
       </app-header-layout>
@@ -106,6 +107,7 @@
         <paper-listbox slot="dropdown-content">
           <paper-item value="heart">Heart</paper-item>
           <paper-item value="bp">Blood pressure</paper-item>
+          <paper-item value="bs">Blood sugar</paper-item>
         </paper-listbox>
       </paper-dropdown-menu>
 
