@@ -78,9 +78,9 @@ class BsElement extends PolymerElement {
 
         <div class="card">
             <div style="width:70%; display:inline-block; vertical-align:top;">
-                <div style="width:40%; display:inline-block;">
+                <div style="width:46%; display:inline-block;">
                     <h1>Blood sugar (mmol/L)</h1>
-                </div><div style="width:60%; display:inline-block;">
+                </div><div style="width:54%; display:inline-block;">
                     <paper-button id="day" toggles on-tap="dateClick">3 days</paper-button>
                     <paper-button id="week" toggles on-tap="dateClick">week</paper-button>
                     <paper-button id="month" toggles on-tap="dateClick">month</paper-button>
