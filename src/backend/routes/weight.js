@@ -52,7 +52,7 @@ router.get('/small/:start&:end', (req, res, next) => {
             var thresholds = doc[0];
             Weight.find({ user: userId })
                 .select("value date")
-                .sort('-date')
+                .sort('date')
                 .exec()
                 .then(doc => {
                     var goal = thresholds.goal;

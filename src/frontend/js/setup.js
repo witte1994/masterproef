@@ -33,6 +33,9 @@ function add() {
     } else if (module === "bs") {
         if (size === "s") newModule = document.createElement("bs-element-small");
         else if (size === "l") newModule = document.createElement("bs-element");
+    } else if (module === "weight") {
+        if (size === "s") newModule = document.createElement("weight-element-small");
+        else if (size === "l") newModule = document.createElement("weight-element");
     }
 
     if (newModule != null) {
