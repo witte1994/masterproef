@@ -36,6 +36,9 @@ function add() {
     } else if (module === "weight") {
         if (size === "s") newModule = document.createElement("weight-element-small");
         else if (size === "l") newModule = document.createElement("weight-element");
+    } else if (module === "oxygen") {
+        if (size === "s") newModule = document.createElement("oxygen-element-small");
+        else if (size === "l") newModule = document.createElement("oxygen-element");
     }
 
     if (newModule != null) {
