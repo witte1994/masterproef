@@ -20,11 +20,53 @@ router.get('/:start&:end', (req, res, next) => {
             var thresholds = doc[0];
             Medication.find({ user: userId, date: { $gte: startDate, $lt: endDate } })
                 .select("name value goal date")
+                .sort("name")
                 .exec()
                 .then(doc => {
+                    var dataArrays = [];
+                    var dateArrays = [];
+                    var colName = "";
+                    var curArray = [];
+                    var curDateArray = [];
+                    var xsDates = {};
+
+                    var indivStrings = {};
+
+                    var totalVals = 0, totalGoal = 0, percentage = 0;
+                    for (var i = 0; i < doc.length; i++) {
+                        if (colName !== doc[i].name) {
+                            if (curArray.length > 0) {
+                                dataArrays.push(curArray);
+                                dateArrays.push(curDateArray);
+                            }
+
+                            colName = doc[i].name;
+
+                            curArray = [];
+                            curDateArray = [];
+                            curArray.push(colName);
+                            curDateArray.push("x"+colName);
+                            xsDates[colName.toString()] = "x" + colName;
+
+                            indivStrings[colName] = [];
+                        }
+
+                        curArray.push(doc[i].value / doc[i].goal * 100);
+                        curDateArray.push(getDateString(new Date(doc[i].date)));
+
+                        indivStrings[colName].push("" + doc[i].value + "/" + doc[i].goal);
+                    }
+                    if (curArray.length > 0) {
+                        dataArrays.push(curArray);
+                        dateArrays.push(curDateArray);
+                    }
+
                     res.status(200).json({
                         thresholds: thresholds,
-                        values: doc
+                        values: dataArrays,
+                        dates: dateArrays,
+                        xsDates: xsDates,
+                        indivStrings: indivStrings
                     });
                 })
                 .catch();
@@ -33,6 +75,11 @@ router.get('/:start&:end', (req, res, next) => {
             console.log(err);
         });
 });
+
+function getDateString(date) {
+    var str = ("0" + date.getDate()).slice(-2) + "/" + ("0" + (date.getMonth() + 1)).slice(-2) + "/" + date.getFullYear();
+    return str;
+}
 
 router.get('/small/:start&:end', (req, res, next) => {
     var userId = req.originalUrl.split('/')[2];

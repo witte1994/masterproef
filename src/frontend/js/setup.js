@@ -39,6 +39,9 @@ function add() {
     } else if (module === "oxygen") {
         if (size === "s") newModule = document.createElement("oxygen-element-small");
         else if (size === "l") newModule = document.createElement("oxygen-element");
+    } else if (module === "medication") {
+        if (size === "s") newModule = document.createElement("medication-element-small");
+        else if (size === "l") newModule = document.createElement("medication-element");
     }
 
     if (newModule != null) {

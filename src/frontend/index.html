@@ -48,6 +48,7 @@
     <script type="module" src="/src/oxygen-element/oxygen-element-small.js"></script>
     <script type="module" src="/src/oxygen-element/oxygen-element.js"></script>
     <script type="module" src="/src/medication-element/medication-element-small.js"></script>
+    <script type="module" src="/src/medication-element/medication-element.js"></script>
 
     <custom-style>
       <style>
@@ -98,7 +99,7 @@
         </app-header>
 
       <div id="mainGrid" class="grid" style="margin: 8px;">
-        <medication-element-small class="grid-item"></medication-element-small>
+        <medication-element class="grid-item"></medication-element>
       </div>
 
       </app-header-layout>
@@ -115,6 +116,7 @@
           <paper-item value="bs">Blood sugar</paper-item>
           <paper-item value="weight">Weight</paper-item>
           <paper-item value="oxygen">Oxygen</paper-item>
+          <paper-item value="medication">Medication</paper-item>
         </paper-listbox>
       </paper-dropdown-menu>
 
