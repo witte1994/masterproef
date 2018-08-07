@@ -18,13 +18,12 @@ class BpElementSmall extends PolymerElement {
         return html`
         <style include="shared-styles">
             :host {
-                width: 440px;
+                width: 360px;
             }
             
             .row {
                 width: 100%;
                 text-align: center;
-                margin-bottom: 5px;
             }
 
             paper-button { 
@@ -51,9 +50,9 @@ class BpElementSmall extends PolymerElement {
         ></iron-ajax>
 
         <div class="card">
-            <div style="width:65%; display:inline-block;">
-                <h1>Blood Pressure (mmHg)</h1>
-            </div><div style="width:35%; display:inline-block;">
+            <div style="width:60%; display:inline-block;">
+                <h1>Blood Pressure</h1>
+            </div><div style="width:40%; display:inline-block;">
                 <paper-icon-button icon="fullscreen" on-tap="resize"></paper-icon-button>
                 <paper-icon-button icon="settings" on-tap="setThresholds"></paper-icon-button>
                 <paper-icon-button icon="close" on-tap="removeModule"></paper-icon-button>
@@ -86,7 +85,7 @@ class BpElementSmall extends PolymerElement {
             </div>
 
             <div style="width:100%; display:inline-block; text-align: center;">
-                <table class="row" style="width: 300px; margin-left:50px;">
+                <table class="row" style="width: 280px; margin-left: 15px;">
                     <tr>
                         <td><img src="img/red_error.png"></td>
                         <td><p>[[dangerVals]]</p></td>
@@ -99,16 +98,18 @@ class BpElementSmall extends PolymerElement {
             </div>
 
             <div style="width:100%; display:inline-block; text-align: center;">
-                <table class="row" style="width: 300px; margin-left:50px;">
+                <table class="row" style="width: 320px; table-layout: fixed;">
                     <tr>
-                        <th id="lowHead">Low</th>
-                        <th id="avgHead">Avg</th>
-                        <th id="highHead">High</th>
+                        <th style="width: 16%; padding: 3px;"></th>
+                        <th style="width: 28%; padding: 3px;">Low</th>
+                        <th style="width: 28%; padding: 3px;">Avg</th>
+                        <th style="width: 28%; padding: 3px;">High</th>
                     </tr>
                     <tr>
-                        <td id="lowCell">[[low]]</td>
-                        <td id="avgCell">[[avg]]</td>
-                        <td id="highCell">[[high]]</td>
+                        <th style="width: 16%; padding: 3px;">mmHg</th>
+                        <td style="width: 28%; padding: 3px;" id="lowCell">[[low]]</td>
+                        <td style="width: 28%; padding: 3px;" id="avgCell">[[avg]]</td>
+                        <td style="width: 28%; padding: 3px;" id="highCell">[[high]]</td>
                     </tr>
                 </table>
             </div>
