@@ -238,7 +238,6 @@ class MedicationElementSmall extends PolymerElement {
     dataReceived(event) {
         var stats = event.detail.response;
 
-        console.log(stats.values);
         this.meds = stats.values;
     }
 
