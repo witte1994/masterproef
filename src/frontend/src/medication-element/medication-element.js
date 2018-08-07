@@ -271,10 +271,6 @@ class MedicationElement extends PolymerElement {
             tooltip: {
                 format: {
                     value: function (value, ratio, id, index) {
-                        console.log(value);
-                        console.log(id);
-                        console.log(index);
-                        //var format = id === 'data1' ? d3.format(',') : d3.format('$');
                         return indivStrings[id][index] + ' (' + value.toFixed(1) + '%)';
                     }
                 }
