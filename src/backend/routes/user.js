@@ -9,12 +9,14 @@ const bpRoutes = require('./bp');
 const bsRoutes = require('./bs');
 const weightRoutes = require('./weight');
 const oxygenRoutes = require('./oxygen');
+const medicationRoutes = require('./medication');
 
 router.use('/:userId/heart', heartRoutes);
 router.use('/:userId/bp', bpRoutes);
 router.use('/:userId/bs', bsRoutes);
 router.use('/:userId/weight', weightRoutes);
 router.use('/:userId/oxygen', oxygenRoutes);
+router.use('/:userId/medication', medicationRoutes);
 
 router.get('/', (req, res, next) => {
     res.status(200).json({

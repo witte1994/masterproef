@@ -49,10 +49,61 @@ router.get('/small/:start&:end', (req, res, next) => {
             var thresholds = doc[0];
             Medication.find({ user: userId, date: { $gte: startDate, $lt: endDate } })
                 .select("name value goal date")
+                .sort("name")
                 .exec()
                 .then(doc => {
+                    var dataArrays = [];
+                    var colName = "";
+                    var curItem = {};
+                    var totalVals = 0, totalGoal = 0, percentage = 0;
+                    for (var i = 0; i < doc.length; i++) {
+                        if (colName !== doc[i].name) {
+                            if (Object.keys(curItem).length !== 0 && curItem.constructor === Object) {
+                                percentage = (totalVals / totalGoal * 100);
+
+                                curItem["values"] = totalVals;
+                                curItem["goal"] = totalGoal;
+                                curItem["percentage"] = percentage.toFixed(1);
+
+                                if (percentage <= thresholds.dangerLess)
+                                    curItem["color"] = "#ff9999";
+                                else if (percentage <= thresholds.warningLess)
+                                    curItem["color"] = "#ffff80";
+                                else 
+                                    curItem["color"] = "#4dff88";
+
+                                dataArrays.push(curItem);
+                            }
+                            
+                            colName = doc[i].name;
+                            totalVals = 0;
+                            totalGoal = 0;
+                            curItem = {};
+                            curItem["name"] = colName;
+                        }
+                        totalVals += doc[i].value;
+                        totalGoal += doc[i].goal;
+                    }
+                    if (Object.keys(curItem).length !== 0 && curItem.constructor === Object) {
+                        percentage = (totalVals / totalGoal * 100);
+
+                        curItem["values"] = totalVals;
+                        curItem["goal"] = totalGoal;
+                        curItem["percentage"] = percentage.toFixed(1);
+
+                        if (percentage <= thresholds.dangerLess)
+                            curItem["color"] = "#ff9999";
+                        else if (percentage <= thresholds.warningLess)
+                            curItem["color"] = "#ffff80";
+                        else
+                            curItem["color"] = "#4dff88";
+
+                        dataArrays.push(curItem);
+                    }
+
                     res.status(200).json({
-                        
+                        thresholds: thresholds,
+                        values: dataArrays
                     });
                 })
                 .catch();
