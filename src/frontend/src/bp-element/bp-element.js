@@ -340,6 +340,10 @@ class BpElement extends PolymerElement {
             },
             axis: {
                 x: {
+                    label: {
+                        text: 'Date (day/month)',
+                        position: 'outer-center'
+                    },
                     min: this.startDateStr,
                     max: this.endDateStr,
                     type: 'timeseries',
@@ -349,6 +353,10 @@ class BpElement extends PolymerElement {
                     }
                 },
                 y: {
+                    label: {
+                        text: 'Blood pressure (mmHg)',
+                        position: 'outer-middle'
+                    },
                     min: 0
                 }
             },
