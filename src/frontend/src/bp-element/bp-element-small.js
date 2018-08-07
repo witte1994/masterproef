@@ -61,10 +61,10 @@ class BpElementSmall extends PolymerElement {
             <paper-dialog id="thresholdsDialog">
                 <h2>Set blood pressure thresholds</h2>
                 <p>Select the ranges in which blood pressure values should be flagged:</p>
-                <paper-input id="warningLess" type="number" label="warning if diastolic is less than"></paper-input>
-                <paper-input id="warningHigher" type="number" label="warning if systolic is higher than"></paper-input>
-                <paper-input id="dangerLess" type="number" label="danger if diastolic is less than"></paper-input>
-                <paper-input id="dangerHigher" type="number" label="danger if systolic is higher than"></paper-input>
+                <paper-input id="warningLess" value="[[warningLess]]" type="number" label="warning if diastolic is less than"></paper-input>
+                <paper-input id="warningHigher" value="[[warningHigher]]" type="number" label="warning if systolic is higher than"></paper-input>
+                <paper-input id="dangerLess" value="[[dangerLess]]" type="number" label="danger if diastolic is less than"></paper-input>
+                <paper-input id="dangerHigher" value="[[dangerHigher]]" type="number" label="danger if systolic is higher than"></paper-input>
 
                 <paper-button dialog-dismiss autofocus>Decline</paper-button>
                 <paper-button dialog-confirm on-tap="updateThresholds">Accept</paper-button>
@@ -172,6 +172,18 @@ class BpElementSmall extends PolymerElement {
             },
             body: {
                 type: Object
+            },
+            warningLess: {
+                type: Number
+            },
+            warningHigher: {
+                type: Number
+            },
+            dangerLess: {
+                type: Number
+            },
+            dangerHigher: {
+                type: Number
             }
         };
     }
@@ -278,6 +290,13 @@ class BpElementSmall extends PolymerElement {
         this.dangerVals = stats.dangerVals;
         this.warningVals = stats.warningVals;
         this.okVals = stats.okVals;
+
+        var thresholds = stats.thresholds;
+
+        this.warningLess = thresholds.warningLess;
+        this.warningHigher = thresholds.warningHigher;
+        this.dangerLess = thresholds.dangerLess;
+        this.dangerHigher = thresholds.dangerHigher;
 
         if (stats.lowCol === "red")         this.$.lowCell.style.backgroundColor = "#ff9999"
         else if (stats.lowCol === "yellow") this.$.lowCell.style.backgroundColor = "#ffff80";

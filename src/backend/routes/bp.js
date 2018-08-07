@@ -22,9 +22,36 @@ router.get('/:start&:end', (req, res, next) => {
                 .select("systolic diastolic date")
                 .exec()
                 .then(doc => {
+                    var avgSys = 0;
+                    var avgDia = 0;
+
+                    count = 0;
+                    for (i in doc) {
+                        avgSys += doc[i].systolic;
+                        avgDia += doc[i].diastolic;
+                        count++;
+                    }
+
+                    var avgLine = [];
+                    if (count > 0) {
+                        avgSys /= count;
+                        avgDia /= count;
+
+                        var sysBlock = {};
+                        var diaBlock = {};
+
+                        sysBlock['value'] = avgSys;
+                        sysBlock['text'] = "Avg. systolic BP = " + avgSys.toFixed(1) + " mmHg";
+                        diaBlock['value'] = avgDia;
+                        diaBlock['text'] = "Avg. diastolic BP = " + avgDia.toFixed(1) + " mmHg";
+                        avgLine.push(sysBlock);
+                        avgLine.push(diaBlock);
+                    }
+
                     res.status(200).json({
                         thresholds: thresholds,
-                        values: doc
+                        values: doc,
+                        avgLine: avgLine
                     });
                 })
                 .catch();
@@ -106,7 +133,8 @@ router.get('/small/:start&:end', (req, res, next) => {
                             okVals: okVals,
                             lowCol: lowCol,
                             avgCol: avgCol,
-                            highCol: highCol
+                            highCol: highCol,
+                            thresholds: thresholds
                         });
                     } else {
                         low = "?";
@@ -125,7 +153,8 @@ router.get('/small/:start&:end', (req, res, next) => {
                             okVals: okVals,
                             lowCol: lowCol,
                             avgCol: avgCol,
-                            highCol: highCol
+                            highCol: highCol,
+                            thresholds: thresholds
                         });
                     }
                 })
@@ -134,8 +163,6 @@ router.get('/small/:start&:end', (req, res, next) => {
         .catch(err => {
             console.log(err);
         });
-
-
 });
 
 router.post('/', (req, res, next) => {
