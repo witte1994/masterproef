@@ -21,10 +21,30 @@ router.get('/:start&:end', (req, res, next) => {
             Heart.find({ user: userId, date: { $gte: startDate, $lt: endDate } })
                 .select("value date")
                 .exec()
-                .then(doc => {    
+                .then(doc => {
+                    var avg = 0;
+
+                    count = 0;
+                    for (i in doc) {
+                        avg += doc[i].value;
+                        count++;
+                    }
+
+                    var avgLine = [];
+                    if (count > 0) {
+                        avg /= count;
+
+                        var avgBlock = {};
+                        avgBlock['value'] = avg;
+                        avgBlock['text'] = "Avg. heart rate = " + avg.toFixed(1) + " BPM";
+
+                        avgLine.push(avgBlock);
+                    }
+
                     res.status(200).json({
                         thresholds: thresholds,
-                        values: doc
+                        values: doc,
+                        avgLine: avgLine
                     });
                 })
                 .catch();
@@ -41,7 +61,6 @@ router.get('/small/:start&:end', (req, res, next) => {
     startDate.setTime(req.params.start);
     var endDate = new Date();
     endDate.setTime(req.params.end);
-
 
     HeartThreshold.find({ user: userId, })
         .select("warningLess warningHigher dangerLess dangerHigher")
@@ -105,7 +124,8 @@ router.get('/small/:start&:end', (req, res, next) => {
                         okVals: okVals,
                         lowCol: lowCol,
                         avgCol: avgCol,
-                        highCol: highCol
+                        highCol: highCol,
+                        thresholds: thresholds
                     });
                 })
                 .catch();

@@ -18,13 +18,12 @@ class HeartElementSmall extends PolymerElement {
         return html`
         <style include="shared-styles">
             :host {
-                width: 380px;
+                width: 360px;
             }
             
             .row {
                 width: 100%;
                 text-align: center;
-                margin-bottom: 5px;
             }
 
             paper-button { 
@@ -51,9 +50,9 @@ class HeartElementSmall extends PolymerElement {
         ></iron-ajax>
 
         <div class="card">
-            <div style="width:62%; display:inline-block;">
-                <h1>Heart rate (BPM)</h1>
-            </div><div style="width:38%; display:inline-block;">
+            <div style="width:60%; display:inline-block;">
+                <h1>Heart rate</h1>
+            </div><div style="width:40%; display:inline-block;">
                 <paper-icon-button icon="fullscreen" on-tap="resize"></paper-icon-button>
                 <paper-icon-button icon="settings" on-tap="setThresholds"></paper-icon-button>
                 <paper-icon-button icon="close" on-tap="removeModule"></paper-icon-button>
@@ -62,10 +61,10 @@ class HeartElementSmall extends PolymerElement {
             <paper-dialog id="thresholdsDialog">
                 <h2>Set heart rate thresholds</h2>
                 <p>Select the ranges in which heart rate values should be flagged:</p>
-                <paper-input id="warningLess" type="number" label="warning if less than"></paper-input>
-                <paper-input id="warningHigher" type="number" label="warning if higher than"></paper-input>
-                <paper-input id="dangerLess" type="number" label="danger if less than"></paper-input>
-                <paper-input id="dangerHigher" type="number" label="danger if higher than"></paper-input>
+                <paper-input id="warningLess" value="[[warningLess]]" type="number" label="warning if less than"></paper-input>
+                <paper-input id="warningHigher" value="[[warningHigher]]" type="number" label="warning if higher than"></paper-input>
+                <paper-input id="dangerLess" value="[[dangerLess]]" type="number" label="danger if less than"></paper-input>
+                <paper-input id="dangerHigher" value="[[dangerHigher]]" type="number" label="danger if higher than"></paper-input>
 
                 <paper-button dialog-dismiss autofocus>Decline</paper-button>
                 <paper-button dialog-confirm on-tap="updateThresholds">Accept</paper-button>
@@ -86,7 +85,7 @@ class HeartElementSmall extends PolymerElement {
             </div>
 
             <div style="width:100%; display:inline-block; text-align: center;">
-                <table class="row" style="width: 260px; margin-left:40px;">
+                <table class="row" style="width: 280px; margin-left: 15px;">
                     <tr>
                         <td><img src="img/red_error.png"></td>
                         <td><p>[[dangerVals]]</p></td>
@@ -99,16 +98,18 @@ class HeartElementSmall extends PolymerElement {
             </div>
 
             <div style="width:100%; display:inline-block; text-align: center;">
-                <table class="row" style="width: 260px; margin-left:40px;">
+                <table class="row" style="width: 320px; table-layout: fixed;">
                     <tr>
-                        <th id="lowHead">Low</th>
-                        <th id="avgHead">Avg</th>
-                        <th id="highHead">High</th>
+                        <th style="width: 16%; padding: 3px;"></th>
+                        <th style="width: 28%; padding: 3px;">Low</th>
+                        <th style="width: 28%; padding: 3px;">Avg</th>
+                        <th style="width: 28%; padding: 3px;">High</th>
                     </tr>
                     <tr>
-                        <td id="lowCell">[[low]]</td>
-                        <td id="avgCell">[[avg]]</td>
-                        <td id="highCell">[[high]]</td>
+                        <th style="width: 16%; padding: 3px;">BPM</th>
+                        <td style="width: 28%; padding: 3px;" id="lowCell">[[low]]</td>
+                        <td style="width: 28%; padding: 3px;" id="avgCell">[[avg]]</td>
+                        <td style="width: 28%; padding: 3px;" id="highCell">[[high]]</td>
                     </tr>
                 </table>
             </div>
@@ -171,6 +172,18 @@ class HeartElementSmall extends PolymerElement {
             },
             body: {
                 type: Object
+            },
+            warningLess: {
+                type: Number
+            },
+            warningHigher: {
+                type: Number
+            },
+            dangerLess: {
+                type: Number
+            },
+            dangerHigher: {
+                type: Number
             }
         };
     }
@@ -278,20 +291,27 @@ class HeartElementSmall extends PolymerElement {
         this.warningVals = stats.warningVals;
         this.okVals = stats.okVals;
 
-        if (stats.lowCol === "red")         this.$.lowCell.style.backgroundColor = "#ff9999"
-        else if (stats.lowCol === "yellow") this.$.lowCell.style.backgroundColor = "#ffff80";
-        else if (stats.lowCol === "green")  this.$.lowCell.style.backgroundColor = "#4dff88";
-        else                                this.$.lowCell.style.backgroundColor = "";
+        var thresholds = stats.thresholds;
 
-        if (stats.avgCol === "red")         this.$.avgCell.style.backgroundColor = "#ff9999";
-        else if (stats.avgCol === "yellow") this.$.avgCell.style.backgroundColor = "#ffff80";
-        else if (stats.avgCol === "green")  this.$.avgCell.style.backgroundColor = "#4dff88";
-        else                                this.$.avgCell.style.backgroundColor = "";
+        this.warningLess = thresholds.warningLess;
+        this.warningHigher = thresholds.warningHigher;
+        this.dangerLess = thresholds.dangerLess;
+        this.dangerHigher = thresholds.dangerHigher;
 
-        if (stats.highCol === "red")        this.$.highCell.style.backgroundColor = "#ff9999";
-        else if (stats.highCol === "yellow")this.$.highCell.style.backgroundColor = "#ffff80";
-        else if (stats.highCol === "green") this.$.highCell.style.backgroundColor = "#4dff88";
-        else                                this.$.highCell.style.backgroundColor = "";
+        if (stats.lowCol === "red") this.$.lowCell.style.backgroundColor = "#ffa6a6";
+        else if (stats.lowCol === "yellow") this.$.lowCell.style.backgroundColor = "#ffff90";
+        else if (stats.lowCol === "green") this.$.lowCell.style.backgroundColor = "#a5ffa5";
+        else this.$.lowCell.style.backgroundColor = "";
+
+        if (stats.avgCol === "red") this.$.avgCell.style.backgroundColor = "#ffa6a6";
+        else if (stats.avgCol === "yellow") this.$.avgCell.style.backgroundColor = "#ffff90";
+        else if (stats.avgCol === "green") this.$.avgCell.style.backgroundColor = "#a5ffa5";
+        else this.$.avgCell.style.backgroundColor = "";
+
+        if (stats.highCol === "red") this.$.highCell.style.backgroundColor = "#ffa6a6";
+        else if (stats.highCol === "yellow") this.$.highCell.style.backgroundColor = "#ffff90";
+        else if (stats.highCol === "green") this.$.highCell.style.backgroundColor = "#a5ffa5";
+        else this.$.highCell.style.backgroundColor = "";
     }
 
     resize(e) {

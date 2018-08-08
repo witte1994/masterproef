@@ -19,7 +19,7 @@ class HeartElement extends PolymerElement {
         <link rel="stylesheet" href="/node_modules/c3/c3.css">
         <style include="shared-styles">
             :host {
-                width: 800px;
+                width: 700px;
             }
 
             .row {
@@ -77,13 +77,17 @@ class HeartElement extends PolymerElement {
         ></iron-ajax>
 
         <div class="card">
-            <div style="width:70%; display:inline-block; vertical-align:top;">
-                <div style="width:40%; display:inline-block;">
-                    <h1>Heart rate (BPM)</h1>
-                </div><div style="width:60%; display:inline-block;">
+            <div style="width:100%; display:inline-block; vertical-align:top;">
+                <div style="width:30%; display:inline-block;">
+                    <h1>Heart rate</h1>
+                </div><div style="width:50%; display:inline-block;">
                     <paper-button id="day" toggles on-tap="dateClick">3 days</paper-button>
                     <paper-button id="week" toggles on-tap="dateClick">week</paper-button>
                     <paper-button id="month" toggles on-tap="dateClick">month</paper-button>
+                </div><div style="width:20%; display:inline-block;">
+                    <paper-icon-button icon="fullscreen-exit" on-tap="resize"></paper-icon-button>
+                    <paper-icon-button icon="settings" on-tap="setThresholds"></paper-icon-button>
+                    <paper-icon-button icon="close" on-tap="removeModule"></paper-icon-button>
                 </div>
                 <div style="width:20%; display:inline-block; text-align: center;">
                     <paper-icon-button id="back" icon="arrow-back" on-tap="changeDate"></paper-icon-button>
@@ -92,63 +96,43 @@ class HeartElement extends PolymerElement {
                 </div><div style="width:20%; display:inline-block; text-align: center;">
                     <paper-icon-button id="forward" icon="arrow-forward" on-tap="changeDate"></paper-icon-button>
                 </div>
-                <div style="width: 100%;"><div id="chart" style="width: 537px;"></div>
+                <div style="width: 100%;"><div id="chart" style="width: 650px;"></div>
                 </div>
-
-            </div><div style="width:30%; display:inline-block;">
-                <div style="width:40%; display:inline-block;">
-                </div><div style="width:60%; display:inline-block;">
-                    <paper-icon-button icon="fullscreen-exit" on-tap="resize"></paper-icon-button>
-                    <paper-icon-button icon="settings" on-tap="setThresholds"></paper-icon-button>
-                    <paper-icon-button icon="close" on-tap="removeModule"></paper-icon-button>
-                </div>
-
-                <paper-dialog id="thresholdsDialog">
-                    <h2>Set heart rate thresholds</h2>
-                    <p>Select the ranges in which heart rate values should be flagged:</p>
-                    <paper-input id="warningLess" type="number" label="warning if less than"></paper-input>
-                    <paper-input id="warningHigher" type="number" label="warning if higher than"></paper-input>
-                    <paper-input id="dangerLess" type="number" label="danger if less than"></paper-input>
-                    <paper-input id="dangerHigher" type="number" label="danger if higher than"></paper-input>
-
-                    <paper-button dialog-dismiss autofocus>Decline</paper-button>
-                    <paper-button dialog-confirm on-tap="updateThresholds">Accept</paper-button>
-                </paper-dialog>
-
-                <div style="width: 100%; margin-top: 40px;">
-                    <table class="row">
+                <div style="width: 38%; display:inline-block; text-align: center;">
+                    <table>
                         <tr>
-                            <td><img src="img/red_error.png"></td>
+                            <td><img src="img/red_error.png" style="margin-right: 10px; margin-left: 10px;"></td>
                             <td><p>[[dangerVals]]</p></td>
-                            <td><img src="img/yellow_warning.png"></td>
+                            <td><img src="img/yellow_warning.png" style="margin-right: 10px; margin-left: 10px;"></td>
                             <td><p>[[warningVals]]</p></td>
-                            <td><img src="img/green_ok.png"></td>
+                            <td><img src="img/green_ok.png" style="margin-right: 10px; margin-left: 10px;"></td>
                             <td><p>[[okVals]]</p></td>
                         </tr>
                     </table>
-                </div>
-
-                <div style="width: 100%; margin-top: 20px;">
-                    <h1 class="row">Summary</h1>
-                </div>
-
-                <div style="width: 100%;">
-                    <table class="row" style="padding: 20px 50px 50px 50px;">
+                </div><div style="width: 62%; display:inline-block; text-align: center;">
+                    <table style="table-layout: fixed; padding-bottom: 16px; padding-left: 40px;">
                         <tr>
-                            <th class="cell" id="lowHead">Low</th>
-                            <td class="cell" id="lowCell">[[low]]</td>
-                        </tr>
-                        <tr>
-                            <th class="cell" id="avgHead">Avg</th>
-                            <td class="cell" id="avgCell">[[avg]]</td>
-                        </tr>
-                        <tr>
-                            <th class="cell" id="highHead">High</th>
-                            <td class="cell" id="highCell">[[high]]</td>
+                            <th style="width: 16%;">Low</th>
+                            <td style="width: 17%;" id="lowCell">[[low]]</td>
+                            <th style="width: 16%; padding-left: 5px;">Avg</th>
+                            <td style="width: 17%;" id="avgCell">[[avg]]</td>
+                            <th style="width: 16%; padding-left: 5px;">High</th>
+                            <td style="width: 17%;" id="highCell">[[high]]</td>
                         </tr>
                     </table>
                 </div>
             </div>
+                <paper-dialog id="thresholdsDialog">
+                    <h2>Set heart rate thresholds</h2>
+                    <p>Select the ranges in which heart rate values should be flagged:</p>
+                    <paper-input id="warningLess" value="[[warningLess]]" type="number" label="warning if less than"></paper-input>
+                    <paper-input id="warningHigher" value="[[warningHigher]]"type="number" label="warning if higher than"></paper-input>
+                    <paper-input id="dangerLess" value="[[dangerLess]]" type="number" label="danger if less than"></paper-input>
+                    <paper-input id="dangerHigher" value="[[dangerHigher]]" type="number" label="danger if higher than"></paper-input>
+
+                    <paper-button dialog-dismiss autofocus>Decline</paper-button>
+                    <paper-button dialog-confirm on-tap="updateThresholds">Accept</paper-button>
+                </paper-dialog>
         </div>
     `;
     }
@@ -205,6 +189,18 @@ class HeartElement extends PolymerElement {
             okVals: {
                 type: Number,
                 value: 0
+            },
+            warningLess: {
+                type: Number
+            },
+            warningHigher: {
+                type: Number
+            },
+            dangerLess: {
+                type: Number
+            },
+            dangerHigher: {
+                type: Number
             }
         };
     }
@@ -310,8 +306,14 @@ class HeartElement extends PolymerElement {
         var data = event.detail.response;
         var thresholds = data.thresholds;
         var values = data.values;
+        var avgLine = data.avgLine;
 
-        var valArray = ['Heart rate (BPM)'];
+        this.warningLess = thresholds.warningLess;
+        this.warningHigher = thresholds.warningHigher;
+        this.dangerLess = thresholds.dangerLess;
+        this.dangerHigher = thresholds.dangerHigher;
+
+        var valArray = ['Heart rate'];
         var dateArray = ['x'];
         for (var i = 0; i < values.length; i++) {
             valArray.push(values[i].value);
@@ -319,10 +321,10 @@ class HeartElement extends PolymerElement {
             dateArray.push(this.getDateString(date));
         }
 
-        this.generateChart(dateArray, valArray, thresholds);
+        this.generateChart(dateArray, valArray, thresholds, avgLine);
     }
 
-    generateChart(dateArray, valArray, thresholds) {
+    generateChart(dateArray, valArray, thresholds, avgLine) {
         var chart = c3.generate({
             bindto: this.$.chart,
             padding: {
@@ -338,6 +340,10 @@ class HeartElement extends PolymerElement {
             },
             axis: {
                 x: {
+                    label: {
+                        text: 'Date (day/month)',
+                        position: 'outer-center'
+                    },
                     min: this.startDateStr,
                     max: this.endDateStr,
                     type: 'timeseries',
@@ -347,7 +353,23 @@ class HeartElement extends PolymerElement {
                     }
                 },
                 y: {
+                    label: {
+                        text: 'Heart rate (BPM)',
+                        position: 'outer-middle'
+                    },
                     min: 0
+                }
+            },
+            grid: {
+                y: {
+                    lines: avgLine
+                }
+            },
+            tooltip: {
+                format: {
+                    value: function (value, ratio, id, index) {
+                        return value + ' BPM';
+                    }
                 }
             },
             regions: [
@@ -369,20 +391,20 @@ class HeartElement extends PolymerElement {
         this.warningVals = stats.warningVals;
         this.okVals = stats.okVals;
 
-        if (stats.lowCol === "red")         this.$.lowCell.style.backgroundColor = "#ff9999"
-        else if (stats.lowCol === "yellow") this.$.lowCell.style.backgroundColor = "#ffff80";
-        else if (stats.lowCol === "green")  this.$.lowCell.style.backgroundColor = "#4dff88";
-        else                                this.$.lowCell.style.backgroundColor = "";
+        if (stats.lowCol === "red") this.$.lowCell.style.backgroundColor = "#ffa6a6";
+        else if (stats.lowCol === "yellow") this.$.lowCell.style.backgroundColor = "#ffff90";
+        else if (stats.lowCol === "green") this.$.lowCell.style.backgroundColor = "#a5ffa5";
+        else this.$.lowCell.style.backgroundColor = "";
 
-        if (stats.avgCol === "red")         this.$.avgCell.style.backgroundColor = "#ff9999";
-        else if (stats.avgCol === "yellow") this.$.avgCell.style.backgroundColor = "#ffff80";
-        else if (stats.avgCol === "green")  this.$.avgCell.style.backgroundColor = "#4dff88";
-        else                                this.$.avgCell.style.backgroundColor = "";
+        if (stats.avgCol === "red") this.$.avgCell.style.backgroundColor = "#ffa6a6";
+        else if (stats.avgCol === "yellow") this.$.avgCell.style.backgroundColor = "#ffff90";
+        else if (stats.avgCol === "green") this.$.avgCell.style.backgroundColor = "#a5ffa5";
+        else this.$.avgCell.style.backgroundColor = "";
 
-        if (stats.highCol === "red")        this.$.highCell.style.backgroundColor = "#ff9999";
-        else if (stats.highCol === "yellow")this.$.highCell.style.backgroundColor = "#ffff80";
-        else if (stats.highCol === "green") this.$.highCell.style.backgroundColor = "#4dff88";
-        else                                this.$.highCell.style.backgroundColor = "";
+        if (stats.highCol === "red") this.$.highCell.style.backgroundColor = "#ffa6a6";
+        else if (stats.highCol === "yellow") this.$.highCell.style.backgroundColor = "#ffff90";
+        else if (stats.highCol === "green") this.$.highCell.style.backgroundColor = "#a5ffa5";
+        else this.$.highCell.style.backgroundColor = "";
     }
 
     getTicks() {
