@@ -96,7 +96,7 @@ class BpElement extends PolymerElement {
                 </div><div style="width:20%; display:inline-block; text-align: center;">
                     <paper-icon-button id="forward" icon="arrow-forward" on-tap="changeDate"></paper-icon-button>
                 </div>
-                <div style="width: 100%;"><div id="chart" style="width: 650px;">
+                <div style="width: 100%;"><div id="chart" style="width: 650px;"></div>
                 </div>
                 <div style="width: 38%; display:inline-block; text-align: center;">
                     <table>

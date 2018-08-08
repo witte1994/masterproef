@@ -22,9 +22,29 @@ router.get('/:start&:end', (req, res, next) => {
                 .select("value date")
                 .exec()
                 .then(doc => {
+                    var avg = 0;
+
+                    count = 0;
+                    for (i in doc) {
+                        avg += doc[i].value;
+                        count++;
+                    }
+
+                    var avgLine = [];
+                    if (count > 0) {
+                        avg /= count;
+
+                        var avgBlock = {};
+                        avgBlock['value'] = avg;
+                        avgBlock['text'] = "Avg. blood sugar = " + avg.toFixed(1) + " mmol/L";
+
+                        avgLine.push(avgBlock);
+                    }
+
                     res.status(200).json({
                         thresholds: thresholds,
-                        values: doc
+                        values: doc,
+                        avgLine: avgLine
                     });
                 })
                 .catch();
