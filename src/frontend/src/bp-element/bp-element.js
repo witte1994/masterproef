@@ -394,20 +394,20 @@ class BpElement extends PolymerElement {
         this.warningVals = stats.warningVals;
         this.okVals = stats.okVals;
 
-        if (stats.lowCol === "red")         this.$.lowCell.style.backgroundColor = "#ff9999"
-        else if (stats.lowCol === "yellow") this.$.lowCell.style.backgroundColor = "#ffff80";
-        else if (stats.lowCol === "green")  this.$.lowCell.style.backgroundColor = "#4dff88";
-        else                                this.$.lowCell.style.backgroundColor = "";
+        if (stats.lowCol === "red") this.$.lowCell.style.backgroundColor = "#ffa6a6";
+        else if (stats.lowCol === "yellow") this.$.lowCell.style.backgroundColor = "#ffff90";
+        else if (stats.lowCol === "green") this.$.lowCell.style.backgroundColor = "#a5ffa5";
+        else this.$.lowCell.style.backgroundColor = "";
 
-        if (stats.avgCol === "red")         this.$.avgCell.style.backgroundColor = "#ff9999";
-        else if (stats.avgCol === "yellow") this.$.avgCell.style.backgroundColor = "#ffff80";
-        else if (stats.avgCol === "green")  this.$.avgCell.style.backgroundColor = "#4dff88";
-        else                                this.$.avgCell.style.backgroundColor = "";
+        if (stats.avgCol === "red") this.$.avgCell.style.backgroundColor = "#ffa6a6";
+        else if (stats.avgCol === "yellow") this.$.avgCell.style.backgroundColor = "#ffff90";
+        else if (stats.avgCol === "green") this.$.avgCell.style.backgroundColor = "#a5ffa5";
+        else this.$.avgCell.style.backgroundColor = "";
 
-        if (stats.highCol === "red")        this.$.highCell.style.backgroundColor = "#ff9999";
-        else if (stats.highCol === "yellow")this.$.highCell.style.backgroundColor = "#ffff80";
-        else if (stats.highCol === "green") this.$.highCell.style.backgroundColor = "#4dff88";
-        else                                this.$.highCell.style.backgroundColor = "";
+        if (stats.highCol === "red") this.$.highCell.style.backgroundColor = "#ffa6a6";
+        else if (stats.highCol === "yellow") this.$.highCell.style.backgroundColor = "#ffff90";
+        else if (stats.highCol === "green") this.$.highCell.style.backgroundColor = "#a5ffa5";
+        else this.$.highCell.style.backgroundColor = "";
     }
 
     getTicks() {
