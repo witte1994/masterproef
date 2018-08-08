@@ -19,7 +19,7 @@ class MedicationElement extends PolymerElement {
         <link rel="stylesheet" href="/node_modules/c3/c3.css">
         <style include="shared-styles">
             :host {
-                width: 600px;
+                width: 700px;
             }
 
             .row {
@@ -72,11 +72,11 @@ class MedicationElement extends PolymerElement {
             <div style="width:100%; display:inline-block; vertical-align:top;">
                 <div style="width:25%; display:inline-block;">
                     <h1>Medication</h1>
-                </div><div style="width:52%; display:inline-block;">
+                </div><div style="width:55%; display:inline-block;">
                     <paper-button id="day" toggles on-tap="dateClick">3 days</paper-button>
                     <paper-button id="week" toggles on-tap="dateClick">week</paper-button>
                     <paper-button id="month" toggles on-tap="dateClick">month</paper-button>
-                </div><div style="width:23%; display:inline-block;">
+                </div><div style="width:20%; display:inline-block;">
                     <paper-icon-button icon="fullscreen-exit" on-tap="resize"></paper-icon-button>
                     <paper-icon-button icon="settings" on-tap="setThresholds"></paper-icon-button>
                     <paper-icon-button icon="close" on-tap="removeModule"></paper-icon-button>
@@ -88,7 +88,7 @@ class MedicationElement extends PolymerElement {
                 </div><div style="width:20%; display:inline-block; text-align: center;">
                     <paper-icon-button id="forward" icon="arrow-forward" on-tap="changeDate"></paper-icon-button>
                 </div>
-                <div style="width: 100%;"><div id="chart" style="width: 550px;"></div>
+                <div style="width: 100%;"><div id="chart" style="width: 650px;"></div>
                 </div>
 
             </div>

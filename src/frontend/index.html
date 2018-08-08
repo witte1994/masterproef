@@ -74,6 +74,15 @@
             box-shadow: 1px 0 0px 0px rgba(0,0,0,0.30);
           }
         }
+
+        .handle {
+          height: 10px;
+          background-color:#e0e0e0;
+          border-radius: 8px;
+          margin-left: 8px;
+          margin-right: 8px;
+          margin-bottom: 2px;
+        }
       </style>
     </custom-style>
   </head>
@@ -99,12 +108,7 @@
         </app-header>
 
       <div id="mainGrid" class="grid" style="margin: 8px;">
-        <bp-element class="grid-item"></bp-element>
-        <bs-element class="grid-item"></bs-element>
-        <heart-element class="grid-item"></heart-element>
-        <medication-element class="grid-item"></medication-element>
-        <oxygen-element class="grid-item"></oxygen-element>
-        <weight-element class="grid-item"></weight-element>
+          
       </div>
 
       </app-header-layout>
@@ -116,12 +120,12 @@
 
       <paper-dropdown-menu id="moduleMenu" label="Module">
         <paper-listbox slot="dropdown-content">
-          <paper-item value="heart">Heart</paper-item>
           <paper-item value="bp">Blood pressure</paper-item>
           <paper-item value="bs">Blood sugar</paper-item>
-          <paper-item value="weight">Weight</paper-item>
-          <paper-item value="oxygen">Oxygen</paper-item>
+          <paper-item value="heart">Heart</paper-item>
           <paper-item value="medication">Medication</paper-item>
+          <paper-item value="oxygen">Oxygen</paper-item>
+          <paper-item value="weight">Weight</paper-item>
         </paper-listbox>
       </paper-dropdown-menu>
 

@@ -51,7 +51,7 @@ class BpElementSmall extends PolymerElement {
 
         <div class="card">
             <div style="width:60%; display:inline-block;">
-                <h1>Blood Pressure</h1>
+                <h1>Blood pressure</h1>
             </div><div style="width:40%; display:inline-block;">
                 <paper-icon-button icon="fullscreen" on-tap="resize"></paper-icon-button>
                 <paper-icon-button icon="settings" on-tap="setThresholds"></paper-icon-button>

@@ -8,15 +8,6 @@ $(document).ready(function() {
         columnWidth: 20,
         transitionDuration: 0
     });
-
-    // make all grid-items draggable
-    $grid.find('.grid-item').each(function (i, gridItem) {
-        var draggie = new Draggabilly(gridItem);
-
-        // bind drag events to Packery
-        $grid.packery('bindDraggabillyEvents', draggie);
-        addListeners(gridItem);
-    });
 });
 
 function add() {
@@ -45,39 +36,67 @@ function add() {
     }
 
     if (newModule != null) {
-        newModule.classList.add("grid-item");
+        var parentDiv = document.createElement("div");
+        parentDiv.classList.add("grid-item");
+        if (size === "s") 
+            parentDiv.style.width = "360px";
+        else
+            parentDiv.style.width = "700px";
+
+        var handlerDiv = document.createElement("div");
+        handlerDiv.classList.add("handle");
+
+        parentDiv.appendChild(handlerDiv);
+        parentDiv.appendChild(newModule);
+
         $grid.packery()
-            .append(newModule)
-            .packery('appended', newModule)
+            .append(parentDiv)
+            .packery('appended', parentDiv)
             .packery();
 
-        var draggie = new Draggabilly(newModule);
+        var draggie = new Draggabilly(parentDiv, {
+            handle: '.handle'
+        });
         $grid.packery('bindDraggabillyEvents', draggie);
 
-        addListeners(newModule);
+        addListeners(parentDiv, newModule);
     }
 }
 
-function addListeners(module) {
-    module.addEventListener('delete', function (e) {
-        $grid.packery('remove', module).packery('shiftLayout');
+function addListeners(parent, mod) {
+    mod.addEventListener('delete', function (e) {
+        $grid.packery('remove', parent).packery('shiftLayout');
     });
 
-    module.addEventListener('resize', function (e) {
-        $grid.packery('remove', module).packery('shiftLayout');
+    mod.addEventListener('resize', function (e) {
+        $grid.packery('remove', parent).packery('shiftLayout');
 
         var resizeTo = e.detail.resizeTo;
         var newModule = document.createElement(resizeTo);
 
-        newModule.classList.add("grid-item");
+        var parentDiv = document.createElement("div");
+        parentDiv.classList.add("grid-item");
+        if (resizeTo.split('-').length == 3)
+            parentDiv.style.width = "360px";
+        else
+            parentDiv.style.width = "700px";
+
+        var handlerDiv = document.createElement("div");
+        handlerDiv.classList.add("handle");
+
+        parentDiv.appendChild(handlerDiv);
+        parentDiv.appendChild(newModule);
+
         $grid.packery()
-            .append(newModule)
-            .packery('appended', newModule)
+            .append(parentDiv)
+            .packery('appended', parentDiv)
             .packery();
 
-        var draggie = new Draggabilly(newModule);
+        var draggie = new Draggabilly(parentDiv, {
+            handle: '.handle'
+        });
         $grid.packery('bindDraggabillyEvents', draggie);
 
-        addListeners(newModule);
+        addListeners(parentDiv, newModule);
     });
 }

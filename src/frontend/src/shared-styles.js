@@ -15,7 +15,7 @@ $_documentContainer.innerHTML = `<dom-module id="shared-styles">
   <template>
     <style>
       .card {
-        margin: 8px;
+        margin: 0px 8px 8px 8px;
         padding: 8px;
         color: #757575;
         border-radius: 5px;
