@@ -308,7 +308,7 @@ class WeightElement extends PolymerElement {
 
     dataReceived(event) {
         var data = event.detail.response;
-        this.goal = data.thresholds.goal;
+        this.goal = data.goal;
         var values = data.values;
 
         var valArray = ['Weight'];

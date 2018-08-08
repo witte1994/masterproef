@@ -18,12 +18,6 @@ router.use('/:userId/weight', weightRoutes);
 router.use('/:userId/oxygen', oxygenRoutes);
 router.use('/:userId/medication', medicationRoutes);
 
-router.get('/', (req, res, next) => {
-    res.status(200).json({
-        message: 'get users'
-    });
-});
-
 router.post('/', (req, res, next) => {
     const user = new User({
         _id: new mongoose.Types.ObjectId(),

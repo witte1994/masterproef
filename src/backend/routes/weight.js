@@ -23,7 +23,7 @@ router.get('/:start&:end', (req, res, next) => {
                 .exec()
                 .then(doc => {
                     res.status(200).json({
-                        thresholds: thresholds,
+                        goal: thresholds.goal,
                         values: doc
                     });
                 })
@@ -127,7 +127,7 @@ router.get('/small/:start&:end', (req, res, next) => {
                             periodDifference: "?",
                             totalCol: "",
                             periodCol: "",
-                            goal: thresholds
+                            goal: thresholds.goal
                         });
                     }
                 })

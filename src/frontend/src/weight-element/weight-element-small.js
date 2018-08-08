@@ -272,7 +272,7 @@ class WeightElementSmall extends PolymerElement {
         this.endPeriod = stats.endPeriod;
         this.periodDifference = stats.periodDifference;
 
-        this.goal = stats.goal.goal;
+        this.goal = stats.goal;
 
         if (stats.totalCol === "red") this.$.totalCell.style.backgroundColor = "#ffa6a6";
         else if (stats.totalCol === "green") this.$.totalCell.style.backgroundColor = "#a5ffa5";
