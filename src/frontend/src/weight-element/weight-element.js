@@ -19,7 +19,7 @@ class WeightElement extends PolymerElement {
         <link rel="stylesheet" href="/node_modules/c3/c3.css">
         <style include="shared-styles">
             :host {
-                width: 750px;
+                width: 700px;
             }
 
             .row {
@@ -77,13 +77,17 @@ class WeightElement extends PolymerElement {
         ></iron-ajax>
 
         <div class="card">
-            <div style="width:74%; display:inline-block; vertical-align:top;">
+            <div style="width:100%; display:inline-block; vertical-align:top;">
                 <div style="width:30%; display:inline-block;">
-                    <h1>Weight (kg)</h1>
-                </div><div style="width:70%; display:inline-block;">
+                    <h1>Weight</h1>
+                </div><div style="width:50%; display:inline-block;">
                     <paper-button id="day" toggles on-tap="dateClick">3 days</paper-button>
                     <paper-button id="week" toggles on-tap="dateClick">week</paper-button>
                     <paper-button id="month" toggles on-tap="dateClick">month</paper-button>
+                </div><div style="width:20%; display:inline-block;">
+                    <paper-icon-button icon="fullscreen-exit" on-tap="resize"></paper-icon-button>
+                    <paper-icon-button icon="settings" on-tap="setThresholds"></paper-icon-button>
+                    <paper-icon-button icon="close" on-tap="removeModule"></paper-icon-button>
                 </div>
                 <div style="width:20%; display:inline-block; text-align: center;">
                     <paper-icon-button id="back" icon="arrow-back" on-tap="changeDate"></paper-icon-button>
@@ -92,71 +96,47 @@ class WeightElement extends PolymerElement {
                 </div><div style="width:20%; display:inline-block; text-align: center;">
                     <paper-icon-button id="forward" icon="arrow-forward" on-tap="changeDate"></paper-icon-button>
                 </div>
-                <div style="width: 100%;"><div id="chart" style="width: 500px; height: 280px;"></div>
+                <div style="width: 100%;"><div id="chart" style="width: 650px;"></div>
                 </div>
-
-            </div><div style="width:26%; display:inline-block;">
-                <div style="width:30%; display:inline-block;">
-                </div><div style="width:70%; display:inline-block;">
-                    <paper-icon-button icon="fullscreen-exit" on-tap="resize"></paper-icon-button>
-                    <paper-icon-button icon="settings" on-tap="setThresholds"></paper-icon-button>
-                    <paper-icon-button icon="close" on-tap="removeModule"></paper-icon-button>
+                <div style="width: 50%; display:inline-block; text-align: center;">
+                    <table style="table-layout: fixed; padding-right: 20px;">
+                        <tr>
+                            <th colspan="6">Total</th>
+                        </tr>
+                        <tr>
+                            <th style="width: 16%;">Start</th>
+                            <td style="width: 17%;" id="startTotal">[[startWeight]]</td>
+                            <th style="width: 16%; padding-left: 5px;">Current</th>
+                            <td style="width: 17%;" id="currentTotal">[[curWeight]]</td>
+                            <th style="width: 16%; padding-left: 5px;">Diff.</th>
+                            <td style="width: 17%;" id="diffTotal">[[difference]]</td>
+                        </tr>
+                    </table>
+                </div><div style="width: 50%; display:inline-block; text-align: center;">
+                    <table style="table-layout: fixed; padding-left: 20px">
+                        <tr>
+                            <th colspan="6">Current</th>
+                        </tr>
+                        <tr>
+                            <th style="width: 16%;">Start</th>
+                            <td style="width: 17%;" id="startPeriod">[[startPeriod]]</td>
+                            <th style="width: 16%; padding-left: 5px;">Current</th>
+                            <td style="width: 17%;" id="endPeriod">[[endPeriod]]</td>
+                            <th style="width: 16%; padding-left: 5px;">Diff.</th>
+                            <td style="width: 17%;" id="diffPeriod">[[periodDifference]]</td>
+                        </tr>
+                    </table>
                 </div>
-
+            </div>
                 <paper-dialog id="thresholdsDialog">
                     <h2>Set weight target</h2>
                     <p>Select weight target:</p>
-                    <paper-input id="goal" type="number" label="target weight"></paper-input>
+                    <paper-input id="goal" value="[[goal]]"  type="number" label="target weight"></paper-input>
 
                     <paper-button dialog-dismiss autofocus>Decline</paper-button>
                     <paper-button dialog-confirm on-tap="updateThresholds">Accept</paper-button>
                 </paper-dialog>
 
-                <div style="width: 100%; margin-top: 20px;">
-                    <h1 class="row">Goal: [[goal]]</h1>
-                </div>
-
-                <div style="width: 100%; margin-top: 20px;">
-                    <table class="row">
-                        <tr>
-                            <th class="cell"></th>
-                            <th class="cell">Total</td>
-                        </tr>
-                        <tr>
-                            <th class="cell">Start</th>
-                            <td class="cell" id="startTotal">[[startWeight]]</td>
-                        </tr>
-                        <tr>
-                            <th class="cell">Current</th>
-                            <td class="cell" id="currentTotal">[[curWeight]]</td>
-                        </tr>
-                        <tr>
-                            <th class="cell">Diff.</th>
-                            <td class="cell" id="diffTotal">[[difference]]</td>
-                        </tr>
-                    </table>
-                </div>
-
-                <div style="width: 100%;">
-                    <table class="row">
-                        <tr>
-                            <th class="cell"></th>
-                            <th class="cell">Period</td>
-                        </tr>
-                        <tr>
-                            <th class="cell">Start</th>
-                            <td class="cell" id="startPeriod">[[startPeriod]]</td>
-                        </tr>
-                        <tr>
-                            <th class="cell">Current</th>
-                            <td class="cell" id="endPeriod">[[endPeriod]]</td>
-                        </tr>
-                        <tr>
-                            <th class="cell">Diff.</th>
-                            <td class="cell" id="diffPeriod">[[periodDifference]]</td>
-                        </tr>
-                    </table>
-                </div>
             </div>
         </div>
     `;
@@ -221,6 +201,9 @@ class WeightElement extends PolymerElement {
             },
             body: {
                 type: Object
+            },
+            goal: {
+                type: Number
             }
         };
     }
@@ -328,7 +311,7 @@ class WeightElement extends PolymerElement {
         this.goal = data.thresholds.goal;
         var values = data.values;
 
-        var valArray = ['Weight (kg)'];
+        var valArray = ['Weight'];
         var dateArray = ['x'];
         var min = 99999, max = 0;
         for (var i = 0; i < values.length; i++) {
@@ -365,6 +348,10 @@ class WeightElement extends PolymerElement {
             },
             axis: {
                 x: {
+                    label: {
+                        text: 'Date (day/month)',
+                        position: 'outer-center'
+                    },
                     min: this.startDateStr,
                     max: this.endDateStr,
                     type: 'timeseries',
@@ -374,6 +361,10 @@ class WeightElement extends PolymerElement {
                     }
                 },
                 y: {
+                    label: {
+                        text: 'Weight (kg)',
+                        position: 'outer-middle'
+                    },
                     min: min,
                     max: max
                 }
@@ -381,8 +372,15 @@ class WeightElement extends PolymerElement {
             grid: {
                 y: {
                     lines: [
-                        {value: this.goal, text: 'Goal weight'}
+                        {value: this.goal, text: 'Goal weight = ' + this.goal + " kg"}
                     ]
+                }
+            },
+            tooltip: {
+                format: {
+                    value: function (value, ratio, id, index) {
+                        return value + ' kg';
+                    }
                 }
             }
         });

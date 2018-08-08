@@ -24,7 +24,6 @@ class WeightElementSmall extends PolymerElement {
             .row {
                 width: 100%;
                 text-align: center;
-                margin-bottom: 5px;
             }
 
             paper-button { 
@@ -52,7 +51,7 @@ class WeightElementSmall extends PolymerElement {
 
         <div class="card">
             <div style="width:60%; display:inline-block;">
-                <h1>Weight (kg)</h1>
+                <h1>Weight</h1>
             </div><div style="width:40%; display:inline-block;">
                 <paper-icon-button icon="fullscreen" on-tap="resize"></paper-icon-button>
                 <paper-icon-button icon="settings" on-tap="setThresholds"></paper-icon-button>
@@ -62,7 +61,7 @@ class WeightElementSmall extends PolymerElement {
             <paper-dialog id="thresholdsDialog">
                 <h2>Set weight target</h2>
                 <p>Select weight target:</p>
-                <paper-input id="goal" type="number" label="target weight"></paper-input>
+                <paper-input id="goal" value="[[goal]]" type="number" label="target weight"></paper-input>
 
                 <paper-button dialog-dismiss autofocus>Decline</paper-button>
                 <paper-button dialog-confirm on-tap="updateThresholds">Accept</paper-button>
@@ -85,7 +84,7 @@ class WeightElementSmall extends PolymerElement {
             <div style="width:100%; display:inline-block; text-align: center;">
                 <table class="row" style="width: 260px; margin-left:30px;">
                     <tr>
-                        <th></th>
+                        <td>(kg)</td>
                         <th>Start</th>
                         <th>Current</th>
                         <th>Diff.</th>
@@ -163,6 +162,9 @@ class WeightElementSmall extends PolymerElement {
             },
             body: {
                 type: Object
+            },
+            goal: {
+                type: Number
             }
         };
     }
@@ -269,6 +271,8 @@ class WeightElementSmall extends PolymerElement {
         this.startPeriod = stats.startPeriod;
         this.endPeriod = stats.endPeriod;
         this.periodDifference = stats.periodDifference;
+
+        this.goal = stats.goal.goal;
 
         if (stats.totalCol === "red") this.$.totalCell.style.backgroundColor = "#ffa6a6";
         else if (stats.totalCol === "green") this.$.totalCell.style.backgroundColor = "#a5ffa5";

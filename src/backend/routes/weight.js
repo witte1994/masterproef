@@ -101,7 +101,8 @@ router.get('/small/:start&:end', (req, res, next) => {
                                 endPeriod: endPeriod,
                                 periodDifference: periodDifference.toFixed(1),
                                 totalCol: totalCol,
-                                periodCol: periodCol
+                                periodCol: periodCol,
+                                goal: thresholds
                             });
                         } else {
                             res.status(200).json({
@@ -112,7 +113,8 @@ router.get('/small/:start&:end', (req, res, next) => {
                                 endPeriod: "?",
                                 periodDifference: "?",
                                 totalCol: totalCol,
-                                periodCol: ""
+                                periodCol: "",
+                                goal: thresholds
                             });
                         }   
                     } else {
@@ -124,7 +126,8 @@ router.get('/small/:start&:end', (req, res, next) => {
                             endPeriod: "?",
                             periodDifference: "?",
                             totalCol: "",
-                            periodCol: ""
+                            periodCol: "",
+                            goal: thresholds
                         });
                     }
                 })
