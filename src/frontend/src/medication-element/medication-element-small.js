@@ -24,7 +24,6 @@ class MedicationElementSmall extends PolymerElement {
             .row {
                 width: 100%;
                 text-align: center;
-                margin-bottom: 5px;
             }
 
             paper-button { 

@@ -22,9 +22,28 @@ router.get('/:start&:end', (req, res, next) => {
                 .select("value date")
                 .exec()
                 .then(doc => {
+                    var avg = 0;
+
+                    count = 0;
+                    for (i in doc) {
+                        avg += doc[i].value;
+                        count++;
+                    }
+
+                    var avgLine = [];
+                    if (count > 0) {
+                        avg /= count;
+
+                        var avgBlock = {};
+                        avgBlock['value'] = avg;
+                        avgBlock['text'] = "Avg. blood oxygen saturation = " + avg.toFixed(1) + " %SpO2";
+
+                        avgLine.push(avgBlock);
+                    }
                     res.status(200).json({
                         thresholds: thresholds,
-                        values: doc
+                        values: doc,
+                        avgLine: avgLine
                     });
                 })
                 .catch();
@@ -104,7 +123,8 @@ router.get('/small/:start&:end', (req, res, next) => {
                         okVals: okVals,
                         lowCol: lowCol,
                         avgCol: avgCol,
-                        highCol: highCol
+                        highCol: highCol,
+                        thresholds: thresholds
                     });
                 })
                 .catch();
