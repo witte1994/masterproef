@@ -270,12 +270,12 @@ class WeightElementSmall extends PolymerElement {
         this.endPeriod = stats.endPeriod;
         this.periodDifference = stats.periodDifference;
 
-        if (stats.totalCol === "red")         this.$.totalCell.style.backgroundColor = "#ff9999";
-        else if (stats.totalCol === "green")  this.$.totalCell.style.backgroundColor = "#4dff88";
+        if (stats.totalCol === "red") this.$.totalCell.style.backgroundColor = "#ffa6a6";
+        else if (stats.totalCol === "green") this.$.totalCell.style.backgroundColor = "#a5ffa5";
         else                                this.$.totalCell.style.backgroundColor = "";
 
-        if (stats.periodCol === "red")         this.$.periodCell.style.backgroundColor = "#ff9999";
-        else if (stats.periodCol === "green") this.$.periodCell.style.backgroundColor = "#4dff88";
+        if (stats.periodCol === "red") this.$.periodCell.style.backgroundColor = "#ffa6a6";
+        else if (stats.periodCol === "green") this.$.periodCell.style.backgroundColor = "#a5ffa5";
         else this.$.periodCell.style.backgroundColor = "";
     }
 

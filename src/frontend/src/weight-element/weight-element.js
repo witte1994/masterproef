@@ -397,13 +397,13 @@ class WeightElement extends PolymerElement {
         this.endPeriod = stats.endPeriod;
         this.periodDifference = stats.periodDifference;
 
-        if (stats.totalCol === "red") this.$.diffTotal.style.backgroundColor = "#ff9999";
-        else if (stats.totalCol === "green") this.$.diffTotal.style.backgroundColor = "#4dff88";
-        else this.$.diffTotal.style.backgroundColor = "";
+        if (stats.totalCol === "red") this.$.totalCell.style.backgroundColor = "#ffa6a6";
+        else if (stats.totalCol === "green") this.$.totalCell.style.backgroundColor = "#a5ffa5";
+        else this.$.totalCell.style.backgroundColor = "";
 
-        if (stats.periodCol === "red") this.$.diffPeriod.style.backgroundColor = "#ff9999";
-        else if (stats.periodCol === "green") this.$.diffPeriod.style.backgroundColor = "#4dff88";
-        else this.$.diffPeriod.style.backgroundColor = "";
+        if (stats.periodCol === "red") this.$.periodCell.style.backgroundColor = "#ffa6a6";
+        else if (stats.periodCol === "green") this.$.periodCell.style.backgroundColor = "#a5ffa5";
+        else this.$.periodCell.style.backgroundColor = "";
     }
 
     getTicks() {
