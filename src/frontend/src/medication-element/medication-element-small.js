@@ -62,8 +62,8 @@ class MedicationElementSmall extends PolymerElement {
             <paper-dialog id="thresholdsDialog">
                 <h2>Set medication adherence target</h2>
                 <p>Select medication adherence target in percent:</p>
-                <paper-input id="warningLess" type="number" label="warning if less than"></paper-input>
-                <paper-input id="dangerLess" type="number" label="danger if less than"></paper-input>
+                <paper-input id="warningLess" value="[[warningLess]]" type="number" label="warning if less than"></paper-input>
+                <paper-input id="dangerLess" value="[[dangerLess]]" type="number" label="danger if less than"></paper-input>
 
                 <paper-button dialog-dismiss autofocus>Decline</paper-button>
                 <paper-button dialog-confirm on-tap="updateThresholds">Accept</paper-button>
@@ -137,6 +137,12 @@ class MedicationElementSmall extends PolymerElement {
             },
             meds: {
                 type: Array
+            },
+            warningLess: {
+                type: Number
+            },
+            dangerLess: {
+                type: Number
             }
         };
     }
@@ -237,6 +243,10 @@ class MedicationElementSmall extends PolymerElement {
 
     dataReceived(event) {
         var stats = event.detail.response;
+        var thresholds = stats.thresholds;
+
+        this.warningLess = thresholds.warningLess;
+        this.dangerLess = thresholds.dangerLess;
 
         this.meds = stats.values;
     }

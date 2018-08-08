@@ -113,11 +113,11 @@ router.get('/small/:start&:end', (req, res, next) => {
                                 curItem["percentage"] = percentage.toFixed(1);
 
                                 if (percentage <= thresholds.dangerLess)
-                                    curItem["color"] = "#ff9999";
+                                    curItem["color"] = "#ffa6a6";
                                 else if (percentage <= thresholds.warningLess)
-                                    curItem["color"] = "#ffff80";
+                                    curItem["color"] = "#ffff90";
                                 else 
-                                    curItem["color"] = "#4dff88";
+                                    curItem["color"] = "#a5ffa5";
 
                                 dataArrays.push(curItem);
                             }
@@ -139,11 +139,11 @@ router.get('/small/:start&:end', (req, res, next) => {
                         curItem["percentage"] = percentage.toFixed(1);
 
                         if (percentage <= thresholds.dangerLess)
-                            curItem["color"] = "#ff9999";
+                            curItem["color"] = "#ffa6a6";
                         else if (percentage <= thresholds.warningLess)
-                            curItem["color"] = "#ffff80";
+                            curItem["color"] = "#ffff90";
                         else
-                            curItem["color"] = "#4dff88";
+                            curItem["color"] = "#a5ffa5";
 
                         dataArrays.push(curItem);
                     }

@@ -72,11 +72,11 @@ class MedicationElement extends PolymerElement {
             <div style="width:100%; display:inline-block; vertical-align:top;">
                 <div style="width:25%; display:inline-block;">
                     <h1>Medication</h1>
-                </div><div style="width:50%; display:inline-block;">
+                </div><div style="width:52%; display:inline-block;">
                     <paper-button id="day" toggles on-tap="dateClick">3 days</paper-button>
                     <paper-button id="week" toggles on-tap="dateClick">week</paper-button>
                     <paper-button id="month" toggles on-tap="dateClick">month</paper-button>
-                </div><div style="width:25%; display:inline-block;">
+                </div><div style="width:23%; display:inline-block;">
                     <paper-icon-button icon="fullscreen-exit" on-tap="resize"></paper-icon-button>
                     <paper-icon-button icon="settings" on-tap="setThresholds"></paper-icon-button>
                     <paper-icon-button icon="close" on-tap="removeModule"></paper-icon-button>
@@ -88,15 +88,15 @@ class MedicationElement extends PolymerElement {
                 </div><div style="width:20%; display:inline-block; text-align: center;">
                     <paper-icon-button id="forward" icon="arrow-forward" on-tap="changeDate"></paper-icon-button>
                 </div>
-                <div style="width: 100%;"><div id="chart" style="width: 537px;"></div>
+                <div style="width: 100%;"><div id="chart" style="width: 550px;"></div>
                 </div>
 
             </div>
             <paper-dialog id="thresholdsDialog">
                 <h2>Set medication adherence target</h2>
                 <p>Select medication adherence target in percent:</p>
-                <paper-input id="warningLess" type="number" label="warning if less than"></paper-input>
-                <paper-input id="dangerLess" type="number" label="danger if less than"></paper-input>
+                <paper-input id="warningLess" value="[[warningLess]]" type="number" label="warning if less than"></paper-input>
+                <paper-input id="dangerLess" value="[[dangerLess]]" type="number" label="danger if less than"></paper-input>
 
                 <paper-button dialog-dismiss autofocus>Decline</paper-button>
                 <paper-button dialog-confirm on-tap="updateThresholds">Accept</paper-button>
@@ -133,6 +133,12 @@ class MedicationElement extends PolymerElement {
             curPressed: {
                 type: String,
                 value: "day"
+            },
+            warningLess: {
+                type: Number
+            },
+            dangerLess: {
+                type: Number
             }
         };
     }
@@ -238,6 +244,9 @@ class MedicationElement extends PolymerElement {
         var dates = data.dates;
         var xsDates = data.xsDates;
         var indivStrings = data.indivStrings;
+
+        this.warningLess = thresholds.warningLess;
+        this.dangerLess = thresholds.dangerLess;
         
         this.generateChart(values, dates, xsDates, thresholds, indivStrings);
     }
@@ -255,6 +264,10 @@ class MedicationElement extends PolymerElement {
             },
             axis: {
                 x: {
+                    label: {
+                        text: 'Date (day/month)',
+                        position: 'outer-center'
+                    },
                     min: this.startDateStr,
                     max: this.endDateStr,
                     type: 'timeseries',
@@ -264,6 +277,10 @@ class MedicationElement extends PolymerElement {
                     }
                 },
                 y: {
+                    label: {
+                        text: 'Medication adherence (%)',
+                        position: 'outer-middle'
+                    },
                     min: 5,
                     max: 95
                 }
