@@ -1,144 +1,142 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+	
+	<title>Dashboard</title>
+	<meta name="description" content="dashboard">
+	
+	<!-- See https://goo.gl/OOhYW5 -->
+	<link rel="manifest" href="/manifest.json">
+	
+	<script src="/node_modules/d3/dist/d3.js" charset="utf-8"></script>
+	<script src="/node_modules/c3/c3.js"></script>
+	
+	<script src="/node_modules/web-animations-js/web-animations-next-lite.min.js"></script>
+	<script src="/node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+	
+	<script src="/node_modules/jquery/dist/jquery.min.js"></script>
+	<script src="/node_modules/packery/dist/packery.pkgd.min.js"></script>
+	<script src="/node_modules/draggabilly/dist/draggabilly.pkgd.js"></script>
+	
+	<script src="/js/setup.js"></script>
+	
+	<script type="module" src="/node_modules/@polymer/app-layout/app-header-layout/app-header-layout.js"></script>
+	<script type="module" src="/node_modules/@polymer/app-layout/app-drawer-layout/app-drawer-layout.js"></script>
+	<script type="module" src="/node_modules/@polymer/app-layout/app-scroll-effects/app-scroll-effects.js"></script>
+	<script type="module" src="/node_modules/@polymer/app-layout/app-header/app-header.js"></script>
+	<script type="module" src="/node_modules/@polymer/app-layout/app-toolbar/app-toolbar.js"></script>
+	<script type="module" src="/node_modules/@polymer/app-layout/app-drawer/app-drawer.js"></script>
+	<script type="module" src="/node_modules/@polymer/paper-icon-button/paper-icon-button.js"></script>
+	<script type="module" src="/node_modules/@polymer/iron-icons/iron-icons.js"></script>
+	<script type="module" src="/node_modules/@polymer/paper-dialog/paper-dialog.js"></script>
+	<script type="module" src="/node_modules/@polymer/paper-button/paper-button.js"></script>
+	<script type="module" src="/node_modules/@polymer/paper-dropdown-menu/paper-dropdown-menu.js"></script>
+	<script type="module" src="/node_modules/@polymer/paper-listbox/paper-listbox.js"></script>
+	<script type="module" src="/node_modules/@polymer/paper-item/paper-item.js"></script>
+	
+	<script type="module" src="/src/user-element/user-element.js"></script>
+	<script type="module" src="/src/heart-element/heart-element-small.js"></script>
+	<script type="module" src="/src/heart-element/heart-element.js"></script>
+	<script type="module" src="/src/bp-element/bp-element-small.js"></script>
+	<script type="module" src="/src/bp-element/bp-element.js"></script>
+	<script type="module" src="/src/bs-element/bs-element-small.js"></script>
+	<script type="module" src="/src/bs-element/bs-element.js"></script>
+	<script type="module" src="/src/weight-element/weight-element-small.js"></script>
+	<script type="module" src="/src/weight-element/weight-element.js"></script>
+	<script type="module" src="/src/oxygen-element/oxygen-element-small.js"></script>
+	<script type="module" src="/src/oxygen-element/oxygen-element.js"></script>
+	<script type="module" src="/src/medication-element/medication-element-small.js"></script>
+	<script type="module" src="/src/medication-element/medication-element.js"></script>
+	
+	<custom-style>
+		<style>
+			body {
+				/* No margin on body so toolbar can span the screen */
+				margin: 0;
+				font-family: "Roboto", "Noto", sans-serif;
+			}
+			app-toolbar {
+				/* Toolbar is the main header, so give it some color */
+				background-color: #1E88E5;
+				font-family: 'Roboto', Helvetica, sans-serif;
+				color: white;
+				--app-toolbar-font-size: 24px;
+			}
+			
+			app-drawer-layout:not([narrow]) [drawer-toggle] {
+				display: none;
+			}
+			
+			app-drawer {
+				--app-drawer-content-container: {
+					box-shadow: 1px 0 0px 0px rgba(0,0,0,0.30);
+				}
+			}
+			
+			.handle {
+				height: 10px;
+				background-color:#e0e0e0;
+				border-radius: 8px;
+				margin-left: 8px;
+				margin-right: 8px;
+				margin-bottom: 2px;
+			}
+		</style>
+	</custom-style>
+</head>
 
-    <title>Dashboard</title>
-    <meta name="description" content="dashboard">
 
-    <!-- See https://goo.gl/OOhYW5 -->
-    <link rel="manifest" href="/manifest.json">
-
-    <script src="/node_modules/d3/dist/d3.js" charset="utf-8"></script>
-    <script src="/node_modules/c3/c3.js"></script>
-
-    <script src="/node_modules/web-animations-js/web-animations-next-lite.min.js"></script>
-    <script src="/node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
-    
-    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="/node_modules/packery/dist/packery.pkgd.min.js"></script>
-    <script src="/node_modules/draggabilly/dist/draggabilly.pkgd.js"></script>
-    
-    <script src="/js/setup.js"></script>
-
-    <script type="module" src="/node_modules/@polymer/app-layout/app-header-layout/app-header-layout.js"></script>
-    <script type="module" src="/node_modules/@polymer/app-layout/app-drawer-layout/app-drawer-layout.js"></script>
-    <script type="module" src="/node_modules/@polymer/app-layout/app-scroll-effects/app-scroll-effects.js"></script>
-    <script type="module" src="/node_modules/@polymer/app-layout/app-header/app-header.js"></script>
-    <script type="module" src="/node_modules/@polymer/app-layout/app-toolbar/app-toolbar.js"></script>
-    <script type="module" src="/node_modules/@polymer/app-layout/app-drawer/app-drawer.js"></script>
-    <script type="module" src="/node_modules/@polymer/paper-icon-button/paper-icon-button.js"></script>
-    <script type="module" src="/node_modules/@polymer/iron-icons/iron-icons.js"></script>
-    <script type="module" src="/node_modules/@polymer/paper-dialog/paper-dialog.js"></script>
-    <script type="module" src="/node_modules/@polymer/paper-button/paper-button.js"></script>
-    <script type="module" src="/node_modules/@polymer/paper-dropdown-menu/paper-dropdown-menu.js"></script>
-    <script type="module" src="/node_modules/@polymer/paper-listbox/paper-listbox.js"></script>
-    <script type="module" src="/node_modules/@polymer/paper-item/paper-item.js"></script>
-
-    <script type="module" src="/src/user-element/user-element.js"></script>
-    <script type="module" src="/src/heart-element/heart-element-small.js"></script>
-    <script type="module" src="/src/heart-element/heart-element.js"></script>
-    <script type="module" src="/src/bp-element/bp-element-small.js"></script>
-    <script type="module" src="/src/bp-element/bp-element.js"></script>
-    <script type="module" src="/src/bs-element/bs-element-small.js"></script>
-    <script type="module" src="/src/bs-element/bs-element.js"></script>
-    <script type="module" src="/src/weight-element/weight-element-small.js"></script>
-    <script type="module" src="/src/weight-element/weight-element.js"></script>
-    <script type="module" src="/src/oxygen-element/oxygen-element-small.js"></script>
-    <script type="module" src="/src/oxygen-element/oxygen-element.js"></script>
-    <script type="module" src="/src/medication-element/medication-element-small.js"></script>
-    <script type="module" src="/src/medication-element/medication-element.js"></script>
-
-    <custom-style>
-      <style>
-        body {
-          /* No margin on body so toolbar can span the screen */
-          margin: 0;
-          font-family: "Roboto", "Noto", sans-serif;
-        }
-        app-toolbar {
-          /* Toolbar is the main header, so give it some color */
-          background-color: #1E88E5;
-          font-family: 'Roboto', Helvetica, sans-serif;
-          color: white;
-          --app-toolbar-font-size: 24px;
-        }
-
-        app-drawer-layout:not([narrow]) [drawer-toggle] {
-          display: none;
-        }
-
-        app-drawer {
-          --app-drawer-content-container: {
-            box-shadow: 1px 0 0px 0px rgba(0,0,0,0.30);
-          }
-        }
-
-        .handle {
-          height: 10px;
-          background-color:#e0e0e0;
-          border-radius: 8px;
-          margin-left: 8px;
-          margin-right: 8px;
-          margin-bottom: 2px;
-        }
-      </style>
-    </custom-style>
-  </head>
-
-
-  <body>
-    <app-drawer-layout fullbleed="" narrow="{{narrow}}">
-      <!-- Drawer content -->
-      <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
-        <app-toolbar>Patient info</app-toolbar>
-
-        <user-element></user-element>
-      </app-drawer>
-    
-      <!-- Main content -->
-      <app-header-layout has-scrolling-region="">
-        <app-header slot="header" condenses="" reveals="" effects="waterfall">
-          <app-toolbar>
-            <paper-icon-button icon="menu" drawer-toggle=""></paper-icon-button>
-            <div main-title="">Dashboard</div>
-            <paper-icon-button icon="add" onclick="addModule.open()"></paper-icon-button>
-          </app-toolbar>
-        </app-header>
-
-      <div id="mainGrid" class="grid" style="margin: 8px;">
-          
-      </div>
-
-      </app-header-layout>
-    </app-drawer-layout>
-    
-    <paper-dialog id="addModule">
-      <h2>Add module</h2>
-      <p>Select the module and its size that you want to add:</p>
-
-      <paper-dropdown-menu id="moduleMenu" label="Module">
-        <paper-listbox slot="dropdown-content">
-          <paper-item value="bp">Blood pressure</paper-item>
-          <paper-item value="bs">Blood sugar</paper-item>
-          <paper-item value="heart">Heart</paper-item>
-          <paper-item value="medication">Medication</paper-item>
-          <paper-item value="oxygen">Oxygen</paper-item>
-          <paper-item value="weight">Weight</paper-item>
-        </paper-listbox>
-      </paper-dropdown-menu>
-
-      <paper-dropdown-menu id="sizeMenu" label="Size">
-        <paper-listbox slot="dropdown-content">
-          <paper-item value="s">Small</paper-item>
-          <paper-item value="l">Large</paper-item>
-        </paper-listbox>
-      </paper-dropdown-menu>
-
-      <paper-button dialog-dismiss autofocus>Decline</paper-button>
-      <paper-button dialog-confirm onclick="add()">Accept</paper-button>
-    </paper-dialog>
-  </body>
+<body>
+	<app-drawer-layout responsive-width="1076px" fullbleed style="--app-drawer-width: 360px;">
+		
+		<app-drawer id="drawer" slot="drawer">
+			<app-toolbar>Patient info</app-toolbar>
+			
+			<user-element></user-element>
+		</app-drawer>
+		
+		<app-header-layout has-scrolling-region="">
+			<app-header slot="header" fixed>
+				<app-toolbar>
+					<paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
+					<div main-title="">Dashboard</div>
+					<paper-icon-button icon="add" onclick="addModule.open()"></paper-icon-button>
+				</app-toolbar>
+			</app-header>
+			
+			<div id="mainGrid" class="grid" style="margin: 8px;">
+			</div>
+			
+		</app-header-layout>
+	</app-drawer-layout>
+	
+	<paper-dialog id="addModule">
+		<h2>Add module</h2>
+		<p>Select the module and its size that you want to add:</p>
+		
+		<paper-dropdown-menu id="moduleMenu" label="Module">
+			<paper-listbox slot="dropdown-content">
+				<paper-item value="bp">Blood pressure</paper-item>
+				<paper-item value="bs">Blood sugar</paper-item>
+				<paper-item value="heart">Heart</paper-item>
+				<paper-item value="medication">Medication</paper-item>
+				<paper-item value="oxygen">Oxygen</paper-item>
+				<paper-item value="weight">Weight</paper-item>
+			</paper-listbox>
+		</paper-dropdown-menu>
+		
+		<paper-dropdown-menu id="sizeMenu" label="Size">
+			<paper-listbox slot="dropdown-content">
+				<paper-item value="s">Small</paper-item>
+				<paper-item value="l">Large</paper-item>
+			</paper-listbox>
+		</paper-dropdown-menu>
+		
+		<paper-button dialog-dismiss autofocus>Decline</paper-button>
+		<paper-button dialog-confirm onclick="add()">Accept</paper-button>
+	</paper-dialog>
+</body>
 
 </html>
