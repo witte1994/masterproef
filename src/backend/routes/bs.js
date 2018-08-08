@@ -105,7 +105,8 @@ router.get('/small/:start&:end', (req, res, next) => {
                         okVals: okVals,
                         lowCol: lowCol,
                         avgCol: avgCol,
-                        highCol: highCol
+                        highCol: highCol,
+                        thresholds: thresholds
                     });
                 })
                 .catch();
