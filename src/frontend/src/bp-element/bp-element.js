@@ -300,7 +300,7 @@ class BpElement extends PolymerElement {
         this.endInt = this.endDate.getTime();
 
         this.$.ajaxBp.generateRequest();
-        this.$.ajaxBp.generateRequest();
+        this.$.ajaxBpSmall.generateRequest();
     }
 
     dataReceived(event) {
