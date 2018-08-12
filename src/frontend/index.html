@@ -92,16 +92,22 @@
 	<app-drawer-layout responsive-width="1076px" fullbleed style="--app-drawer-width: 360px;">
 		
 		<app-drawer id="drawer" slot="drawer">
-			<app-toolbar style="margin-bottom: 8px;">Patient info</app-toolbar>
+			<app-toolbar style="margin-bottom: 8px;">
+				<div main-title>Patient info</div>
+				<paper-icon-button icon="add" onclick="addModuleSmall.open()"></paper-icon-button>
+			</app-toolbar>
 			
 			<user-element></user-element>
+
+			<div id="smallGrid" class="grid">
+			</div>
 		</app-drawer>
 		
 		<app-header-layout has-scrolling-region="">
 			<app-header slot="header" fixed>
 				<app-toolbar>
 					<paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
-					<div main-title="">Dashboard</div>
+					<div main-title>Dashboard</div>
 					<paper-icon-button icon="add" onclick="addModule.open()"></paper-icon-button>
 				</app-toolbar>
 			</app-header>
@@ -136,6 +142,25 @@
 		
 		<paper-button dialog-dismiss autofocus>Decline</paper-button>
 		<paper-button dialog-confirm onclick="add()">Accept</paper-button>
+	</paper-dialog>
+
+	<paper-dialog id="addModuleSmall">
+		<h2>Pin small module</h2>
+		<p>Select a small module to pin to the left-hand side:</p>
+	
+		<paper-dropdown-menu id="moduleMenuSmall" label="Module">
+			<paper-listbox slot="dropdown-content">
+				<paper-item value="bp">Blood pressure</paper-item>
+				<paper-item value="bs">Blood sugar</paper-item>
+				<paper-item value="heart">Heart</paper-item>
+				<paper-item value="medication">Medication</paper-item>
+				<paper-item value="oxygen">Oxygen</paper-item>
+				<paper-item value="weight">Weight</paper-item>
+			</paper-listbox>
+		</paper-dropdown-menu>
+	
+		<paper-button dialog-dismiss autofocus>Decline</paper-button>
+		<paper-button dialog-confirm onclick="addSmall()">Accept</paper-button>
 	</paper-dialog>
 </body>
 
