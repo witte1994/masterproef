@@ -350,7 +350,7 @@ class OxygenElement extends PolymerElement {
                         text: 'Blood oxygen saturation (%SpO2)',
                         position: 'outer-middle'
                     },
-                    max: 98,
+                    max: 99,
                     min: thresholds.dangerLess - 2
                 }
             },
