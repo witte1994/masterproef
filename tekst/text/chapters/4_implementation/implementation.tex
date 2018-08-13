@@ -19,7 +19,7 @@ First, an overview of the global scope of the application is given, after which 
     \begin{figure}[!t]
         \centering
         \includegraphics[width=0.9\textwidth]{chapters/4_implementation/structure}
-        \caption{The application structure}\label{fig:structure}
+        \caption{The application structure.}\label{fig:structure}
     \end{figure}
 
     A typical web application consists of two parts: the back end and the front end. In software engineering principles, these refer to the separation of the data access layer and the presentation layer of the web application. For example, the back end fetches data requested by the front end. In turn, the front end presents the retrieved data towards the user. Due to the modular design of the dashboard, each module needs to have its own back end (data retrieval and database models) and front end functionality as summarized in figure \ref{fig:structure}.  As seen in the figure, there is no interaction between the modules. Furthermore, the front end has a general presentation in which the modules reside. The next sections describe the back end and front end in detail. Also, before the implementation began, I only had basic knowledge of HTML, CSS, and JavaScript. As a result, the learning curve was personally quite steep.
@@ -52,17 +52,15 @@ First, an overview of the global scope of the application is given, after which 
 
         \subsubsection{Database}
 
-        MongoDB was chosen as the database program, which uses JSON-like documents to store data. Groups of these documents are stored in collections. A feature of MongoDB is that the documents inside a collection do not need the same data fields. Suppose we update our patient information page to also show their phone number. In SQL, tables would need to be redefined and the existing rows updated to have a default value for this attribute. In MongoDB this is not necessary as  patients with this new attribute can be added without a problem to the existing collection. These flexible documents facilitate integration as no schema rules need to be defined. This allows developers to create their own document schemas and pair them to existing users by solely referring to their id.
+        At the very beginning, SQL was used in the back end, but it was quickly switched out for MongoDB. MongoDB uses JSON-like documents to store data. Groups of these documents are stored in collections. A feature of MongoDB is that the documents inside a collection do not need the same data fields. Suppose we update our patient information page to also show their phone number. In SQL, tables would need to be redefined and the existing rows updated to have a default value for this attribute. In MongoDB this is not necessary as  patients with this new attribute can be added without a problem to the existing collection. These flexible documents facilitate integration as no schema rules need to be defined. This allows developers to create their own document schemas and pair them to existing users by solely referring to their id. 
 
         \begin{figure}[!t]
             \centering
             \includegraphics[width=1.0\textwidth]{chapters/4_implementation/db}
-            \caption{The database structure}\label{fig:db}
+            \caption{The database structure.}\label{fig:db}
         \end{figure}
 
         The prototype runs a local MongoDB database server where all dashboard data is stored. Each module is responsible for its own documents. As such, every module has a value collection, which contains all values of all users, and a threshold collection, where one threshold entry exists for each user in the dashboard system. No module accesses data from another module. The database is managed via the Mongoose modeling library for Node.js. By defining models, Mongoose helps us by managing relationships between data. Also, it translates source code objects to their representation in the database.
-
-        
 
         The models present in this prototype are straightforward, as shown in figure \ref{fig:db}. It is possible that one blood pressure entry can have an additional field, such as whether it was seen or not by the clinician. However, the current implementation of each module, ignores extra data fields. If in the future data fields are added, the front end part of the module must adapted in order to present these to the clinician.
 
@@ -78,25 +76,82 @@ First, an overview of the global scope of the application is given, after which 
         \begin{figure}[!t]
             \centering
             \includegraphics[width=1.0\textwidth]{chapters/4_implementation/shadow-dom}
-            \caption{The shadow DOM (src: \url{https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM})}\label{fig:shadow_dom}
+            \caption{The shadow DOM (src: \url{https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM}).}\label{fig:shadow_dom}
         \end{figure}
 
         HTML provides us with standard elements such as \texttt{h1} and \texttt{img}. Web Components allows the developer to create custom elements which can be used in the same manner as the ones HTML provides. Suppose a calendar Web Component was created, a developer could add the element to any web page as follows: \texttt{<calendar></calendar>}. The actual definition of the calendar module resides in another file which is imported on the page where it will be used. This approach supports reusability, and above all, easy integration which is a primary goal of our dashboard application. At the heart of Web Components is the shadow DOM.
 
-        \paragraph{Shadow DOM} We assume the reader is familiar with the DOM concept. The shadow DOM can be seen as a scoped subtree inside a custom element. The root of this subtree is called the shadow root. The structure, styling, and behavior of the children within the shadow DOM do not affect any elements outside of it. Therefore, the appearance and functionality of the custom element is encapsulated and hidden at the document level. Only events fired by elements in the shadow DOM can be pickup outside the shadow DOM boundary. Figure \ref{fig:shadow_dom} visualizes this concept. This idea of encapsulation is important for our approach toward the dashboard, as each module is responsible for its own appearance and functionality. Developers of custom modules should not need to worry about what happens outside of the shadow DOM.
+        \paragraph{Shadow DOM} We assume the reader is familiar with the DOM concept. The shadow DOM can be seen as a scoped subtree inside a custom element. The root of this subtree is called the shadow root. The structure, styling, and behavior of the children within the shadow DOM do not affect any elements outside of it. Therefore, the appearance and functionality of the custom element is encapsulated and hidden at the document level. Only events fired by elements in the shadow DOM can be pickup outside the shadow DOM boundary. Figure \ref{fig:shadow_dom} visualizes this concept. This idea of encapsulation is important for our approach towards the dashboard, as each module is responsible for its own appearance and functionality. Developers of custom modules should not need to worry about what happens outside of the shadow DOM.
 
-        \subsubsection{Structure}
+        \subsubsection{Structure} \label{dashboard_structure}
 
         \begin{figure}[!t]
             \centering
             \frame{\includegraphics[width=1.0\textwidth]{screenshots/db_empty}}
-            \caption{The empty dashboard}\label{fig:screen_db_empty}
+            \caption{The empty dashboard.}\label{fig:screen_db_empty}
         \end{figure}
 
-        The dashboard features two panels. On the left, only small modules can be pinned, while both the small and large modules can be placed on the right panel. The left panel is thin and can be hidden in case of small screen estate. Should too many modules be present on the right pane, scrolling is possible. The left pane will stay in place to still show the information of the small modules that reside there. Figure \ref{fig:screen_db_empty} shows the empty dashboard.
+        The dashboard features two panels. On the left, only small modules can be pinned, while both the small and large modules can be placed on the right panel. The left panel is thin and is automatically hidden in case of small screen estate. Should too many modules be present on the right panel, a scroll bar appears. The left panel will stay in place if scrolling happens in the right panel to show the information of the small modules that reside there. Figure \ref{fig:screen_db_empty} shows the empty dashboard.
 
-        The right panel allows the ordering of the modules via drag-and-dropping them into place. Several libraries were tried out to achieve this functionality, but many of them did not support dragging elements within a shadow DOM. As a result, the front end was rebuilt several times. Eventually, Packery.js was used. This library allows free placement of the modules and tries to arrange them to maximize space efficiency. In case of resizing, the modules are rearranged automatically. Modules are added through a dialog which can be accessed by pressing the plus-sign button in the top-right corner. The same applies for the smaller panel on the left side. However, the modules in this panel can only be realigned vertically.
+        The right panel allows the ordering of the modules via drag-and-dropping them into place. Several libraries were tried out to achieve this functionality, but many of them did not support dragging Web Components. As a result, the front end was rebuilt several times. Eventually, Packery.js was used. This library allows free placement of the modules and tries to arrange them to maximize space efficiency. In case of resizing, the modules are rearranged automatically. Modules are added via a dialog which can be accessed by pressing the plus-sign button in the top-right corner. The same applies for the smaller panel on the left side. However, the modules in this panel can only be realigned vertically.
 
     \subsection{Result}
 
-    
+    Throughout this section multiple screenshots show the final prototype in action. Extra screenshots can be found in appendix \ref{app_high_fidelity}, as some modules are very similar in design and functionality. The threshold settings menu is found at the start of that appendix. Changes visible in a screenshot compared its low fidelity counterpart, are explained in the paragraph where it is referred to. First, the small and large modules are shown. Hereafter, multiple complete dashboards are presented to show the different possibilities in terms of layout.
+
+        \subsubsection{Small modules}
+
+        \begin{figure}[!t]
+            \centering
+            \includegraphics[width=0.8\textwidth]{screenshots/mods_small}
+            \caption{The small modules: blood pressure, heart rate, medication, and weight.}\label{fig:screen_mods_small}
+        \end{figure}
+
+        Figure \ref{fig:screen_mods_small} shows four small modules, with each showing data of different time periods. For easy arrangement, all small modules have the same width. Note that there is no heart rate data for the time period selected in that module. The only changes present in the small modules are also applied to the large modules. One of these changes was the addition of a small handle bar at the top of each module. This allows safe dragging and dropping. Previously, the entire module was draggable, which resulted in unexpected button behavior, but could also lead to accidental dragging.
+
+        The second and last change, was the replacement of the menu button in the top-right corner. This menu was replaced by buttons for each action it would contain: resize, update thresholds, and delete. As a result, a click is saved. The unit of measurement, which was originally in the title, had to be moved to the tables below to make room for the buttons.
+
+        \subsubsection{Large modules}
+
+        The larger modules saw additional changes on top of the two mentioned in the previous section. When the large modules were completed, the right-hand side had a lot of whitespace. To remedy this, the statistics were placed beneath the chart. This had the added bonus that the modules became narrower. All large modules have a fixed width of 716 pixels, which is the minimum screen resolution width without needing to scroll horizontally.
+
+        \begin{figure}[!t]
+            \centering
+            \includegraphics[width=1\textwidth]{screenshots/med_large}
+            \caption{The large medication module.}\label{fig:screen_med_large}
+        \end{figure}
+
+        The charts were generated using the C3.js chart library. Not mentioned in the design, most charts feature a line showing the average of the values for the selected time period. Indicating the lowest and highest values is difficult to do in C3 and was left out of the prototype. Hovering over the plotted data points shows the exact values, as shown in figure \ref{fig:screen_med_large} for medication. Labelling the axes and indicating the measurement units was overlooked and added later for all charts. All charts are simple to understand and no ``chart junk'' is present.
+
+        \subsubsection{Dashboard}
+
+        \begin{figure}[!t]
+            \centering
+            \includegraphics[width=1\textwidth]{screenshots/add_module}
+            \caption{The dialog to add a module to the dashboard.}\label{fig:screen_add_module}
+        \end{figure}
+
+        \begin{figure}[!t]
+            \centering
+            \frame{\includegraphics[width=1\textwidth]{screenshots/db_wide}}
+            \caption{A very wide dashboard.}\label{fig:screen_db_wide}
+        \end{figure}
+
+        \begin{figure}[!t]
+            \centering
+            \frame{\includegraphics[width=0.8\textwidth]{screenshots/db_resized}}
+            \caption{A narrower version of the dashboard shown in figure \ref{fig:screen_db_wide}.}\label{fig:screen_db_resized}
+        \end{figure}
+
+        \begin{figure}[!t]
+            \centering
+            \frame{\includegraphics[width=1\textwidth]{screenshots/db_left_hidden}}
+            \caption{A narrow dashboard with the left panel hidden.}\label{fig:screen_db_left_hidden}
+        \end{figure}
+        \begin{figure}[!t]
+            \centering
+            \frame{\includegraphics[width=1\textwidth]{screenshots/db_left_shown}}
+            \caption{A narrow dashboard with the left panel shown.}\label{fig:screen_db_left_shown}
+        \end{figure}
+
+        As mentioned in section \ref{dashboard_structure}, different screen sizes are supported, and the left panel is hidden if the available screen space is too narrow. This section shows several examples of dashboards on smaller and larger screens. The empty dashboard was already displayed in figure \ref{fig:screen_db_empty}. The plus-signs on top open the menu seen in figure \ref{fig:screen_add_module}. Only small modules can be added to the left panel. Figure \ref{fig:screen_db_wide} shows a very wide dashboard, which was automatically resized on a smaller screen to the one shown in figure \ref{fig:screen_db_resized}. If the screen is even smaller, the left panel is hidden as seen in figure \ref{fig:screen_db_left_hidden}. Pressing the button in the top left corner shows the left panel on top the other modules (figure \ref{fig:screen_db_left_shown}). Extra dashboard layouts are found in appendix \ref{app_high_fidelity}.

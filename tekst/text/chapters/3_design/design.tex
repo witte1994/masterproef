@@ -11,7 +11,7 @@ After the literature study, the design phase started. First, the MuiCSer framewo
         \begin{figure}[!t]
             \centering
             \includegraphics[width=0.8\textwidth]{chapters/3_design/muicser}
-            \caption{MuiCSer process}\label{fig:muicser}
+            \caption{The MuiCSer process.}\label{fig:muicser}
         \end{figure}
 
         The MuiCSer process is summarized in figure \ref{fig:muicser}. After each phase, the result is evaluated, verified and validated to ensure that the required functionality is present. In turn, the received feedback can be used to reiterate over the previous phase. On the figure, this is denoted with the light arrows, while the dark one represents the overall process direction. What follows is a brief description of each phase:
@@ -136,12 +136,12 @@ After the literature study, the design phase started. First, the MuiCSer framewo
         \begin{figure}[!htb]
             \centering
             \includegraphics[width=0.45\textwidth]{chapters/3_design/mockups/heart_small}
-            \caption{Small heart rate module}\label{fig:hr_small}
+            \caption{The small heart rate module.}\label{fig:hr_small}
         \end{figure}
         \begin{figure}[!htb]
             \centering
             \includegraphics[width=0.75\textwidth]{chapters/3_design/mockups/heart_large}
-            \caption{Large heart rate module}\label{fig:hr_large}
+            \caption{The large heart rate module.}\label{fig:hr_large}
         \end{figure}
 
         The small summarizing module (figure \ref{fig:hr_small}) tries to indicate how the last three, seven, or 30 days went. Three buttons are present to choose the time period. Navigating the time period is done by pressing the arrow buttons. Based on the set thresholds, a count is generated of the measurements: good values lay between the recommended values, warning values lay between the danger and recommended values, and dangerous values have crossed the danger threshold. These are color coded as green, yellow, and red respectively. Below the count, the lowest, average, and highest values for the selected time period are found. These values are again color coded to situate them in the threshold zones. A settings button shows a menu wherein the user can change the thresholds for the current patient. Also, the options to remove or enlarge the module are found here.
@@ -153,7 +153,7 @@ After the literature study, the design phase started. First, the MuiCSer framewo
         \begin{figure}[!htb]
             \centering
             \includegraphics[width=0.75\textwidth]{chapters/3_design/mockups/bp_large}
-            \caption{Large blood pressure module}\label{fig:bp_large}
+            \caption{The large blood pressure module.}\label{fig:bp_large}
         \end{figure}
 
         The functionality and design of both the small and large modules are the same compared to the heart rate module. The only difference is that the chart of the large module (figure \ref{fig:bp_large}) displays two lines: one for the systolic blood pressure (BP) and one for the diastolic blood pressure. The threshold zones are also different. Warnings are shown if either the systolic BP is too high or if the diastolic BP is too low. Since both systolic and diastolic BP change in the same direction, this method should suffice. For example, in a hypertensive state both the systolic and diastolic are too high, not just one. If both BP values are between the systolic and diastolic warning zones, the value is flagged as okay.
@@ -167,16 +167,16 @@ After the literature study, the design phase started. First, the MuiCSer framewo
         \begin{figure}[!htb]
             \centering
             \includegraphics[width=0.45\textwidth]{chapters/3_design/mockups/weight_small}
-            \caption{Small weight module}\label{fig:weight_small}
+            \caption{The small weight module.}\label{fig:weight_small}
         \end{figure}
 
         \begin{figure}[!htb]
             \centering
             \includegraphics[width=0.75\textwidth]{chapters/3_design/mockups/weight_large}
-            \caption{Large weight module}\label{fig:weight_large}
+            \caption{The large weight module.}\label{fig:weight_large}
         \end{figure}
-
-        The weight module shows different statistics. To start, there are no thresholds present, only a goal weight can be set. Progress is visualized based on this value. The small module (figure \ref{fig:weight_small}) shows the starting weight (the first measurement ever registered) and the current weight of a patient today (last registered measurement). The difference of these two values is calculated and marked either green or red. If the person is moving closer towards the goal weight, the color will be green and otherwise red. A second column shows the same information, but for values from the selected time period. This allows the clinician to see, for example, the progress made weekly. Similar values are shown in the larger module (figure \ref{fig:weight_large}). It features the same layout as the previous large modules. The chart does not show any colors since there are no thresholds. Instead, a line is shown which represents the goal weight. Ideally, the measured values close in towards this line over time.
+        
+        \noindent The weight module shows different statistics. To start, there are no thresholds present, only a goal weight can be set. Progress is visualized based on this value. The small module (figure \ref{fig:weight_small}) shows the starting weight (the first measurement ever registered) and the current weight of a patient today (last registered measurement). The difference of these two values is calculated and marked either green or red. If the person is moving closer towards the goal weight, the color will be green and otherwise red. A second column shows the same information, but for values from the selected time period. This allows the clinician to see, for example, the progress made weekly. Similar values are shown in the larger module (figure \ref{fig:weight_large}). It features the same layout as the previous large modules. The chart does not show any colors since there are no thresholds. Instead, a line is shown which represents the goal weight. Ideally, the measured values close in towards this line over time.
 
         \subsubsection{Oxygen saturation}
 
@@ -187,13 +187,13 @@ After the literature study, the design phase started. First, the MuiCSer framewo
         \begin{figure}[!htb]
             \centering
             \includegraphics[width=0.45\textwidth]{chapters/3_design/mockups/med_small}
-            \caption{Small medication module}\label{fig:med_small}
+            \caption{The small medication module.}\label{fig:med_small}
         \end{figure}
 
         \begin{figure}[!htb]
             \centering
             \includegraphics[width=0.75\textwidth]{chapters/3_design/mockups/med_large}
-            \caption{Large medication module}\label{fig:med_large}
+            \caption{The large medication module.}\label{fig:med_large}
         \end{figure}
 
         Medication intake is tracked in a very different manner compared to the previous parameters. It is possible that a patient needs to take in multiple medicines in changing amounts over time. The small module (figure \ref{fig:med_small}) shows all the medicines the patient had to take for the selected time period. Precisely, the actual amount the patient took in, the prescribed amount, and the ratio of these two values. Depending on the thresholds, the background will be color coded red, yellow, or green. These thresholds indicate the minimum ratios the patient must abide by.
