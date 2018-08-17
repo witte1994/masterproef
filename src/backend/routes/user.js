@@ -1,9 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
 const checkAuth = require('../models/auth/check-auth');
-
-const User = require('../models/user');
 
 const heartRoutes = require('./heart');
 const bpRoutes = require('./bp');
@@ -12,6 +9,8 @@ const weightRoutes = require('./weight');
 const oxygenRoutes = require('./oxygen');
 const medicationRoutes = require('./medication');
 
+const UserController = require('../controller/user');
+
 router.use('/:userId/heart', heartRoutes);
 router.use('/:userId/bp', bpRoutes);
 router.use('/:userId/bs', bsRoutes);
@@ -19,62 +18,8 @@ router.use('/:userId/weight', weightRoutes);
 router.use('/:userId/oxygen', oxygenRoutes);
 router.use('/:userId/medication', medicationRoutes);
 
-router.post('/', (req, res, next) => {
-    const user = new User({
-        _id: new mongoose.Types.ObjectId(),
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        birth: req.body.birth,
-        gender: req.body.gender,
-        bloodType: req.body.bloodType,
-        height: req.body.height,
-        address: req.body.address,
-        phone: req.body.phone
-    });
-    user.save()
-        .then(result => {
-            console.log(result);
-            res.status(201).json({
-                message: "Added user",
-                createdUser: result
-            });
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({
-                error: err
-            });
-        });
-});
-
-router.get('/', checkAuth, (req, res, next) => {
-    User.find()
-        .exec()
-        .then(doc => {
-            console.log(doc);
-            res.status(200).json(doc);
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({ error: err });
-        });
-
-});
-
-router.get('/:userId', checkAuth, (req, res, next) => {
-    const id = req.params.userId;
-
-    User.findById(id)
-        .exec()
-        .then(doc => {
-            console.log(doc);
-            res.status(200).json(doc);
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({error: err});
-        });
-    
-});
+router.post('/', UserController.create);
+router.get('/', checkAuth, UserController.get_users);
+router.get('/:userId', checkAuth, UserController.get_user_by_id);
 
 module.exports = router;
