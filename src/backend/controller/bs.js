@@ -158,6 +158,10 @@ exports.add = (req, res, next) => {
 
 exports.set_threshold = (req, res, next) => {
     var userId = req.originalUrl.split('/')[2];
+    this.setThreshold(userId, res);
+};
+
+exports.setThreshold = function (userId, res) {
     const bsThreshold = new BsThreshold({
         _id: mongoose.Types.ObjectId(),
         user: userId,
@@ -170,15 +174,17 @@ exports.set_threshold = (req, res, next) => {
         .save()
         .then(result => {
             console.log(result);
-            res.status(201).json(result);
+            if (res != null)
+                res.status(201).json(result);
         })
         .catch(err => {
             console.log(err);
-            res.status(500).json({
-                error: err
-            });
+            if (res != null)
+                res.status(500).json({
+                    error: err
+                });
         });
-};
+}
 
 exports.update_threshold = (req, res, next) => {
     var userId = req.originalUrl.split('/')[2];
