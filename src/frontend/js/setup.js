@@ -1,6 +1,90 @@
 var $grid;
 var $gridSmall;
 
+document.addEventListener('iron-ajax-response', function(e) {
+    var srcElement = e.srcElement.id;
+
+    if (srcElement === "ajaxLogin") {
+        window.sessionStorage.accessToken = e.detail.response.token;
+        var ajaxPatients = document.querySelector('#ajaxPatients');
+        ajaxPatients.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
+        ajaxPatients.generateRequest();
+    } else if (srcElement === "ajaxPatients") {
+        openPatientsDialog(e.detail.response);
+    }
+});
+
+document.addEventListener('iron-ajax-error', function (e) {
+    var srcElement = e.srcElement.id;
+
+    if (srcElement === "ajaxLogin") {
+        document.querySelector('#loginError').open();;
+    } else if (srcElement === "ajaxPatients") {
+        console.log("patients fail");
+    }
+    
+});
+
+function openPatientsDialog(patients) {
+    var listbox = document.querySelector('#listbox');
+    for (i in patients) {
+        var paperItem = document.createElement("paper-item");
+        paperItem.setAttribute("value", patients[i]._id);
+        
+        var paperBody = document.createElement("paper-item-body");
+        var patientString = patients[i].lastName + " " + patients[i].firstName;
+        paperBody.innerHTML = patientString;
+        
+        var paperButton = document.createElement("paper-icon-button");
+        paperButton.classList.add("patientSelector");
+        paperButton.setAttribute("icon", "arrow-forward");
+        paperButton.addEventListener("click", function() {
+            document.querySelector('#patientDialog').toggle();
+            var patientId = this.parentElement.getAttribute("value");
+            window.history.pushState("", "", "/"+patientId);
+
+            loadPatientPage();
+        });
+
+        paperItem.appendChild(paperBody);
+        paperItem.appendChild(paperButton);
+        listbox.appendChild(paperItem);
+    }
+
+    document.querySelector('#patientDialog').open();
+}
+
+function loadPatientPage() {
+    clearGrids();
+    var userElement = document.createElement("user-element");
+    userElement.setAttribute("id", "userElement");
+    var refElement = document.querySelector('#smallGrid');
+    document.querySelector('#drawer').insertBefore(userElement, refElement);
+}
+
+function clearGrids() {
+    var userElement = document.querySelector('#userElement');
+    if (userElement != null)
+        userElement.parentNode.removeChild(userElement);
+
+    var elements = $grid.packery('getItemElements');
+    $grid.packery('remove', elements);
+    var elementsSmall = $gridSmall.packery('getItemElements');
+    $gridSmall.packery('remove', elementsSmall);
+}
+
+function login() {
+    var loginVal = document.querySelector('#login').value;
+    var passwordVal = document.querySelector('#password').value;
+
+    var ajaxLogin = document.querySelector('#ajaxLogin');
+    ajaxLogin.body = {
+        "login": loginVal,
+        "password": passwordVal
+    };
+    ajaxLogin.generateRequest();
+}
+
 $(document).ready(function() {
     var elem = document.querySelector('.draggable');
     

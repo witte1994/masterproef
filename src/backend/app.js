@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const userRoutes = require('./routes/user')
+const clinicianRoutes = require('./routes/clinician')
 
 mongoose.connect('mongodb://localhost:27017/dashboard', {
     useNewUrlParser: true
@@ -16,12 +17,13 @@ app.use(bodyParser.json());
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,POST,PATCH');
+    res.header('Access-Control-Allow-Methods', 'GET,POST,PATCH,OPTIONS');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
     next();
 });
 
 app.use('/user', userRoutes);
+app.use('/clinician', clinicianRoutes);
 
 app.use((req, res, next) => {
     const error = new Error('Not found');

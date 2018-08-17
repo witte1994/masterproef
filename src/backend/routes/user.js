@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+const checkAuth = require('../models/auth/check-auth');
 
 const User = require('../models/user');
 
@@ -46,7 +47,21 @@ router.post('/', (req, res, next) => {
         });
 });
 
-router.get('/:userId', (req, res, next) => {
+router.get('/', checkAuth, (req, res, next) => {
+    User.find()
+        .exec()
+        .then(doc => {
+            console.log(doc);
+            res.status(200).json(doc);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ error: err });
+        });
+
+});
+
+router.get('/:userId', checkAuth, (req, res, next) => {
     const id = req.params.userId;
 
     User.findById(id)

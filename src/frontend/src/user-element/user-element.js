@@ -20,7 +20,7 @@ class UserElement extends PolymerElement {
         </style>
 
         <iron-ajax 
-            auto
+            id="ajaxUser"
             url="http://localhost:3000/user/[[userId]]"
             method="GET"
             handle-as="json"
@@ -43,10 +43,6 @@ class UserElement extends PolymerElement {
     }
     static get properties() {
         return {
-            userId: {
-                type: String,
-                value: '5b5c65e3ad30264506380dd1'
-            },
             user: {
                 value: Object
             },
@@ -61,6 +57,9 @@ class UserElement extends PolymerElement {
         var split = document.URL.split("/");
         var param = split[split.length-1];
         this.userId = param;
+        this.$.ajaxUser.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
+
+        this.$.ajaxUser.generateRequest();
     }
 
     handleResponse(event) {

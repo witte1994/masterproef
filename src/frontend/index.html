@@ -35,6 +35,8 @@
 	<script type="module" src="/node_modules/@polymer/paper-dropdown-menu/paper-dropdown-menu.js"></script>
 	<script type="module" src="/node_modules/@polymer/paper-listbox/paper-listbox.js"></script>
 	<script type="module" src="/node_modules/@polymer/paper-item/paper-item.js"></script>
+	<script type="module" src="/node_modules/@polymer/paper-input/paper-input.js"></script>
+	<script type="module" src="/node_modules/@polymer/iron-ajax/iron-ajax.js"></script>
 	
 	<script type="module" src="/src/user-element/user-element.js"></script>
 	<script type="module" src="/src/heart-element/heart-element-small.js"></script>
@@ -74,6 +76,11 @@
 					box-shadow: 1px 0 0px 0px rgba(0,0,0,0.30);
 				}
 			}
+
+			.patientSelector {
+				margin-left: auto;
+				margin-right: 0;
+			}
 			
 			.handle {
 				height: 10px;
@@ -89,16 +96,34 @@
 
 
 <body>
+	<iron-ajax 
+		id="ajaxLogin" 
+		url="http://localhost:3000/clinician/login"
+		method="POST"
+		handle-as="json"
+		content-type="application/json"
+		on-response="testFunction"
+		bubbles="true">
+	</iron-ajax>
+
+	<iron-ajax 
+		id="ajaxPatients"
+		url="http://localhost:3000/user"
+		method="GET"
+		handle-as="json"
+		content-type="application/json"
+		bubbles="true">
+	</iron-ajax>
+
 	<app-drawer-layout responsive-width="1076px" fullbleed style="--app-drawer-width: 360px;">
 		
 		<app-drawer id="drawer" slot="drawer">
 			<app-toolbar style="margin-bottom: 8px;">
+				<paper-icon-button icon="compare-arrows" onclick="patientDialog.open()"></paper-icon-button>
 				<div main-title>Patient info</div>
 				<paper-icon-button icon="add" onclick="addModuleSmall.open()"></paper-icon-button>
 			</app-toolbar>
 			
-			<user-element></user-element>
-
 			<div id="smallGrid" class="grid">
 			</div>
 		</app-drawer>
@@ -161,6 +186,31 @@
 	
 		<paper-button dialog-dismiss autofocus>Decline</paper-button>
 		<paper-button dialog-confirm onclick="addSmall()">Accept</paper-button>
+	</paper-dialog>
+
+	<paper-dialog id="loginDialog" opened no-cancel-on-esc-key="true" no-cancel-on-outside-click="true" with-backdrop="true">
+		<h2>Log in</h2>
+		<p>Please log in:</p>
+	
+		<paper-input id="login" label="username"></paper-input>
+		<paper-input id="password" type="password" label="password"></paper-input>
+	
+		<paper-button dialog-confirm onclick="login()">Login</paper-button>
+	</paper-dialog>
+
+	<paper-dialog id="loginError" no-cancel-on-esc-key="true" no-cancel-on-outside-click="true" with-backdrop="true">
+		<h2>Error: log in failed</h2>
+		<p>Please try again.</p>
+	
+		<paper-button dialog-confirm onclick="loginDialog.open()">Retry</paper-button>
+	</paper-dialog>
+
+	<paper-dialog id="patientDialog" no-cancel-on-esc-key="true" no-cancel-on-outside-click="true" with-backdrop="true">
+		<h2>Select a patient</h2>
+
+			<paper-listbox style="width:400px;" id="listbox">
+			</paper-listbox>	
+		
 	</paper-dialog>
 </body>
 
