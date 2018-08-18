@@ -217,7 +217,9 @@ class BsElement extends PolymerElement {
 
         this.$.day.style.background = "#cac9c9";
 
+        this.$.ajaxBs.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
         this.$.ajaxBs.generateRequest();
+        this.$.ajaxBsSmall.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
         this.$.ajaxBsSmall.generateRequest();
     }
 
@@ -267,7 +269,9 @@ class BsElement extends PolymerElement {
         this.startInt = this.startDate.getTime();
         this.endInt = this.endDate.getTime();
 
+        this.$.ajaxBs.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
         this.$.ajaxBs.generateRequest();
+        this.$.ajaxBsSmall.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
         this.$.ajaxBsSmall.generateRequest();
     }
 
@@ -302,7 +306,9 @@ class BsElement extends PolymerElement {
         this.startInt = this.startDate.getTime();
         this.endInt = this.endDate.getTime();
 
+        this.$.ajaxBs.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
         this.$.ajaxBs.generateRequest();
+        this.$.ajaxBsSmall.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
         this.$.ajaxBsSmall.generateRequest();
     }
 
@@ -469,11 +475,14 @@ class BsElement extends PolymerElement {
             "dangerHigher": dangerHigher
         };
 
+        this.$.ajaxThreshold.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
         this.$.ajaxThreshold.generateRequest();
     }
 
     dataUpdated(e) {
+        this.$.ajaxBs.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
         this.$.ajaxBs.generateRequest();
+        this.$.ajaxBsSmall.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
         this.$.ajaxBsSmall.generateRequest();
     }
 

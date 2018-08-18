@@ -177,6 +177,7 @@ class WeightElementSmall extends PolymerElement {
         
         this.$.day.style.background = "#cac9c9";
 
+        this.$.ajaxWeight.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
         this.$.ajaxWeight.generateRequest();
     }
 
@@ -226,6 +227,7 @@ class WeightElementSmall extends PolymerElement {
         this.startInt = this.startDate.getTime();
         this.endInt = this.endDate.getTime();
 
+        this.$.ajaxWeight.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
         this.$.ajaxWeight.generateRequest();
     }
 
@@ -260,6 +262,7 @@ class WeightElementSmall extends PolymerElement {
         this.startInt = this.startDate.getTime();
         this.endInt = this.endDate.getTime();
 
+        this.$.ajaxWeight.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
         this.$.ajaxWeight.generateRequest();
     }
 
@@ -302,10 +305,12 @@ class WeightElementSmall extends PolymerElement {
             "goal": goal,
         };
 
+        this.$.ajaxThreshold.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
         this.$.ajaxThreshold.generateRequest();
     }
 
     dataUpdated(e) {
+        this.$.ajaxWeight.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
         this.$.ajaxWeight.generateRequest();
     }
 

@@ -188,6 +188,7 @@ class OxygenElementSmall extends PolymerElement {
         
         this.$.day.style.background = "#cac9c9";
 
+        this.$.ajaxOxygen.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
         this.$.ajaxOxygen.generateRequest();
     }
 
@@ -237,6 +238,7 @@ class OxygenElementSmall extends PolymerElement {
         this.startInt = this.startDate.getTime();
         this.endInt = this.endDate.getTime();
 
+        this.$.ajaxOxygen.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
         this.$.ajaxOxygen.generateRequest();
     }
 
@@ -271,6 +273,7 @@ class OxygenElementSmall extends PolymerElement {
         this.startInt = this.startDate.getTime();
         this.endInt = this.endDate.getTime();
 
+        this.$.ajaxOxygen.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
         this.$.ajaxOxygen.generateRequest();
     }
 
@@ -325,10 +328,12 @@ class OxygenElementSmall extends PolymerElement {
             "dangerLess": dangerLess
         };
 
+        this.$.ajaxThreshold.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
         this.$.ajaxThreshold.generateRequest();
     }
 
     dataUpdated(e) {
+        this.$.ajaxOxygen.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
         this.$.ajaxOxygen.generateRequest();
     }
 

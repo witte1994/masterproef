@@ -213,7 +213,9 @@ class HeartElement extends PolymerElement {
 
         this.$.day.style.background = "#cac9c9";
 
+        this.$.ajaxHeart.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
         this.$.ajaxHeart.generateRequest();
+        this.$.ajaxHeartSmall.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
         this.$.ajaxHeartSmall.generateRequest();
     }
 
@@ -263,7 +265,9 @@ class HeartElement extends PolymerElement {
         this.startInt = this.startDate.getTime();
         this.endInt = this.endDate.getTime();
 
+        this.$.ajaxHeart.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
         this.$.ajaxHeart.generateRequest();
+        this.$.ajaxHeartSmall.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
         this.$.ajaxHeartSmall.generateRequest();
     }
 
@@ -298,7 +302,9 @@ class HeartElement extends PolymerElement {
         this.startInt = this.startDate.getTime();
         this.endInt = this.endDate.getTime();
 
+        this.$.ajaxHeart.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
         this.$.ajaxHeart.generateRequest();
+        this.$.ajaxHeartSmall.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
         this.$.ajaxHeartSmall.generateRequest();
     }
 
@@ -465,11 +471,14 @@ class HeartElement extends PolymerElement {
             "dangerHigher": dangerHigher
         };
 
+        this.$.ajaxThreshold.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
         this.$.ajaxThreshold.generateRequest();
     }
 
     dataUpdated(e) {
+        this.$.ajaxHeart.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
         this.$.ajaxHeart.generateRequest();
+        this.$.ajaxHeartSmall.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
         this.$.ajaxHeartSmall.generateRequest();
     }
 

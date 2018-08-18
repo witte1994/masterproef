@@ -186,11 +186,6 @@ exports.add = (req, res, next) => {
         });
 };
 
-exports.set_threshold = (req, res, next) => {
-    var userId = req.originalUrl.split('/')[2];
-    this.setThreshold(userId, res);
-};
-
 exports.setThreshold = function (userId, res) {
     const bpThreshold = new BpThreshold({
         _id: mongoose.Types.ObjectId(),

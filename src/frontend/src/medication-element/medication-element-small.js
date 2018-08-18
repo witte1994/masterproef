@@ -154,6 +154,7 @@ class MedicationElementSmall extends PolymerElement {
         
         this.$.day.style.background = "#cac9c9";
 
+        this.$.ajaxMedication.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
         this.$.ajaxMedication.generateRequest();
     }
 
@@ -203,6 +204,7 @@ class MedicationElementSmall extends PolymerElement {
         this.startInt = this.startDate.getTime();
         this.endInt = this.endDate.getTime();
 
+        this.$.ajaxMedication.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
         this.$.ajaxMedication.generateRequest();
     }
 
@@ -237,6 +239,7 @@ class MedicationElementSmall extends PolymerElement {
         this.startInt = this.startDate.getTime();
         this.endInt = this.endDate.getTime();
 
+        this.$.ajaxMedication.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
         this.$.ajaxMedication.generateRequest();
     }
 
@@ -271,10 +274,12 @@ class MedicationElementSmall extends PolymerElement {
             "dangerLess": dangerLess
         };
 
+        this.$.ajaxThreshold.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
         this.$.ajaxThreshold.generateRequest();
     }
 
     dataUpdated(e) {
+        this.$.ajaxMedication.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
         this.$.ajaxMedication.generateRequest();
     }
 

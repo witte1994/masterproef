@@ -57,8 +57,8 @@ class UserElement extends PolymerElement {
         var split = document.URL.split("/");
         var param = split[split.length-1];
         this.userId = param;
+        
         this.$.ajaxUser.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
-
         this.$.ajaxUser.generateRequest();
     }
 
