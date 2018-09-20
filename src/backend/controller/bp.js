@@ -211,6 +211,24 @@ exports.setThreshold = function (userId, res) {
         });
 }
 
+exports.importValues = function (userId, values) {
+    for (var i = 0; i < values.length; i++) {
+        const bp = new BP({
+            _id: mongoose.Types.ObjectId(),
+            user: userId,
+            systolic: values[i].systolic,
+            diastolic: values[i].diastolic,
+            date: values[i].date
+        });
+        bp
+            .save()
+            .then()
+            .catch(err => {
+                console.log(err);
+            });
+    }
+}
+
 exports.update_threshold = (req, res, next) => {
     var userId = req.originalUrl.split('/')[2];
     BpThreshold.update({ user: userId }, { $set: { warningLess: req.body.warningLess, warningHigher: req.body.warningHigher, dangerLess: req.body.dangerLess, dangerHigher: req.body.dangerHigher } })

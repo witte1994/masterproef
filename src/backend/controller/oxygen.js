@@ -177,6 +177,23 @@ exports.setThreshold = function (userId, res) {
         });
 }
 
+exports.importValues = function (userId, values) {
+    for (var i = 0; i < values.length; i++) {
+        const oxygen = new Oxygen({
+            _id: mongoose.Types.ObjectId(),
+            user: userId,
+            value: values[i].value,
+            date: values[i].date
+        });
+        oxygen
+            .save()
+            .then()
+            .catch(err => {
+                console.log(err);
+            });
+    }
+}
+
 exports.update_threshold = (req, res, next) => {
     var userId = req.originalUrl.split('/')[2];
     OxygenThreshold.update({ user: userId }, { $set: { warningLess: req.body.warningLess, dangerLess: req.body.dangerLess } })

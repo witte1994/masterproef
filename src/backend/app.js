@@ -4,8 +4,9 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-const userRoutes = require('./routes/user')
-const clinicianRoutes = require('./routes/clinician')
+const importRoutes = require('./routes/import');
+const userRoutes = require('./routes/user');
+const clinicianRoutes = require('./routes/clinician');
 
 mongoose.connect('mongodb://localhost:27017/dashboard', {
     useNewUrlParser: true
@@ -22,6 +23,7 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use('/import', importRoutes);
 app.use('/user', userRoutes);
 app.use('/clinician', clinicianRoutes);
 

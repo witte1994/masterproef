@@ -37,6 +37,63 @@ exports.create = (req, res, next) => {
         });
 };
 
+exports.importUser = function (userInfo) {
+    var info = userInfo.info;
+
+    const user = new User({
+        _id: new mongoose.Types.ObjectId(),
+        firstName: info.firstName,
+        lastName: info.lastName,
+        birth: info.birth,
+        gender: info.gender,
+        bloodType: info.bloodType,
+        height: info.height,
+        address: info.address,
+        phone: info.phone
+    });
+    user.save()
+        .then(result => {
+            setThresholds(user._id);
+            importRest(user._id, userInfo);
+            console.log(result);
+            return user._id;
+        })
+        .catch(err => {
+            console.log(err);
+            return -1;
+        });
+}
+
+function importRest(userId, info) {
+    var keys = Object.keys(info);
+
+    for (var i = 0; i < keys.length; i++) {
+        switch (keys[i]) {
+            case 'bpVals':
+                BPController.importValues(userId, info.bpVals);
+                break;
+            case 'bsVals':
+                BSController.importValues(userId, info.bsVals);
+                break;
+            case 'heartVals':
+                HeartController.importValues(userId, info.heartVals);
+                break;
+            case 'oxygenVals':
+                OxygenController.importValues(userId, info.oxygenVals);
+                break;
+            case 'weightVals':
+                WeightController.importValues(userId, info.weightVals);
+                break;
+            case 'info':
+                console.log("info");
+                break;
+            default:
+                console.log("unknown");
+                break;
+        }
+    }
+}
+
 function setThresholds(userId) {
     BPController.setThreshold(userId, null);
     BSController.setThreshold(userId, null);

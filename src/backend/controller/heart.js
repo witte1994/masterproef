@@ -180,6 +180,23 @@ exports.setThreshold = function (userId, res) {
         });
 }
 
+exports.importValues = function (userId, values) {
+    for (var i = 0; i < values.length; i++) {
+        const heart = new Heart({
+            _id: mongoose.Types.ObjectId(),
+            user: userId,
+            value: values[i].value,
+            date: values[i].date
+        });
+        heart
+            .save()
+            .then()
+            .catch(err => {
+                console.log(err);
+            });
+    }
+}
+
 exports.update_threshold = (req, res, next) => {
     var userId = req.originalUrl.split('/')[2];
     HeartThreshold.update({ user: userId }, { $set: { warningLess: req.body.warningLess, warningHigher: req.body.warningHigher, dangerLess: req.body.dangerLess, dangerHigher: req.body.dangerHigher } })
