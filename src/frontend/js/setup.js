@@ -6,9 +6,14 @@ document.addEventListener('iron-ajax-response', function(e) {
 
     if (srcElement === "ajaxLogin") {
         window.sessionStorage.accessToken = e.detail.response.token;
+
+        var patientList = document.createElement("patient-list");
+        document.querySelector('#patientDialog').appendChild(patientList);
+        document.querySelector('#patientDialog').open();
+        /*
         var ajaxPatients = document.querySelector('#ajaxPatients');
         ajaxPatients.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
-        ajaxPatients.generateRequest();
+        ajaxPatients.generateRequest();*/
     } else if (srcElement === "ajaxPatients") {
         openPatientsDialog(e.detail.response);
     }

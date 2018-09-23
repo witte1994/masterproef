@@ -51,6 +51,7 @@
 	<script type="module" src="/src/oxygen-element/oxygen-element.js"></script>
 	<script type="module" src="/src/medication-element/medication-element-small.js"></script>
 	<script type="module" src="/src/medication-element/medication-element.js"></script>
+	<script type="module" src="/src/patient-list.js"></script>
 	
 	<custom-style>
 		<style>
@@ -205,13 +206,11 @@
 		<paper-button dialog-confirm onclick="loginDialog.open()">Retry</paper-button>
 	</paper-dialog>
 
-	<paper-dialog id="patientDialog" no-cancel-on-esc-key="true" no-cancel-on-outside-click="true" with-backdrop="true">
-		<h2>Select a patient</h2>
+	<paper-dialog style="width: 700px;" id="patientDialog" no-cancel-on-esc-key="true" no-cancel-on-outside-click="true" with-backdrop="true">
 
-			<paper-listbox style="width:400px;" id="listbox">
-			</paper-listbox>	
-		
 	</paper-dialog>
+
+	
 </body>
 
 </html>
