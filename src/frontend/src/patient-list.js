@@ -3,6 +3,7 @@ import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-ajax/iron-ajax'
 import '@vaadin/vaadin-grid/vaadin-grid';
 import '@vaadin/vaadin-grid/vaadin-grid-sorter';
+import '@polymer/paper-icon-button/paper-icon-button'
 import './shared-styles.js';
 
 /**
@@ -37,7 +38,7 @@ class PatientList extends PolymerElement {
             bubbles="true">
         </iron-ajax>
 
-		<h2 style="margin: 0px 0px 0px 10px;">Select a patient</h2>
+		<h2 style="margin: 0px 0px 20px 10px;">Select a patient</h2>
 
         <vaadin-grid aria-label="Basic Binding Example" items="{{patients}}">
 
@@ -46,23 +47,27 @@ class PatientList extends PolymerElement {
             <template>[[index]]</template>
         </vaadin-grid-column>
 
-        <vaadin-grid-column>
+        <vaadin-grid-column width="160px">
             <template class="header">
                 <vaadin-grid-sorter path="firstName">First name</vaadin-grid-sorter>
             </template>
             <template>[[item.firstName]]</template>
         </vaadin-grid-column>
 
-        <vaadin-grid-column>
+        <vaadin-grid-column width="160px">
             <template class="header">
                 <vaadin-grid-sorter path="lastName">Last name</vaadin-grid-sorter>
             </template>
             <template>[[item.lastName]]</template>
         </vaadin-grid-column>
 
-        <vaadin-grid-column>
+        <vaadin-grid-column width="100px">
             <template class="header">Birth date</template>
             <template>[[item.birth]]</template>
+        </vaadin-grid-column>
+
+        <vaadin-grid-column width="30px">
+            <template><paper-icon-button on-click="patientClick" id="[[item._id]]" icon="arrow-forward"></paper-icon-button></template>
         </vaadin-grid-column>
 
         </vaadin-grid>
@@ -70,11 +75,7 @@ class PatientList extends PolymerElement {
     }
     static get properties() {
         return {
-            patients: {
-                type: Array,
-                notify: true,
-                reflectToAttribute: true
-            }
+            
         };
     }
 
@@ -86,13 +87,18 @@ class PatientList extends PolymerElement {
     }
 
     patientsReceived(event) {
-        console.log(event.detail.response);
         this.patients = event.detail.response;
 
         for (var i = 0; i < this.patients.length; i++) {
             var dateObj = new Date(this.patients[i].birth);
             this.patients[i].birth = this.getDateString(dateObj);
         }
+    }
+
+    patientClick(e) {
+        window.history.pushState("", "", "/" + e.srcElement.id);
+
+        this.dispatchEvent(new CustomEvent('patient-click', { bubbles: true, composed: true }));
     }
 
     getDateString(date) {
