@@ -3,6 +3,7 @@ import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-ajax/iron-ajax'
 import '@vaadin/vaadin-grid/vaadin-grid';
 import '@vaadin/vaadin-grid/vaadin-grid-sorter';
+import '@vaadin/vaadin-grid/vaadin-grid-filter';
 import '@polymer/paper-icon-button/paper-icon-button'
 import './shared-styles.js';
 
@@ -49,14 +50,22 @@ class PatientList extends PolymerElement {
 
         <vaadin-grid-column width="160px">
             <template class="header">
-                <vaadin-grid-sorter path="firstName">First name</vaadin-grid-sorter>
+                <vaadin-grid-sorter path="firstName">
+                    <vaadin-grid-filter aria-label="First Name" path="firstName" value="[[_filterFirstName]]">
+                        <vaadin-text-field style="width:145px;" slot="filter" placeholder="First name" value="{{_filterFirstName}}" focus-target></vaadin-text-field>
+                    </vaadin-grid-filter>
+                </vaadin-grid-sorter>
             </template>
             <template>[[item.firstName]]</template>
         </vaadin-grid-column>
 
         <vaadin-grid-column width="160px">
             <template class="header">
-                <vaadin-grid-sorter path="lastName">Last name</vaadin-grid-sorter>
+                <vaadin-grid-sorter path="lastName">
+                    <vaadin-grid-filter aria-label="Last Name" path="lastName" value="[[_filterLastName]]">
+                        <vaadin-text-field style="width:145px;" slot="filter" placeholder="Last name" value="{{_filterLastName}}" focus-target></vaadin-text-field>
+                    </vaadin-grid-filter>
+                </vaadin-grid-sorter>
             </template>
             <template>[[item.lastName]]</template>
         </vaadin-grid-column>
