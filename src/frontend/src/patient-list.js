@@ -34,7 +34,7 @@ class PatientList extends PolymerElement {
             method="GET"
             handle-as="json"
             content-type="application/json"
-            on-response="patientsReceived"
+            last-response="{{patients}}"
             bubbles="true">
         </iron-ajax>
 
@@ -63,7 +63,7 @@ class PatientList extends PolymerElement {
 
         <vaadin-grid-column width="100px">
             <template class="header">Birth date</template>
-            <template>[[item.birth]]</template>
+            <template>[[item.dateStr]]</template>
         </vaadin-grid-column>
 
         <vaadin-grid-column width="30px">
@@ -86,24 +86,10 @@ class PatientList extends PolymerElement {
         this.$.ajaxPatients.generateRequest();
     }
 
-    patientsReceived(event) {
-        this.patients = event.detail.response;
-
-        for (var i = 0; i < this.patients.length; i++) {
-            var dateObj = new Date(this.patients[i].birth);
-            this.patients[i].birth = this.getDateString(dateObj);
-        }
-    }
-
     patientClick(e) {
         window.history.pushState("", "", "/" + e.srcElement.id);
 
         this.dispatchEvent(new CustomEvent('patient-click', { bubbles: true, composed: true }));
-    }
-
-    getDateString(date) {
-        var str = ("0" + date.getDate()).slice(-2) + "/" + ("0" + (date.getMonth() + 1)).slice(-2) + "/" + date.getFullYear();
-        return str;
     }
 }
 

@@ -105,8 +105,13 @@ function setThresholds(userId) {
 
 exports.get_users = (req, res, next) => {
     User.find()
+        .lean()
         .exec()
         .then(doc => {
+            for (var i = 0; i < doc.length; i++) {
+                var dateObj = new Date(doc[i].birth);
+                Object.assign(doc[i], { dateStr: getDateString(dateObj) });
+            }
             console.log(doc);
             res.status(200).json(doc);
         })
@@ -116,6 +121,11 @@ exports.get_users = (req, res, next) => {
         });
 
 };
+
+function getDateString(date) {
+    var str = ("0" + date.getDate()).slice(-2) + "/" + ("0" + (date.getMonth() + 1)).slice(-2) + "/" + date.getFullYear();
+    return str;
+}
 
 exports.get_user_by_id = (req, res, next) => {
     const id = req.params.userId;
