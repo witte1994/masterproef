@@ -1,0 +1,56 @@
+[
+    {
+        "info": {
+            "firstName": "Jenny",
+            "lastName": "Johnson",
+            "nid": "15898435",
+            "birth": "1992-04-22T07:20:00",
+            "gender": "F",
+            "bloodType": "A+",
+            "height": "166",
+            "address": "Straat 12, 4567 Dorp",
+            "phone": "0858/898989",
+            "smoker": "false"
+        }
+    },
+    {
+        "info": {
+            "firstName": "Ben",
+            "lastName": "Norris",
+            "nid": "2666835",
+            "birth": "1968-07-06T19:55:00",
+            "gender": "M",
+            "bloodType": "O-",
+            "height": "186",
+            "address": "Street 77, 5822 City",
+            "phone": "0222/881789"
+        }
+    },
+    {
+        "info": {
+            "firstName": "Nancy",
+            "lastName": "Scott",
+            "nid": "85642871",
+            "birth": "1976-12-09T14:35:00",
+            "gender": "F",
+            "bloodType": "AB+",
+            "height": "176",
+            "address": "Nicestreet 88, 4567 Town",
+            "phone": "2688/855200",
+            "smoker": "true"
+        }
+    },
+    {
+        "info": {
+            "firstName": "Alex",
+            "lastName": "Morrison",
+            "nid": "6547188",
+            "birth": "2000-01-29T02:44:00",
+            "gender": "M",
+            "bloodType": "B-",
+            "height": "159",
+            "address": "Highway 22, 80889 Capital",
+            "phone": "022/8989-444"
+        }
+    }
+]

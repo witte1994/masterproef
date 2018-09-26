@@ -30,11 +30,13 @@ class UserElement extends PolymerElement {
         <div class="card">
             <h1>[[user.lastName]] [[user.firstName]]</h1>
             <p><b>Date of birth:</b> [[date]]</p>
+            <p><b>NID:</b> [[user.nid]]</p>
             <div class="horizontal">
                 <p><b>Gender:</b> [[user.gender]]</p>
                 <p style="margin-left: 8px;"><b>Blood type:</b> [[user.bloodType]]</p>
             </div>
-            <p><b>Height:</b> [[user.height]]</p>
+            <p><b>Smoker:</b> [[smoker]]</p>
+            <p><b>Height:</b> [[heightStr]]</p>
             <p><b>Address:</b> [[user.address]]</p>
             <p><b>Phone:</b> [[user.phone]]</p>
             
@@ -65,7 +67,19 @@ class UserElement extends PolymerElement {
     handleResponse(event) {
         this.user = event.detail.response;
         var newDate = new Date(this.user.birth);
-        this.date = ("0" + newDate.getDate()).slice(-2) + "/" + ("0" + (newDate.getMonth()+1)).slice(-2) + "/" + newDate.getFullYear(); 
+        this.date = ("0" + newDate.getDate()).slice(-2) + "/" + ("0" + (newDate.getMonth()+1)).slice(-2) + "/" + newDate.getFullYear();
+
+        var heightStr = "";
+        var height = this.user.height;
+        heightStr += parseInt(Math.floor((height/100)), 10) + ",";
+        heightStr += (height % 100) + "m";
+        this.heightStr = heightStr;
+
+        console.log(this.user.smoker);
+        if (this.user.smoker)
+            this.smoker = "Yes";
+        else
+            this.smoker = "No";
     }
 }
 
