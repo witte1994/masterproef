@@ -30,6 +30,8 @@ const userSchema = mongoose.Schema({
     },
     height: {
         type: Number,
+        min: 10,
+        max: 300,
         required: true
     },
     address: {

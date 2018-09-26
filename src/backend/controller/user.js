@@ -14,11 +14,13 @@ exports.create = (req, res, next) => {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         birth: req.body.birth,
+        nid: req.body.nid,
         gender: req.body.gender,
         bloodType: req.body.bloodType,
         height: req.body.height,
         address: req.body.address,
-        phone: req.body.phone
+        phone: req.body.phone,
+        smoker: req.body.smoker
     });
     user.save()
         .then(result => {
@@ -44,12 +46,14 @@ exports.importUser = function (userInfo) {
         _id: new mongoose.Types.ObjectId(),
         firstName: info.firstName,
         lastName: info.lastName,
+        nid: info.nid,
         birth: info.birth,
         gender: info.gender,
         bloodType: info.bloodType,
         height: info.height,
         address: info.address,
-        phone: info.phone
+        phone: info.phone,
+        smoker: info.smoker
     });
     user.save()
         .then(result => {
