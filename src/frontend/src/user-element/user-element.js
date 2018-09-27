@@ -75,7 +75,6 @@ class UserElement extends PolymerElement {
         heightStr += (height % 100) + "m";
         this.heightStr = heightStr;
 
-        console.log(this.user.smoker);
         if (this.user.smoker)
             this.smoker = "Yes";
         else

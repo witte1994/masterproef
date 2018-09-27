@@ -34,6 +34,8 @@ function loadPatientPage() {
     userElement.setAttribute("id", "userElement");
     var refElement = document.querySelector('#smallGrid');
     document.querySelector('#drawer').insertBefore(userElement, refElement);
+
+    //var testElement = document.createElement("test-element");
 }
 
 function clearGrids() {
@@ -101,31 +103,45 @@ function add() {
     }
 
     if (newModule != null) {
-        var parentDiv = document.createElement("div");
-        parentDiv.classList.add("grid-item");
-        if (size === "s") 
-            parentDiv.style.width = "360px";
-        else
-            parentDiv.style.width = "700px";
-
-        var handlerDiv = document.createElement("div");
-        handlerDiv.classList.add("handle");
-
-        parentDiv.appendChild(handlerDiv);
-        parentDiv.appendChild(newModule);
-
-        $grid.packery()
-            .append(parentDiv)
-            .packery('appended', parentDiv)
-            .packery();
-
-        var draggie = new Draggabilly(parentDiv, {
-            handle: '.handle'
-        });
-        $grid.packery('bindDraggabillyEvents', draggie);
-
-        addListeners(parentDiv, newModule);
+        addModuleToGrid(newModule, size, "large");
     }
+}
+
+function addModuleToGrid(newModule, size, gridStr) {
+    var targetGrid;
+
+    if (gridStr === "large")
+        targetGrid = $grid;
+    else
+        targetGrid = $gridSmall;
+
+    var parentDiv = document.createElement("div");
+    parentDiv.classList.add("grid-item");
+    if (size === "s")
+        parentDiv.style.width = "360px";
+    else
+        parentDiv.style.width = "700px";
+
+    var handlerDiv = document.createElement("div");
+    handlerDiv.classList.add("handle");
+
+    parentDiv.appendChild(handlerDiv);
+    parentDiv.appendChild(newModule);
+
+    targetGrid.packery()
+        .append(parentDiv)
+        .packery('appended', parentDiv)
+        .packery();
+
+    var draggie = new Draggabilly(parentDiv, {
+        handle: '.handle'
+    });
+    targetGrid.packery('bindDraggabillyEvents', draggie);
+
+    if (gridStr === "large")
+        addListeners(parentDiv, newModule);
+    else
+        addSmallListeners(parentDiv, newModule);
 }
 
 function addSmall() {
@@ -147,27 +163,7 @@ function addSmall() {
     }
 
     if (newModule != null) {
-        var parentDiv = document.createElement("div");
-        parentDiv.classList.add("grid-item");
-        parentDiv.style.width = "360px";
-
-        var handlerDiv = document.createElement("div");
-        handlerDiv.classList.add("handle");
-
-        parentDiv.appendChild(handlerDiv);
-        parentDiv.appendChild(newModule);
-
-        $gridSmall.packery()
-            .append(parentDiv)
-            .packery('appended', parentDiv)
-            .packery();
-
-        var draggie = new Draggabilly(parentDiv, {
-            handle: '.handle'
-        });
-        $gridSmall.packery('bindDraggabillyEvents', draggie);
-
-        addSmallListeners(parentDiv, newModule);
+        addModuleToGrid(newModule, "s", "small");
     }
 }
 
