@@ -11,24 +11,17 @@ class TestElement extends PolymerElement {
         return html`
         <style include="shared-styles">
             :host {
-                width: 400px;
-                height: 400px;
-            }
-            
-            .row {
+                display: inline-block;
                 width: 100%;
-                text-align: center;
-            }
-
-            paper-button { 
-                background: #e0e0e0;
+                height: 100%;
             }
         </style>
 
         
 
-        <div class="card handle">
-            <h1>test</h1>
+        <div class="card">
+            <h1 style="display: inline;">test</h1>
+            <h1 style="display: inline;">test</h1>
         </div>
     `;
     }

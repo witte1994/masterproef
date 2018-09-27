@@ -1,6 +1,22 @@
 var $grid;
 var $gridSmall;
 
+$(document).ready(function () {
+    var elem = document.querySelector('.draggable');
+
+    $grid = $('#mainGrid').packery({
+        itemSelector: '.grid-item',
+        columnWidth: 20,
+        transitionDuration: 0
+    });
+
+    $gridSmall = $('#smallGrid').packery({
+        itemSelector: '.grid-item',
+        columnWidth: 20,
+        transitionDuration: 0
+    });
+});
+
 document.addEventListener('iron-ajax-response', function(e) {
     var srcElement = e.srcElement.id;
 
@@ -28,6 +44,22 @@ document.addEventListener('patient-click', function (e) {
     loadPatientPage();
 });
 
+function saveLayout() {
+    console.log("save layout");
+
+    var elements = $grid.packery('getItemElements');
+
+    for (var i = 0; i < elements.length; i++) {
+        var pos = getPosition(elements[i]);
+        console.log(pos.x); console.log(pos.y);
+    }
+}
+
+function getPosition(element) {
+    var rect = element.getBoundingClientRect();
+    return { x: rect.left, y: rect.top };
+}
+
 function loadPatientPage() {
     clearGrids();
     var userElement = document.createElement("user-element");
@@ -35,7 +67,12 @@ function loadPatientPage() {
     var refElement = document.querySelector('#smallGrid');
     document.querySelector('#drawer').insertBefore(userElement, refElement);
 
-    //var testElement = document.createElement("test-element");
+    /*
+    var testElement = document.createElement("test-element");
+    addModuleToGrid(testElement, "s","large");
+
+    var testElement2 = document.createElement("test-element");
+    addModuleToGrid(testElement2, "s", "large");*/
 }
 
 function clearGrids() {
@@ -60,22 +97,6 @@ function login() {
     };
     ajaxLogin.generateRequest();
 }
-
-$(document).ready(function() {
-    var elem = document.querySelector('.draggable');
-    
-    $grid = $('#mainGrid').packery({
-        itemSelector: '.grid-item',
-        columnWidth: 20,
-        transitionDuration: 0
-    });
-
-    $gridSmall = $('#smallGrid').packery({
-        itemSelector: '.grid-item',
-        columnWidth: 20,
-        transitionDuration: 0
-    });
-});
 
 function add() {
     var module = document.getElementById("moduleMenu").selectedItem.getAttribute("value");
@@ -117,6 +138,7 @@ function addModuleToGrid(newModule, size, gridStr) {
 
     var parentDiv = document.createElement("div");
     parentDiv.classList.add("grid-item");
+    //parentDiv.classList.add("resizeDiv");
     if (size === "s")
         parentDiv.style.width = "360px";
     else
@@ -168,9 +190,7 @@ function addSmall() {
 }
 
 function addListeners(parent, mod) {
-    mod.addEventListener('delete', function (e) {
-        $grid.packery('remove', parent).packery('shiftLayout');
-    });
+    addRemoveListener(parent, mod, $grid);
 
     mod.addEventListener('resize', function (e) {
         $grid.packery('remove', parent).packery('shiftLayout');
@@ -206,7 +226,11 @@ function addListeners(parent, mod) {
 }
 
 function addSmallListeners(parent, mod) {
+    addRemoveListener(parent, mod, $gridSmall);
+}
+
+function addRemoveListener(parent, mod, grid) {
     mod.addEventListener('delete', function (e) {
-        $gridSmall.packery('remove', parent).packery('shiftLayout');
+        grid.packery('remove', parent).packery('shiftLayout');
     });
 }
