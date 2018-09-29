@@ -130,6 +130,15 @@
 		bubbles="true">
 	</iron-ajax>
 
+	<iron-ajax 
+		id="ajaxGetLayout" 
+		url="http://localhost:3000/user/"
+		method="GET"
+		handle-as="json"
+		content-type="application/json"
+		bubbles="true">
+	</iron-ajax>
+
 	<app-drawer-layout responsive-width="1076px" fullbleed style="--app-drawer-width: 360px;">
 		
 		<app-drawer id="drawer" slot="drawer">
@@ -165,19 +174,19 @@
 		
 		<paper-dropdown-menu id="moduleMenu" label="Module">
 			<paper-listbox slot="dropdown-content">
-				<paper-item value="bp">Blood pressure</paper-item>
-				<paper-item value="bs">Blood sugar</paper-item>
-				<paper-item value="heart">Heart</paper-item>
-				<paper-item value="medication">Medication</paper-item>
-				<paper-item value="oxygen">Oxygen</paper-item>
-				<paper-item value="weight">Weight</paper-item>
+				<paper-item value="bp-element">Blood pressure</paper-item>
+				<paper-item value="bs-element">Blood sugar</paper-item>
+				<paper-item value="heart-element">Heart</paper-item>
+				<paper-item value="medication-element">Medication</paper-item>
+				<paper-item value="oxygen-element">Oxygen</paper-item>
+				<paper-item value="weight-element">Weight</paper-item>
 			</paper-listbox>
 		</paper-dropdown-menu>
 		
 		<paper-dropdown-menu id="sizeMenu" label="Size">
 			<paper-listbox slot="dropdown-content">
-				<paper-item value="s">Small</paper-item>
-				<paper-item value="l">Large</paper-item>
+				<paper-item value="-small">Small</paper-item>
+				<paper-item value="">Large</paper-item>
 			</paper-listbox>
 		</paper-dropdown-menu>
 		
@@ -191,12 +200,12 @@
 	
 		<paper-dropdown-menu id="moduleMenuSmall" label="Module">
 			<paper-listbox slot="dropdown-content">
-				<paper-item value="bp">Blood pressure</paper-item>
-				<paper-item value="bs">Blood sugar</paper-item>
-				<paper-item value="heart">Heart</paper-item>
-				<paper-item value="medication">Medication</paper-item>
-				<paper-item value="oxygen">Oxygen</paper-item>
-				<paper-item value="weight">Weight</paper-item>
+				<paper-item value="bp-element-small">Blood pressure</paper-item>
+				<paper-item value="bs-element-small">Blood sugar</paper-item>
+				<paper-item value="heart-element-small">Heart</paper-item>
+				<paper-item value="medication-element-small">Medication</paper-item>
+				<paper-item value="oxygen-element-small">Oxygen</paper-item>
+				<paper-item value="weight-element-small">Weight</paper-item>
 			</paper-listbox>
 		</paper-dropdown-menu>
 	

@@ -7,7 +7,10 @@ const layoutSchema = mongoose.Schema({
         ref: 'User',
         required: true
     },
-    layout: [{
+    small: [{
+        type: String
+    }],
+    main: [{
         elementName: {
             type: String,
             required: true

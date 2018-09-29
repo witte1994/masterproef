@@ -1,5 +1,7 @@
 var $grid;
-var $gridSmall;
+var $smallGrid;
+
+var onMainGrid = true;
 
 $(document).ready(function () {
     var elem = document.querySelector('.draggable');
@@ -10,7 +12,7 @@ $(document).ready(function () {
         transitionDuration: 0
     });
 
-    $gridSmall = $('#smallGrid').packery({
+    $smallGrid = $('#smallGrid').packery({
         itemSelector: '.grid-item',
         columnWidth: 20,
         transitionDuration: 0
@@ -27,6 +29,8 @@ document.addEventListener('iron-ajax-response', function(e) {
         var dialog = document.querySelector('#patientDialog');
         dialog.appendChild(patientList);
         dialog.toggle();
+    } else if (srcElement === "ajaxGetLayout") {
+        loadLayout(e.detail.response);
     }
 });
 
@@ -42,7 +46,6 @@ document.addEventListener('patient-click', function (e) {
     var dialog = document.querySelector('#patientDialog');
     dialog.toggle();
 
-    
     var split = document.URL.split("/");
     var param = split[split.length-1];
     window.sessionStorage.setItem('userId', param);
@@ -57,6 +60,13 @@ function saveLayout() {
 }
 
 function getElementPositions() {
+    var mainPositions = getMainElements();
+    var smallPositions = getSmallElements();
+
+    return {small: smallPositions, main: mainPositions};
+}
+
+function getMainElements() {
     var mainGrid = document.getElementById("mainGrid");
     var elements = $grid.packery('getItemElements');
 
@@ -78,6 +88,17 @@ function getElementPositions() {
     }
 
     return positions;
+}
+
+function getSmallElements() {
+    var elements = $smallGrid.packery('getItemElements');
+
+    var order = [];
+    for (var i = 0; i < elements.length; i++) {
+        order.push(elements[i].children[1].tagName.toLowerCase());
+    }
+
+    return order;
 }
 
 function savePositions(positions) {
@@ -103,12 +124,18 @@ function loadPatientPage() {
     var refElement = document.querySelector('#smallGrid');
     document.querySelector('#drawer').insertBefore(userElement, refElement);
 
-    /*
-    var testElement = document.createElement("test-element");
-    addModuleToGrid(testElement, "s","large");
+    loadLayoutProcess();
+}
 
-    var testElement2 = document.createElement("test-element");
-    addModuleToGrid(testElement2, "s", "large");*/
+function loadLayoutProcess() {
+    var ajaxGetLayout = document.querySelector('#ajaxGetLayout');
+    ajaxGetLayout.url = "http://localhost:3000/user/" + window.sessionStorage.getItem('userId') + "/layout";
+    ajaxGetLayout.generateRequest();
+}
+
+function loadLayout(elements) {
+    var container = createModuleContainer("heart-element-small");
+    addContainerToGrid(container);
 }
 
 function clearGrids() {
@@ -118,8 +145,8 @@ function clearGrids() {
 
     var elements = $grid.packery('getItemElements');
     $grid.packery('remove', elements);
-    var elementsSmall = $gridSmall.packery('getItemElements');
-    $gridSmall.packery('remove', elementsSmall);
+    var elementsSmall = $smallGrid.packery('getItemElements');
+    $smallGrid.packery('remove', elementsSmall);
 }
 
 function login() {
@@ -135,50 +162,22 @@ function login() {
 }
 
 function add() {
+    onMainGrid = true;
     var module = document.getElementById("moduleMenu").selectedItem.getAttribute("value");
     var size = document.getElementById("sizeMenu").selectedItem.getAttribute("value");
 
-    var newModule = null;
-    if (module === "heart") {
-        if (size === "s") newModule = document.createElement("heart-element-small");
-        else if (size === "l") newModule = document.createElement("heart-element");
-    } else if (module === "bp") {
-        if (size === "s") newModule = document.createElement("bp-element-small");
-        else if (size === "l") newModule = document.createElement("bp-element");
-    } else if (module === "bs") {
-        if (size === "s") newModule = document.createElement("bs-element-small");
-        else if (size === "l") newModule = document.createElement("bs-element");
-    } else if (module === "weight") {
-        if (size === "s") newModule = document.createElement("weight-element-small");
-        else if (size === "l") newModule = document.createElement("weight-element");
-    } else if (module === "oxygen") {
-        if (size === "s") newModule = document.createElement("oxygen-element-small");
-        else if (size === "l") newModule = document.createElement("oxygen-element");
-    } else if (module === "medication") {
-        if (size === "s") newModule = document.createElement("medication-element-small");
-        else if (size === "l") newModule = document.createElement("medication-element");
-    }
+    var moduleName = module + size;
 
-    if (newModule != null) {
-        addModuleToGrid(newModule, size, "large");
-    }
+    var container = createModuleContainer(moduleName);
+    addContainerToGrid(container);
 }
 
-function addModuleToGrid(newModule, size, gridStr) {
-    var targetGrid;
-
-    if (gridStr === "large")
-        targetGrid = $grid;
-    else
-        targetGrid = $gridSmall;
-
+function createModuleContainer(moduleName) {
+    var newModule = document.createElement(moduleName);
     var parentDiv = document.createElement("div");
     parentDiv.classList.add("grid-item");
-    //parentDiv.classList.add("resizeDiv");
-    if (size === "s")
-        parentDiv.style.width = "360px";
-    else
-        parentDiv.style.width = "700px";
+
+    parentDiv.style.width = getModuleSize(moduleName);
 
     var handlerDiv = document.createElement("div");
     handlerDiv.classList.add("handle");
@@ -186,87 +185,72 @@ function addModuleToGrid(newModule, size, gridStr) {
     parentDiv.appendChild(handlerDiv);
     parentDiv.appendChild(newModule);
 
-    targetGrid.packery()
-        .append(parentDiv)
-        .packery('appended', parentDiv)
+    addListeners(parentDiv, newModule);
+
+    return parentDiv;
+}
+
+function addContainerToGrid(container) {
+    var tarGrid;
+
+    if (onMainGrid) tarGrid = $grid;
+    else tarGrid = $smallGrid;
+
+    tarGrid.packery()
+        .append(container)
+        .packery('appended', container)
         .packery();
 
-    var draggie = new Draggabilly(parentDiv, {
+    var draggie = new Draggabilly(container, {
         handle: '.handle'
     });
-    targetGrid.packery('bindDraggabillyEvents', draggie);
+    tarGrid.packery('bindDraggabillyEvents', draggie);
+}
 
-    if (gridStr === "large")
-        addListeners(parentDiv, newModule);
-    else
-        addSmallListeners(parentDiv, newModule);
+function getModuleSize(moduleName) {
+    if (moduleName.split('-').length == 3) {
+        return "360px";
+    } else {
+        return "700px";
+    }
 }
 
 function addSmall() {
-    var module = document.getElementById("moduleMenuSmall").selectedItem.getAttribute("value");
+    onMainGrid = false;
+    var moduleName = document.getElementById("moduleMenuSmall").selectedItem.getAttribute("value");
 
-    var newModule = null;
-    if (module === "heart") {
-        newModule = document.createElement("heart-element-small");
-    } else if (module === "bp") {
-        newModule = document.createElement("bp-element-small");
-    } else if (module === "bs") {
-        newModule = document.createElement("bs-element-small");
-    } else if (module === "weight") {
-        newModule = document.createElement("weight-element-small");
-    } else if (module === "oxygen") {
-        newModule = document.createElement("oxygen-element-small");
-    } else if (module === "medication") {
-        newModule = document.createElement("medication-element-small");
-    }
-
-    if (newModule != null) {
-        addModuleToGrid(newModule, "s", "small");
-    }
+    var container = createModuleContainer(moduleName);
+    addContainerToGrid(container);
 }
 
 function addListeners(parent, mod) {
-    addRemoveListener(parent, mod, $grid);
+    addRemoveListener(parent, mod);
 
-    mod.addEventListener('resize', function (e) {
-        $grid.packery('remove', parent).packery('shiftLayout');
+    if (onMainGrid) {
+        addResizeListener(parent, mod);
+    }
+    
+}
 
-        var resizeTo = e.detail.resizeTo;
-        var newModule = document.createElement(resizeTo);
+function addRemoveListener(parent, mod) {
+    var tarGrid;
 
-        var parentDiv = document.createElement("div");
-        parentDiv.classList.add("grid-item");
-        if (resizeTo.split('-').length == 3)
-            parentDiv.style.width = "360px";
-        else
-            parentDiv.style.width = "700px";
+    if (onMainGrid) tarGrid = $grid;
+    else tarGrid = $smallGrid;
 
-        var handlerDiv = document.createElement("div");
-        handlerDiv.classList.add("handle");
-
-        parentDiv.appendChild(handlerDiv);
-        parentDiv.appendChild(newModule);
-
-        $grid.packery()
-            .append(parentDiv)
-            .packery('appended', parentDiv)
-            .packery();
-
-        var draggie = new Draggabilly(parentDiv, {
-            handle: '.handle'
-        });
-        $grid.packery('bindDraggabillyEvents', draggie);
-
-        addListeners(parentDiv, newModule);
+    mod.addEventListener('delete', function (e) {
+        tarGrid.packery('remove', parent).packery('shiftLayout');
     });
 }
 
-function addSmallListeners(parent, mod) {
-    addRemoveListener(parent, mod, $gridSmall);
-}
+function addResizeListener(parent, mod) {
+    mod.addEventListener('resize', function (e) {
+        $grid.packery('remove', parent).packery('shiftLayout');
 
-function addRemoveListener(parent, mod, grid) {
-    mod.addEventListener('delete', function (e) {
-        grid.packery('remove', parent).packery('shiftLayout');
+        onMainGrid = true;
+        var resizeTo = e.detail.resizeTo;
+        
+        var parentDiv = createModuleContainer(resizeTo);
+        addContainerToGrid(parentDiv);
     });
 }
