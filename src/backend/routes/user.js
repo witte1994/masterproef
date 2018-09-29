@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const checkAuth = require('../models/auth/check-auth');
 
+const layoutRoutes = require('./layout');
+
 const heartRoutes = require('./heart');
 const bpRoutes = require('./bp');
 const bsRoutes = require('./bs');
@@ -10,6 +12,9 @@ const oxygenRoutes = require('./oxygen');
 const medicationRoutes = require('./medication');
 
 const UserController = require('../controller/user');
+
+
+router.use('/:userId/layout', layoutRoutes);
 
 router.use('/:userId/heart', heartRoutes);
 router.use('/:userId/bp', bpRoutes);

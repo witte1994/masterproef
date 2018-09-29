@@ -18,8 +18,6 @@ class TestElement extends PolymerElement {
             }
         </style>
 
-        
-
         <div class="card">
             <h1 style="display: inline;">test</h1>
             <h1 style="display: inline;">test</h1>

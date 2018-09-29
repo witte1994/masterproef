@@ -41,23 +41,59 @@ document.addEventListener('iron-ajax-error', function (e) {
 document.addEventListener('patient-click', function (e) {
     var dialog = document.querySelector('#patientDialog');
     dialog.toggle();
+
+    
+    var split = document.URL.split("/");
+    var param = split[split.length-1];
+    window.sessionStorage.setItem('userId', param);
+
     loadPatientPage();
 });
 
 function saveLayout() {
-    console.log("save layout");
+    var positions = getElementPositions();
 
+    savePositions(positions);
+}
+
+function getElementPositions() {
+    var mainGrid = document.getElementById("mainGrid");
     var elements = $grid.packery('getItemElements');
 
+    var posMain = getPosition(mainGrid);
+    var positions = [];
+    var offset = { x: 0, y: 0 };
     for (var i = 0; i < elements.length; i++) {
         var pos = getPosition(elements[i]);
-        console.log(pos.x); console.log(pos.y);
+
+        offset.x = pos.x - posMain.x;
+        offset.y = pos.y - posMain.y;
+        var savePos = {
+            elementName: elements[i].children[1].tagName.toLowerCase(),
+            x: offset.x,
+            y: offset.y,
+            width: elements[i].offsetWidth
+        };
+        positions.push(savePos);
     }
+
+    return positions;
+}
+
+function savePositions(positions) {
+    var ajaxSaveLayout = document.querySelector('#ajaxSaveLayout');
+
+    ajaxSaveLayout.url = "http://localhost:3000/user/" + window.sessionStorage.getItem('userId') + "/layout";
+
+    ajaxSaveLayout.body = {
+        layout: positions
+    };
+    ajaxSaveLayout.generateRequest();
 }
 
 function getPosition(element) {
     var rect = element.getBoundingClientRect();
-    return { x: rect.left, y: rect.top };
+    return { x: rect.left, y: rect.top, xRight: rect.right, yBottom: rect.bottom };
 }
 
 function loadPatientPage() {

@@ -109,7 +109,6 @@
 		method="POST"
 		handle-as="json"
 		content-type="application/json"
-		on-response="testFunction"
 		bubbles="true">
 	</iron-ajax>
 
@@ -117,6 +116,15 @@
 		id="ajaxPatients"
 		url="http://localhost:3000/user"
 		method="GET"
+		handle-as="json"
+		content-type="application/json"
+		bubbles="true">
+	</iron-ajax>
+
+	<iron-ajax 
+		id="ajaxSaveLayout" 
+		url="http://localhost:3000/user/"
+		method="POST"
 		handle-as="json"
 		content-type="application/json"
 		bubbles="true">
