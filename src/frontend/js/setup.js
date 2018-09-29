@@ -134,8 +134,26 @@ function loadLayoutProcess() {
 }
 
 function loadLayout(elements) {
-    var container = createModuleContainer("heart-element-small");
-    addContainerToGrid(container);
+    loadSmallLayout(elements.small);
+    loadMainLayout(elements.main);
+}
+
+function loadSmallLayout(elements) {
+    onMainGrid = false;
+    for (var i = 0; i < elements.length; i++) {
+        var container = createModuleContainer(elements[i]);
+        addContainerToGrid(container);
+    }
+}
+
+function loadMainLayout(elements) {
+    onMainGrid = true;
+
+    for (var i = 0; i < elements.length; i++) {
+        var container = createModuleContainer(elements[i].elementName);
+        addContainerToGrid(container);
+        $grid.packery('fit', container, elements[i].x, elements[i].y);
+    }
 }
 
 function clearGrids() {
@@ -191,10 +209,7 @@ function createModuleContainer(moduleName) {
 }
 
 function addContainerToGrid(container) {
-    var tarGrid;
-
-    if (onMainGrid) tarGrid = $grid;
-    else tarGrid = $smallGrid;
+    var tarGrid = getTargetGrid();
 
     tarGrid.packery()
         .append(container)
@@ -228,15 +243,11 @@ function addListeners(parent, mod) {
 
     if (onMainGrid) {
         addResizeListener(parent, mod);
-    }
-    
+    }   
 }
 
 function addRemoveListener(parent, mod) {
-    var tarGrid;
-
-    if (onMainGrid) tarGrid = $grid;
-    else tarGrid = $smallGrid;
+    var tarGrid = getTargetGrid();
 
     mod.addEventListener('delete', function (e) {
         tarGrid.packery('remove', parent).packery('shiftLayout');
@@ -253,4 +264,11 @@ function addResizeListener(parent, mod) {
         var parentDiv = createModuleContainer(resizeTo);
         addContainerToGrid(parentDiv);
     });
+}
+
+function getTargetGrid() {
+    if (onMainGrid)
+        return $grid;
+    else
+        return $smallGrid;
 }
