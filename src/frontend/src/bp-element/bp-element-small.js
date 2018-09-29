@@ -12,6 +12,7 @@ import '../shared-styles.js';
 /**
  * @customElement
  * @polymer
+ * @extends HTMLElement
  */
 class BpElementSmall extends PolymerElement {
     static get template() {

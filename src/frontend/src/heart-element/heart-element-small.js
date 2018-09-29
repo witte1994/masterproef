@@ -12,6 +12,7 @@ import '../shared-styles.js';
 /**
  * @customElement
  * @polymer
+ * @extends HTMLElement
  */
 class HeartElementSmall extends PolymerElement {
     static get template() {

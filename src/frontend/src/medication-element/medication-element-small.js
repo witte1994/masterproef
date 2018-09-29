@@ -12,6 +12,8 @@ import '../shared-styles.js';
 /**
  * @customElement
  * @polymer
+ * @extends HTMLElement
+ * @extends HTMLElement
  */
 class MedicationElementSmall extends PolymerElement {
     static get template() {

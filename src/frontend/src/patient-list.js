@@ -10,6 +10,7 @@ import './shared-styles.js';
 /**
  * @customElement
  * @polymer
+ * @extends HTMLElement
  */
 class PatientList extends PolymerElement {
     static get template() {
