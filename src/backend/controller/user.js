@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const User = require('../models/user');
 
+const LayoutController = require('../controller/layout');
+
 const BPController = require('../controller/bp');
 const BSController = require('../controller/bs');
 const HeartController = require('../controller/heart');
@@ -69,6 +71,8 @@ exports.importUser = function (userInfo) {
 }
 
 function importRest(userId, info) {
+    LayoutController.default(userId);
+
     var keys = Object.keys(info);
 
     for (var i = 0; i < keys.length; i++) {

@@ -52,3 +52,18 @@ exports.get = (req, res, next) => {
             res.status(500).json({ error: err });
         });
 };
+
+exports.default = function (userId) {
+    const layout = new Layout({
+        _id: mongoose.Types.ObjectId(),
+        user: userId,
+        small: [],
+        main: []
+    });
+    layout
+        .save()
+        .then()
+        .catch(err => {
+            console.log(err);
+        });
+}
