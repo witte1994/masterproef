@@ -16,6 +16,7 @@
     "@polymer/polymer": "^3.0.0",
     "@vaadin/vaadin-grid": "^5.2.0-alpha2",
     "c3": "^0.6.6",
+    "css-element-queries": "^1.0.2",
     "draggabilly": "^2.2.0",
     "jquery": "^3.3.1",
     "packery": "^2.1.2",

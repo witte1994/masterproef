@@ -20,6 +20,8 @@
 	<script src="/node_modules/packery/dist/packery.pkgd.min.js"></script>
 	<script src="/node_modules/draggabilly/dist/draggabilly.pkgd.js"></script>
 	
+	<script src="/node_modules/css-element-queries/src/ResizeSensor.js"></script>
+	
 	<script src="/js/setup.js"></script>
 	
 	<script type="module" src="/node_modules/@polymer/app-layout/app-header-layout/app-header-layout.js"></script>
@@ -96,6 +98,7 @@
 			.resizeDiv {
 				resize: horizontal;
     			overflow: auto;
+				min-width: 200px;
 			}
 		</style>
 	</custom-style>

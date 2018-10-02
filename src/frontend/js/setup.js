@@ -134,8 +134,16 @@ function loadLayoutProcess() {
 }
 
 function loadLayout(elements) {
+    /*
     loadSmallLayout(elements.small);
-    loadMainLayout(elements.main);
+    loadMainLayout(elements.main);*/
+
+    onMainGrid = true;
+    var container = createModuleContainer("test-element");
+    addContainerToGrid(container);
+    var container2 = createModuleContainer("test-element");
+    addContainerToGrid(container2);
+    //$grid.packery('fit', container, elements[i].x, elements[i].y);
 }
 
 function loadSmallLayout(elements) {
@@ -194,6 +202,7 @@ function createModuleContainer(moduleName) {
     var newModule = document.createElement(moduleName);
     var parentDiv = document.createElement("div");
     parentDiv.classList.add("grid-item");
+    parentDiv.classList.add("resizeDiv");
 
     parentDiv.style.width = getModuleSize(moduleName);
 
@@ -223,6 +232,10 @@ function addContainerToGrid(container) {
 }
 
 function getModuleSize(moduleName) {
+    if (moduleName === "test-element") {
+        return "400px";
+    }
+
     if (moduleName.split('-').length == 3) {
         return "360px";
     } else {
@@ -239,6 +252,11 @@ function addSmall() {
 }
 
 function addListeners(parent, mod) {
+    new ResizeSensor(parent, function () {
+        console.log('Changed to ' + parent.clientWidth);
+        $grid.packery('shiftLayout');
+    });
+
     addRemoveListener(parent, mod);
 
     if (onMainGrid) {

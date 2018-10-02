@@ -13,6 +13,7 @@ class UserElement extends PolymerElement {
         <style include="shared-styles">
             :host {
                 width: 256px;
+                font-family: 'Roboto', Helvetica, sans-serif;
             }
 
             .horizontal p {
