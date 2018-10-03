@@ -16,11 +16,19 @@ class TestElement extends PolymerElement {
                 width: 100%;
                 height: 100%;
             }
+
+            .container {
+                width: 100%;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+            }
         </style>
 
         <div class="card">
-            <h1 style="display: inline;">test</h1>
-            <h1 style="display: inline;">test</h1>
+            <div class="container">
+                <div>a</div>
+                <div>b</div>
+            </div>
         </div>
     `;
     }

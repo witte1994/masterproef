@@ -119,12 +119,34 @@ function getPosition(element) {
 
 function loadPatientPage() {
     clearGrids();
+
+    addUserElement();
+
+    loadLayoutProcess();
+}
+
+function addUserElement() {
     var userElement = document.createElement("user-element");
     userElement.setAttribute("id", "userElement");
     var refElement = document.querySelector('#smallGrid');
     document.querySelector('#drawer').insertBefore(userElement, refElement);
 
-    loadLayoutProcess();
+    userElement.addEventListener('resizeUser', function (e) {
+        userElement.parentNode.removeChild(userElement);
+        addSmallUserElement();
+    });
+}
+
+function addSmallUserElement() {
+    var userElement = document.createElement("user-element-small");
+    userElement.setAttribute("id", "userElementSmall");
+    var refElement = document.querySelector('#smallGrid');
+    document.querySelector('#drawer').insertBefore(userElement, refElement);
+
+    userElement.addEventListener('resizeUserSmall', function (e) {
+        userElement.parentNode.removeChild(userElement);
+        addUserElement();
+    });
 }
 
 function loadLayoutProcess() {
@@ -168,6 +190,10 @@ function clearGrids() {
     var userElement = document.querySelector('#userElement');
     if (userElement != null)
         userElement.parentNode.removeChild(userElement);
+
+    var userElementSmall = document.querySelector('#userElementSmall');
+    if (userElementSmall != null)
+        userElementSmall.parentNode.removeChild(userElementSmall);
 
     var elements = $grid.packery('getItemElements');
     $grid.packery('remove', elements);
@@ -253,7 +279,6 @@ function addSmall() {
 
 function addListeners(parent, mod) {
     new ResizeSensor(parent, function () {
-        console.log('Changed to ' + parent.clientWidth);
         $grid.packery('shiftLayout');
     });
 

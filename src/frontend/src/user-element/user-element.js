@@ -1,5 +1,6 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-ajax/iron-ajax'
+import '@polymer/paper-icon-button/paper-icon-button'
 import '../shared-styles.js';
 
 /**
@@ -16,8 +17,35 @@ class UserElement extends PolymerElement {
                 font-family: 'Roboto', Helvetica, sans-serif;
             }
 
-            .horizontal p {
-                display: inline;
+            p {
+                margin: 4px 0px 4px 0px;
+            }
+
+            h1 {
+                margin-left: 0px;
+                margin-bottom: 12px;
+            }
+
+            .containerVer {
+                display: grid;
+                grid-template-rows: repeat(7, 1fr);
+                grid-gap: 10px;
+            }
+
+            .containerHorGender {
+                display: grid;
+                grid-template-columns: 4fr 6fr;
+            }
+            .containerHor {
+                display: grid;
+                grid-template-columns: 1fr 2fr;
+            }
+
+            paper-icon-button {
+                width: 20px;
+                height: 20px;
+                padding: 0px;
+                margin: auto;
             }
         </style>
 
@@ -29,19 +57,40 @@ class UserElement extends PolymerElement {
             on-response="handleResponse"
         ></iron-ajax>
 
-        <div class="card">
+        <div class="card" style="padding-bottom: 0px;">
             <h1>[[user.lastName]] [[user.firstName]]</h1>
-            <p><b>Date of birth:</b> [[date]]</p>
-            <p><b>NID:</b> [[user.nid]]</p>
-            <div class="horizontal">
-                <p><b>Gender:</b> [[user.gender]]</p>
-                <p style="margin-left: 8px;"><b>Blood type:</b> [[user.bloodType]]</p>
+
+            <div>
+                <div class="containerHor">
+                    <p><b>Birth:</b></p>
+                    <p>[[date]]</p>
+                </div>
+                <div class="containerHor">
+                    <p><b>NID:</b></p>
+                    <p>[[user.nid]]</p>
+                </div>
+                <div class="containerHorGender">
+                    <p><b>Gender:</b> [[user.gender]]</p>
+                    <p style="margin-left: 8px;"><b>Blood type:</b> [[user.bloodType]]</p>
+                </div>
+                <div class="containerHor">
+                    <p><b>Smoker:</b></p>
+                    <p>[[smoker]]</p>
+                </div>
+                <div class="containerHor">
+                    <p><b>Height:</b></p>
+                    <p>[[heightStr]]</p>
+                </div>
+                <div class="containerHor">
+                    <p><b>Address:</b></p>
+                    <p>[[user.address]]</p>
+                </div>
+                <div class="containerHor">
+                    <p><b>Phone:</b></p>
+                    <p>[[user.phone]]</p>
+                </div>
+                <div style="text-align:center;"><paper-icon-button icon="expand-less" on-tap="resize"></paper-icon-button></div>
             </div>
-            <p><b>Smoker:</b> [[smoker]]</p>
-            <p><b>Height:</b> [[heightStr]]</p>
-            <p><b>Address:</b> [[user.address]]</p>
-            <p><b>Phone:</b> [[user.phone]]</p>
-            
         </div>
     `;
     }
@@ -81,6 +130,10 @@ class UserElement extends PolymerElement {
             this.smoker = "Yes";
         else
             this.smoker = "No";
+    }
+
+    resize(e) {
+        this.dispatchEvent(new CustomEvent('resizeUser', { composed: true }));
     }
 }
 
