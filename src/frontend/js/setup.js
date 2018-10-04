@@ -161,9 +161,9 @@ function loadLayout(elements) {
     loadMainLayout(elements.main);*/
 
     onMainGrid = true;
-    var container = createModuleContainer("test-element");
+    var container = createModuleContainer("medication-element");
     addContainerToGrid(container);
-    var container2 = createModuleContainer("test-element");
+    var container2 = createModuleContainer("medication-element");
     addContainerToGrid(container2);
     //$grid.packery('fit', container, elements[i].x, elements[i].y);
 }
@@ -258,7 +258,7 @@ function addContainerToGrid(container) {
 }
 
 function getModuleSize(moduleName) {
-    if (moduleName === "test-element") {
+    if (moduleName === "medication-element") {
         return "400px";
     }
 

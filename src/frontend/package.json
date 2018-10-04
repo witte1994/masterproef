@@ -14,6 +14,7 @@
     "@polymer/paper-listbox": "^3.0.0-pre.21",
     "@polymer/paper-menu-button": "^3.0.0-pre.21",
     "@polymer/polymer": "^3.0.0",
+    "@vaadin/vaadin-date-picker": "^3.3.0-beta1",
     "@vaadin/vaadin-grid": "^5.2.0-alpha2",
     "c3": "^0.6.6",
     "css-element-queries": "^1.0.2",
