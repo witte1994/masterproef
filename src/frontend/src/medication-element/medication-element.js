@@ -61,7 +61,7 @@ class MedicationElement extends PolymerElement {
             }
         </style>
 
-        <div class="card">
+        <div id="cardId" class="card">
             <div class="containerHeader">
                 <h1>Medication</h1>
 
@@ -86,17 +86,82 @@ class MedicationElement extends PolymerElement {
                     </iron-input>
                 </vaadin-date-picker-light>
             </div>
+
+            <div>
+                <vaadin-grid aria-label="Basic Binding Example" items="{{patients}}">
+
+                    <vaadin-grid-column width="60px" flex-grow="0">
+                        <template class="header">#</template>
+                        <template>[[index]]</template>
+                    </vaadin-grid-column>
+
+                    <vaadin-grid-column id="firstCol" width="160px" hidden="[[hiddenCol]]">
+                        <template class="header">
+                            <vaadin-grid-sorter path="firstName">
+                                <vaadin-grid-filter aria-label="First Name" path="firstName" value="[[_filterFirstName]]">
+                                    <vaadin-text-field style="width:145px;" slot="filter" placeholder="First name" value="{{_filterFirstName}}" focus-target></vaadin-text-field>
+                                </vaadin-grid-filter>
+                            </vaadin-grid-sorter>
+                        </template>
+                        <template>[[item.firstName]]</template>
+                    </vaadin-grid-column>
+
+                    <vaadin-grid-column width="160px">
+                        <template class="header">
+                            <vaadin-grid-sorter path="lastName">
+                                <vaadin-grid-filter aria-label="Last Name" path="lastName" value="[[_filterLastName]]">
+                                    <vaadin-text-field style="width:145px;" slot="filter" placeholder="Last name" value="{{_filterLastName}}" focus-target></vaadin-text-field>
+                                </vaadin-grid-filter>
+                            </vaadin-grid-sorter>
+                        </template>
+                        <template>[[item.lastName]]</template>
+                    </vaadin-grid-column>
+
+                    <vaadin-grid-column width="100px">
+                        <template class="header">Birth date</template>
+                        <template>[[item.dateStr]]</template>
+                    </vaadin-grid-column>
+
+                    <vaadin-grid-column width="30px">
+                        <template><paper-icon-button on-click="patientClick" id="[[item._id]]" icon="arrow-forward"></paper-icon-button></template>
+                    </vaadin-grid-column>
+
+                </vaadin-grid>
+            </div>
         </div>
     `;
     }
     static get properties() {
         return {
-            
+            showCol
         };
     }
 
     ready() {
         super.ready();
+
+        this.patients = [
+            {
+                _id: "lala",
+                firstName: "test",
+                lastName: "achtern",
+                dateStr: "date"
+            }
+        ];
+
+        var cardId = this.$.cardId;
+        var firstCol = this.$.firstCol;
+        console.log(firstCol);
+        new ResizeSensor(this.$.cardId, function () {
+            var width = cardId.getBoundingClientRect().width;
+            console.log(width);
+            if (width > 800)
+                firstCol.setAttribute("hidden", "true");
+            else
+                firstCol.setAttribute("hidden", "false");
+
+            console.log(firstCol);
+        });
 
         this.setUserId();
     }
