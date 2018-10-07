@@ -88,14 +88,14 @@ class MedicationElement extends PolymerElement {
             </div>
 
             <div>
-                <vaadin-grid style="height: 300px;" aria-label="Basic Binding Example" items="{{patients}}">
+                <vaadin-grid on-active-item-changed="showDetails" id="vaadinGrid" style="height: 300px;" aria-label="Basic Binding Example" items="{{patients}}">
 
                     <template class="row-details">
-                        <div class="details">
+
                         <p>
                             Hi! My name is
                         </p>
-                        </div>
+
                     </template>
 
                     <vaadin-grid-column width="36px" flex-grow="0">
@@ -141,10 +141,6 @@ class MedicationElement extends PolymerElement {
                         <template>[[item.end]]</template>
                     </vaadin-grid-column>
 
-                    <vaadin-grid-column width="36px" flex-grow="0">
-                        <template><paper-icon-button class="detailsButton" on-click="showDetails" id="[[item._id]]" icon="expand-more"></paper-icon-button></template>
-                    </vaadin-grid-column>
-
                 </vaadin-grid>
             </div>
         </div>
@@ -162,6 +158,13 @@ class MedicationElement extends PolymerElement {
             {
                 _id: "lala",
                 medName: "Aliceran",
+                dosage: "0/1/1/0",
+                start: "02/01/19",
+                end: "21/01/19"
+            },
+            {
+                _id: "lala2",
+                medName: "Belraren",
                 dosage: "0/1/1/0",
                 start: "02/01/19",
                 end: "21/01/19"
@@ -186,12 +189,12 @@ class MedicationElement extends PolymerElement {
         this.userId = param;
     }
 
-    addMedication(e) {
-        console.log("add med");
+    showDetails(e) {
+        this.$.vaadinGrid.detailsOpenedItems = [e.detail.value];
     }
 
-    showDetails(e) {
-        console.log("show details");
+    addMedication(e) {
+        console.log("add med");
     }
 
     removeModule(e) {

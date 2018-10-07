@@ -257,7 +257,7 @@ function addContainerToGrid(container) {
 
 function getModuleSize(moduleName) {
     if (moduleName === "medication-element") {
-        return "572px";
+        return "542px";
     }
 
     if (moduleName.split('-').length == 3) {
