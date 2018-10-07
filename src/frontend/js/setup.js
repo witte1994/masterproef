@@ -163,8 +163,6 @@ function loadLayout(elements) {
     onMainGrid = true;
     var container = createModuleContainer("medication-element");
     addContainerToGrid(container);
-    var container2 = createModuleContainer("medication-element");
-    addContainerToGrid(container2);
     //$grid.packery('fit', container, elements[i].x, elements[i].y);
 }
 
@@ -230,7 +228,7 @@ function createModuleContainer(moduleName) {
     parentDiv.classList.add("grid-item");
     parentDiv.classList.add("resizeDiv");
 
-    parentDiv.style.width = getModuleSize(moduleName);
+    parentDiv.style.minWidth = getModuleSize(moduleName);
 
     var handlerDiv = document.createElement("div");
     handlerDiv.classList.add("handle");
@@ -259,7 +257,7 @@ function addContainerToGrid(container) {
 
 function getModuleSize(moduleName) {
     if (moduleName === "medication-element") {
-        return "400px";
+        return "572px";
     }
 
     if (moduleName.split('-').length == 3) {

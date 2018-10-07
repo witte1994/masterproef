@@ -30,6 +30,7 @@ class MedicationElement extends PolymerElement {
                 display: grid;
                 grid-template-columns: auto 56px;
                 align-items: center;
+                margin-bottom: 8px;
             }
 
             .buttonsHeader {
@@ -59,6 +60,16 @@ class MedicationElement extends PolymerElement {
             .dash {
                 font-size: 22px;
             }
+
+            .detailsButton {
+                padding: 0px;
+                width: 20px;
+                height: 20px;
+            }
+
+            vaadin-grid-cell-content {
+                padding: 4px 8px 4px 8px;
+            }
         </style>
 
         <div id="cardId" class="card">
@@ -71,59 +82,54 @@ class MedicationElement extends PolymerElement {
                 </div>
             </div>
 
-            <div class="containerDate">
-                <vaadin-date-picker-light on-value-changed="dateSelected" style="justify-self: end;" class="my-input1">
-                    <iron-input>
-                        <input placeholder="Start" size="8">
-                    </iron-input>
-                </vaadin-date-picker-light>
-
-                <div class="dash">-</div>
-
-                <vaadin-date-picker-light on-value-changed="dateSelected" style="justify-self: start;" class="my-input1">
-                    <iron-input>
-                        <input placeholder="End" size="8">
-                    </iron-input>
-                </vaadin-date-picker-light>
-            </div>
-
             <div>
-                <vaadin-grid aria-label="Basic Binding Example" items="{{patients}}">
+                <vaadin-grid style="height: 300px;" aria-label="Basic Binding Example" items="{{patients}}">
 
-                    <vaadin-grid-column width="60px" flex-grow="0">
-                        <template class="header">#</template>
-                        <template>[[index]]</template>
-                    </vaadin-grid-column>
-
-                    <vaadin-grid-column id="firstCol" width="160px" hidden="[[hiddenCol]]">
-                        <template class="header">
-                            <vaadin-grid-sorter path="firstName">
-                                <vaadin-grid-filter aria-label="First Name" path="firstName" value="[[_filterFirstName]]">
-                                    <vaadin-text-field style="width:145px;" slot="filter" placeholder="First name" value="{{_filterFirstName}}" focus-target></vaadin-text-field>
-                                </vaadin-grid-filter>
-                            </vaadin-grid-sorter>
-                        </template>
-                        <template>[[item.firstName]]</template>
+                    <vaadin-grid-column width="36px" flex-grow="0">
+                        <template class="header"><iron-icon style="width: 20px; height: 20px;" icon="flag"></iron-icon></template>
+                        <template>0</template>
                     </vaadin-grid-column>
 
                     <vaadin-grid-column width="160px">
                         <template class="header">
-                            <vaadin-grid-sorter path="lastName">
-                                <vaadin-grid-filter aria-label="Last Name" path="lastName" value="[[_filterLastName]]">
-                                    <vaadin-text-field style="width:145px;" slot="filter" placeholder="Last name" value="{{_filterLastName}}" focus-target></vaadin-text-field>
+                            <vaadin-grid-sorter path="medName">
+                                <vaadin-grid-filter aria-label="Medication" path="medName" value="[[_filterMedName]]">
+                                    <vaadin-text-field style="width:145px;" slot="filter" placeholder="Medication" value="{{_filterMedName}}" focus-target></vaadin-text-field>
                                 </vaadin-grid-filter>
                             </vaadin-grid-sorter>
                         </template>
-                        <template>[[item.lastName]]</template>
+                        <template>[[item.medName]]</template>
                     </vaadin-grid-column>
 
-                    <vaadin-grid-column width="100px">
-                        <template class="header">Birth date</template>
-                        <template>[[item.dateStr]]</template>
+                    <vaadin-grid-column width="72px" flex-grow="0">
+                        <template class="header">Dosage</template>
+                        <template>[[item.dosage]]</template>
                     </vaadin-grid-column>
 
-                    <vaadin-grid-column width="30px">
-                        <template><paper-icon-button on-click="patientClick" id="[[item._id]]" icon="arrow-forward"></paper-icon-button></template>
+                    <vaadin-grid-column width="109px" flex-grow="0">
+                        <template class="header">
+                            <vaadin-date-picker-light on-value-changed="dateSelected" style="justify-self: end;" class="my-input1">
+                                <iron-input>
+                                    <input placeholder="Start" size="8">
+                                </iron-input>
+                            </vaadin-date-picker-light>
+                        </template>
+                        <template>[[item.start]]</template>
+                    </vaadin-grid-column>
+
+                    <vaadin-grid-column width="109px" flex-grow="0">
+                        <template class="header">
+                            <vaadin-date-picker-light on-value-changed="dateSelected" style="justify-self: start;" class="my-input1">
+                                <iron-input>
+                                    <input placeholder="End" size="8">
+                                </iron-input>
+                            </vaadin-date-picker-light>
+                        </template>
+                        <template>[[item.end]]</template>
+                    </vaadin-grid-column>
+
+                    <vaadin-grid-column width="36px" flex-grow="0">
+                        <template><paper-icon-button class="detailsButton" on-click="showDetails" id="[[item._id]]" icon="expand-more"></paper-icon-button></template>
                     </vaadin-grid-column>
 
                 </vaadin-grid>
@@ -133,7 +139,6 @@ class MedicationElement extends PolymerElement {
     }
     static get properties() {
         return {
-            showCol
         };
     }
 
@@ -143,24 +148,16 @@ class MedicationElement extends PolymerElement {
         this.patients = [
             {
                 _id: "lala",
-                firstName: "test",
-                lastName: "achtern",
-                dateStr: "date"
+                medName: "Aliceran",
+                dosage: "0/1/1/0",
+                start: "02/01/19",
+                end: "21/01/19"
             }
         ];
 
         var cardId = this.$.cardId;
-        var firstCol = this.$.firstCol;
-        console.log(firstCol);
         new ResizeSensor(this.$.cardId, function () {
             var width = cardId.getBoundingClientRect().width;
-            console.log(width);
-            if (width > 800)
-                firstCol.setAttribute("hidden", "true");
-            else
-                firstCol.setAttribute("hidden", "false");
-
-            console.log(firstCol);
         });
 
         this.setUserId();
@@ -178,6 +175,10 @@ class MedicationElement extends PolymerElement {
 
     addMedication(e) {
         console.log("add med");
+    }
+
+    showDetails(e) {
+        console.log("show details");
     }
 
     removeModule(e) {
