@@ -67,6 +67,11 @@ class MedicationElement extends PolymerElement {
                 height: 20px;
             }
 
+            .details {
+                display: flex;
+                font-size: 20px;
+            }
+
             vaadin-grid-cell-content {
                 padding: 4px 8px 4px 8px;
             }
@@ -84,6 +89,14 @@ class MedicationElement extends PolymerElement {
 
             <div>
                 <vaadin-grid style="height: 300px;" aria-label="Basic Binding Example" items="{{patients}}">
+
+                    <template class="row-details">
+                        <div class="details">
+                        <p>
+                            Hi! My name is
+                        </p>
+                        </div>
+                    </template>
 
                     <vaadin-grid-column width="36px" flex-grow="0">
                         <template class="header"><iron-icon style="width: 20px; height: 20px;" icon="flag"></iron-icon></template>
