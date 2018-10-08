@@ -75,6 +75,13 @@ class MedicationElement extends PolymerElement {
             vaadin-grid-cell-content {
                 padding: 4px 8px 4px 8px;
             }
+
+            .detailsGrid {
+                display: grid;
+                grid-template-rows: auto auto;
+                grid-template-columns: 100px auto;
+            }
+
         </style>
 
         <div id="cardId" class="card">
@@ -91,11 +98,12 @@ class MedicationElement extends PolymerElement {
                 <vaadin-grid on-active-item-changed="showDetails" id="vaadinGrid" style="height: 300px;" aria-label="Basic Binding Example" items="{{patients}}">
 
                     <template class="row-details">
-
-                        <p>
-                            Hi! My name is
-                        </p>
-
+                        <div class="detailsGrid">
+                            <div><small>Description:</small></div>
+                            <div><small>[[item.details]] [[item.details]]</small></div>
+                            <div><small>Side effects:</small></div>
+                            <div><small>[[item.details]]</small></div>
+                        </div>
                     </template>
 
                     <vaadin-grid-column width="36px" flex-grow="0">
@@ -158,6 +166,7 @@ class MedicationElement extends PolymerElement {
             {
                 _id: "lala",
                 medName: "Aliceran",
+                details: "Dit is een medicijn dat helpt tegen de hoofdpijn.",
                 dosage: "0/1/1/0",
                 start: "02/01/19",
                 end: "21/01/19"
@@ -165,6 +174,7 @@ class MedicationElement extends PolymerElement {
             {
                 _id: "lala2",
                 medName: "Belraren",
+                details: "Dit geneesmiddel helpt met maagklachten.",
                 dosage: "0/1/1/0",
                 start: "02/01/19",
                 end: "21/01/19"
