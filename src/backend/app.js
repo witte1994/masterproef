@@ -7,6 +7,8 @@ const mongoose = require('mongoose');
 const importRoutes = require('./routes/import');
 const userRoutes = require('./routes/user');
 const clinicianRoutes = require('./routes/clinician');
+const medicationRoutes = require('./routes/medication');
+
 
 mongoose.connect('mongodb://localhost:27017/dashboard', {
     useNewUrlParser: true
@@ -26,6 +28,7 @@ app.use((req, res, next) => {
 app.use('/import', importRoutes);
 app.use('/user', userRoutes);
 app.use('/clinician', clinicianRoutes);
+app.use('/medication', medicationRoutes);
 
 app.use((req, res, next) => {
     const error = new Error('Not found');
