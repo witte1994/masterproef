@@ -97,7 +97,8 @@ exports.update = (req, res, next) => {
 };
 
 exports.delete = (req, res, next) => {
-    Prescription.deleteMany({ _id: req.body.id }, function(err) {
+    console.log(req.params.id);
+    Prescription.deleteMany({ _id: req.params.id }, function(err) {
         if (err) {
             console.log(err);
             res.status(500).json({
@@ -105,7 +106,7 @@ exports.delete = (req, res, next) => {
             });
         } else {
             console.log("DELETE ok");
-            res.status(201).json({
+            res.status(200).json({
                 message: "DELETE ok"
             });
         }

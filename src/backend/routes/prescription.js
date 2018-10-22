@@ -9,6 +9,6 @@ router.get('/:start&:end', checkAuth, PrescriptionController.get_all_by_date);
 
 router.post('/create', PrescriptionController.create);
 router.post('/update', PrescriptionController.update);
-router.post('/delete', PrescriptionController.delete);
+router.delete('/delete/:id', PrescriptionController.delete);
 
 module.exports = router;
