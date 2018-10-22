@@ -11,6 +11,7 @@ const weightRoutes = require('./weight');
 const oxygenRoutes = require('./oxygen');
 const prescriptionRoutes = require('./prescription');
 const allergyRoutes = require('./allergy');
+const vaccinationRoutes = require('./vaccination');
 const medicationRoutes = require('./medication');
 
 const UserController = require('../controller/user');
@@ -25,6 +26,7 @@ router.use('/:userId/weight', weightRoutes);
 router.use('/:userId/oxygen', oxygenRoutes);
 router.use('/:userId/prescription', prescriptionRoutes);
 router.use('/:userId/allergy', allergyRoutes);
+router.use('/:userId/vaccination', vaccinationRoutes);
 router.use('/:userId/medication', medicationRoutes);
 
 router.post('/', UserController.create);
