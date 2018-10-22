@@ -75,3 +75,27 @@ exports.delete = (req, res, next) => {
         }
     });
 };
+
+exports.create_entry = (req, res, next) => {
+    var userId = req.originalUrl.split('/')[2];
+
+    var entry = {
+        _id: mongoose.Types.ObjectId(),
+        description: req.body.description,
+        date: req.body.date
+    };
+
+    // todo
+};
+
+exports.update_entry = (req, res, next) => {
+    var userId = req.originalUrl.split('/')[2];
+
+    // todo
+};
+
+exports.delete_entry = (req, res, next) => {
+    var userId = req.originalUrl.split('/')[2];
+
+    // todo
+};
