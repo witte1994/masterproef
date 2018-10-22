@@ -3,11 +3,40 @@ const mongoose = require('mongoose');
 const Prescription = require('../models/prescription');
 
 exports.get_all_by_id = (req, res, next) => {
-    
+    var userId = req.originalUrl.split('/')[2];
+
+    Prescription.find({ user: userId })
+        .exec()
+        .then(doc => {
+            console.log(doc);
+            res.status(200).json(doc);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ error: err });
+        });
 };
 
 exports.get_all_by_date = (req, res, next) => {
-    
+    var userId = req.originalUrl.split('/')[2];
+
+    var start = new Date();
+    start.setTime(req.params.start);
+    var end = new Date();
+    end.setTime(req.params.end);
+
+    Prescription.find({ 
+        $and: 
+            [
+                { user: { $eq: userId } },
+                { $or: 
+                    [
+                        { $and: [ { startDate: { $lt: end} }, { endDate: { $gte: end}} ] },
+                        { $and: [] },
+                        { $and: [] }
+                    ]}
+            ]
+        })
 };
 
 exports.create = (req, res, next) => {
