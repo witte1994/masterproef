@@ -7,11 +7,12 @@ const mongoose = require('mongoose');
 const importRoutes = require('./routes/import');
 const userRoutes = require('./routes/user');
 const clinicianRoutes = require('./routes/clinician');
+const prescriptionRoutes = require('./routes/prescription');
 const medicationRoutes = require('./routes/medication');
-
 
 mongoose.connect('mongodb://localhost:27017/dashboard', {
     useCreateIndex: true,
+    useFindAndModify: false,
     useNewUrlParser: true
 });
 

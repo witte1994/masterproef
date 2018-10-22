@@ -31,12 +31,21 @@ exports.get_all_by_date = (req, res, next) => {
                 { user: { $eq: userId } },
                 { $or: 
                     [
-                        { $and: [ { startDate: { $lt: end} }, { endDate: { $gte: end}} ] },
-                        { $and: [] },
-                        { $and: [] }
+                        { $and: [ { startDate: { $lt: end } }, { endDate: { $gte: end } } ] },
+                        { $and: [ { startDate: { $lte: start } }, { endDate: { $gt: start } } ] },
+                        { $and: [ { startDate: { $gte: start } }, { endDate: { $lt: end } } ] }
                     ]}
             ]
         })
+        .exec()
+        .then(doc => {
+            console.log(doc);
+            res.status(200).json(doc);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ error: err });
+        });
 };
 
 exports.create = (req, res, next) => {
@@ -44,7 +53,7 @@ exports.create = (req, res, next) => {
     const prescription = new Prescription({
         _id: mongoose.Types.ObjectId(),
         user: userId,
-        medication: req.body.medicationId,
+        medication: req.body.medication,
         dosage: {
             morning: req.body.dosage.morning,
             noon: req.body.dosage.noon,
@@ -69,7 +78,22 @@ exports.create = (req, res, next) => {
 };
 
 exports.update = (req, res, next) => {
-    
+    Prescription.findOneAndUpdate({ _id: req.body.id },
+            {
+                dosage: req.body.dosage,
+                startDate: req.body.startDate,
+                endDate: req.body.endDate
+            },
+            { new: true })
+        .exec()
+        .then(doc => {
+            console.log(doc);
+            res.status(200).json(doc);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ error: err });
+        });
 };
 
 exports.delete = (req, res, next) => {
@@ -80,8 +104,10 @@ exports.delete = (req, res, next) => {
                 error: err
             });
         } else {
-            console.log(result);
-            res.status(201).json(result);
+            console.log("DELETE ok");
+            res.status(201).json({
+                message: "DELETE ok"
+            });
         }
     });
 };

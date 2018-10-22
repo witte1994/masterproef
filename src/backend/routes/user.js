@@ -9,6 +9,7 @@ const bpRoutes = require('./bp');
 const bsRoutes = require('./bs');
 const weightRoutes = require('./weight');
 const oxygenRoutes = require('./oxygen');
+const prescriptionRoutes = require('./prescription');
 const medicationRoutes = require('./medication');
 
 const UserController = require('../controller/user');
@@ -21,6 +22,7 @@ router.use('/:userId/bp', bpRoutes);
 router.use('/:userId/bs', bsRoutes);
 router.use('/:userId/weight', weightRoutes);
 router.use('/:userId/oxygen', oxygenRoutes);
+router.use('/:userId/prescription', prescriptionRoutes);
 router.use('/:userId/medication', medicationRoutes);
 
 router.post('/', UserController.create);
