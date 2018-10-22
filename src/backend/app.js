@@ -11,6 +11,7 @@ const medicationRoutes = require('./routes/medication');
 
 
 mongoose.connect('mongodb://localhost:27017/dashboard', {
+    useCreateIndex: true,
     useNewUrlParser: true
 });
 
