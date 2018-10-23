@@ -82,9 +82,17 @@ class MedicationElement extends PolymerElement {
                 grid-template-columns: 100px auto;
             }
 
+            .resizers {
+                width: 20px;
+                height: 20px;
+                padding: 0px;
+                margin: auto;
+                display: inline-block;
+            }
+
         </style>
 
-        <div id="cardId" class="card">
+        <div id="cardId" class="card" style="padding-bottom: 0px;">
             <div class="containerHeader">
                 <h1>Medication</h1>
 
@@ -95,7 +103,7 @@ class MedicationElement extends PolymerElement {
             </div>
 
             <div>
-                <vaadin-grid on-active-item-changed="showDetails" id="vaadinGrid" style="height: 300px;" aria-label="Basic Binding Example" items="{{patients}}">
+                <vaadin-grid on-active-item-changed="showDetails" id="vaadinGrid" style="height: {{height}}px;" aria-label="Basic Binding Example" items="{{patients}}">
 
                     <template class="row-details">
                         <div class="detailsGrid">
@@ -150,17 +158,26 @@ class MedicationElement extends PolymerElement {
                     </vaadin-grid-column>
 
                 </vaadin-grid>
+                <div style="text-align: center;">
+                    <paper-icon-button class="resizers" icon="expand-less" on-tap="resizeSmaller"></paper-icon-button>
+                    <paper-icon-button class="resizers" icon="expand-more" on-tap="resizeLarger"></paper-icon-button>
+                </div>
+                
             </div>
         </div>
     `;
     }
     static get properties() {
         return {
+            height: {
+                type: Number
+            } 
         };
     }
 
     ready() {
         super.ready();
+        this.height = 200;
 
         this.patients = [
             {
@@ -197,6 +214,7 @@ class MedicationElement extends PolymerElement {
         var split = document.URL.split("/");
         var param = split[split.length - 1];
         this.userId = param;
+        this.test = true;
     }
 
     showDetails(e) {
@@ -205,6 +223,15 @@ class MedicationElement extends PolymerElement {
 
     addMedication(e) {
         console.log("add med");
+    }
+
+    resizeSmaller(e) {
+        if (this.height > 200)
+            this.height -= 50;
+    }
+
+    resizeLarger(e) {
+        this.height += 50;
     }
 
     removeModule(e) {

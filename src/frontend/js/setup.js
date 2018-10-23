@@ -263,7 +263,7 @@ function getModuleSize(moduleName) {
     if (moduleName.split('-').length == 3) {
         return "360px";
     } else {
-        return "700px";
+        return "400px";
     }
 }
 
