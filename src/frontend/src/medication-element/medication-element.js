@@ -1,11 +1,14 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-ajax/iron-ajax'
 import '@polymer/paper-icon-button/paper-icon-button'
+import '@polymer/paper-dialog/paper-dialog'
+import '@polymer/paper-input/paper-input'
 import '@vaadin/vaadin-grid/vaadin-grid';
 import '@vaadin/vaadin-grid/vaadin-grid-sorter';
 import '@vaadin/vaadin-grid/vaadin-grid-filter';
 import '@vaadin/vaadin-date-picker/vaadin-date-picker';
 import '@vaadin/vaadin-date-picker/vaadin-date-picker-light';
+
 import '../shared-styles.js';
 
 /**
@@ -90,6 +93,14 @@ class MedicationElement extends PolymerElement {
                 display: inline-block;
             }
 
+            paper-input {
+                margin-top: 0px;
+                height: 50px;
+            }
+
+            p {
+                margin: 8px 0px 0px 0px;
+            }
         </style>
 
         <div id="cardId" class="card" style="padding-bottom: 0px;">
@@ -156,13 +167,25 @@ class MedicationElement extends PolymerElement {
                         </template>
                         <template>[[item.end]]</template>
                     </vaadin-grid-column>
-
                 </vaadin-grid>
+                
                 <div style="text-align: center;">
                     <paper-icon-button class="resizers" icon="expand-less" on-tap="resizeSmaller"></paper-icon-button>
                     <paper-icon-button class="resizers" icon="expand-more" on-tap="resizeLarger"></paper-icon-button>
                 </div>
                 
+                <paper-dialog id="prescriptionDialog">
+                    <h2>Set the prescription details</h2>
+
+                    <p>Dosage:</p>
+                    <paper-input id="morning" type="number" label="Morning"></paper-input>
+                    <paper-input id="noon" type="number" label="Noon"></paper-input>
+                    <paper-input id="evening" type="number" label="Evening"></paper-input>
+                    <paper-input id="Bed" type="number" label="Bed"></paper-input>
+
+                    <paper-button dialog-dismiss autofocus>Decline</paper-button>
+                    <paper-button dialog-confirm >Accept</paper-button>
+                </paper-dialog>
             </div>
         </div>
     `;
@@ -171,7 +194,10 @@ class MedicationElement extends PolymerElement {
         return {
             height: {
                 type: Number
-            } 
+            },
+            meds: {
+                type: Array
+            }
         };
     }
 
@@ -223,6 +249,7 @@ class MedicationElement extends PolymerElement {
 
     addMedication(e) {
         console.log("add med");
+        this.$.prescriptionDialog.open();
     }
 
     resizeSmaller(e) {
