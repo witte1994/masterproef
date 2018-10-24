@@ -3,6 +3,7 @@ import '@polymer/iron-ajax/iron-ajax'
 import '@polymer/paper-icon-button/paper-icon-button'
 import '@polymer/paper-dialog/paper-dialog'
 import '@polymer/paper-input/paper-input'
+import '@polymer/paper-dropdown-menu/paper-dropdown-menu'
 import '@vaadin/vaadin-grid/vaadin-grid';
 import '@vaadin/vaadin-grid/vaadin-grid-sorter';
 import '@vaadin/vaadin-grid/vaadin-grid-filter';
@@ -21,7 +22,7 @@ class MedicationElement extends PolymerElement {
         return html`
         <style include="shared-styles">
             :host {
-                width: 400px;
+                width: 440px;
             }
 
             h1 {
@@ -167,6 +168,11 @@ class MedicationElement extends PolymerElement {
                         </template>
                         <template>[[item.end]]</template>
                     </vaadin-grid-column>
+
+                    <vaadin-grid-column width="40px" flex-grow="0">
+                        <template><paper-icon-button style="margin: 0px; padding:0px; width: 22px; height: 22px;"icon="create" on-tap="addMedication"></paper-icon-button></template>
+                        
+                    </vaadin-grid-column>
                 </vaadin-grid>
                 
                 <div style="text-align: center;">
@@ -175,14 +181,36 @@ class MedicationElement extends PolymerElement {
                 </div>
                 
                 <paper-dialog id="prescriptionDialog">
-                    <h2>Set the prescription details</h2>
+                    <h2>Create prescription</h2>
 
-                    <p>Dosage:</p>
-                    <paper-input id="morning" type="number" label="Morning"></paper-input>
-                    <paper-input id="noon" type="number" label="Noon"></paper-input>
-                    <paper-input id="evening" type="number" label="Evening"></paper-input>
-                    <paper-input id="Bed" type="number" label="Bed"></paper-input>
+                    <paper-dropdown-menu label="Medicin">
+                        <paper-listbox slot="dropdown-content" selected="1">
+                            <paper-item>Omeprazol</paper-item>
+                            <paper-item>Metoprolol</paper-item>
+                            <paper-item>Acetylsalicylzuur</paper-item>
+                            <paper-item>Simvastatine</paper-item>
+                            <paper-item>Metformine</paper-item>
+                            <paper-item>Furosemide</paper-item>
+                        </paper-listbox>
+                    </paper-dropdown-menu>
 
+                    <div style="margin: 0px;">
+                        <paper-input style="padding: 0px; width: 60px; display: inline-block;" id="morning" type="number" label="Morning"></paper-input>
+                        <paper-input style="padding: 0px; width: 60px; display: inline-block;" id="noon" type="number" label="Noon"></paper-input>
+                    </div >
+                    <div style="margin: 0px;">
+                        <paper-input style="padding: 0px; width: 60px; display: inline-block;" id="evening" type="number" label="Evening"></paper-input>
+                        <paper-input style="padding: 0px; width: 60px; display: inline-block;" id="Bed" type="number" label="Bed"></paper-input>
+                    </div>
+                    <div style="margin: 0px;">
+                        <vaadin-date-picker style="padding: 0px;" label="Start date" style="width: 160px;">
+                        </vaadin-date-picker>
+                    </div>
+                    <div style="margin: 0px;">
+                        <vaadin-date-picker style="padding: 0px;" label="End date" style="width: 160px;">
+                        </vaadin-date-picker>
+                    </div>
+                    
                     <paper-button dialog-dismiss autofocus>Decline</paper-button>
                     <paper-button dialog-confirm >Accept</paper-button>
                 </paper-dialog>
@@ -203,7 +231,7 @@ class MedicationElement extends PolymerElement {
 
     ready() {
         super.ready();
-        this.height = 200;
+        this.height = 210;
 
         this.patients = [
             {
@@ -248,7 +276,6 @@ class MedicationElement extends PolymerElement {
     }
 
     addMedication(e) {
-        console.log("add med");
         this.$.prescriptionDialog.open();
     }
 
