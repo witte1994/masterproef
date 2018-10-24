@@ -167,6 +167,8 @@ function loadLayout(elements) {
     onMainGrid = false;
     var container = createModuleContainer("medication-element-small");
     addContainerToGrid(container);
+    var container = createModuleContainer("medication-element-small");
+    addContainerToGrid(container);
     //$grid.packery('fit', container, elements[i].x, elements[i].y);
 }
 

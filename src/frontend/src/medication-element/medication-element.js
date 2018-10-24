@@ -115,7 +115,7 @@ class MedicationElement extends PolymerElement {
             </div>
 
             <div>
-                <vaadin-grid on-active-item-changed="showDetails" id="vaadinGrid" style="height: {{height}}px;" aria-label="Basic Binding Example" items="{{patients}}">
+                <vaadin-grid on-active-item-changed="showDetails" id="vaadinGrid" style="height: {{height}}px;" items="{{prescriptions}}">
 
                     <template class="row-details">
                         <div class="detailsGrid">
@@ -233,7 +233,7 @@ class MedicationElement extends PolymerElement {
         super.ready();
         this.height = 210;
 
-        this.patients = [
+        this.prescriptions = [
             {
                 _id: "lala",
                 medName: "Aliceran",
