@@ -43,20 +43,37 @@ exports.get_all_by_date = (req, res, next) => {
     var end = new Date();
     end.setTime(req.params.end);
 
-    Prescription.find({ 
-        $and: 
+    Prescription.aggregate([
+        { $match: { 
+            $and: 
             [
-                { user: { $eq: userId } },
+                { user: mongoose.Types.ObjectId(userId) },
                 { $or: 
                     [
-                        { $and: [ { startDate: { $lt: end } }, { endDate: { $gte: end } } ] },
-                        { $and: [ { startDate: { $lte: start } }, { endDate: { $gt: start } } ] },
-                        { $and: [ { startDate: { $gte: start } }, { endDate: { $lt: end } } ] }
+                        { $and: [ { startDate: { $lte: end } }, { endDate: { $gt: end } } ] },
+                        { $and: [ { startDate: { $lt: start } }, { endDate: { $gte: start } } ] },
+                        { $and: [ { startDate: { $gte: start } }, { endDate: { $lte: end } } ] }
                     ]}
             ]
-        })
+         } },
+        {
+          $lookup:{
+            from: "medications",
+            localField: "medication",
+            foreignField: "_id",
+            as: "medication"
+          }
+        },
+        { $unwind:"$medication"}
+        ])
         .exec()
         .then(doc => {
+            for (var i = 0; i < doc.length; i++) {
+                var startDateObj = new Date(doc[i].startDate);
+                Object.assign(doc[i], { startStr: getDateString(startDateObj) });
+                var endDateObj = new Date(doc[i].endDate);
+                Object.assign(doc[i], { endStr: getDateString(endDateObj) });
+            }
             console.log(doc);
             res.status(200).json(doc);
         })

@@ -118,7 +118,14 @@ class MedicationElement extends PolymerElement {
             url="http://localhost:3000/user/[[userId]]/prescription"
             method="GET"
             handle-as="json"
-            on-response="receivedPrescriptions"
+            last-response="{{prescriptions}}"
+        ></iron-ajax>
+
+        <iron-ajax 
+            id="ajaxPrescriptionsByDate"
+            url="http://localhost:3000/user/[[userId]]/prescription/[[startInt]]\&[[endInt]]"
+            method="GET"
+            handle-as="json"
             last-response="{{prescriptions}}"
         ></iron-ajax>
 
@@ -131,12 +138,29 @@ class MedicationElement extends PolymerElement {
             on-response="medCreated"
         ></iron-ajax>
 
+        <iron-ajax
+            id="ajaxEditPrescription"
+            url="http://localhost:3000/user/[[userId]]/prescription/update"
+            method="POST"
+            handle-as="json"
+            content-type="application/json"
+            on-response="medUpdated"
+        ></iron-ajax>
+
+        <iron-ajax
+            id="ajaxDeletePrescription"
+            url="http://localhost:3000/user/[[userId]]/prescription/delete/[[deleteId]]"
+            method="DELETE"
+            handle-as="json"
+            on-response="medDeleted"
+        ></iron-ajax>
+
         <div id="cardId" class="card" style="padding-bottom: 0px;">
             <div class="containerHeader">
                 <h1>Medication</h1>
 
                 <div>
-                    <paper-icon-button class="buttonsHeader" icon="add" on-tap="addMedication"></paper-icon-button>
+                    <paper-icon-button class="buttonsHeader" icon="add" on-tap="openPrescriptionDialog"></paper-icon-button>
                     <paper-icon-button class="buttonsHeader" icon="close" on-tap="removeModule"></paper-icon-button>
                 </div>
             </div>
@@ -176,9 +200,9 @@ class MedicationElement extends PolymerElement {
 
                     <vaadin-grid-column width="109px" flex-grow="0">
                         <template class="header">
-                            <vaadin-date-picker-light on-value-changed="dateSelected" style="justify-self: end;" class="my-input1">
-                                <iron-input>
-                                    <input placeholder="Start" size="8">
+                            <vaadin-date-picker-light id="startFilter" on-value-changed="dateSelected" style="justify-self: end;" class="my-input1">
+                                <iron-input id="startInput">
+                                    <input id="startInputInner" placeholder="Start" size="8">
                                 </iron-input>
                             </vaadin-date-picker-light>
                         </template>
@@ -187,7 +211,7 @@ class MedicationElement extends PolymerElement {
 
                     <vaadin-grid-column width="109px" flex-grow="0">
                         <template class="header">
-                            <vaadin-date-picker-light on-value-changed="dateSelected" style="justify-self: start;" class="my-input1">
+                            <vaadin-date-picker-light id="endFilter" on-value-changed="dateSelected" style="justify-self: start;" class="my-input1">
                                 <iron-input>
                                     <input placeholder="End" size="8">
                                 </iron-input>
@@ -197,8 +221,7 @@ class MedicationElement extends PolymerElement {
                     </vaadin-grid-column>
 
                     <vaadin-grid-column width="40px" flex-grow="0">
-                        <template><paper-icon-button style="margin: 0px; padding:0px; width: 22px; height: 22px;"icon="create" on-tap="addMedication"></paper-icon-button></template>
-                        
+                        <template><paper-icon-button style="margin: 0px; padding:0px; width: 22px; height: 22px;"icon="create" on-tap="openEditPrescriptionDialog" data-args$="[[index]]"></paper-icon-button></template>
                     </vaadin-grid-column>
                 </vaadin-grid>
                 
@@ -240,6 +263,31 @@ class MedicationElement extends PolymerElement {
                     <paper-button dialog-dismiss autofocus>Decline</paper-button>
                     <paper-button dialog-confirm on-tap="addPrescription">Accept</paper-button>
                 </paper-dialog>
+
+                <paper-dialog id="editPrescriptionDialog">
+                    <h2>Edit prescription</h2>
+
+                    <div style="margin: 0px;">
+                        <paper-input style="padding: 0px; width: 60px; display: inline-block;" id="morningEdit" type="number" label="Morning"></paper-input>
+                        <paper-input style="padding: 0px; width: 60px; display: inline-block;" id="noonEdit" type="number" label="Noon"></paper-input>
+                    </div >
+                    <div style="margin: 0px;">
+                        <paper-input style="padding: 0px; width: 60px; display: inline-block;" id="eveningEdit" type="number" label="Evening"></paper-input>
+                        <paper-input style="padding: 0px; width: 60px; display: inline-block;" id="bedEdit" type="number" label="Bed"></paper-input>
+                    </div>
+                    <div style="margin: 0px;">
+                        <vaadin-date-picker id="startDateEdit" style="padding: 0px;" label="Start date" style="width: 160px;">
+                        </vaadin-date-picker>
+                    </div>
+                    <div style="margin: 0px;">
+                        <vaadin-date-picker id="endDateEdit" style="padding: 0px;" label="End date" style="width: 160px;">
+                        </vaadin-date-picker>
+                    </div>
+                    
+                    <paper-button dialog-dismiss autofocus>Cancel</paper-button>
+                    <paper-button dialog-confirm on-tap="editPrescription">Edit</paper-button>
+                    <paper-button dialog-dismiss on-tap="deletePrescription">Delete</paper-button>
+                </paper-dialog>
             </div>
         </div>
     `;
@@ -251,6 +299,21 @@ class MedicationElement extends PolymerElement {
             },
             meds: {
                 type: Array
+            },
+            selectedStartDate: {
+                type: Object
+            },
+            selectedEndDate: {
+                type: Object
+            },
+            startInt: {
+                type: Number
+            },
+            endInt: {
+                type: Number
+            },
+            curObj: {
+                type: Object
             }
         };
     }
@@ -258,6 +321,9 @@ class MedicationElement extends PolymerElement {
     ready() {
         super.ready();
         this.height = 210;
+
+        this.selectedStartDate = null;
+        this.selectedEndDate = null;
 
         var cardId = this.$.cardId;
         new ResizeSensor(this.$.cardId, function () {
@@ -271,7 +337,26 @@ class MedicationElement extends PolymerElement {
     }
 
     dateSelected(e) {
-        console.log("date selected");
+        if (e.detail.value !== "") {
+            if (e.target.id === "startFilter") {
+                this.selectedStartDate = new Date(e.detail.value);
+            } else if (e.target.id === "endFilter") {
+                this.selectedEndDate = new Date(e.detail.value);
+            }
+        }
+        
+        if (this.selectedStartDate !== null && this.selectedEndDate !== null) {
+            this.checkDates();
+        } 
+    }
+
+    checkDates() {
+        if (this.selectedStartDate < this.selectedEndDate) {
+            this.startInt = this.selectedStartDate.getTime();
+            this.endInt = this.selectedEndDate.getTime();
+            
+            this.$.ajaxPrescriptionsByDate.generateRequest();
+        }
     }
 
     setUserId() {
@@ -285,8 +370,26 @@ class MedicationElement extends PolymerElement {
         this.$.vaadinGrid.detailsOpenedItems = [e.detail.value];
     }
 
-    addMedication(e) {
+    openPrescriptionDialog(e) {
         this.$.prescriptionDialog.open();
+    }
+
+    openEditPrescriptionDialog(e) {
+        this.curObj = this.prescriptions[e.target.dataset.args];
+        var curObj = this.curObj;
+
+        this.$.morningEdit.value = curObj.dosage.morning;
+        this.$.noonEdit.value = curObj.dosage.noon;
+        this.$.eveningEdit.value = curObj.dosage.evening;
+        this.$.bedEdit.value = curObj.dosage.bed;
+
+        var startDate = new Date(curObj.startDate);
+        var endDate = new Date(curObj.endDate);
+
+        this.$.startDateEdit.value = startDate.getFullYear() + "-" + (startDate.getMonth()+1) + "-" + startDate.getDate();
+        this.$.endDateEdit.value = endDate.getFullYear() + "-" + (endDate.getMonth()+1) + "-" + endDate.getDate();
+
+        this.$.editPrescriptionDialog.open();
     }
 
     addPrescription(e) {
@@ -311,8 +414,43 @@ class MedicationElement extends PolymerElement {
         this.$.ajaxCreatePrescription.generateRequest();
     }
 
+    editPrescription(e) {
+        var startDate = new Date(this.$.startDateEdit.value);
+        var endDate = new Date(this.$.endDateEdit.value);
+
+        var obj = {
+            "id": this.curObj._id,
+            "dosage": {
+                "morning": this.$.morningEdit.value,
+                "noon": this.$.noonEdit.value,
+                "evening": this.$.eveningEdit.value,
+                "bed": this.$.bedEdit.value
+            },
+            "startDate": startDate.toISOString(),
+            "endDate": endDate.toISOString()
+        };
+
+        this.$.ajaxEditPrescription.body = obj;
+        this.$.ajaxEditPrescription.generateRequest();
+    }
+
+    deletePrescription(e) {
+        this.deleteId = this.curObj._id;
+        this.$.ajaxDeletePrescription.generateRequest();
+    }
+
     medCreated(e) {
         console.log(e.detail.response);
+        this.$.ajaxPrescriptions.generateRequest();
+    }
+
+    medUpdated(e) {
+        console.log(e.detail.response);
+        this.$.ajaxPrescriptions.generateRequest();
+    }
+
+    medDeleted(e) {
+        this.$.ajaxPrescriptions.generateRequest();
     }
 
     resizeSmaller(e) {
@@ -330,10 +468,6 @@ class MedicationElement extends PolymerElement {
 
     receivedMedication(e) {
         this.meds = e.detail.response;
-    }
-
-    receivedPrescriptions(e) {
-        console.log(e.detail.response);
     }
 }
 
