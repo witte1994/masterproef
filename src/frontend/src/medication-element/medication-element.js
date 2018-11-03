@@ -186,7 +186,7 @@ class MedicationElement extends PolymerElement {
                         <template class="header">
                             <vaadin-grid-sorter path="medName">
                                 <vaadin-grid-filter aria-label="Medication" path="medName" value="[[_filterMedName]]">
-                                    <vaadin-text-field style="width:145px;" slot="filter" placeholder="Medication" value="{{_filterMedName}}" focus-target></vaadin-text-field>
+                                    <vaadin-text-field style="width:145px;" slot="filter" placeholder="Medicine" value="{{_filterMedName}}" focus-target></vaadin-text-field>
                                 </vaadin-grid-filter>
                             </vaadin-grid-sorter>
                         </template>
@@ -363,7 +363,6 @@ class MedicationElement extends PolymerElement {
         var split = document.URL.split("/");
         var param = split[split.length - 1];
         this.userId = param;
-        this.test = true;
     }
 
     showDetails(e) {
