@@ -5,9 +5,26 @@ const Prescription = require('../models/prescription');
 exports.get_all_by_id = (req, res, next) => {
     var userId = req.originalUrl.split('/')[2];
 
-    Prescription.find({ user: userId })
+    Prescription.aggregate([
+        { $match: { user: mongoose.Types.ObjectId(userId) } },
+        {
+          $lookup:{
+            from: "medications",
+            localField: "medication",
+            foreignField: "_id",
+            as: "medication"
+          }
+        },
+        { $unwind:"$medication"}
+        ])
         .exec()
         .then(doc => {
+            for (var i = 0; i < doc.length; i++) {
+                var startDateObj = new Date(doc[i].startDate);
+                Object.assign(doc[i], { startStr: getDateString(startDateObj) });
+                var endDateObj = new Date(doc[i].endDate);
+                Object.assign(doc[i], { endStr: getDateString(endDateObj) });
+            }
             console.log(doc);
             res.status(200).json(doc);
         })
@@ -16,6 +33,7 @@ exports.get_all_by_id = (req, res, next) => {
             res.status(500).json({ error: err });
         });
 };
+
 
 exports.get_all_by_date = (req, res, next) => {
     var userId = req.originalUrl.split('/')[2];
@@ -47,6 +65,11 @@ exports.get_all_by_date = (req, res, next) => {
             res.status(500).json({ error: err });
         });
 };
+
+function getDateString(date) {
+    var str = ("0" + date.getDate()).slice(-2) + "/" + ("0" + (date.getMonth() + 1)).slice(-2) + "/" + date.getFullYear();
+    return str;
+}
 
 exports.create = (req, res, next) => {
     var userId = req.originalUrl.split('/')[2];

@@ -104,6 +104,33 @@ class MedicationElement extends PolymerElement {
             }
         </style>
 
+        <iron-ajax 
+            id="ajaxMeds"
+            url="http://localhost:3000/medication"
+            method="GET"
+            handle-as="json"
+            on-response="receivedMedication"
+            last-response="{{data}}"
+        ></iron-ajax>
+
+        <iron-ajax 
+            id="ajaxPrescriptions"
+            url="http://localhost:3000/user/[[userId]]/prescription"
+            method="GET"
+            handle-as="json"
+            on-response="receivedPrescriptions"
+            last-response="{{prescriptions}}"
+        ></iron-ajax>
+
+        <iron-ajax
+            id="ajaxCreatePrescription"
+            url="http://localhost:3000/user/[[userId]]/prescription/create"
+            method="POST"
+            handle-as="json"
+            content-type="application/json"
+            on-response="medCreated"
+        ></iron-ajax>
+
         <div id="cardId" class="card" style="padding-bottom: 0px;">
             <div class="containerHeader">
                 <h1>Medication</h1>
@@ -120,9 +147,9 @@ class MedicationElement extends PolymerElement {
                     <template class="row-details">
                         <div class="detailsGrid">
                             <div><small>Description:</small></div>
-                            <div><small>[[item.details]] [[item.details]]</small></div>
+                            <div><small>[[item.medication.description]]</small></div>
                             <div><small>Side effects:</small></div>
-                            <div><small>[[item.details]]</small></div>
+                            <div><small>[[item.medication.sideEffects]]</small></div>
                         </div>
                     </template>
 
@@ -139,12 +166,12 @@ class MedicationElement extends PolymerElement {
                                 </vaadin-grid-filter>
                             </vaadin-grid-sorter>
                         </template>
-                        <template>[[item.medName]]</template>
+                        <template>[[item.medication.name]]</template>
                     </vaadin-grid-column>
 
                     <vaadin-grid-column width="72px" flex-grow="0">
                         <template class="header">Dosage</template>
-                        <template>[[item.dosage]]</template>
+                        <template>[[item.dosage.morning]]/[[item.dosage.noon]]/[[item.dosage.evening]]/[[item.dosage.bed]]</template>
                     </vaadin-grid-column>
 
                     <vaadin-grid-column width="109px" flex-grow="0">
@@ -155,7 +182,7 @@ class MedicationElement extends PolymerElement {
                                 </iron-input>
                             </vaadin-date-picker-light>
                         </template>
-                        <template>[[item.start]]</template>
+                        <template>[[item.startStr]]</template>
                     </vaadin-grid-column>
 
                     <vaadin-grid-column width="109px" flex-grow="0">
@@ -166,7 +193,7 @@ class MedicationElement extends PolymerElement {
                                 </iron-input>
                             </vaadin-date-picker-light>
                         </template>
-                        <template>[[item.end]]</template>
+                        <template>[[item.endStr]]</template>
                     </vaadin-grid-column>
 
                     <vaadin-grid-column width="40px" flex-grow="0">
@@ -183,14 +210,13 @@ class MedicationElement extends PolymerElement {
                 <paper-dialog id="prescriptionDialog">
                     <h2>Create prescription</h2>
 
-                    <paper-dropdown-menu label="Medicin">
+                    <paper-dropdown-menu label="Medicin" id="medList">
                         <paper-listbox slot="dropdown-content" selected="1">
-                            <paper-item>Omeprazol</paper-item>
-                            <paper-item>Metoprolol</paper-item>
-                            <paper-item>Acetylsalicylzuur</paper-item>
-                            <paper-item>Simvastatine</paper-item>
-                            <paper-item>Metformine</paper-item>
-                            <paper-item>Furosemide</paper-item>
+                            <dom-repeat items="{{data}}">
+                                <template>
+                                    <paper-item value$="{{item._id}}">{{item.name}}</paper-item>
+                                </template>
+                            </dom-repeat>
                         </paper-listbox>
                     </paper-dropdown-menu>
 
@@ -200,19 +226,19 @@ class MedicationElement extends PolymerElement {
                     </div >
                     <div style="margin: 0px;">
                         <paper-input style="padding: 0px; width: 60px; display: inline-block;" id="evening" type="number" label="Evening"></paper-input>
-                        <paper-input style="padding: 0px; width: 60px; display: inline-block;" id="Bed" type="number" label="Bed"></paper-input>
+                        <paper-input style="padding: 0px; width: 60px; display: inline-block;" id="bed" type="number" label="Bed"></paper-input>
                     </div>
                     <div style="margin: 0px;">
-                        <vaadin-date-picker style="padding: 0px;" label="Start date" style="width: 160px;">
+                        <vaadin-date-picker id="startDate" style="padding: 0px;" label="Start date" style="width: 160px;">
                         </vaadin-date-picker>
                     </div>
                     <div style="margin: 0px;">
-                        <vaadin-date-picker style="padding: 0px;" label="End date" style="width: 160px;">
+                        <vaadin-date-picker id="endDate" style="padding: 0px;" label="End date" style="width: 160px;">
                         </vaadin-date-picker>
                     </div>
                     
                     <paper-button dialog-dismiss autofocus>Decline</paper-button>
-                    <paper-button dialog-confirm >Accept</paper-button>
+                    <paper-button dialog-confirm on-tap="addPrescription">Accept</paper-button>
                 </paper-dialog>
             </div>
         </div>
@@ -233,31 +259,15 @@ class MedicationElement extends PolymerElement {
         super.ready();
         this.height = 210;
 
-        this.prescriptions = [
-            {
-                _id: "lala",
-                medName: "Aliceran",
-                details: "Dit is een medicijn dat helpt tegen de hoofdpijn.",
-                dosage: "0/1/1/0",
-                start: "02/01/19",
-                end: "21/01/19"
-            },
-            {
-                _id: "lala2",
-                medName: "Belraren",
-                details: "Dit geneesmiddel helpt met maagklachten.",
-                dosage: "0/1/1/0",
-                start: "02/01/19",
-                end: "21/01/19"
-            }
-        ];
-
         var cardId = this.$.cardId;
         new ResizeSensor(this.$.cardId, function () {
             var width = cardId.getBoundingClientRect().width;
         });
 
         this.setUserId();
+
+        this.$.ajaxMeds.generateRequest();
+        this.$.ajaxPrescriptions.generateRequest();
     }
 
     dateSelected(e) {
@@ -279,6 +289,32 @@ class MedicationElement extends PolymerElement {
         this.$.prescriptionDialog.open();
     }
 
+    addPrescription(e) {
+        var medicine = this.$.medList.selectedItem.getAttribute("value");
+
+        var startDate = new Date(this.$.startDate.value);
+        var endDate = new Date(this.$.endDate.value);
+
+        var obj = {
+            "medication": medicine,
+            "dosage": {
+                "morning": this.$.morning.value,
+                "noon": this.$.noon.value,
+                "evening": this.$.evening.value,
+                "bed": this.$.bed.value
+            },
+            "startDate": startDate.toISOString(),
+            "endDate": endDate.toISOString()
+        };
+
+        this.$.ajaxCreatePrescription.body = obj;
+        this.$.ajaxCreatePrescription.generateRequest();
+    }
+
+    medCreated(e) {
+        console.log(e.detail.response);
+    }
+
     resizeSmaller(e) {
         if (this.height > 200)
             this.height -= 50;
@@ -290,6 +326,14 @@ class MedicationElement extends PolymerElement {
 
     removeModule(e) {
         this.dispatchEvent(new CustomEvent('delete', { composed: true }));
+    }
+
+    receivedMedication(e) {
+        this.meds = e.detail.response;
+    }
+
+    receivedPrescriptions(e) {
+        console.log(e.detail.response);
     }
 }
 
