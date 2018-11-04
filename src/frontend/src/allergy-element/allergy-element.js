@@ -20,6 +20,7 @@ import '../shared-styles.js';
  */
 class AllergyElement extends PolymerElement {
     static get template() {
+        //500px
         return html`
         <style include="shared-styles">
             :host {

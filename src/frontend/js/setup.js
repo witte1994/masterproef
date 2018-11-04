@@ -164,10 +164,10 @@ function loadLayout(elements) {
     var container = createModuleContainer("allergy-element");
     addContainerToGrid(container);
 
-    /*
+    
     onMainGrid = false;
-    var container = createModuleContainer("prescription-element-small");
-    addContainerToGrid(container);*/
+    var container = createModuleContainer("allergy-element-small");
+    addContainerToGrid(container);
     //$grid.packery('fit', container, elements[i].x, elements[i].y);
 }
 
