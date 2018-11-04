@@ -161,12 +161,13 @@ function loadLayout(elements) {
     loadMainLayout(elements.main);*/
 
     onMainGrid = true;
-    var container = createModuleContainer("prescription-element");
+    var container = createModuleContainer("allergy-element");
     addContainerToGrid(container);
 
+    /*
     onMainGrid = false;
     var container = createModuleContainer("prescription-element-small");
-    addContainerToGrid(container);
+    addContainerToGrid(container);*/
     //$grid.packery('fit', container, elements[i].x, elements[i].y);
 }
 
@@ -262,7 +263,7 @@ function addContainerToGrid(container) {
 }
 
 function getModuleSize(moduleName) {
-    if (moduleName === "prescription-element") {
+    if (moduleName === "allergy-element") {
         return "582px";
     }
 

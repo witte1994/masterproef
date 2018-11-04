@@ -234,7 +234,7 @@ class PrescriptionElement extends PolymerElement {
                     <h2>Create prescription</h2>
 
                     <paper-dropdown-menu label="Medicin" id="medList">
-                        <paper-listbox slot="dropdown-content" selected="1">
+                        <paper-listbox slot="dropdown-content">
                             <dom-repeat items="{{data}}">
                                 <template>
                                     <paper-item value$="{{item._id}}">{{item.name}}</paper-item>
@@ -439,12 +439,10 @@ class PrescriptionElement extends PolymerElement {
     }
 
     medCreated(e) {
-        console.log(e.detail.response);
         this.$.ajaxPrescriptions.generateRequest();
     }
 
     medUpdated(e) {
-        console.log(e.detail.response);
         this.$.ajaxPrescriptions.generateRequest();
     }
 
