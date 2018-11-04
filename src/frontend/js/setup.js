@@ -161,13 +161,11 @@ function loadLayout(elements) {
     loadMainLayout(elements.main);*/
 
     onMainGrid = true;
-    var container = createModuleContainer("medication-element");
+    var container = createModuleContainer("prescription-element");
     addContainerToGrid(container);
 
     onMainGrid = false;
-    var container = createModuleContainer("medication-element-small");
-    addContainerToGrid(container);
-    var container = createModuleContainer("medication-element-small");
+    var container = createModuleContainer("prescription-element-small");
     addContainerToGrid(container);
     //$grid.packery('fit', container, elements[i].x, elements[i].y);
 }
@@ -264,7 +262,7 @@ function addContainerToGrid(container) {
 }
 
 function getModuleSize(moduleName) {
-    if (moduleName === "medication-element") {
+    if (moduleName === "prescription-element") {
         return "582px";
     }
 

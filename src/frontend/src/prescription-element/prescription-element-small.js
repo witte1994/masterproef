@@ -8,7 +8,7 @@ import '../shared-styles.js';
  * @polymer
  * @extends HTMLElement
  */
-class MedicationElementSmall extends PolymerElement {
+class PrescriptionElementSmall extends PolymerElement {
     static get template() {
         return html`
         <style include="shared-styles">
@@ -131,4 +131,4 @@ class MedicationElementSmall extends PolymerElement {
     }
 }
 
-window.customElements.define('medication-element-small', MedicationElementSmall);
+window.customElements.define('prescription-element-small', PrescriptionElementSmall);
