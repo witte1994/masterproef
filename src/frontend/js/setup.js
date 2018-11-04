@@ -264,7 +264,7 @@ function addContainerToGrid(container) {
 
 function getModuleSize(moduleName) {
     if (moduleName === "allergy-element") {
-        return "582px";
+        return "500px";
     }
 
     if (moduleName.split('-').length == 3) {

@@ -19,6 +19,7 @@ import '../shared-styles.js';
  */
 class PrescriptionElement extends PolymerElement {
     static get template() {
+        // 582px
         return html`
         <style include="shared-styles">
             :host {
