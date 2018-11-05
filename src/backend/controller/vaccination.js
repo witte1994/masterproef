@@ -88,7 +88,7 @@ exports.delete = (req, res, next) => {
 };
 
 exports.create_entry = (req, res, next) => {
-    var userId = req.originalUrl.split('/')[2];
+    var vaccinationId = req.originalUrl.split('/')[4];
 
     var entry = {
         _id: mongoose.Types.ObjectId(),
@@ -96,6 +96,20 @@ exports.create_entry = (req, res, next) => {
         date: req.body.date
     };
 
+    Vaccination.findOneAndUpdate({ _id: vaccinationId },
+        {
+            $push: { entries: entry }
+        },
+        { new: true })
+        .exec()
+        .then(doc => {
+            console.log(doc);
+            res.status(200).json(doc);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ error: err });
+        });
     // todo
 };
 

@@ -130,6 +130,15 @@ class VaccinationElement extends PolymerElement {
             on-response="vaccinationDeleted"
         ></iron-ajax>
 
+        <iron-ajax
+            id="ajaxCreateVaccinationEntry"
+            url="http://localhost:3000/user/[[userId]]/vaccination/[[vaccinationId]]/create"
+            method="POST"
+            handle-as="json"
+            content-type="application/json"
+            on-response="vaccinationEntryCreated"
+        ></iron-ajax>
+
         <div id="cardId" class="card" style="padding-bottom: 0px;">
             <div class="containerHeader">
                 <h1>Vaccinations</h1>
@@ -169,7 +178,7 @@ class VaccinationElement extends PolymerElement {
 
                     <vaadin-grid-column width="70px" flex-grow="0">
                         <template>
-                            <paper-icon-button style="margin: 0px; padding:0px; width: 22px; height: 22px;" icon="add" data-args$="[[index]]"></paper-icon-button>
+                            <paper-icon-button style="margin: 0px; padding:0px; width: 22px; height: 22px;" icon="add" on-tap="openAddVaccinationEntryDialog" data-args$="[[index]]"></paper-icon-button>
                             <paper-icon-button style="margin: 0px; padding:0px; width: 22px; height: 22px;" icon="create" on-tap="openEditVaccinationDialog" data-args$="[[index]]"></paper-icon-button>
                         </template>
                     </vaadin-grid-column>
@@ -215,6 +224,20 @@ class VaccinationElement extends PolymerElement {
                     <paper-button dialog-confirm on-tap="editVaccination">Edit</paper-button>
                     <paper-button dialog-dismiss on-tap="deleteVaccination">Delete</paper-button>
                 </paper-dialog>
+
+                <paper-dialog id="addVaccinationEntryDialog">
+                    <h2>Add new vaccination entry</h2>
+                    <div style="width: 225px;">
+                        <paper-textarea style="padding: 0px;" id="descriptionEntry" label="Description"></paper-textarea>
+                    </div>
+                    <div style="margin: 0px;">
+                        <vaadin-date-picker id="dateEntry" style="padding: 0px;" label="Vaccination date" style="width: 160px;">
+                        </vaadin-date-picker>
+                    </div>
+                    
+                    <paper-button dialog-dismiss autofocus>Decline</paper-button>
+                    <paper-button dialog-confirm on-tap="addVaccinationEntry">Accept</paper-button>
+                </paper-dialog>
             </div>
         </div>
     `;
@@ -256,6 +279,11 @@ class VaccinationElement extends PolymerElement {
 
     openAddVaccinationDialog(e) {
         this.$.addVaccinationDialog.open();
+    }
+
+    openAddVaccinationEntryDialog(e) {
+        this.curObj = this.vaccinations[e.target.dataset.args];
+        this.$.addVaccinationEntryDialog.open();
     }
 
     openEditVaccinationDialog(e) {
@@ -303,6 +331,19 @@ class VaccinationElement extends PolymerElement {
         this.$.ajaxDeleteVaccination.generateRequest();
     }
 
+    addVaccinationEntry(e) {
+        this.vaccinationId = this.curObj._id;
+        var date = new Date(this.$.dateEntry.value);
+
+        var obj = {
+            "description": this.$.descriptionEntry.value,
+            "date": date.toISOString()
+        };
+
+        this.$.ajaxCreateVaccinationEntry.body = obj;
+        this.$.ajaxCreateVaccinationEntry.generateRequest();
+    }
+
     vaccinationCreated(e) {
         this.$.ajaxVaccinations.generateRequest();
     }
@@ -312,6 +353,10 @@ class VaccinationElement extends PolymerElement {
     }
 
     vaccinationDeleted(e) {
+        this.$.ajaxVaccinations.generateRequest();
+    }
+
+    vaccinationEntryCreated(e) {
         this.$.ajaxVaccinations.generateRequest();
     }
 
