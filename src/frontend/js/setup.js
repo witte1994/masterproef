@@ -161,12 +161,12 @@ function loadLayout(elements) {
     loadMainLayout(elements.main);*/
 
     onMainGrid = true;
-    var container = createModuleContainer("allergy-element");
+    var container = createModuleContainer("vaccination-element");
     addContainerToGrid(container);
 
     
     onMainGrid = false;
-    var container = createModuleContainer("allergy-element-small");
+    var container = createModuleContainer("vaccination-element-small");
     addContainerToGrid(container);
     //$grid.packery('fit', container, elements[i].x, elements[i].y);
 }
@@ -263,8 +263,8 @@ function addContainerToGrid(container) {
 }
 
 function getModuleSize(moduleName) {
-    if (moduleName === "allergy-element") {
-        return "500px";
+    if (moduleName === "vaccination-element") {
+        return "400px";
     }
 
     if (moduleName.split('-').length == 3) {

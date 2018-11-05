@@ -6,8 +6,13 @@ exports.get_all_by_id = (req, res, next) => {
     var userId = req.originalUrl.split('/')[2];
 
     Vaccination.find({ user: userId })
+        .lean()
         .exec()
         .then(doc => {
+            for (var i = 0; i < doc.length; i++) {
+                var dateObj = new Date(doc[i].dateNext);
+                Object.assign(doc[i], { dateNextStr: getDateString(dateObj) });
+            }
             console.log(doc);
             res.status(200).json(doc);
         })
@@ -16,6 +21,12 @@ exports.get_all_by_id = (req, res, next) => {
             res.status(500).json({ error: err });
         });
 };
+
+function getDateString(date) {
+    var str = ("0" + date.getDate()).slice(-2) + "/" + ("0" + (date.getMonth() + 1)).slice(-2) + "/" + date.getFullYear();
+    return str;
+}
+
 
 exports.create = (req, res, next) => {
     var userId = req.originalUrl.split('/')[2];
