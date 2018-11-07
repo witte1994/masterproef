@@ -12,6 +12,9 @@ exports.get_all_by_id = (req, res, next) => {
             for (var i = 0; i < doc.length; i++) {
                 var dateObj = new Date(doc[i].dateNext);
                 Object.assign(doc[i], { dateNextStr: getDateString(dateObj) });
+                for (var j = 0; j < doc[i].entries.length; j++) {
+                    Object.assign(doc[i].entries[j], { dateStr: getDateString(doc[i].entries[j].date) });
+                }
             }
             console.log(doc);
             res.status(200).json(doc);
@@ -88,7 +91,7 @@ exports.delete = (req, res, next) => {
 };
 
 exports.create_entry = (req, res, next) => {
-    var vaccinationId = req.originalUrl.split('/')[4];
+    var vaccinationId = req.params.id;
 
     var entry = {
         _id: mongoose.Types.ObjectId(),
@@ -110,17 +113,50 @@ exports.create_entry = (req, res, next) => {
             console.log(err);
             res.status(500).json({ error: err });
         });
-    // todo
 };
 
 exports.update_entry = (req, res, next) => {
-    var userId = req.originalUrl.split('/')[2];
+    var vaccinationId = req.params.id;
 
-    // todo
+    var entry = {
+        _id: req.body.id,
+        description: req.body.description,
+        date: req.body.date
+    };
+
+    Vaccination.findOneAndUpdate({ "_id": vaccinationId, "entries._id": entry._id  },
+        {
+            $set: { "entries.$.description": entry.description,
+                    "entries.$.date": entry.date }
+        },
+        { new: true })
+        .exec()
+        .then(doc => {
+            console.log(doc);
+            res.status(200).json(doc);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ error: err });
+        });
 };
 
 exports.delete_entry = (req, res, next) => {
-    var userId = req.originalUrl.split('/')[2];
+    var vaccinationId = req.params.id;
+    var entryId = req.params.entryId;
 
-    // todo
+    Vaccination.findOneAndUpdate({ _id: vaccinationId },
+        {
+            $pull: { entries: { _id: entryId } }
+        },
+        { new: true })
+        .exec()
+        .then(doc => {
+            console.log(doc);
+            res.status(200).json(doc);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ error: err });
+        });
 };

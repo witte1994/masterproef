@@ -74,8 +74,8 @@ class VaccinationElement extends PolymerElement {
 
             .detailsGrid {
                 display: grid;
-                grid-template-rows: auto auto;
-                grid-template-columns: 100px auto;
+                grid-template-rows: auto;
+                grid-template-columns: 10px 100px auto 24px;
             }
 
             .resizers {
@@ -139,6 +139,23 @@ class VaccinationElement extends PolymerElement {
             on-response="vaccinationEntryCreated"
         ></iron-ajax>
 
+        <iron-ajax
+            id="ajaxEditVaccinationEntry"
+            url="http://localhost:3000/user/[[userId]]/vaccination/[[vaccinationId]]/update"
+            method="POST"
+            handle-as="json"
+            content-type="application/json"
+            on-response="vaccinationEntryUpdated"
+        ></iron-ajax>
+
+        <iron-ajax
+            id="ajaxDeleteVaccinationEntry"
+            url="http://localhost:3000/user/[[userId]]/vaccination/[[vaccinationId]]/delete/[[deleteEntryId]]"
+            method="DELETE"
+            handle-as="json"
+            on-response="vaccinationEntryDeleted"
+        ></iron-ajax>
+
         <div id="cardId" class="card" style="padding-bottom: 0px;">
             <div class="containerHeader">
                 <h1>Vaccinations</h1>
@@ -154,8 +171,14 @@ class VaccinationElement extends PolymerElement {
 
                     <template class="row-details">
                         <div class="detailsGrid">
-                            <div><small>Description:</small></div>
-                            <div><small>[[item.description]]</small></div>
+                            <dom-repeat items="{{item.entries}}" as="entry">
+                                <template>
+                                    <div></div>
+                                    <div>[[entry.dateStr]]</div>
+                                    <div>[[entry.description]]</div>
+                                    <div><paper-icon-button style="margin: 0px; padding:0px; width: 22px; height: 22px;" icon="create" on-tap="openEditVaccinationEntryDialog" data-args$="[[index]]"></paper-icon-button></div>
+                                </template>
+                            </dom-repeat>
                         </div>
                     </template>
 
@@ -238,6 +261,22 @@ class VaccinationElement extends PolymerElement {
                     <paper-button dialog-dismiss autofocus>Decline</paper-button>
                     <paper-button dialog-confirm on-tap="addVaccinationEntry">Accept</paper-button>
                 </paper-dialog>
+
+                <paper-dialog id="editVaccinationEntryDialog">
+                    <h2>Edit entry</h2>
+
+                    <div style="width: 225px;">
+                        <paper-textarea style="padding: 0px;" id="descriptionEntryEdit" label="Description"></paper-textarea>
+                    </div>
+                    <div style="margin: 0px;">
+                        <vaadin-date-picker id="dateEntryEdit" style="padding: 0px;" label="Vaccination date" style="width: 160px;">
+                        </vaadin-date-picker>
+                    </div>
+                    
+                    <paper-button dialog-dismiss autofocus>Cancel</paper-button>
+                    <paper-button dialog-confirm on-tap="editVaccinationEntry">Edit</paper-button>
+                    <paper-button dialog-dismiss on-tap="deleteVaccinationEntry">Delete</paper-button>
+                </paper-dialog>
             </div>
         </div>
     `;
@@ -248,6 +287,12 @@ class VaccinationElement extends PolymerElement {
                 type: Number
             },
             curObj: {
+                type: Object
+            },
+            openedObj: {
+                type: Object
+            },
+            curObjEntry: {
                 type: Object
             }
         };
@@ -275,6 +320,7 @@ class VaccinationElement extends PolymerElement {
 
     showDetails(e) {
         this.$.vaadinGrid.detailsOpenedItems = [e.detail.value];
+        this.openedObj = e.detail.value;
     }
 
     openAddVaccinationDialog(e) {
@@ -297,6 +343,18 @@ class VaccinationElement extends PolymerElement {
         this.$.dateEdit.value = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
         
         this.$.editVaccinationDialog.open();
+    }
+
+    openEditVaccinationEntryDialog(e) {
+        this.curObjEntry = this.openedObj.entries[e.target.dataset.args];
+        var curEntry = this.curObjEntry;
+
+        this.$.descriptionEntryEdit.value = curEntry.description;
+
+        var date = new Date(curEntry.date);
+        this.$.dateEntryEdit.value = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
+
+        this.$.editVaccinationEntryDialog.open();
     }
 
     addVaccination(e) {
@@ -344,6 +402,27 @@ class VaccinationElement extends PolymerElement {
         this.$.ajaxCreateVaccinationEntry.generateRequest();
     }
 
+    editVaccinationEntry(e) {
+        this.vaccinationId = this.openedObj._id;
+        var date = new Date(this.$.dateEntryEdit.value);
+
+        var obj = {
+            "id": this.curObjEntry._id,
+            "description": this.$.descriptionEntryEdit.value,
+            "date": date.toISOString()
+        };
+
+        this.$.ajaxEditVaccinationEntry.body = obj;
+        this.$.ajaxEditVaccinationEntry.generateRequest();
+    }
+
+    deleteVaccinationEntry(e) {
+        this.vaccinationId = this.openedObj._id;
+        this.deleteEntryId = this.curObjEntry._id;
+
+        this.$.ajaxDeleteVaccinationEntry.generateRequest();
+    }
+
     vaccinationCreated(e) {
         this.$.ajaxVaccinations.generateRequest();
     }
@@ -357,6 +436,14 @@ class VaccinationElement extends PolymerElement {
     }
 
     vaccinationEntryCreated(e) {
+        this.$.ajaxVaccinations.generateRequest();
+    }
+
+    vaccinationEntryUpdated(e) {
+        this.$.ajaxVaccinations.generateRequest();
+    }
+
+    vaccinationEntryDeleted(e) {
         this.$.ajaxVaccinations.generateRequest();
     }
 
