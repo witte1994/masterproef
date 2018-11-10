@@ -40,7 +40,7 @@ class UserElement extends PolymerElement {
                 display: grid;
                 grid-template-columns: 1fr 2fr;
             }
-
+            
             paper-icon-button {
                 width: 20px;
                 height: 20px;

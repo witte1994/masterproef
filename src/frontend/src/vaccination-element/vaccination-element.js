@@ -86,6 +86,11 @@ class VaccinationElement extends PolymerElement {
                 display: inline-block;
             }
 
+            .card {
+                display: grid;
+                grid-template-rows: 36px auto 21px;
+            }
+
             paper-input {
                 margin-top: 0px;
                 height: 50px;
@@ -156,6 +161,72 @@ class VaccinationElement extends PolymerElement {
             on-response="vaccinationEntryDeleted"
         ></iron-ajax>
 
+        <paper-dialog id="addVaccinationDialog">
+            <h2>Add new vaccination</h2>
+            <div>
+                <paper-input style="padding: 0px;" id="name" label="Name"></paper-input>
+            </div>
+            <div style="width: 225px;">
+                <paper-textarea style="padding: 0px;" id="description" label="Description"></paper-textarea>
+            </div>
+            <div style="margin: 0px;">
+                <vaadin-date-picker id="date" style="padding: 0px;" label="Next vaccination date" style="width: 160px;">
+                </vaadin-date-picker>
+            </div>
+            
+            <paper-button dialog-dismiss autofocus>Decline</paper-button>
+            <paper-button dialog-confirm on-tap="addVaccination">Accept</paper-button>
+        </paper-dialog>
+        
+        <paper-dialog id="editVaccinationDialog">
+            <h2>Edit vaccination</h2>
+
+            <div>
+                <paper-input style="padding: 0px;" id="nameEdit" label="Name"></paper-input>
+            </div>
+            <div style="width: 225px;">
+                <paper-textarea style="padding: 0px;" id="descriptionEdit" label="Description"></paper-textarea>
+            </div>
+            <div style="margin: 0px;">
+                <vaadin-date-picker id="dateEdit" style="padding: 0px;" label="Next vaccination date" style="width: 160px;">
+                </vaadin-date-picker>
+            </div>
+            
+            <paper-button dialog-dismiss autofocus>Cancel</paper-button>
+            <paper-button dialog-confirm on-tap="editVaccination">Edit</paper-button>
+            <paper-button dialog-dismiss on-tap="deleteVaccination">Delete</paper-button>
+        </paper-dialog>
+
+        <paper-dialog id="addVaccinationEntryDialog">
+            <h2>Add new vaccination entry</h2>
+            <div style="width: 225px;">
+                <paper-textarea style="padding: 0px;" id="descriptionEntry" label="Description"></paper-textarea>
+            </div>
+            <div style="margin: 0px;">
+                <vaadin-date-picker id="dateEntry" style="padding: 0px;" label="Vaccination date" style="width: 160px;">
+                </vaadin-date-picker>
+            </div>
+            
+            <paper-button dialog-dismiss autofocus>Decline</paper-button>
+            <paper-button dialog-confirm on-tap="addVaccinationEntry">Accept</paper-button>
+        </paper-dialog>
+
+        <paper-dialog id="editVaccinationEntryDialog">
+            <h2>Edit entry</h2>
+
+            <div style="width: 225px;">
+                <paper-textarea style="padding: 0px;" id="descriptionEntryEdit" label="Description"></paper-textarea>
+            </div>
+            <div style="margin: 0px;">
+                <vaadin-date-picker id="dateEntryEdit" style="padding: 0px;" label="Vaccination date" style="width: 160px;">
+                </vaadin-date-picker>
+            </div>
+            
+            <paper-button dialog-dismiss autofocus>Cancel</paper-button>
+            <paper-button dialog-confirm on-tap="editVaccinationEntry">Edit</paper-button>
+            <paper-button dialog-dismiss on-tap="deleteVaccinationEntry">Delete</paper-button>
+        </paper-dialog>
+
         <div id="cardId" class="card" style="padding-bottom: 0px;">
             <div class="containerHeader">
                 <h1>Vaccinations</h1>
@@ -167,7 +238,7 @@ class VaccinationElement extends PolymerElement {
             </div>
 
             <div>
-                <vaadin-grid on-active-item-changed="showDetails" id="vaadinGrid" style="height: {{height}}px;" items="{{vaccinations}}">
+                <vaadin-grid on-active-item-changed="showDetails" id="vaadinGrid" style="height: 100%;" items="{{vaccinations}}">
 
                     <template class="row-details">
                         <div class="detailsGrid">
@@ -198,7 +269,6 @@ class VaccinationElement extends PolymerElement {
                         <template>[[item.dateNextStr]]</template>
                     </vaadin-grid-column>
 
-
                     <vaadin-grid-column width="70px" flex-grow="0">
                         <template>
                             <paper-icon-button style="margin: 0px; padding:0px; width: 22px; height: 22px;" icon="add" on-tap="openAddVaccinationEntryDialog" data-args$="[[index]]"></paper-icon-button>
@@ -206,78 +276,12 @@ class VaccinationElement extends PolymerElement {
                         </template>
                     </vaadin-grid-column>
                 </vaadin-grid>
-                
-                <div style="text-align: center;">
-                    <paper-icon-button class="resizers" icon="expand-less" on-tap="resizeSmaller"></paper-icon-button>
-                    <paper-icon-button class="resizers" icon="expand-more" on-tap="resizeLarger"></paper-icon-button>
-                </div>
-
-                <paper-dialog id="addVaccinationDialog">
-                    <h2>Add new vaccination</h2>
-                    <div>
-                        <paper-input style="padding: 0px;" id="name" label="Name"></paper-input>
-                    </div>
-                    <div style="width: 225px;">
-                        <paper-textarea style="padding: 0px;" id="description" label="Description"></paper-textarea>
-                    </div>
-                    <div style="margin: 0px;">
-                        <vaadin-date-picker id="date" style="padding: 0px;" label="Next vaccination date" style="width: 160px;">
-                        </vaadin-date-picker>
-                    </div>
-                    
-                    <paper-button dialog-dismiss autofocus>Decline</paper-button>
-                    <paper-button dialog-confirm on-tap="addVaccination">Accept</paper-button>
-                </paper-dialog>
-                
-                <paper-dialog id="editVaccinationDialog">
-                    <h2>Edit vaccination</h2>
-
-                    <div>
-                        <paper-input style="padding: 0px;" id="nameEdit" label="Name"></paper-input>
-                    </div>
-                    <div style="width: 225px;">
-                        <paper-textarea style="padding: 0px;" id="descriptionEdit" label="Description"></paper-textarea>
-                    </div>
-                    <div style="margin: 0px;">
-                        <vaadin-date-picker id="dateEdit" style="padding: 0px;" label="Next vaccination date" style="width: 160px;">
-                        </vaadin-date-picker>
-                    </div>
-                    
-                    <paper-button dialog-dismiss autofocus>Cancel</paper-button>
-                    <paper-button dialog-confirm on-tap="editVaccination">Edit</paper-button>
-                    <paper-button dialog-dismiss on-tap="deleteVaccination">Delete</paper-button>
-                </paper-dialog>
-
-                <paper-dialog id="addVaccinationEntryDialog">
-                    <h2>Add new vaccination entry</h2>
-                    <div style="width: 225px;">
-                        <paper-textarea style="padding: 0px;" id="descriptionEntry" label="Description"></paper-textarea>
-                    </div>
-                    <div style="margin: 0px;">
-                        <vaadin-date-picker id="dateEntry" style="padding: 0px;" label="Vaccination date" style="width: 160px;">
-                        </vaadin-date-picker>
-                    </div>
-                    
-                    <paper-button dialog-dismiss autofocus>Decline</paper-button>
-                    <paper-button dialog-confirm on-tap="addVaccinationEntry">Accept</paper-button>
-                </paper-dialog>
-
-                <paper-dialog id="editVaccinationEntryDialog">
-                    <h2>Edit entry</h2>
-
-                    <div style="width: 225px;">
-                        <paper-textarea style="padding: 0px;" id="descriptionEntryEdit" label="Description"></paper-textarea>
-                    </div>
-                    <div style="margin: 0px;">
-                        <vaadin-date-picker id="dateEntryEdit" style="padding: 0px;" label="Vaccination date" style="width: 160px;">
-                        </vaadin-date-picker>
-                    </div>
-                    
-                    <paper-button dialog-dismiss autofocus>Cancel</paper-button>
-                    <paper-button dialog-confirm on-tap="editVaccinationEntry">Edit</paper-button>
-                    <paper-button dialog-dismiss on-tap="deleteVaccinationEntry">Delete</paper-button>
-                </paper-dialog>
             </div>
+
+            <div style="text-align: center;">
+                <paper-icon-button class="resizers" icon="expand-less" on-tap="resizeSmaller"></paper-icon-button>
+                <paper-icon-button class="resizers" icon="expand-more" on-tap="resizeLarger"></paper-icon-button>
+            </div>  
         </div>
     `;
     }
@@ -300,9 +304,11 @@ class VaccinationElement extends PolymerElement {
 
     ready() {
         super.ready();
-        this.height = 210;
 
         var cardId = this.$.cardId;
+        this.height = 600;
+
+        cardId.style.height = this.height + "px";
         new ResizeSensor(this.$.cardId, function () {
             var width = cardId.getBoundingClientRect().width;
         });
@@ -450,10 +456,13 @@ class VaccinationElement extends PolymerElement {
     resizeSmaller(e) {
         if (this.height > 200)
             this.height -= 50;
+        
+        this.$.cardId.style.height = this.height + "px";
     }
 
     resizeLarger(e) {
         this.height += 50;
+        this.$.cardId.style.height = this.height + "px";
     }
 
     removeModule(e) {
