@@ -1,6 +1,7 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
+import {BaseElement} from '../base-element.js'
+
 import '@polymer/iron-ajax/iron-ajax'
-import '@polymer/paper-icon-button/paper-icon-button'
 import '@polymer/paper-dialog/paper-dialog'
 import '@polymer/paper-input/paper-input'
 import '@polymer/paper-input/paper-textarea'
@@ -11,293 +12,214 @@ import '@vaadin/vaadin-grid/vaadin-grid-filter';
 import '@vaadin/vaadin-date-picker/vaadin-date-picker';
 import '@vaadin/vaadin-date-picker/vaadin-date-picker-light';
 
-import '../shared-styles.js';
-
 /**
  * @customElement
  * @polymer
  * @extends HTMLElement
  */
-class VaccinationElement extends PolymerElement {
-    static get template() {
-        //500px
+class VaccinationElement extends BaseElement {
+    static get cssTemplate() {
         return html`
-        <style include="shared-styles">
-            :host {
-                width: 440px;
-            }
+            <style include="shared-styles">
+                vaadin-grid-cell-content {
+                    padding: 4px 8px 4px 8px;
+                }
 
-            h1 {
-                font-family: 'Roboto', Helvetica, sans-serif;
-            }
+                .detailsGrid {
+                    display: grid;
+                    grid-template-rows: auto;
+                    grid-template-columns: 10px 100px auto 24px;
+                }
 
-            .containerHeader {
-                width: 100%;
-                display: grid;
-                grid-template-columns: auto 56px;
-                align-items: center;
-                margin-bottom: 8px;
-            }
+                paper-input {
+                    margin-top: 0px;
+                    height: 50px;
+                }
+            </style>
+        `;
+    }
 
-            .buttonsHeader {
-                padding: 0px;
-                height: 24px;
-                width: 24px;
-            }
+    static get ironAjaxTemplate() {
+        return html`
+            <iron-ajax 
+                id="ajaxVaccinations"
+                url="http://localhost:3000/user/[[userId]]/vaccination"
+                method="GET"
+                handle-as="json"
+                last-response="{{vaccinations}}"
+            ></iron-ajax>
 
-            .containerDate {
-                width: 100%;
-                display: grid;
-                grid-template-columns: 1fr 30px 1fr;
-                justify-items: center;
-                align-items: center;
-            }
+            <iron-ajax
+                id="ajaxCreateVaccination"
+                url="http://localhost:3000/user/[[userId]]/vaccination/create"
+                method="POST"
+                handle-as="json"
+                content-type="application/json"
+                on-response="vaccinationCreated"
+            ></iron-ajax>
 
-            .dash {
-                font-size: 22px;
-            }
+            <iron-ajax
+                id="ajaxEditVaccination"
+                url="http://localhost:3000/user/[[userId]]/vaccination/update"
+                method="POST"
+                handle-as="json"
+                content-type="application/json"
+                on-response="vaccinationUpdated"
+            ></iron-ajax>
 
-            .detailsButton {
-                padding: 0px;
-                width: 20px;
-                height: 20px;
-            }
+            <iron-ajax
+                id="ajaxDeleteVaccination"
+                url="http://localhost:3000/user/[[userId]]/vaccination/delete/[[deleteId]]"
+                method="DELETE"
+                handle-as="json"
+                on-response="vaccinationDeleted"
+            ></iron-ajax>
 
-            .details {
-                display: flex;
-                font-size: 20px;
-            }
+            <iron-ajax
+                id="ajaxCreateVaccinationEntry"
+                url="http://localhost:3000/user/[[userId]]/vaccination/[[vaccinationId]]/create"
+                method="POST"
+                handle-as="json"
+                content-type="application/json"
+                on-response="vaccinationEntryCreated"
+            ></iron-ajax>
 
-            vaadin-grid-cell-content {
-                padding: 4px 8px 4px 8px;
-            }
+            <iron-ajax
+                id="ajaxEditVaccinationEntry"
+                url="http://localhost:3000/user/[[userId]]/vaccination/[[vaccinationId]]/update"
+                method="POST"
+                handle-as="json"
+                content-type="application/json"
+                on-response="vaccinationEntryUpdated"
+            ></iron-ajax>
 
-            .detailsGrid {
-                display: grid;
-                grid-template-rows: auto;
-                grid-template-columns: 10px 100px auto 24px;
-            }
+            <iron-ajax
+                id="ajaxDeleteVaccinationEntry"
+                url="http://localhost:3000/user/[[userId]]/vaccination/[[vaccinationId]]/delete/[[deleteEntryId]]"
+                method="DELETE"
+                handle-as="json"
+                on-response="vaccinationEntryDeleted"
+            ></iron-ajax>
+        `;
+    }
 
-            .resizers {
-                width: 20px;
-                height: 20px;
-                padding: 0px;
-                margin: auto;
-                display: inline-block;
-            }
-
-            .card {
-                display: grid;
-                grid-template-rows: 36px auto 21px;
-            }
-
-            paper-input {
-                margin-top: 0px;
-                height: 50px;
-            }
-
-            p {
-                margin: 8px 0px 0px 0px;
-            }
-        </style>
-
-        <iron-ajax 
-            id="ajaxVaccinations"
-            url="http://localhost:3000/user/[[userId]]/vaccination"
-            method="GET"
-            handle-as="json"
-            last-response="{{vaccinations}}"
-        ></iron-ajax>
-
-        <iron-ajax
-            id="ajaxCreateVaccination"
-            url="http://localhost:3000/user/[[userId]]/vaccination/create"
-            method="POST"
-            handle-as="json"
-            content-type="application/json"
-            on-response="vaccinationCreated"
-        ></iron-ajax>
-
-        <iron-ajax
-            id="ajaxEditVaccination"
-            url="http://localhost:3000/user/[[userId]]/vaccination/update"
-            method="POST"
-            handle-as="json"
-            content-type="application/json"
-            on-response="vaccinationUpdated"
-        ></iron-ajax>
-
-        <iron-ajax
-            id="ajaxDeleteVaccination"
-            url="http://localhost:3000/user/[[userId]]/vaccination/delete/[[deleteId]]"
-            method="DELETE"
-            handle-as="json"
-            on-response="vaccinationDeleted"
-        ></iron-ajax>
-
-        <iron-ajax
-            id="ajaxCreateVaccinationEntry"
-            url="http://localhost:3000/user/[[userId]]/vaccination/[[vaccinationId]]/create"
-            method="POST"
-            handle-as="json"
-            content-type="application/json"
-            on-response="vaccinationEntryCreated"
-        ></iron-ajax>
-
-        <iron-ajax
-            id="ajaxEditVaccinationEntry"
-            url="http://localhost:3000/user/[[userId]]/vaccination/[[vaccinationId]]/update"
-            method="POST"
-            handle-as="json"
-            content-type="application/json"
-            on-response="vaccinationEntryUpdated"
-        ></iron-ajax>
-
-        <iron-ajax
-            id="ajaxDeleteVaccinationEntry"
-            url="http://localhost:3000/user/[[userId]]/vaccination/[[vaccinationId]]/delete/[[deleteEntryId]]"
-            method="DELETE"
-            handle-as="json"
-            on-response="vaccinationEntryDeleted"
-        ></iron-ajax>
-
-        <paper-dialog id="addVaccinationDialog">
-            <h2>Add new vaccination</h2>
-            <div>
-                <paper-input style="padding: 0px;" id="name" label="Name"></paper-input>
-            </div>
-            <div style="width: 225px;">
-                <paper-textarea style="padding: 0px;" id="description" label="Description"></paper-textarea>
-            </div>
-            <div style="margin: 0px;">
-                <vaadin-date-picker id="date" style="padding: 0px;" label="Next vaccination date" style="width: 160px;">
-                </vaadin-date-picker>
-            </div>
+    static get dialogTemplate() {
+        return html`
+            <paper-dialog id="addVaccinationDialog">
+                <h2>Add new vaccination</h2>
+                <div>
+                    <paper-input style="padding: 0px;" id="name" label="Name"></paper-input>
+                </div>
+                <div style="width: 225px;">
+                    <paper-textarea style="padding: 0px;" id="description" label="Description"></paper-textarea>
+                </div>
+                <div style="margin: 0px;">
+                    <vaadin-date-picker id="date" style="padding: 0px;" label="Next vaccination date" style="width: 160px;">
+                    </vaadin-date-picker>
+                </div>
+                
+                <paper-button dialog-dismiss autofocus>Decline</paper-button>
+                <paper-button dialog-confirm on-tap="addVaccination">Accept</paper-button>
+            </paper-dialog>
             
-            <paper-button dialog-dismiss autofocus>Decline</paper-button>
-            <paper-button dialog-confirm on-tap="addVaccination">Accept</paper-button>
-        </paper-dialog>
-        
-        <paper-dialog id="editVaccinationDialog">
-            <h2>Edit vaccination</h2>
-
-            <div>
-                <paper-input style="padding: 0px;" id="nameEdit" label="Name"></paper-input>
-            </div>
-            <div style="width: 225px;">
-                <paper-textarea style="padding: 0px;" id="descriptionEdit" label="Description"></paper-textarea>
-            </div>
-            <div style="margin: 0px;">
-                <vaadin-date-picker id="dateEdit" style="padding: 0px;" label="Next vaccination date" style="width: 160px;">
-                </vaadin-date-picker>
-            </div>
-            
-            <paper-button dialog-dismiss autofocus>Cancel</paper-button>
-            <paper-button dialog-confirm on-tap="editVaccination">Edit</paper-button>
-            <paper-button dialog-dismiss on-tap="deleteVaccination">Delete</paper-button>
-        </paper-dialog>
-
-        <paper-dialog id="addVaccinationEntryDialog">
-            <h2>Add new vaccination entry</h2>
-            <div style="width: 225px;">
-                <paper-textarea style="padding: 0px;" id="descriptionEntry" label="Description"></paper-textarea>
-            </div>
-            <div style="margin: 0px;">
-                <vaadin-date-picker id="dateEntry" style="padding: 0px;" label="Vaccination date" style="width: 160px;">
-                </vaadin-date-picker>
-            </div>
-            
-            <paper-button dialog-dismiss autofocus>Decline</paper-button>
-            <paper-button dialog-confirm on-tap="addVaccinationEntry">Accept</paper-button>
-        </paper-dialog>
-
-        <paper-dialog id="editVaccinationEntryDialog">
-            <h2>Edit entry</h2>
-
-            <div style="width: 225px;">
-                <paper-textarea style="padding: 0px;" id="descriptionEntryEdit" label="Description"></paper-textarea>
-            </div>
-            <div style="margin: 0px;">
-                <vaadin-date-picker id="dateEntryEdit" style="padding: 0px;" label="Vaccination date" style="width: 160px;">
-                </vaadin-date-picker>
-            </div>
-            
-            <paper-button dialog-dismiss autofocus>Cancel</paper-button>
-            <paper-button dialog-confirm on-tap="editVaccinationEntry">Edit</paper-button>
-            <paper-button dialog-dismiss on-tap="deleteVaccinationEntry">Delete</paper-button>
-        </paper-dialog>
-
-        <div id="cardId" class="card" style="padding-bottom: 0px;">
-            <div class="containerHeader">
-                <h1>Vaccinations</h1>
+            <paper-dialog id="editVaccinationDialog">
+                <h2>Edit vaccination</h2>
 
                 <div>
-                    <paper-icon-button class="buttonsHeader" icon="add" on-tap="openAddVaccinationDialog"></paper-icon-button>
-                    <paper-icon-button class="buttonsHeader" icon="close" on-tap="removeModule"></paper-icon-button>
+                    <paper-input style="padding: 0px;" id="nameEdit" label="Name"></paper-input>
                 </div>
-            </div>
+                <div style="width: 225px;">
+                    <paper-textarea style="padding: 0px;" id="descriptionEdit" label="Description"></paper-textarea>
+                </div>
+                <div style="margin: 0px;">
+                    <vaadin-date-picker id="dateEdit" style="padding: 0px;" label="Next vaccination date" style="width: 160px;">
+                    </vaadin-date-picker>
+                </div>
+                
+                <paper-button dialog-dismiss autofocus>Cancel</paper-button>
+                <paper-button dialog-confirm on-tap="editVaccination">Edit</paper-button>
+                <paper-button dialog-dismiss on-tap="deleteVaccination">Delete</paper-button>
+            </paper-dialog>
 
-            <div>
-                <vaadin-grid on-active-item-changed="showDetails" id="vaadinGrid" style="height: 100%;" items="{{vaccinations}}">
+            <paper-dialog id="addVaccinationEntryDialog">
+                <h2>Add new vaccination entry</h2>
+                <div style="width: 225px;">
+                    <paper-textarea style="padding: 0px;" id="descriptionEntry" label="Description"></paper-textarea>
+                </div>
+                <div style="margin: 0px;">
+                    <vaadin-date-picker id="dateEntry" style="padding: 0px;" label="Vaccination date" style="width: 160px;">
+                    </vaadin-date-picker>
+                </div>
+                
+                <paper-button dialog-dismiss autofocus>Decline</paper-button>
+                <paper-button dialog-confirm on-tap="addVaccinationEntry">Accept</paper-button>
+            </paper-dialog>
 
-                    <template class="row-details">
-                        <div class="detailsGrid">
-                            <dom-repeat items="{{item.entries}}" as="entry">
-                                <template>
-                                    <div></div>
-                                    <div>[[entry.dateStr]]</div>
-                                    <div>[[entry.description]]</div>
-                                    <div><paper-icon-button style="margin: 0px; padding:0px; width: 22px; height: 22px;" icon="create" on-tap="openEditVaccinationEntryDialog" data-args$="[[index]]"></paper-icon-button></div>
-                                </template>
-                            </dom-repeat>
-                        </div>
-                    </template>
+            <paper-dialog id="editVaccinationEntryDialog">
+                <h2>Edit entry</h2>
 
-                    <vaadin-grid-column width="160px">
-                        <template class="header">
-                            <vaadin-grid-sorter path="vaccinationName">
-                                <vaadin-grid-filter aria-label="Vaccination" path="vaccinationName" value="[[_filterVaccinationName]]">
-                                    <vaadin-text-field style="width:145px;" slot="filter" placeholder="Vaccination" value="{{_filterVaccinationName}}" focus-target></vaadin-text-field>
-                                </vaadin-grid-filter>
-                            </vaadin-grid-sorter>
-                        </template>
-                        <template>[[item.name]]</template>
-                    </vaadin-grid-column>
-
-                    <vaadin-grid-column width="100px" flex-grow="0">
-                        <template class="header">Next date</template>
-                        <template>[[item.dateNextStr]]</template>
-                    </vaadin-grid-column>
-
-                    <vaadin-grid-column width="70px" flex-grow="0">
-                        <template>
-                            <paper-icon-button style="margin: 0px; padding:0px; width: 22px; height: 22px;" icon="add" on-tap="openAddVaccinationEntryDialog" data-args$="[[index]]"></paper-icon-button>
-                            <paper-icon-button style="margin: 0px; padding:0px; width: 22px; height: 22px;" icon="create" on-tap="openEditVaccinationDialog" data-args$="[[index]]"></paper-icon-button>
-                        </template>
-                    </vaadin-grid-column>
-                </vaadin-grid>
-            </div>
-
-            <div style="text-align: center;">
-                <paper-icon-button class="resizers" icon="expand-less" on-tap="resizeSmaller"></paper-icon-button>
-                <paper-icon-button class="resizers" icon="expand-more" on-tap="resizeLarger"></paper-icon-button>
-            </div>  
-        </div>
-    `;
+                <div style="width: 225px;">
+                    <paper-textarea style="padding: 0px;" id="descriptionEntryEdit" label="Description"></paper-textarea>
+                </div>
+                <div style="margin: 0px;">
+                    <vaadin-date-picker id="dateEntryEdit" style="padding: 0px;" label="Vaccination date" style="width: 160px;">
+                    </vaadin-date-picker>
+                </div>
+                
+                <paper-button dialog-dismiss autofocus>Cancel</paper-button>
+                <paper-button dialog-confirm on-tap="editVaccinationEntry">Edit</paper-button>
+                <paper-button dialog-dismiss on-tap="deleteVaccinationEntry">Delete</paper-button>
+            </paper-dialog>
+        `;
     }
+
+    static get contentTemplate() {
+        return html`
+            <vaadin-grid on-active-item-changed="showDetails" id="vaadinGrid" style="height: 100%;" items="{{vaccinations}}">
+                <template class="row-details">
+                    <div class="detailsGrid">
+                        <dom-repeat items="{{item.entries}}" as="entry">
+                            <template>
+                                <div></div>
+                                <div>[[entry.dateStr]]</div>
+                                <div>[[entry.description]]</div>
+                                <div><paper-icon-button style="margin: 0px; padding:0px; width: 22px; height: 22px;" icon="create" on-tap="openEditVaccinationEntryDialog" data-args$="[[index]]"></paper-icon-button></div>
+                            </template>
+                        </dom-repeat>
+                    </div>
+                </template>
+
+                <vaadin-grid-column width="160px">
+                    <template class="header">
+                        <vaadin-grid-sorter path="vaccinationName">
+                            <vaadin-grid-filter aria-label="Vaccination" path="vaccinationName" value="[[_filterVaccinationName]]">
+                                <vaadin-text-field style="width:145px;" slot="filter" placeholder="Vaccination" value="{{_filterVaccinationName}}" focus-target></vaadin-text-field>
+                            </vaadin-grid-filter>
+                        </vaadin-grid-sorter>
+                    </template>
+                    <template>[[item.name]]</template>
+                </vaadin-grid-column>
+
+                <vaadin-grid-column width="100px" flex-grow="0">
+                    <template class="header">Next date</template>
+                    <template>[[item.dateNextStr]]</template>
+                </vaadin-grid-column>
+
+                <vaadin-grid-column width="70px" flex-grow="0">
+                    <template>
+                        <paper-icon-button style="margin: 0px; padding:0px; width: 22px; height: 22px;" icon="add" on-tap="openAddVaccinationEntryDialog" data-args$="[[index]]"></paper-icon-button>
+                        <paper-icon-button style="margin: 0px; padding:0px; width: 22px; height: 22px;" icon="create" on-tap="openEditVaccinationDialog" data-args$="[[index]]"></paper-icon-button>
+                    </template>
+                </vaadin-grid-column>
+            </vaadin-grid>
+        `;
+    }
+
     static get properties() {
         return {
-            height: {
-                type: Number
-            },
-            curObj: {
-                type: Object
-            },
-            openedObj: {
-                type: Object
-            },
-            curObjEntry: {
-                type: Object
+            title: {
+                type: String,
+                value: "Vaccinations"
             }
         };
     }
@@ -305,32 +227,12 @@ class VaccinationElement extends PolymerElement {
     ready() {
         super.ready();
 
-        var cardId = this.$.cardId;
-        this.height = 600;
-
-        cardId.style.height = this.height + "px";
-        new ResizeSensor(this.$.cardId, function () {
-            var width = cardId.getBoundingClientRect().width;
-        });
-
-        this.setUserId();
-
         this.$.ajaxVaccinations.generateRequest();
-    }
-
-    setUserId() {
-        var split = document.URL.split("/");
-        var param = split[split.length - 1];
-        this.userId = param;
     }
 
     showDetails(e) {
         this.$.vaadinGrid.detailsOpenedItems = [e.detail.value];
         this.openedObj = e.detail.value;
-    }
-
-    openAddVaccinationDialog(e) {
-        this.$.addVaccinationDialog.open();
     }
 
     openAddVaccinationEntryDialog(e) {
@@ -453,20 +355,9 @@ class VaccinationElement extends PolymerElement {
         this.$.ajaxVaccinations.generateRequest();
     }
 
-    resizeSmaller(e) {
-        if (this.height > 200)
-            this.height -= 50;
-        
-        this.$.cardId.style.height = this.height + "px";
-    }
 
-    resizeLarger(e) {
-        this.height += 50;
-        this.$.cardId.style.height = this.height + "px";
-    }
-
-    removeModule(e) {
-        this.dispatchEvent(new CustomEvent('delete', { composed: true }));
+    openDialog(e) {
+        this.$.addVaccinationDialog.open();
     }
 }
 
