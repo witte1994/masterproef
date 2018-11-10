@@ -284,15 +284,18 @@ function addSmall() {
 }
 
 function addListeners(parent, mod) {
-    new ResizeSensor(parent, function () {
-        $grid.packery('shiftLayout');
-    });
-
     addRemoveListener(parent, mod);
 
     if (onMainGrid) {
         addResizeListener(parent, mod);
-    }   
+        new ResizeSensor(parent, function () {
+            $grid.packery('shiftLayout');
+        });
+    } else {
+        new ResizeSensor(parent, function () {
+            $smallGrid.packery('shiftLayout');
+        });
+    }
 }
 
 function addRemoveListener(parent, mod) {
