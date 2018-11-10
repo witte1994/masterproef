@@ -82,7 +82,8 @@ function getMainElements() {
             elementName: elements[i].children[1].tagName.toLowerCase(),
             x: offset.x,
             y: offset.y,
-            width: elements[i].offsetWidth
+            width: elements[i].offsetWidth,
+            height: elements[i].offsetHeight - 28
         };
         positions.push(savePos);
     }
@@ -95,7 +96,12 @@ function getSmallElements() {
 
     var order = [];
     for (var i = 0; i < elements.length; i++) {
-        order.push(elements[i].children[1].tagName.toLowerCase());
+        var pos = {
+            elementName: elements[i].children[1].tagName.toLowerCase(),
+            height: elements[i].offsetHeight - 28
+        };
+
+        order.push(pos);
     }
 
     return order;
@@ -156,25 +162,15 @@ function loadLayoutProcess() {
 }
 
 function loadLayout(elements) {
-    /*
     loadSmallLayout(elements.small);
-    loadMainLayout(elements.main);*/
-
-    onMainGrid = true;
-    var container = createModuleContainer("vaccination-element");
-    addContainerToGrid(container);
-
-    
-    onMainGrid = false;
-    var container = createModuleContainer("vaccination-element-small");
-    addContainerToGrid(container);
-    //$grid.packery('fit', container, elements[i].x, elements[i].y);
+    loadMainLayout(elements.main);
 }
 
 function loadSmallLayout(elements) {
     onMainGrid = false;
     for (var i = 0; i < elements.length; i++) {
-        var container = createModuleContainer(elements[i]);
+        var container = createModuleContainer(elements[i].elementName);
+        container.children[1].setAttribute("height", elements[i].height);
         addContainerToGrid(container);
     }
 }
@@ -184,6 +180,7 @@ function loadMainLayout(elements) {
 
     for (var i = 0; i < elements.length; i++) {
         var container = createModuleContainer(elements[i].elementName);
+        container.children[1].setAttribute("height", elements[i].height);
         addContainerToGrid(container);
         $grid.packery('fit', container, elements[i].x, elements[i].y);
     }
@@ -273,6 +270,8 @@ function getModuleSize(moduleName) {
     } else {
         return "1000px";
     }
+
+
 }
 
 function addSmall() {

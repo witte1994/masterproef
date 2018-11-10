@@ -97,7 +97,8 @@ export class BaseElementSmall extends PolymerElement {
                 value: "Title"
             },
             height: {
-                type: Number
+                type: Number,
+                value: 210
             }
         };
     }
@@ -105,7 +106,6 @@ export class BaseElementSmall extends PolymerElement {
     ready() {
         super.ready();
         
-        this.height = 210;
         this.$.cardId.style.height = this.height + "px";
 
         this.setUserId();

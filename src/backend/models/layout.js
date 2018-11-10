@@ -8,7 +8,15 @@ const layoutSchema = mongoose.Schema({
         required: true
     },
     small: [{
-        type: String
+        elementName: {
+            type: String,
+            required: true
+        },
+        height: {
+            type: Number,
+            min: 0,
+            required: true
+        }
     }],
     main: [{
         elementName: {
@@ -26,6 +34,11 @@ const layoutSchema = mongoose.Schema({
             required: true
         },
         width: {
+            type: Number,
+            min: 0,
+            required: true
+        },
+        height: {
             type: Number,
             min: 0,
             required: true
