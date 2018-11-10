@@ -8,14 +8,14 @@ import './shared-styles.js'
  * @polymer
  * @extends HTMLElement
  */
-export class BaseElement extends PolymerElement {
+export class BaseElementSmall extends PolymerElement {
     static get template() {
         return html`
         <style include="shared-styles">
             .containerHeader {
                 width: 100%;
                 display: grid;
-                grid-template-columns: auto 56px;
+                grid-template-columns: auto 28px;
                 align-items: center;
                 margin-bottom: 8px;
             }
@@ -53,8 +53,7 @@ export class BaseElement extends PolymerElement {
                 <h1>[[title]]</h1>
 
                 <div>
-                    <paper-icon-button class="buttonsHeader" icon="add" on-tap="openDialog"></paper-icon-button>
-                    <paper-icon-button class="buttonsHeader" icon="close" on-tap="removeModule"></paper-icon-button>
+                <paper-icon-button class="buttonsHeader" icon="close" on-tap="removeModule"></paper-icon-button>
                 </div>
             </div>
 
@@ -106,7 +105,7 @@ export class BaseElement extends PolymerElement {
     ready() {
         super.ready();
         
-        this.height = 300;
+        this.height = 210;
         this.$.cardId.style.height = this.height + "px";
 
         this.setUserId();
@@ -130,13 +129,9 @@ export class BaseElement extends PolymerElement {
         this.$.cardId.style.height = this.height + "px";
     }
 
-    openDialog(e) {
-        console.log("implement in child element");
-    }
-
     removeModule(e) {
         this.dispatchEvent(new CustomEvent('delete', { composed: true }));
     }
 }
 
-window.customElements.define('base-element', BaseElement);
+window.customElements.define('base-element-small', BaseElementSmall);
