@@ -141,22 +141,27 @@
 		id="ajaxGetLayout" 
 		url="http://localhost:3000/user/"
 		method="GET"
-		handle-as="json"
+		handle-as="json"display:flex;
+		flex-direction:column;
 		content-type="application/json"
 		bubbles="true">
 	</iron-ajax>
 
-	<app-drawer-layout responsive-width="1076px" fullbleed style="--app-drawer-width: 280px;">
+	<app-drawer-layout responsive-width="1076px" fullbleed style="--app-drawer-width: 285px;">
 		
-		<app-drawer id="drawer" slot="drawer">
-			<app-toolbar style="margin-bottom: 8px;">
-				<paper-icon-button icon="compare-arrows" onclick="patientDialog.open()"></paper-icon-button>
-				<div main-title>Patient info</div>
-				<paper-icon-button icon="add" onclick="addModuleSmall.open()"></paper-icon-button>
-			</app-toolbar>
-			
-			<div id="smallGrid" class="grid">
-			</div>
+		<app-drawer id="drawer" slot="drawer" style="overflow-y: auto;">
+			<app-header-layout id="drawerLayout" has-scrolling-region="">
+				<app-header slot="header" fixed>
+					<app-toolbar style="margin-bottom: 8px;">
+						<paper-icon-button icon="compare-arrows" onclick="patientDialog.open()"></paper-icon-button>
+						<div main-title>Patient info</div>
+						<paper-icon-button icon="add" onclick="addModuleSmall.open()"></paper-icon-button>
+					</app-toolbar>
+				</app-header>
+
+				<div id="smallGrid" class="grid">
+				</div>
+			</app-header-layout>
 		</app-drawer>
 		
 		<app-header-layout has-scrolling-region="">
@@ -181,22 +186,12 @@
 		
 		<paper-dropdown-menu id="moduleMenu" label="Module">
 			<paper-listbox slot="dropdown-content">
-				<paper-item value="bp-element">Blood pressure</paper-item>
-				<paper-item value="bs-element">Blood sugar</paper-item>
-				<paper-item value="heart-element">Heart</paper-item>
-				<paper-item value="medication-element">Medication</paper-item>
-				<paper-item value="oxygen-element">Oxygen</paper-item>
-				<paper-item value="weight-element">Weight</paper-item>
+				<paper-item value="allergy-element">Allergies</paper-item>
+				<paper-item value="prescription-element">Prescriptions</paper-item>
+				<paper-item value="vaccination-element">Vaccinations</paper-item>
 			</paper-listbox>
 		</paper-dropdown-menu>
-		
-		<paper-dropdown-menu id="sizeMenu" label="Size">
-			<paper-listbox slot="dropdown-content">
-				<paper-item value="-small">Small</paper-item>
-				<paper-item value="">Large</paper-item>
-			</paper-listbox>
-		</paper-dropdown-menu>
-		
+
 		<paper-button dialog-dismiss autofocus>Decline</paper-button>
 		<paper-button dialog-confirm onclick="add()">Accept</paper-button>
 	</paper-dialog>
@@ -207,12 +202,9 @@
 	
 		<paper-dropdown-menu id="moduleMenuSmall" label="Module">
 			<paper-listbox slot="dropdown-content">
-				<paper-item value="bp-element-small">Blood pressure</paper-item>
-				<paper-item value="bs-element-small">Blood sugar</paper-item>
-				<paper-item value="heart-element-small">Heart</paper-item>
-				<paper-item value="medication-element-small">Medication</paper-item>
-				<paper-item value="oxygen-element-small">Oxygen</paper-item>
-				<paper-item value="weight-element-small">Weight</paper-item>
+				<paper-item value="allergy-element-small">Allergies</paper-item>
+				<paper-item value="prescription-element-small">Prescriptions</paper-item>
+				<paper-item value="vaccination-element-small">Vaccinations</paper-item>
 			</paper-listbox>
 		</paper-dropdown-menu>
 	

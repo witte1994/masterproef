@@ -129,7 +129,7 @@ function addUserElement() {
     var userElement = document.createElement("user-element");
     userElement.setAttribute("id", "userElement");
     var refElement = document.querySelector('#smallGrid');
-    document.querySelector('#drawer').insertBefore(userElement, refElement);
+    document.querySelector('#drawerLayout').insertBefore(userElement, refElement);
 
     userElement.addEventListener('resizeUser', function (e) {
         userElement.parentNode.removeChild(userElement);
@@ -141,7 +141,7 @@ function addSmallUserElement() {
     var userElement = document.createElement("user-element-small");
     userElement.setAttribute("id", "userElementSmall");
     var refElement = document.querySelector('#smallGrid');
-    document.querySelector('#drawer').insertBefore(userElement, refElement);
+    document.querySelector('#drawerLayout').insertBefore(userElement, refElement);
 
     userElement.addEventListener('resizeUserSmall', function (e) {
         userElement.parentNode.removeChild(userElement);
@@ -218,10 +218,7 @@ function login() {
 
 function add() {
     onMainGrid = true;
-    var module = document.getElementById("moduleMenu").selectedItem.getAttribute("value");
-    var size = document.getElementById("sizeMenu").selectedItem.getAttribute("value");
-
-    var moduleName = module + size;
+    var moduleName = document.getElementById("moduleMenu").selectedItem.getAttribute("value");
 
     var container = createModuleContainer(moduleName);
     addContainerToGrid(container);
@@ -263,14 +260,18 @@ function addContainerToGrid(container) {
 }
 
 function getModuleSize(moduleName) {
-    if (moduleName === "vaccination-element") {
-        return "400px";
+    if (!onMainGrid) {
+        return "100%"
     }
 
-    if (moduleName.split('-').length == 3) {
-        return "100%";
-    } else {
+    if (moduleName === "allergy-element") {
+        return "500px";
+    } else if (moduleName === "prescription-element") {
+        return "582px";
+    } else if (moduleName === "vaccination-element") {
         return "400px";
+    } else {
+        return "1000px";
     }
 }
 
