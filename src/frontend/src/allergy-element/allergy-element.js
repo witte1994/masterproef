@@ -201,9 +201,6 @@ class AllergyElement extends BaseElement {
             title: {
                 type: String,
                 value: "Allergies"
-            },
-            curObj: {
-                type: Object
             }
         };
     }
