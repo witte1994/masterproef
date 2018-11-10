@@ -95,6 +95,11 @@ class PrescriptionElement extends PolymerElement {
                 display: inline-block;
             }
 
+            .card {
+                display: grid;
+                grid-template-rows: 36px auto 21px;
+            }
+
             paper-input {
                 margin-top: 0px;
                 height: 50px;
@@ -156,6 +161,65 @@ class PrescriptionElement extends PolymerElement {
             on-response="medDeleted"
         ></iron-ajax>
 
+        <paper-dialog id="prescriptionDialog">
+            <h2>Create prescription</h2>
+
+            <paper-dropdown-menu label="Medicin" id="medList">
+                <paper-listbox slot="dropdown-content">
+                    <dom-repeat items="{{data}}">
+                        <template>
+                            <paper-item value$="{{item._id}}">{{item.name}}</paper-item>
+                        </template>
+                    </dom-repeat>
+                </paper-listbox>
+            </paper-dropdown-menu>
+
+            <div style="margin: 0px;">
+                <paper-input style="padding: 0px; width: 60px; display: inline-block;" id="morning" type="number" label="Morning"></paper-input>
+                <paper-input style="padding: 0px; width: 60px; display: inline-block;" id="noon" type="number" label="Noon"></paper-input>
+            </div >
+            <div style="margin: 0px;">
+                <paper-input style="padding: 0px; width: 60px; display: inline-block;" id="evening" type="number" label="Evening"></paper-input>
+                <paper-input style="padding: 0px; width: 60px; display: inline-block;" id="bed" type="number" label="Bed"></paper-input>
+            </div>
+            <div style="margin: 0px;">
+                <vaadin-date-picker id="startDate" style="padding: 0px;" label="Start date" style="width: 160px;">
+                </vaadin-date-picker>
+            </div>
+            <div style="margin: 0px;">
+                <vaadin-date-picker id="endDate" style="padding: 0px;" label="End date" style="width: 160px;">
+                </vaadin-date-picker>
+            </div>
+            
+            <paper-button dialog-dismiss autofocus>Decline</paper-button>
+            <paper-button dialog-confirm on-tap="addPrescription">Accept</paper-button>
+        </paper-dialog>
+
+        <paper-dialog id="editPrescriptionDialog">
+            <h2>Edit prescription</h2>
+
+            <div style="margin: 0px;">
+                <paper-input style="padding: 0px; width: 60px; display: inline-block;" id="morningEdit" type="number" label="Morning"></paper-input>
+                <paper-input style="padding: 0px; width: 60px; display: inline-block;" id="noonEdit" type="number" label="Noon"></paper-input>
+            </div >
+            <div style="margin: 0px;">
+                <paper-input style="padding: 0px; width: 60px; display: inline-block;" id="eveningEdit" type="number" label="Evening"></paper-input>
+                <paper-input style="padding: 0px; width: 60px; display: inline-block;" id="bedEdit" type="number" label="Bed"></paper-input>
+            </div>
+            <div style="margin: 0px;">
+                <vaadin-date-picker id="startDateEdit" style="padding: 0px;" label="Start date" style="width: 160px;">
+                </vaadin-date-picker>
+            </div>
+            <div style="margin: 0px;">
+                <vaadin-date-picker id="endDateEdit" style="padding: 0px;" label="End date" style="width: 160px;">
+                </vaadin-date-picker>
+            </div>
+            
+            <paper-button dialog-dismiss autofocus>Cancel</paper-button>
+            <paper-button dialog-confirm on-tap="editPrescription">Edit</paper-button>
+            <paper-button dialog-dismiss on-tap="deletePrescription">Delete</paper-button>
+        </paper-dialog>
+
         <div id="cardId" class="card" style="padding-bottom: 0px;">
             <div class="containerHeader">
                 <h1>Medication</h1>
@@ -167,7 +231,7 @@ class PrescriptionElement extends PolymerElement {
             </div>
 
             <div>
-                <vaadin-grid on-active-item-changed="showDetails" id="vaadinGrid" style="height: {{height}}px;" items="{{prescriptions}}">
+                <vaadin-grid on-active-item-changed="showDetails" id="vaadinGrid" style="height: 100%;" items="{{prescriptions}}">
 
                     <template class="row-details">
                         <div class="detailsGrid">
@@ -225,70 +289,11 @@ class PrescriptionElement extends PolymerElement {
                         <template><paper-icon-button style="margin: 0px; padding:0px; width: 22px; height: 22px;"icon="create" on-tap="openEditPrescriptionDialog" data-args$="[[index]]"></paper-icon-button></template>
                     </vaadin-grid-column>
                 </vaadin-grid>
+            </div>
                 
-                <div style="text-align: center;">
-                    <paper-icon-button class="resizers" icon="expand-less" on-tap="resizeSmaller"></paper-icon-button>
-                    <paper-icon-button class="resizers" icon="expand-more" on-tap="resizeLarger"></paper-icon-button>
-                </div>
-                
-                <paper-dialog id="prescriptionDialog">
-                    <h2>Create prescription</h2>
-
-                    <paper-dropdown-menu label="Medicin" id="medList">
-                        <paper-listbox slot="dropdown-content">
-                            <dom-repeat items="{{data}}">
-                                <template>
-                                    <paper-item value$="{{item._id}}">{{item.name}}</paper-item>
-                                </template>
-                            </dom-repeat>
-                        </paper-listbox>
-                    </paper-dropdown-menu>
-
-                    <div style="margin: 0px;">
-                        <paper-input style="padding: 0px; width: 60px; display: inline-block;" id="morning" type="number" label="Morning"></paper-input>
-                        <paper-input style="padding: 0px; width: 60px; display: inline-block;" id="noon" type="number" label="Noon"></paper-input>
-                    </div >
-                    <div style="margin: 0px;">
-                        <paper-input style="padding: 0px; width: 60px; display: inline-block;" id="evening" type="number" label="Evening"></paper-input>
-                        <paper-input style="padding: 0px; width: 60px; display: inline-block;" id="bed" type="number" label="Bed"></paper-input>
-                    </div>
-                    <div style="margin: 0px;">
-                        <vaadin-date-picker id="startDate" style="padding: 0px;" label="Start date" style="width: 160px;">
-                        </vaadin-date-picker>
-                    </div>
-                    <div style="margin: 0px;">
-                        <vaadin-date-picker id="endDate" style="padding: 0px;" label="End date" style="width: 160px;">
-                        </vaadin-date-picker>
-                    </div>
-                    
-                    <paper-button dialog-dismiss autofocus>Decline</paper-button>
-                    <paper-button dialog-confirm on-tap="addPrescription">Accept</paper-button>
-                </paper-dialog>
-
-                <paper-dialog id="editPrescriptionDialog">
-                    <h2>Edit prescription</h2>
-
-                    <div style="margin: 0px;">
-                        <paper-input style="padding: 0px; width: 60px; display: inline-block;" id="morningEdit" type="number" label="Morning"></paper-input>
-                        <paper-input style="padding: 0px; width: 60px; display: inline-block;" id="noonEdit" type="number" label="Noon"></paper-input>
-                    </div >
-                    <div style="margin: 0px;">
-                        <paper-input style="padding: 0px; width: 60px; display: inline-block;" id="eveningEdit" type="number" label="Evening"></paper-input>
-                        <paper-input style="padding: 0px; width: 60px; display: inline-block;" id="bedEdit" type="number" label="Bed"></paper-input>
-                    </div>
-                    <div style="margin: 0px;">
-                        <vaadin-date-picker id="startDateEdit" style="padding: 0px;" label="Start date" style="width: 160px;">
-                        </vaadin-date-picker>
-                    </div>
-                    <div style="margin: 0px;">
-                        <vaadin-date-picker id="endDateEdit" style="padding: 0px;" label="End date" style="width: 160px;">
-                        </vaadin-date-picker>
-                    </div>
-                    
-                    <paper-button dialog-dismiss autofocus>Cancel</paper-button>
-                    <paper-button dialog-confirm on-tap="editPrescription">Edit</paper-button>
-                    <paper-button dialog-dismiss on-tap="deletePrescription">Delete</paper-button>
-                </paper-dialog>
+            <div style="text-align: center;">
+                <paper-icon-button class="resizers" icon="expand-less" on-tap="resizeSmaller"></paper-icon-button>
+                <paper-icon-button class="resizers" icon="expand-more" on-tap="resizeLarger"></paper-icon-button>
             </div>
         </div>
     `;
@@ -321,12 +326,14 @@ class PrescriptionElement extends PolymerElement {
 
     ready() {
         super.ready();
-        this.height = 210;
+
+        var cardId = this.$.cardId;
+        this.height = 400;
 
         this.selectedStartDate = null;
         this.selectedEndDate = null;
 
-        var cardId = this.$.cardId;
+        cardId.style.height = this.height + "px";
         new ResizeSensor(this.$.cardId, function () {
             var width = cardId.getBoundingClientRect().width;
         });
@@ -454,10 +461,13 @@ class PrescriptionElement extends PolymerElement {
     resizeSmaller(e) {
         if (this.height > 200)
             this.height -= 50;
+        
+        this.$.cardId.style.height = this.height + "px";
     }
 
     resizeLarger(e) {
         this.height += 50;
+        this.$.cardId.style.height = this.height + "px";
     }
 
     removeModule(e) {

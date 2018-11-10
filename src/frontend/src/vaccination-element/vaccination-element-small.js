@@ -46,6 +46,11 @@ class VaccinationElementSmall extends PolymerElement {
                 margin: auto;
                 display: inline-block;
             }
+
+            .card {
+                display: grid;
+                grid-template-rows: 36px auto 21px;
+            }
         </style>
 
         <iron-ajax 
@@ -56,7 +61,7 @@ class VaccinationElementSmall extends PolymerElement {
             last-response="{{vaccinations}}"
         ></iron-ajax>
 
-        <div class="card" style="padding-bottom: 0px;">
+        <div id="cardId" class="card" style="padding-bottom: 0px;">
             <div class="containerHeader">
                 <h1>Vaccinations</h1>
 
@@ -65,20 +70,21 @@ class VaccinationElementSmall extends PolymerElement {
                 </div>
             </div>
 
-            <vaadin-grid id="vaadinGrid" style="height: {{height}}px;" items="{{vaccinations}}">
+            <div>
+                <vaadin-grid id="vaadinGrid" style="height: 100%;" items="{{vaccinations}}">
+                    <vaadin-grid-column width="132px">
+                        <template class="header">
+                            Vaccination
+                        </template>
+                        <template>[[item.name]]</template>
+                    </vaadin-grid-column>
 
-                <vaadin-grid-column width="132px">
-                    <template class="header">
-                        Vaccination
-                    </template>
-                    <template>[[item.name]]</template>
-                </vaadin-grid-column>
-
-                <vaadin-grid-column width="100px" flex-grow="0">
-                    <template class="header">Next date</template>
-                    <template>[[item.dateNextStr]]</template>
-                </vaadin-grid-column>
-            </vaadin-grid>
+                    <vaadin-grid-column width="100px" flex-grow="0">
+                        <template class="header">Next date</template>
+                        <template>[[item.dateNextStr]]</template>
+                    </vaadin-grid-column>
+                </vaadin-grid>
+            </div>
 
             <div style="text-align: center;">
                 <paper-icon-button class="resizers" icon="expand-less" on-tap="resizeSmaller"></paper-icon-button>
@@ -99,6 +105,8 @@ class VaccinationElementSmall extends PolymerElement {
         super.ready();
 
         this.height = 210;
+        this.$.cardId.style.height = this.height + "px";
+
         this.setUserId();
 
         this.$.ajaxVaccinations.generateRequest();
@@ -111,12 +119,15 @@ class VaccinationElementSmall extends PolymerElement {
     }
 
     resizeSmaller(e) {
-        if (this.height > 210)
+        if (this.height > 200)
             this.height -= 50;
+        
+        this.$.cardId.style.height = this.height + "px";
     }
 
     resizeLarger(e) {
         this.height += 50;
+        this.$.cardId.style.height = this.height + "px";
     }
 
     removeModule(e) {

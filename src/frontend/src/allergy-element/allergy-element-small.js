@@ -46,6 +46,11 @@ class AllergyElementSmall extends PolymerElement {
                 margin: auto;
                 display: inline-block;
             }
+
+            .card {
+                display: grid;
+                grid-template-rows: 36px auto 21px;
+            }
         </style>
 
         <iron-ajax 
@@ -56,7 +61,7 @@ class AllergyElementSmall extends PolymerElement {
             last-response="{{allergies}}"
         ></iron-ajax>
 
-        <div class="card" style="padding-bottom: 0px;">
+        <div id="cardId" class="card" style="padding-bottom: 0px;">
             <div class="containerHeader">
                 <h1>Allergies</h1>
 
@@ -64,21 +69,23 @@ class AllergyElementSmall extends PolymerElement {
                     <paper-icon-button class="buttonsHeader" icon="close" on-tap="removeModule"></paper-icon-button>
                 </div>
             </div>
+            
+            <div>
+                <vaadin-grid id="vaadinGrid" style="height: 100%;" items="{{allergies}}">
 
-            <vaadin-grid id="vaadinGrid" style="height: {{height}}px;" items="{{allergies}}">
+                    <vaadin-grid-column width="36px" flex-grow="0">
+                        <template class="header"><iron-icon style="width: 20px; height: 20px;" icon="flag"></iron-icon></template>
+                        <template>[[item.severity]]</template>
+                    </vaadin-grid-column>
 
-                <vaadin-grid-column width="36px" flex-grow="0">
-                    <template class="header"><iron-icon style="width: 20px; height: 20px;" icon="flag"></iron-icon></template>
-                    <template>[[item.severity]]</template>
-                </vaadin-grid-column>
-
-                <vaadin-grid-column width="196px">
-                    <template class="header">
-                        Allergy (type)
-                    </template>
-                    <template>[[item.name]] ([[item.type]])</template>
-                </vaadin-grid-column>
-            </vaadin-grid>
+                    <vaadin-grid-column width="196px">
+                        <template class="header">
+                            Allergy (type)
+                        </template>
+                        <template>[[item.name]] ([[item.type]])</template>
+                    </vaadin-grid-column>
+                </vaadin-grid>
+            </div>
 
             <div style="text-align: center;">
                 <paper-icon-button class="resizers" icon="expand-less" on-tap="resizeSmaller"></paper-icon-button>
@@ -99,6 +106,8 @@ class AllergyElementSmall extends PolymerElement {
         super.ready();
 
         this.height = 210;
+        this.$.cardId.style.height = this.height + "px";
+
         this.setUserId();
 
         this.$.ajaxAllergies.generateRequest();
@@ -111,12 +120,15 @@ class AllergyElementSmall extends PolymerElement {
     }
 
     resizeSmaller(e) {
-        if (this.height > 210)
+        if (this.height > 200)
             this.height -= 50;
+        
+        this.$.cardId.style.height = this.height + "px";
     }
 
     resizeLarger(e) {
         this.height += 50;
+        this.$.cardId.style.height = this.height + "px";
     }
 
     removeModule(e) {

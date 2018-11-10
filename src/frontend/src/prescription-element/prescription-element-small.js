@@ -46,6 +46,11 @@ class PrescriptionElementSmall extends PolymerElement {
                 margin: auto;
                 display: inline-block;
             }
+
+            .card {
+                display: grid;
+                grid-template-rows: 36px auto 21px;
+            }
         </style>
 
         <iron-ajax 
@@ -56,7 +61,7 @@ class PrescriptionElementSmall extends PolymerElement {
             last-response="{{prescriptions}}"
         ></iron-ajax>
 
-        <div class="card" style="padding-bottom: 0px;">
+        <div id="cardId" class="card" style="padding-bottom: 0px;">
             <div class="containerHeader">
                 <h1>Current medication</h1>
 
@@ -65,20 +70,21 @@ class PrescriptionElementSmall extends PolymerElement {
                 </div>
             </div>
 
-            <vaadin-grid id="vaadinGrid" style="height: {{height}}px;" items="{{prescriptions}}">
+            <div>
+                <vaadin-grid id="vaadinGrid" style="height: 100%;" items="{{prescriptions}}">
+                    <vaadin-grid-column width="160px">
+                        <template class="header">
+                            Medicine
+                        </template>
+                        <template>[[item.medication.name]]</template>
+                    </vaadin-grid-column>
 
-                <vaadin-grid-column width="160px">
-                    <template class="header">
-                        Medicine
-                    </template>
-                    <template>[[item.medication.name]]</template>
-                </vaadin-grid-column>
-
-                <vaadin-grid-column width="72px" flex-grow="0">
-                    <template class="header">Dosage</template>
-                    <template>[[item.dosage.morning]]/[[item.dosage.noon]]/[[item.dosage.evening]]/[[item.dosage.bed]]</template>
-                </vaadin-grid-column>
-            </vaadin-grid>
+                    <vaadin-grid-column width="72px" flex-grow="0">
+                        <template class="header">Dosage</template>
+                        <template>[[item.dosage.morning]]/[[item.dosage.noon]]/[[item.dosage.evening]]/[[item.dosage.bed]]</template>
+                    </vaadin-grid-column>
+                </vaadin-grid>
+            </div>
 
             <div style="text-align: center;">
                 <paper-icon-button class="resizers" icon="expand-less" on-tap="resizeSmaller"></paper-icon-button>
@@ -102,6 +108,8 @@ class PrescriptionElementSmall extends PolymerElement {
         super.ready();
 
         this.height = 210;
+        this.$.cardId.style.height = this.height + "px";
+
         this.setUserId();
 
         var todayStr = (new Date()).toISOString().substring(0,10) + "T00:00:00.000Z";
@@ -118,12 +126,15 @@ class PrescriptionElementSmall extends PolymerElement {
     }
 
     resizeSmaller(e) {
-        if (this.height > 210)
+        if (this.height > 200)
             this.height -= 50;
+        
+        this.$.cardId.style.height = this.height + "px";
     }
 
     resizeLarger(e) {
         this.height += 50;
+        this.$.cardId.style.height = this.height + "px";
     }
 
     removeModule(e) {
