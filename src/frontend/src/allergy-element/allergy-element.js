@@ -55,16 +55,16 @@ class AllergyElement extends BaseElement {
                 method="POST"
                 handle-as="json"
                 content-type="application/json"
-                on-response="allergyCreated"
+                on-response="sendUpdateSignal"
             ></iron-ajax>
 
             <iron-ajax
-                id="ajaxEditAllergy"
+                id="ajaxUpdateAllergy"
                 url="http://localhost:3000/user/[[userId]]/allergy/update"
                 method="POST"
                 handle-as="json"
                 content-type="application/json"
-                on-response="allergyUpdated"
+                on-response="sendUpdateSignal"
             ></iron-ajax>
 
             <iron-ajax
@@ -72,7 +72,7 @@ class AllergyElement extends BaseElement {
                 url="http://localhost:3000/user/[[userId]]/allergy/delete/[[deleteId]]"
                 method="DELETE"
                 handle-as="json"
-                on-response="allergyDeleted"
+                on-response="sendUpdateSignal"
             ></iron-ajax>
         `;
     }
@@ -94,8 +94,8 @@ class AllergyElement extends BaseElement {
                     </paper-dropdown-menu>
                 </div>
                 <div>
-                    <paper-dropdown-menu label="Severity" id="severpaper-textyList">
-                        <paper-listbox slot="dropdown-content" selepaper-texted="0">
+                    <paper-dropdown-menu label="Severity" id="severityList">
+                        <paper-listbox slot="dropdown-content" selected="0">
                             <paper-item value="0">0</paper-item>
                             <paper-item value="1">1</paper-item>
                             <paper-item value="2">2</paper-item>
@@ -119,12 +119,12 @@ class AllergyElement extends BaseElement {
                 <paper-button dialog-confirm on-tap="addAllergy">Accept</paper-button>
             </paper-dialog>
             
-            <paper-dialog id="editAllergyDialog">
-                <h2>Edit allergy</h2>
+            <paper-dialog id="updateAllergyDialog">
+                <h2>Update allergy info</h2>
 
                 <div>
-                    <paper-dropdown-menu label="Severity" id="severityListEdit">
-                        <paper-listbox id="severityListboxEdit" slot="dropdown-content" selected="0">
+                    <paper-dropdown-menu label="Severity" id="severityListUpdate">
+                        <paper-listbox id="severityListboxUpdate" slot="dropdown-content" selected="0">
                             <paper-item value="0">0</paper-item>
                             <paper-item value="1">1</paper-item>
                             <paper-item value="2">2</paper-item>
@@ -134,18 +134,18 @@ class AllergyElement extends BaseElement {
                     </paper-dropdown-menu>
                 </div>
                 <div>
-                    <paper-input style="padding: 0px;" id="nameEdit" label="Name"></paper-input>
+                    <paper-input style="padding: 0px;" id="nameUpdate" label="Name"></paper-input>
                 </div>
                 <div style="width: 225px;">
-                    <paper-textarea style="padding: 0px;" id="descriptionEdit" label="Description"></paper-textarea>
+                    <paper-textarea style="padding: 0px;" id="descriptionUpdate" label="Description"></paper-textarea>
                 </div>
                 <div style="margin: 0px;">
-                    <vaadin-date-picker id="dateEdit" style="padding: 0px;" label="Date" style="width: 160px;">
+                    <vaadin-date-picker id="dateUpdate" style="padding: 0px;" label="Date" style="width: 160px;">
                     </vaadin-date-picker>
                 </div>
                 
                 <paper-button dialog-dismiss autofocus>Cancel</paper-button>
-                <paper-button dialog-confirm on-tap="editAllergy">Edit</paper-button>
+                <paper-button dialog-confirm on-tap="updateAllergy">Update</paper-button>
                 <paper-button dialog-dismiss on-tap="deleteAllergy">Delete</paper-button>
             </paper-dialog>
         `;
@@ -190,7 +190,7 @@ class AllergyElement extends BaseElement {
                 </vaadin-grid-column>
 
                 <vaadin-grid-column width="40px" flex-grow="0">
-                    <template><paper-icon-button style="margin: 0px; padding:0px; width: 22px; height: 22px;" icon="create" on-tap="openEditAllergyDialog" data-args$="[[index]]"></paper-icon-button></template>
+                    <template><paper-icon-button style="margin: 0px; padding:0px; width: 22px; height: 22px;" icon="create" on-tap="openUpdateAllergyDialog" data-args$="[[index]]"></paper-icon-button></template>
                 </vaadin-grid-column>
             </vaadin-grid>
         `;
@@ -198,35 +198,40 @@ class AllergyElement extends BaseElement {
 
     static get properties() {
         return {
-            title: {
-                type: String,
-                value: "Allergies"
-            }
         };
     }
 
     ready() {
         super.ready();
+        this.title = "Allergies";
 
+        this.update();
+    }
+
+    update(e) {
         this.$.ajaxAllergies.generateRequest();
+    }
+
+    sendUpdateSignal() {
+        this.dispatchEvent(new CustomEvent("allergy", {bubbles: true, composed: true}));
     }
 
     showDetails(e) {
         this.$.vaadinGrid.detailsOpenedItems = [e.detail.value];
     }
 
-    openEditAllergyDialog(e) {
+    openUpdateAllergyDialog(e) {
         this.curObj = this.allergies[e.target.dataset.args];
         var curObj = this.curObj;
 
-        this.$.severityListboxEdit.setAttribute("selected", curObj.severity);
-        this.$.nameEdit.value = curObj.name;
-        this.$.descriptionEdit.value = curObj.description;
+        this.$.severityListboxUpdate.setAttribute("selected", curObj.severity);
+        this.$.nameUpdate.value = curObj.name;
+        this.$.descriptionUpdate.value = curObj.description;
 
         var date = new Date(curObj.date);
-        this.$.dateEdit.value = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
+        this.$.dateUpdate.value = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
         
-        this.$.editAllergyDialog.open();
+        this.$.updateAllergyDialog.open();
     }
 
     addAllergy(e) {
@@ -247,40 +252,27 @@ class AllergyElement extends BaseElement {
         this.$.ajaxCreateAllergy.generateRequest();
     }
 
-    editAllergy(e) {
-        var date = new Date(this.$.dateEdit.value);
-        var severity = this.$.severityListEdit.selectedItem.getAttribute("value");
+    updateAllergy(e) {
+        var date = new Date(this.$.dateUpdate.value);
+        var severity = this.$.severityListUpdate.selectedItem.getAttribute("value");
 
         var obj = {
             "id": this.curObj._id,
-            "name": this.$.nameEdit.value,
-            "description": this.$.descriptionEdit.value,
+            "name": this.$.nameUpdate.value,
+            "description": this.$.descriptionUpdate.value,
             "severity": severity,
             "type": this.curObj.type,
             "date": date.toISOString()
         };
 
-        this.$.ajaxEditAllergy.body = obj;
-        this.$.ajaxEditAllergy.generateRequest();
+        this.$.ajaxUpdateAllergy.body = obj;
+        this.$.ajaxUpdateAllergy.generateRequest();
     }
 
     deleteAllergy(e) {
         this.deleteId = this.curObj._id;
         this.$.ajaxDeleteAllergy.generateRequest();
     }
-
-    allergyCreated(e) {
-        this.$.ajaxAllergies.generateRequest();
-    }
-
-    allergyUpdated(e) {
-        this.$.ajaxAllergies.generateRequest();
-    }
-
-    allergyDeleted(e) {
-        this.$.ajaxAllergies.generateRequest();
-    }
-
 
     openDialog(e) {
         this.$.addAllergyDialog.open();

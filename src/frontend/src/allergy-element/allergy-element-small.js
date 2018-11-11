@@ -56,16 +56,17 @@ class AllergyElementSmall extends BaseElementSmall {
 
     static get properties() {
         return {
-            title: {
-                type: String,
-                value: "Allergies"
-            }
         };
     }
 
     ready() {
         super.ready();
+        this.title = "Allergies";
 
+        this.update();
+    }
+
+    update(e) {
         this.$.ajaxAllergies.generateRequest();
     }
 }

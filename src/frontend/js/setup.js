@@ -162,6 +162,9 @@ function loadLayoutProcess() {
 }
 
 function loadLayout(elements) {
+    if (elements == null)
+        return;
+
     loadSmallLayout(elements.small);
     loadMainLayout(elements.main);
 }
@@ -223,6 +226,7 @@ function add() {
 
 function createModuleContainer(moduleName) {
     var newModule = document.createElement(moduleName);
+    newModule.setAttribute("update", false);
     var parentDiv = document.createElement("div");
     parentDiv.classList.add("grid-item");
 
@@ -285,6 +289,11 @@ function addSmall() {
 function addListeners(parent, mod) {
     addRemoveListener(parent, mod);
 
+    var updateStr = mod.tagName.split("-")[0].toLowerCase();
+    mod.addEventListener(updateStr, function (e) {
+        sendUpdateSignal(updateStr);
+    });
+
     if (onMainGrid) {
         addResizeListener(parent, mod);
         new ResizeSensor(parent, function () {
@@ -294,6 +303,31 @@ function addListeners(parent, mod) {
         new ResizeSensor(parent, function () {
             $smallGrid.packery('shiftLayout');
         });
+    }
+}
+
+function sendUpdateSignal(updateStr) {
+    var elements = $grid.packery('getItemElements');
+
+    for (var i = 0; i < elements.length; i++) {
+        var curElement = elements[i].children[1];
+        var curName = curElement.tagName.split("-")[0].toLowerCase();
+
+        if (curName === updateStr) {
+            console.log("large");
+            curElement.update();
+        }
+    }
+
+    var elements = $smallGrid.packery('getItemElements');
+    for (var i = 0; i < elements.length; i++) {
+        var curElement = elements[i].children[1];
+        var curName = curElement.tagName.split("-")[0].toLowerCase();
+
+        if (curName === updateStr) {
+            console.log("small");
+            curElement.update();
+        }
     }
 }
 

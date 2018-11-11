@@ -111,6 +111,14 @@ export class BaseElementSmall extends PolymerElement {
         this.setUserId();
     }
 
+    update(e) {
+        console.log("update: implement in child class - small");
+    }
+
+    sendUpdateSignal() {
+        console.log("sendUpdateSignal: implement in child class");
+    }
+
     setUserId() {
         var split = document.URL.split("/");
         var param = split[split.length - 1];
