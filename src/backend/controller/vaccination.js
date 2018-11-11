@@ -4,40 +4,28 @@ const Vaccination = require('../models/vaccination');
 
 exports.importValues = function (userId, values) {
     for (var i = 0; i < values.length; i++) {
+        var curVac = values[i];
+        
+        if (!("entries" in curVac))
+            curVac.entries = [];
+
+        for (var j = 0; j < curVac.entries.length; j++) {
+            curVac.entries[j]._id = mongoose.Types.ObjectId();
+        }
+        
         const vaccination = new Vaccination({
             _id: mongoose.Types.ObjectId(),
             user: userId,
-            name: values[i].name,
-            description: values[i].description,
-            entries: [],
-            dateNext: values[i].dateNext
+            name: curVac.name,
+            description: curVac.description,
+            entries: curVac.entries,
+            dateNext: curVac.dateNext
         });
         vaccination
             .save()
             .then(doc => {
-                importEntries(doc._id, values[i].entries);
+                console.log(doc);
             })
-            .catch(err => {
-                console.log(err);
-            });
-    }
-}
-
-function importEntries(vaccinationId, entries) {
-    for (var i = 0; i < entries.length; i++) {
-        var entry = {
-            _id: mongoose.Types.ObjectId(),
-            description: entries[i].description,
-            date: entries[i].date
-        };
-    
-        Vaccination.findOneAndUpdate({ _id: vaccinationId },
-            {
-                $push: { entries: entry }
-            },
-            { new: true })
-            .exec()
-            .then()
             .catch(err => {
                 console.log(err);
             });

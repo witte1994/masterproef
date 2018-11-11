@@ -82,14 +82,14 @@ function importRest(userId, info) {
     for (var i = 0; i < keys.length; i++) {
         switch (keys[i]) {
             case 'allergies':
-                AllergyController.importValues(user, info.allergies);
+                AllergyController.importValues(userId, info.allergies);
                 break;
             case 'prescriptions':
                 MedicationController.importValues(info.prescriptions.medicines);
-                PrescriptionController.importValues(user, info.prescriptions.prescriptions);
+                PrescriptionController.importValues(userId, info.prescriptions.prescriptions);
                 break;
             case 'vaccinations':
-                VaccinationController.importValues(user, info.vaccinations);
+                VaccinationController.importValues(userId, info.vaccinations);
                 break;
             case 'bpVals':
                 BPController.importValues(userId, info.bpVals);
