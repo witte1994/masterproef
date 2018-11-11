@@ -2,6 +2,26 @@ const mongoose = require('mongoose');
 
 const Allergy = require('../models/allergy');
 
+exports.importValues = function (userId, values) {
+    for (var i = 0; i < values.length; i++) {
+        const allergy = new Allergy({
+            _id: mongoose.Types.ObjectId(),
+            user: userId,
+            name: values[i].name,
+            description: values[i].description,
+            severity: values[i].severity,
+            type: values[i].type,
+            date: values[i].date
+        });
+        allergy
+            .save()
+            .then()
+            .catch(err => {
+                console.log(err);
+            });
+    }
+}
+
 exports.get_all_by_id = (req, res, next) => {
     var userId = req.originalUrl.split('/')[2];
 

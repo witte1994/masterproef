@@ -3,10 +3,14 @@ const User = require('../models/user');
 
 const LayoutController = require('../controller/layout');
 
+const AllergyController = require('../controller/allergy');
+const MedicationController = require('../controller/medication');
+const PrescriptionController = require('../controller/prescription');
+const VaccinationController = require('../controller/vaccination');
+
 const BPController = require('../controller/bp');
 const BSController = require('../controller/bs');
 const HeartController = require('../controller/heart');
-const MedicationController = require('../controller/medication');
 const OxygenController = require('../controller/oxygen');
 const WeightController = require('../controller/weight');
 
@@ -77,6 +81,12 @@ function importRest(userId, info) {
 
     for (var i = 0; i < keys.length; i++) {
         switch (keys[i]) {
+            case 'allergies':
+                AllergyController.importValues(user, info.allergies);
+                break;
+            case 'vaccinations':
+                VaccinationController.importValues(user, info.vaccinations);
+                break;
             case 'bpVals':
                 BPController.importValues(userId, info.bpVals);
                 break;
@@ -106,7 +116,6 @@ function setThresholds(userId) {
     BPController.setThreshold(userId, null);
     BSController.setThreshold(userId, null);
     HeartController.setThreshold(userId, null);
-    MedicationController.setThreshold(userId, null);
     OxygenController.setThreshold(userId, null);
     WeightController.setThreshold(userId, null);
 }

@@ -2,6 +2,48 @@ const mongoose = require('mongoose');
 
 const Vaccination = require('../models/vaccination');
 
+exports.importValues = function (userId, values) {
+    for (var i = 0; i < values.length; i++) {
+        const vaccination = new Vaccination({
+            _id: mongoose.Types.ObjectId(),
+            user: userId,
+            name: values[i].name,
+            description: values[i].description,
+            entries: [],
+            dateNext: values[i].dateNext
+        });
+        vaccination
+            .save()
+            .then(doc => {
+                importEntries(doc._id, values[i].entries);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
+}
+
+function importEntries(vaccinationId, entries) {
+    for (var i = 0; i < entries.length; i++) {
+        var entry = {
+            _id: mongoose.Types.ObjectId(),
+            description: entries[i].description,
+            date: entries[i].date
+        };
+    
+        Vaccination.findOneAndUpdate({ _id: vaccinationId },
+            {
+                $push: { entries: entry }
+            },
+            { new: true })
+            .exec()
+            .then()
+            .catch(err => {
+                console.log(err);
+            });
+    }
+}
+
 exports.get_all_by_id = (req, res, next) => {
     var userId = req.originalUrl.split('/')[2];
 
