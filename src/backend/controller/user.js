@@ -63,7 +63,7 @@ exports.importUser = function (userInfo) {
     });
     user.save()
         .then(result => {
-            setThresholds(user._id);
+            //setThresholds(user._id);
             importRest(user._id, userInfo);
             console.log(result);
             return user._id;
@@ -91,6 +91,7 @@ function importRest(userId, info) {
             case 'vaccinations':
                 VaccinationController.importValues(userId, info.vaccinations);
                 break;
+            /*
             case 'bpVals':
                 BPController.importValues(userId, info.bpVals);
                 break;
@@ -105,7 +106,7 @@ function importRest(userId, info) {
                 break;
             case 'weightVals':
                 WeightController.importValues(userId, info.weightVals);
-                break;
+                break;*/
             case 'info':
                 console.log("info");
                 break;
