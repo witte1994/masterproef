@@ -11,46 +11,73 @@
             "address": "Straat 12, 4567 Dorp",
             "phone": "0858/898989",
             "smoker": "false"
-        }
-    },
-    {
-        "info": {
-            "firstName": "Ben",
-            "lastName": "Norris",
-            "nid": "2666835",
-            "birth": "1968-07-06T19:55:00",
-            "gender": "M",
-            "bloodType": "O-",
-            "height": "186",
-            "address": "Street 77, 5822 City",
-            "phone": "0222/881789"
-        }
-    },
-    {
-        "info": {
-            "firstName": "Nancy",
-            "lastName": "Scott",
-            "nid": "85642871",
-            "birth": "1976-12-09T14:35:00",
-            "gender": "F",
-            "bloodType": "AB+",
-            "height": "176",
-            "address": "Nicestreet 88, 4567 Town",
-            "phone": "2688/855200",
-            "smoker": "true"
-        }
-    },
-    {
-        "info": {
-            "firstName": "Alex",
-            "lastName": "Morrison",
-            "nid": "6547188",
-            "birth": "2000-01-29T02:44:00",
-            "gender": "M",
-            "bloodType": "B-",
-            "height": "159",
-            "address": "Highway 22, 80889 Capital",
-            "phone": "022/8989-444"
+        },
+        "allergies": [
+            {
+                "name": "bananenallergie",
+                "description": "mag geen bananen eten",
+                "severity": "4",
+                "type": "Food",
+                "date": "2018-11-11T07:20:00"
+            },
+            {
+                "name": "rubber",
+                "description": "mag geen rubber op huid",
+                "severity": "2",
+                "type": "Skin",
+                "date": "2018-11-04T07:20:00"
+            }
+        ],
+        "vaccinations": [
+            {
+                "name": "vac1",
+                "description": "vaccination1",
+                "dateNext": "2018-08-11T07:20:00",
+                "entries": [
+                    {
+                        "description": "description1",
+                        "date": "2018-04-22T07:20:00"
+                    },
+                    {
+                        "description": "description2",
+                        "date": "2018-04-24T07:20:00"
+                    }
+                ]
+            },
+            {
+                "name": "vac2",
+                "description": "vaccination1",
+                "dateNext": "2018-08-11T07:20:00",
+                "entries": [
+                ]
+            }
+        ],
+        "prescriptions": {
+            "medicines": [
+                {
+                    "name": "testmed1",
+                    "description": "description of med 1",
+                    "sideEffects": "side effects"
+                },
+                {
+                    "name": "med2",
+                    "description": "med2",
+                    "sideEffects": "side effects 222"
+                }
+            ],
+            "prescriptions": [
+                {
+                    "medName": "med2",
+                    "dosage": {
+                        "morning": "1",
+                        "noon": "2",
+                        "evening": "1",
+                        "bed": "1"
+                    },
+                    "startDate": "2018-08-08T07:20:00",
+                    "endDate": "2018-08-14T07:20:00"
+                }
+            ]
         }
     }
 ]
