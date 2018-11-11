@@ -27,6 +27,11 @@ $_documentContainer.innerHTML = `<dom-module id="shared-styles">
         margin: 4px;
         color: #212121;
         font-size: 22px;
+        font-weight: normal;
+      }
+
+      h2 {
+        font-weight: normal;
       }
     </style>
   </template>

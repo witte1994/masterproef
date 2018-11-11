@@ -20,7 +20,7 @@ import '@vaadin/vaadin-date-picker/vaadin-date-picker-light';
 class PrescriptionElement extends BaseElement {
     static get cssTemplate() {
         return html`
-            <style include="shared-styles">
+            <style>
                 .custom-date input {
                     background: #f5f5f5;
                     border: 2px solid #2196f3;

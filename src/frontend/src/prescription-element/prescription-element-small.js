@@ -12,7 +12,7 @@ import '@vaadin/vaadin-grid/vaadin-grid';
 class PrescriptionElementSmall extends BaseElementSmall {
     static get cssTemplate() {
         return html`
-            <style include="shared-styles">
+            <style >
                 vaadin-grid-cell-content {
                     padding: 4px 8px 4px 8px;
                 }

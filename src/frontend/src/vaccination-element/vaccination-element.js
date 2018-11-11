@@ -20,7 +20,7 @@ import '@vaadin/vaadin-date-picker/vaadin-date-picker-light';
 class VaccinationElement extends BaseElement {
     static get cssTemplate() {
         return html`
-            <style include="shared-styles">
+            <style>
                 vaadin-grid-cell-content {
                     padding: 4px 8px 4px 8px;
                 }
