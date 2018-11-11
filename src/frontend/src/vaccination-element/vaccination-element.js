@@ -191,9 +191,9 @@ class VaccinationElement extends BaseElement {
 
                 <vaadin-grid-column width="160px">
                     <template class="header">
-                        <vaadin-grid-sorter path="vaccinationName">
-                            <vaadin-grid-filter aria-label="Vaccination" path="vaccinationName" value="[[_filterVaccinationName]]">
-                                <vaadin-text-field style="width:145px;" slot="filter" placeholder="Vaccination" value="{{_filterVaccinationName}}" focus-target></vaadin-text-field>
+                        <vaadin-grid-sorter path="name">
+                            <vaadin-grid-filter aria-label="Vaccination" path="name" value="[[_filterName]]">
+                                <vaadin-text-field style="width:145px;" slot="filter" placeholder="Vaccination" value="{{_filterName}}" focus-target></vaadin-text-field>
                             </vaadin-grid-filter>
                         </vaadin-grid-sorter>
                     </template>

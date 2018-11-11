@@ -168,9 +168,9 @@ class AllergyElement extends BaseElement {
 
                 <vaadin-grid-column width="160px">
                     <template class="header">
-                        <vaadin-grid-sorter path="allergyName">
-                            <vaadin-grid-filter aria-label="Allergy" path="allergyName" value="[[_filterAllergyName]]">
-                                <vaadin-text-field style="width:145px;" slot="filter" placeholder="Allergy" value="{{_filterAllergyName}}" focus-target></vaadin-text-field>
+                        <vaadin-grid-sorter path="name">
+                            <vaadin-grid-filter aria-label="Allergy" path="name" value="[[_filterName]]">
+                                <vaadin-text-field style="width:145px;" slot="filter" placeholder="Allergy" value="{{_filterName}}" focus-target></vaadin-text-field>
                             </vaadin-grid-filter>
                         </vaadin-grid-sorter>
                     </template>

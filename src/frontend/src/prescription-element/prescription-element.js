@@ -186,9 +186,9 @@ class PrescriptionElement extends BaseElement {
 
                 <vaadin-grid-column width="160px">
                     <template class="header">
-                        <vaadin-grid-sorter path="medName">
-                            <vaadin-grid-filter aria-label="Medication" path="medName" value="[[_filterMedName]]">
-                                <vaadin-text-field style="width:145px;" slot="filter" placeholder="Medicine" value="{{_filterMedName}}" focus-target></vaadin-text-field>
+                        <vaadin-grid-sorter path="medication.name">
+                            <vaadin-grid-filter aria-label="Medication" path="medication.name" value="[[_filterMedicationName]]">
+                                <vaadin-text-field style="width:145px;" slot="filter" placeholder="Medicine" value="{{_filterMedicationName}}" focus-target></vaadin-text-field>
                             </vaadin-grid-filter>
                         </vaadin-grid-sorter>
                     </template>
