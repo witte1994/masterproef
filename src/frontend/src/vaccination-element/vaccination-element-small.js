@@ -56,16 +56,17 @@ class VaccinationElementSmall extends BaseElementSmall {
 
     static get properties() {
         return {
-            title: {
-                type: String,
-                value: "Vaccinations"
-            }
         };
     }
 
     ready() {
         super.ready();
+        this.title = "Vaccinations";
 
+        this.update();
+    }
+
+    update(e) {
         this.$.ajaxVaccinations.generateRequest();
     }
 }

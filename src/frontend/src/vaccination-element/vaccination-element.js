@@ -55,16 +55,16 @@ class VaccinationElement extends BaseElement {
                 method="POST"
                 handle-as="json"
                 content-type="application/json"
-                on-response="vaccinationCreated"
+                on-response="sendUpdateSignal"
             ></iron-ajax>
 
             <iron-ajax
-                id="ajaxEditVaccination"
+                id="ajaxUpdateVaccination"
                 url="http://localhost:3000/user/[[userId]]/vaccination/update"
                 method="POST"
                 handle-as="json"
                 content-type="application/json"
-                on-response="vaccinationUpdated"
+                on-response="sendUpdateSignal"
             ></iron-ajax>
 
             <iron-ajax
@@ -72,7 +72,7 @@ class VaccinationElement extends BaseElement {
                 url="http://localhost:3000/user/[[userId]]/vaccination/delete/[[deleteId]]"
                 method="DELETE"
                 handle-as="json"
-                on-response="vaccinationDeleted"
+                on-response="sendUpdateSignal"
             ></iron-ajax>
 
             <iron-ajax
@@ -81,16 +81,16 @@ class VaccinationElement extends BaseElement {
                 method="POST"
                 handle-as="json"
                 content-type="application/json"
-                on-response="vaccinationEntryCreated"
+                on-response="sendUpdateSignal"
             ></iron-ajax>
 
             <iron-ajax
-                id="ajaxEditVaccinationEntry"
+                id="ajaxUpdateVaccinationEntry"
                 url="http://localhost:3000/user/[[userId]]/vaccination/[[vaccinationId]]/update"
                 method="POST"
                 handle-as="json"
                 content-type="application/json"
-                on-response="vaccinationEntryUpdated"
+                on-response="sendUpdateSignal"
             ></iron-ajax>
 
             <iron-ajax
@@ -98,7 +98,7 @@ class VaccinationElement extends BaseElement {
                 url="http://localhost:3000/user/[[userId]]/vaccination/[[vaccinationId]]/delete/[[deleteEntryId]]"
                 method="DELETE"
                 handle-as="json"
-                on-response="vaccinationEntryDeleted"
+                on-response="sendUpdateSignal"
             ></iron-ajax>
         `;
     }
@@ -122,22 +122,22 @@ class VaccinationElement extends BaseElement {
                 <paper-button dialog-confirm on-tap="addVaccination">Accept</paper-button>
             </paper-dialog>
             
-            <paper-dialog id="editVaccinationDialog">
-                <h2>Edit vaccination</h2>
+            <paper-dialog id="updateVaccinationDialog">
+                <h2>Update vaccination</h2>
 
                 <div>
-                    <paper-input style="padding: 0px;" id="nameEdit" label="Name"></paper-input>
+                    <paper-input style="padding: 0px;" id="nameUpdate" label="Name"></paper-input>
                 </div>
                 <div style="width: 225px;">
-                    <paper-textarea style="padding: 0px;" id="descriptionEdit" label="Description"></paper-textarea>
+                    <paper-textarea style="padding: 0px;" id="descriptionUpdate" label="Description"></paper-textarea>
                 </div>
                 <div style="margin: 0px;">
-                    <vaadin-date-picker id="dateEdit" style="padding: 0px;" label="Next vaccination date" style="width: 160px;">
+                    <vaadin-date-picker id="dateUpdate" style="padding: 0px;" label="Next vaccination date" style="width: 160px;">
                     </vaadin-date-picker>
                 </div>
                 
                 <paper-button dialog-dismiss autofocus>Cancel</paper-button>
-                <paper-button dialog-confirm on-tap="editVaccination">Edit</paper-button>
+                <paper-button dialog-confirm on-tap="updateVaccination">Update</paper-button>
                 <paper-button dialog-dismiss on-tap="deleteVaccination">Delete</paper-button>
             </paper-dialog>
 
@@ -155,19 +155,19 @@ class VaccinationElement extends BaseElement {
                 <paper-button dialog-confirm on-tap="addVaccinationEntry">Accept</paper-button>
             </paper-dialog>
 
-            <paper-dialog id="editVaccinationEntryDialog">
-                <h2>Edit entry</h2>
+            <paper-dialog id="updateVaccinationEntryDialog">
+                <h2>Update entry</h2>
 
                 <div style="width: 225px;">
-                    <paper-textarea style="padding: 0px;" id="descriptionEntryEdit" label="Description"></paper-textarea>
+                    <paper-textarea style="padding: 0px;" id="descriptionEntryUpdate" label="Description"></paper-textarea>
                 </div>
                 <div style="margin: 0px;">
-                    <vaadin-date-picker id="dateEntryEdit" style="padding: 0px;" label="Vaccination date" style="width: 160px;">
+                    <vaadin-date-picker id="dateEntryUpdate" style="padding: 0px;" label="Vaccination date" style="width: 160px;">
                     </vaadin-date-picker>
                 </div>
                 
                 <paper-button dialog-dismiss autofocus>Cancel</paper-button>
-                <paper-button dialog-confirm on-tap="editVaccinationEntry">Edit</paper-button>
+                <paper-button dialog-confirm on-tap="updateVaccinationEntry">Update</paper-button>
                 <paper-button dialog-dismiss on-tap="deleteVaccinationEntry">Delete</paper-button>
             </paper-dialog>
         `;
@@ -183,7 +183,7 @@ class VaccinationElement extends BaseElement {
                                 <div></div>
                                 <div>[[entry.dateStr]]</div>
                                 <div>[[entry.description]]</div>
-                                <div><paper-icon-button style="margin: 0px; padding:0px; width: 22px; height: 22px;" icon="create" on-tap="openEditVaccinationEntryDialog" data-args$="[[index]]"></paper-icon-button></div>
+                                <div><paper-icon-button style="margin: 0px; padding:0px; width: 22px; height: 22px;" icon="create" on-tap="openUpdateVaccinationEntryDialog" data-args$="[[index]]"></paper-icon-button></div>
                             </template>
                         </dom-repeat>
                     </div>
@@ -208,7 +208,7 @@ class VaccinationElement extends BaseElement {
                 <vaadin-grid-column width="70px" flex-grow="0">
                     <template>
                         <paper-icon-button style="margin: 0px; padding:0px; width: 22px; height: 22px;" icon="add" on-tap="openAddVaccinationEntryDialog" data-args$="[[index]]"></paper-icon-button>
-                        <paper-icon-button style="margin: 0px; padding:0px; width: 22px; height: 22px;" icon="create" on-tap="openEditVaccinationDialog" data-args$="[[index]]"></paper-icon-button>
+                        <paper-icon-button style="margin: 0px; padding:0px; width: 22px; height: 22px;" icon="create" on-tap="openUpdateVaccinationDialog" data-args$="[[index]]"></paper-icon-button>
                     </template>
                 </vaadin-grid-column>
             </vaadin-grid>
@@ -217,17 +217,22 @@ class VaccinationElement extends BaseElement {
 
     static get properties() {
         return {
-            title: {
-                type: String,
-                value: "Vaccinations"
-            }
         };
     }
 
     ready() {
         super.ready();
+        this.title = "Vaccinations"
 
+        this.update();
+    }
+
+    update(e) {
         this.$.ajaxVaccinations.generateRequest();
+    }
+
+    sendUpdateSignal() {
+        this.dispatchEvent(new CustomEvent("vaccination", {bubbles: true, composed: true}));
     }
 
     showDetails(e) {
@@ -240,29 +245,29 @@ class VaccinationElement extends BaseElement {
         this.$.addVaccinationEntryDialog.open();
     }
 
-    openEditVaccinationDialog(e) {
+    openUpdateVaccinationDialog(e) {
         this.curObj = this.vaccinations[e.target.dataset.args];
         var curObj = this.curObj;
 
-        this.$.nameEdit.value = curObj.name;
-        this.$.descriptionEdit.value = curObj.description;
+        this.$.nameUpdate.value = curObj.name;
+        this.$.descriptionUpdate.value = curObj.description;
 
         var date = new Date(curObj.dateNext);
-        this.$.dateEdit.value = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
+        this.$.dateUpdate.value = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
         
-        this.$.editVaccinationDialog.open();
+        this.$.updateVaccinationDialog.open();
     }
 
-    openEditVaccinationEntryDialog(e) {
+    openUpdateVaccinationEntryDialog(e) {
         this.curObjEntry = this.openedObj.entries[e.target.dataset.args];
         var curEntry = this.curObjEntry;
 
-        this.$.descriptionEntryEdit.value = curEntry.description;
+        this.$.descriptionEntryUpdate.value = curEntry.description;
 
         var date = new Date(curEntry.date);
-        this.$.dateEntryEdit.value = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
+        this.$.dateEntryUpdate.value = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
 
-        this.$.editVaccinationEntryDialog.open();
+        this.$.updateVaccinationEntryDialog.open();
     }
 
     addVaccination(e) {
@@ -278,18 +283,18 @@ class VaccinationElement extends BaseElement {
         this.$.ajaxCreateVaccination.generateRequest();
     }
 
-    editVaccination(e) {
-        var date = new Date(this.$.dateEdit.value);
+    updateVaccination(e) {
+        var date = new Date(this.$.dateUpdate.value);
 
         var obj = {
             "id": this.curObj._id,
-            "name": this.$.nameEdit.value,
-            "description": this.$.descriptionEdit.value,
+            "name": this.$.nameUpdate.value,
+            "description": this.$.descriptionUpdate.value,
             "dateNext": date.toISOString()
         };
 
-        this.$.ajaxEditVaccination.body = obj;
-        this.$.ajaxEditVaccination.generateRequest();
+        this.$.ajaxUpdateVaccination.body = obj;
+        this.$.ajaxUpdateVaccination.generateRequest();
     }
 
     deleteVaccination(e) {
@@ -310,18 +315,18 @@ class VaccinationElement extends BaseElement {
         this.$.ajaxCreateVaccinationEntry.generateRequest();
     }
 
-    editVaccinationEntry(e) {
+    updateVaccinationEntry(e) {
         this.vaccinationId = this.openedObj._id;
-        var date = new Date(this.$.dateEntryEdit.value);
+        var date = new Date(this.$.dateEntryUpdate.value);
 
         var obj = {
             "id": this.curObjEntry._id,
-            "description": this.$.descriptionEntryEdit.value,
+            "description": this.$.descriptionEntryUpdate.value,
             "date": date.toISOString()
         };
 
-        this.$.ajaxEditVaccinationEntry.body = obj;
-        this.$.ajaxEditVaccinationEntry.generateRequest();
+        this.$.ajaxUpdateVaccinationEntry.body = obj;
+        this.$.ajaxUpdateVaccinationEntry.generateRequest();
     }
 
     deleteVaccinationEntry(e) {
@@ -330,31 +335,6 @@ class VaccinationElement extends BaseElement {
 
         this.$.ajaxDeleteVaccinationEntry.generateRequest();
     }
-
-    vaccinationCreated(e) {
-        this.$.ajaxVaccinations.generateRequest();
-    }
-
-    vaccinationUpdated(e) {
-        this.$.ajaxVaccinations.generateRequest();
-    }
-
-    vaccinationDeleted(e) {
-        this.$.ajaxVaccinations.generateRequest();
-    }
-
-    vaccinationEntryCreated(e) {
-        this.$.ajaxVaccinations.generateRequest();
-    }
-
-    vaccinationEntryUpdated(e) {
-        this.$.ajaxVaccinations.generateRequest();
-    }
-
-    vaccinationEntryDeleted(e) {
-        this.$.ajaxVaccinations.generateRequest();
-    }
-
 
     openDialog(e) {
         this.$.addVaccinationDialog.open();
