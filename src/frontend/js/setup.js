@@ -314,7 +314,6 @@ function sendUpdateSignal(updateStr) {
         var curName = curElement.tagName.split("-")[0].toLowerCase();
 
         if (curName === updateStr) {
-            console.log("large");
             curElement.update();
         }
     }
@@ -325,7 +324,6 @@ function sendUpdateSignal(updateStr) {
         var curName = curElement.tagName.split("-")[0].toLowerCase();
 
         if (curName === updateStr) {
-            console.log("small");
             curElement.update();
         }
     }

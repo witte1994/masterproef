@@ -56,23 +56,21 @@ class PrescriptionElementSmall extends BaseElementSmall {
 
     static get properties() {
         return {
-            title: {
-                type: String,
-                value: "Current medication"
-            },
-            currTime: {
-                type: Number
-            }
         };
     }
 
     ready() {
         super.ready();
+        this.title = "Current medication";
 
         var todayStr = (new Date()).toISOString().substring(0,10) + "T00:00:00.000Z";
         var today = new Date(todayStr);
 
         this.currTime = today.getTime();
+        this.update();
+    }
+
+    update(e) {
         this.$.ajaxPrescriptionsByDate.generateRequest();
     }
 }

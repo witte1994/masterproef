@@ -82,16 +82,16 @@ class PrescriptionElement extends BaseElement {
                 method="POST"
                 handle-as="json"
                 content-type="application/json"
-                on-response="medCreated"
+                on-response="sendUpdateSignal"
             ></iron-ajax>
 
             <iron-ajax
-                id="ajaxEditPrescription"
+                id="ajaxUpdatePrescription"
                 url="http://localhost:3000/user/[[userId]]/prescription/update"
                 method="POST"
                 handle-as="json"
                 content-type="application/json"
-                on-response="medUpdated"
+                on-response="sendUpdateSignal"
             ></iron-ajax>
 
             <iron-ajax
@@ -99,7 +99,7 @@ class PrescriptionElement extends BaseElement {
                 url="http://localhost:3000/user/[[userId]]/prescription/delete/[[deleteId]]"
                 method="DELETE"
                 handle-as="json"
-                on-response="medDeleted"
+                on-response="sendUpdateSignal"
             ></iron-ajax>
         `;
     }
@@ -140,28 +140,28 @@ class PrescriptionElement extends BaseElement {
                 <paper-button dialog-confirm on-tap="addPrescription">Accept</paper-button>
             </paper-dialog>
 
-            <paper-dialog id="editPrescriptionDialog">
-                <h2>Edit prescription</h2>
+            <paper-dialog id="updatePrescriptionDialog">
+                <h2>Update prescription</h2>
 
                 <div style="margin: 0px;">
-                    <paper-input style="padding: 0px; width: 60px; display: inline-block;" id="morningEdit" type="number" label="Morning"></paper-input>
-                    <paper-input style="padding: 0px; width: 60px; display: inline-block;" id="noonEdit" type="number" label="Noon"></paper-input>
+                    <paper-input style="padding: 0px; width: 60px; display: inline-block;" id="morningUpdate" type="number" label="Morning"></paper-input>
+                    <paper-input style="padding: 0px; width: 60px; display: inline-block;" id="noonUpdate" type="number" label="Noon"></paper-input>
                 </div >
                 <div style="margin: 0px;">
-                    <paper-input style="padding: 0px; width: 60px; display: inline-block;" id="eveningEdit" type="number" label="Evening"></paper-input>
-                    <paper-input style="padding: 0px; width: 60px; display: inline-block;" id="bedEdit" type="number" label="Bed"></paper-input>
+                    <paper-input style="padding: 0px; width: 60px; display: inline-block;" id="eveningUpdate" type="number" label="Evening"></paper-input>
+                    <paper-input style="padding: 0px; width: 60px; display: inline-block;" id="bedUpdate" type="number" label="Bed"></paper-input>
                 </div>
                 <div style="margin: 0px;">
-                    <vaadin-date-picker id="startDateEdit" style="padding: 0px;" label="Start date" style="width: 160px;">
+                    <vaadin-date-picker id="startDateUpdate" style="padding: 0px;" label="Start date" style="width: 160px;">
                     </vaadin-date-picker>
                 </div>
                 <div style="margin: 0px;">
-                    <vaadin-date-picker id="endDateEdit" style="padding: 0px;" label="End date" style="width: 160px;">
+                    <vaadin-date-picker id="endDateUpdate" style="padding: 0px;" label="End date" style="width: 160px;">
                     </vaadin-date-picker>
                 </div>
                 
                 <paper-button dialog-dismiss autofocus>Cancel</paper-button>
-                <paper-button dialog-confirm on-tap="editPrescription">Edit</paper-button>
+                <paper-button dialog-confirm on-tap="updatePrescription">Update</paper-button>
                 <paper-button dialog-dismiss on-tap="deletePrescription">Delete</paper-button>
             </paper-dialog>
         `;
@@ -223,7 +223,7 @@ class PrescriptionElement extends BaseElement {
                 </vaadin-grid-column>
 
                 <vaadin-grid-column width="40px" flex-grow="0">
-                    <template><paper-icon-button style="margin: 0px; padding:0px; width: 22px; height: 22px;"icon="create" on-tap="openEditPrescriptionDialog" data-args$="[[index]]"></paper-icon-button></template>
+                    <template><paper-icon-button style="margin: 0px; padding:0px; width: 22px; height: 22px;"icon="create" on-tap="openUpdatePrescriptionDialog" data-args$="[[index]]"></paper-icon-button></template>
                 </vaadin-grid-column>
             </vaadin-grid>
         `;
@@ -231,21 +231,27 @@ class PrescriptionElement extends BaseElement {
 
     static get properties() {
         return {
-            title: {
-                type: String,
-                value: "Prescriptions"
-            }
         };
     }
 
     ready() {
         super.ready();
+        this.title = "Prescriptions";
 
         this.selectedStartDate = null;
         this.selectedEndDate = null;
 
         this.$.ajaxMeds.generateRequest();
-        this.$.ajaxPrescriptions.generateRequest();
+        this.update();
+    }
+
+    update(e) {
+        if (!this.checkDates())
+            this.$.ajaxPrescriptions.generateRequest();
+    }
+
+    sendUpdateSignal() {
+        this.dispatchEvent(new CustomEvent("prescription", {bubbles: true, composed: true}));
     }
 
     dateSelected(e) {
@@ -257,17 +263,20 @@ class PrescriptionElement extends BaseElement {
             }
         }
         
-        if (this.selectedStartDate !== null && this.selectedEndDate !== null) {
-            this.checkDates();
-        } 
+        this.checkDates();
     }
 
     checkDates() {
-        if (this.selectedStartDate < this.selectedEndDate) {
+        if (this.selectedStartDate === null || this.selectedEndDate === null) {
+            return false;
+        } else if (this.selectedStartDate < this.selectedEndDate) {
             this.startInt = this.selectedStartDate.getTime();
             this.endInt = this.selectedEndDate.getTime();
             
             this.$.ajaxPrescriptionsByDate.generateRequest();
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -275,22 +284,22 @@ class PrescriptionElement extends BaseElement {
         this.$.vaadinGrid.detailsOpenedItems = [e.detail.value];
     }
 
-    openEditPrescriptionDialog(e) {
+    openUpdatePrescriptionDialog(e) {
         this.curObj = this.prescriptions[e.target.dataset.args];
         var curObj = this.curObj;
 
-        this.$.morningEdit.value = curObj.dosage.morning;
-        this.$.noonEdit.value = curObj.dosage.noon;
-        this.$.eveningEdit.value = curObj.dosage.evening;
-        this.$.bedEdit.value = curObj.dosage.bed;
+        this.$.morningUpdate.value = curObj.dosage.morning;
+        this.$.noonUpdate.value = curObj.dosage.noon;
+        this.$.eveningUpdate.value = curObj.dosage.evening;
+        this.$.bedUpdate.value = curObj.dosage.bed;
 
         var startDate = new Date(curObj.startDate);
         var endDate = new Date(curObj.endDate);
 
-        this.$.startDateEdit.value = startDate.getFullYear() + "-" + (startDate.getMonth()+1) + "-" + startDate.getDate();
-        this.$.endDateEdit.value = endDate.getFullYear() + "-" + (endDate.getMonth()+1) + "-" + endDate.getDate();
+        this.$.startDateUpdate.value = startDate.getFullYear() + "-" + (startDate.getMonth()+1) + "-" + startDate.getDate();
+        this.$.endDateUpdate.value = endDate.getFullYear() + "-" + (endDate.getMonth()+1) + "-" + endDate.getDate();
 
-        this.$.editPrescriptionDialog.open();
+        this.$.updatePrescriptionDialog.open();
     }
 
     addPrescription(e) {
@@ -315,41 +324,29 @@ class PrescriptionElement extends BaseElement {
         this.$.ajaxCreatePrescription.generateRequest();
     }
 
-    editPrescription(e) {
-        var startDate = new Date(this.$.startDateEdit.value);
-        var endDate = new Date(this.$.endDateEdit.value);
+    updatePrescription(e) {
+        var startDate = new Date(this.$.startDateUpdate.value);
+        var endDate = new Date(this.$.endDateUpdate.value);
 
         var obj = {
             "id": this.curObj._id,
             "dosage": {
-                "morning": this.$.morningEdit.value,
-                "noon": this.$.noonEdit.value,
-                "evening": this.$.eveningEdit.value,
-                "bed": this.$.bedEdit.value
+                "morning": this.$.morningUpdate.value,
+                "noon": this.$.noonUpdate.value,
+                "evening": this.$.eveningUpdate.value,
+                "bed": this.$.bedUpdate.value
             },
             "startDate": startDate.toISOString(),
             "endDate": endDate.toISOString()
         };
 
-        this.$.ajaxEditPrescription.body = obj;
-        this.$.ajaxEditPrescription.generateRequest();
+        this.$.ajaxUpdatePrescription.body = obj;
+        this.$.ajaxUpdatePrescription.generateRequest();
     }
 
     deletePrescription(e) {
         this.deleteId = this.curObj._id;
         this.$.ajaxDeletePrescription.generateRequest();
-    }
-
-    medCreated(e) {
-        this.$.ajaxPrescriptions.generateRequest();
-    }
-
-    medUpdated(e) {
-        this.$.ajaxPrescriptions.generateRequest();
-    }
-
-    medDeleted(e) {
-        this.$.ajaxPrescriptions.generateRequest();
     }
 
     receivedMedication(e) {
