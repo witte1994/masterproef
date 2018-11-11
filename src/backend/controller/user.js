@@ -84,6 +84,10 @@ function importRest(userId, info) {
             case 'allergies':
                 AllergyController.importValues(user, info.allergies);
                 break;
+            case 'prescriptions':
+                MedicationController.importValues(info.prescriptions.medicines);
+                PrescriptionController.importValues(user, info.prescriptions.prescriptions);
+                break;
             case 'vaccinations':
                 VaccinationController.importValues(user, info.vaccinations);
                 break;

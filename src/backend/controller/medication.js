@@ -12,6 +12,12 @@ exports.import = (req, res, next) => {
     });
 };
 
+exports.importValues = function (values) {
+    for (var i = 0; i < values.length; i++) {
+        importMedication(values[i]);
+    }
+}
+
 function importMedication(info) {
     const medication = new Medication({
         _id: mongoose.Types.ObjectId(),

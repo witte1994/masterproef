@@ -1,6 +1,44 @@
 const mongoose = require('mongoose');
 
+const Medication = require('../models/medication');
 const Prescription = require('../models/prescription');
+
+exports.importValues = function (userId, values) {
+    for (var i = 0; i < values.length; i++) {
+        importPrescription(userId, values[i]);
+    }
+}
+
+function importPrescription(userId, info) {
+    Medication.findOne({ name: info.medName })
+        .exec()
+        .then(doc => {
+            const prescription = new Prescription({
+                _id: mongoose.Types.ObjectId(),
+                user: userId,
+                medication: doc._id,
+                dosage: {
+                    morning: info.dosage.morning,
+                    noon: info.dosage.noon,
+                    evening: info.dosage.evening,
+                    bed: info.dosage.bed
+                },
+                startDate: info.startDate,
+                endDate: info.endDate
+            });
+            prescription
+                .save()
+                .then(result => {
+                    console.log(result);
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        })
+        .catch(err => {
+            console.log(err);
+        });
+}
 
 exports.get_all_by_id = (req, res, next) => {
     var userId = req.originalUrl.split('/')[2];

@@ -4,7 +4,9 @@ const medicationSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     name: {
         type: String,
-        required: true
+        required: true,
+        unique: true,
+        dropDups: true
     },
     description: {
         type: String,
