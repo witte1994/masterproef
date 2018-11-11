@@ -5,7 +5,6 @@ const LayoutController = require('../controller/layout');
 
 const AllergyController = require('../controller/allergy');
 const MedicationController = require('../controller/medication');
-const PrescriptionController = require('../controller/prescription');
 const VaccinationController = require('../controller/vaccination');
 
 const BPController = require('../controller/bp');
@@ -85,8 +84,7 @@ function importRest(userId, info) {
                 AllergyController.importValues(userId, info.allergies);
                 break;
             case 'prescriptions':
-                MedicationController.importValues(info.prescriptions.medicines);
-                PrescriptionController.importValues(userId, info.prescriptions.prescriptions);
+                MedicationController.importPrescriptions(userId, info.prescriptions);
                 break;
             case 'vaccinations':
                 VaccinationController.importValues(userId, info.vaccinations);

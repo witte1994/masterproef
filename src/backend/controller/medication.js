@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+const PrescriptionController = require('./prescription');
 const Medication = require('../models/medication');
 
 exports.import = (req, res, next) => {
@@ -12,10 +13,21 @@ exports.import = (req, res, next) => {
     });
 };
 
-exports.importValues = function (values) {
-    for (var i = 0; i < values.length; i++) {
-        importMedication(values[i]);
+exports.importPrescriptions = function (userId, values) {
+    var medicines = values.medicines;
+    var prescriptions = values.prescriptions;
+
+    for (var i = 0; i < medicines.length; i++) {
+        medicines[i]._id = mongoose.Types.ObjectId();
     }
+
+    Medication.create(medicines)
+        .then(doc => {
+            PrescriptionController.importValues(userId, prescriptions);
+        })
+        .catch(err => {
+            console.log(err);
+        });
 }
 
 function importMedication(info) {
