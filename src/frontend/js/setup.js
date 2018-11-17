@@ -136,23 +136,6 @@ function addUserElement() {
     userElement.setAttribute("id", "userElement");
     var refElement = document.querySelector('#smallGrid');
     document.querySelector('#drawerLayout').insertBefore(userElement, refElement);
-
-    userElement.addEventListener('resizeUser', function (e) {
-        userElement.parentNode.removeChild(userElement);
-        addSmallUserElement();
-    });
-}
-
-function addSmallUserElement() {
-    var userElement = document.createElement("user-element-small");
-    userElement.setAttribute("id", "userElementSmall");
-    var refElement = document.querySelector('#smallGrid');
-    document.querySelector('#drawerLayout').insertBefore(userElement, refElement);
-
-    userElement.addEventListener('resizeUserSmall', function (e) {
-        userElement.parentNode.removeChild(userElement);
-        addUserElement();
-    });
 }
 
 function loadLayoutProcess() {

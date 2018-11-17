@@ -1,7 +1,6 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-ajax/iron-ajax'
 import '@polymer/paper-icon-button/paper-icon-button'
-import '../shared-styles.js';
 
 /**
  * @customElement
@@ -12,10 +11,6 @@ class UserElement extends PolymerElement {
     static get template() {
         return html`
         <style include="shared-styles">
-            :host {
-                width: 256px;
-                font-family: 'Roboto', Helvetica, sans-serif;
-            }
 
             p {
                 margin: 4px 0px 4px 0px;
@@ -40,12 +35,25 @@ class UserElement extends PolymerElement {
                 display: grid;
                 grid-template-columns: 1fr 2fr;
             }
+
+            .containerHorLessInfo {
+                display: grid;
+                grid-template-columns: 5fr 4fr 2fr;
+                justify-items: center;
+            }
             
             paper-icon-button {
                 width: 20px;
                 height: 20px;
                 padding: 0px;
-                margin: auto;
+            }
+
+            #allInfo {
+                display: block;
+            }
+
+            #lessInfo {
+                display: none;
             }
         </style>
 
@@ -60,7 +68,7 @@ class UserElement extends PolymerElement {
         <div class="card" style="padding-bottom: 0px;">
             <h1>[[user.lastName]] [[user.firstName]]</h1>
 
-            <div>
+            <div id="allInfo">
                 <div class="containerHor">
                     <p><b>Birth:</b></p>
                     <p>[[date]]</p>
@@ -90,6 +98,15 @@ class UserElement extends PolymerElement {
                     <p>[[user.phone]]</p>
                 </div>
                 <div style="text-align:center;"><paper-icon-button title="Show less info" icon="expand-less" on-tap="resize"></paper-icon-button></div>
+            </div>
+
+            <div id="lessInfo">
+                <div class="containerHorLessInfo">
+                    <p>[[date]]</p>
+                    <p>[[gender]]</p>
+                    <p>[[user.bloodType]]</p>
+                </div>
+                <div style="text-align:center;"><paper-icon-button title="Show more info" icon="expand-more" on-tap="resize"></paper-icon-button></div>
             </div>
         </div>
     `;
@@ -126,6 +143,12 @@ class UserElement extends PolymerElement {
         heightStr += (height % 100) + "m";
         this.heightStr = heightStr;
 
+        if (this.user.gender === "F") {
+            this.gender = "Female";
+        } else {
+            this.gender = "Male";
+        }
+
         if (this.user.smoker)
             this.smoker = "Yes";
         else
@@ -133,7 +156,13 @@ class UserElement extends PolymerElement {
     }
 
     resize(e) {
-        this.dispatchEvent(new CustomEvent('resizeUser', { composed: true }));
+        if (this.$.allInfo.style.display === "none") {
+            this.$.allInfo.style.display = "block";
+            this.$.lessInfo.style.display = "none";
+        } else {
+            this.$.allInfo.style.display = "none";
+            this.$.lessInfo.style.display = "block";
+        }
     }
 }
 
