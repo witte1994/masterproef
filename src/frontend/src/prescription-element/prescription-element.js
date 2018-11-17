@@ -223,7 +223,7 @@ class PrescriptionElement extends BaseElement {
                 </vaadin-grid-column>
 
                 <vaadin-grid-column width="40px" flex-grow="0">
-                    <template><paper-icon-button style="margin: 0px; padding:0px; width: 22px; height: 22px;"icon="create" on-tap="openUpdatePrescriptionDialog" data-args$="[[index]]"></paper-icon-button></template>
+                    <template><paper-icon-button title="Edit prescription" style="margin: 0px; padding:0px; width: 22px; height: 22px;"icon="create" on-tap="openUpdatePrescriptionDialog" data-args$="[[index]]"></paper-icon-button></template>
                 </vaadin-grid-column>
             </vaadin-grid>
         `;

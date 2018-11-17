@@ -48,7 +48,7 @@ export class BaseElementSmall extends PolymerElement {
                     <h1>[[title]]</h1>
 
                     <div>
-                    <paper-icon-button class="buttonsHeader" icon="close" on-tap="removeModule"></paper-icon-button>
+                    <paper-icon-button title="Remove module" class="buttonsHeader" icon="close" on-tap="removeModule"></paper-icon-button>
                     </div>
                 </div>
 

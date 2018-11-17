@@ -190,7 +190,7 @@ class AllergyElement extends BaseElement {
                 </vaadin-grid-column>
 
                 <vaadin-grid-column width="40px" flex-grow="0">
-                    <template><paper-icon-button style="margin: 0px; padding:0px; width: 22px; height: 22px;" icon="create" on-tap="openUpdateAllergyDialog" data-args$="[[index]]"></paper-icon-button></template>
+                    <template><paper-icon-button title="Edit allergy" style="margin: 0px; padding:0px; width: 22px; height: 22px;" icon="create" on-tap="openUpdateAllergyDialog" data-args$="[[index]]"></paper-icon-button></template>
                 </vaadin-grid-column>
             </vaadin-grid>
         `;
@@ -206,7 +206,7 @@ class AllergyElement extends BaseElement {
 
         this.title = "Allergies";
         this.dispatchEvent(new CustomEvent("size", {bubbles: true, composed: true, detail: this.getMinSizes() }));
-        
+
         this.update();
     }
 

@@ -183,7 +183,7 @@ class VaccinationElement extends BaseElement {
                                 <div></div>
                                 <div>[[entry.dateStr]]</div>
                                 <div>[[entry.description]]</div>
-                                <div><paper-icon-button style="margin: 0px; padding:0px; width: 22px; height: 22px;" icon="create" on-tap="openUpdateVaccinationEntryDialog" data-args$="[[index]]"></paper-icon-button></div>
+                                <div><paper-icon-button title="Edit vaccination entry" style="margin: 0px; padding:0px; width: 22px; height: 22px;" icon="create" on-tap="openUpdateVaccinationEntryDialog" data-args$="[[index]]"></paper-icon-button></div>
                             </template>
                         </dom-repeat>
                     </div>
@@ -207,8 +207,8 @@ class VaccinationElement extends BaseElement {
 
                 <vaadin-grid-column width="70px" flex-grow="0">
                     <template>
-                        <paper-icon-button style="margin: 0px; padding:0px; width: 22px; height: 22px;" icon="add" on-tap="openAddVaccinationEntryDialog" data-args$="[[index]]"></paper-icon-button>
-                        <paper-icon-button style="margin: 0px; padding:0px; width: 22px; height: 22px;" icon="create" on-tap="openUpdateVaccinationDialog" data-args$="[[index]]"></paper-icon-button>
+                        <paper-icon-button title="Add vaccination entry" style="margin: 0px; padding:0px; width: 22px; height: 22px;" icon="add" on-tap="openAddVaccinationEntryDialog" data-args$="[[index]]"></paper-icon-button>
+                        <paper-icon-button title="Edit vaccination" style="margin: 0px; padding:0px; width: 22px; height: 22px;" icon="create" on-tap="openUpdateVaccinationDialog" data-args$="[[index]]"></paper-icon-button>
                     </template>
                 </vaadin-grid-column>
             </vaadin-grid>

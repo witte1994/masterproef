@@ -57,7 +57,7 @@ class UserElementSmall extends PolymerElement {
                     <p>[[gender]]</p>
                     <p>[[user.bloodType]]</p>
                 </div>
-                <div style="text-align:center;"><paper-icon-button icon="expand-more" on-tap="resize"></paper-icon-button></div>
+                <div style="text-align:center;"><paper-icon-button title="Show more info" icon="expand-more" on-tap="resize"></paper-icon-button></div>
             </div>
         </div>
     `;

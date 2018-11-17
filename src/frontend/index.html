@@ -161,9 +161,9 @@
 			<app-header-layout id="drawerLayout" has-scrolling-region="">
 				<app-header slot="header" fixed>
 					<app-toolbar style="margin-bottom: 8px;">
-						<paper-icon-button icon="compare-arrows" onclick="patientDialog.open()"></paper-icon-button>
+						<paper-icon-button title="Switch patients" icon="compare-arrows" onclick="patientDialog.open()"></paper-icon-button>
 						<div main-title>Patient info</div>
-						<paper-icon-button icon="add" onclick="addModuleSmall.open()"></paper-icon-button>
+						<paper-icon-button title="Add small module" icon="add" onclick="addModuleSmall.open()"></paper-icon-button>
 					</app-toolbar>
 				</app-header>
 
@@ -175,10 +175,10 @@
 		<app-header-layout has-scrolling-region="">
 			<app-header slot="header" fixed>
 				<app-toolbar>
-					<paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
+					<paper-icon-button title="Open summary panel" icon="menu" drawer-toggle></paper-icon-button>
 					<div main-title>Dashboard</div>
-					<paper-icon-button icon="save" onclick="saveLayout()"></paper-icon-button>
-					<paper-icon-button icon="add" onclick="addModule.open()"></paper-icon-button>
+					<paper-icon-button title="Save layout" icon="save" onclick="saveLayout()"></paper-icon-button>
+					<paper-icon-button title="Add module" icon="add" onclick="addModule.open()"></paper-icon-button>
 				</app-toolbar>
 			</app-header>
 			

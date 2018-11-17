@@ -77,7 +77,7 @@ class PatientList extends PolymerElement {
         </vaadin-grid-column>
 
         <vaadin-grid-column width="30px">
-            <template><paper-icon-button on-click="patientClick" id="[[item._id]]" icon="arrow-forward"></paper-icon-button></template>
+            <template><paper-icon-button title="Open patient file" on-click="patientClick" id="[[item._id]]" icon="arrow-forward"></paper-icon-button></template>
         </vaadin-grid-column>
 
         </vaadin-grid>

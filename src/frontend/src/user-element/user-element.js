@@ -89,7 +89,7 @@ class UserElement extends PolymerElement {
                     <p><b>Phone:</b></p>
                     <p>[[user.phone]]</p>
                 </div>
-                <div style="text-align:center;"><paper-icon-button icon="expand-less" on-tap="resize"></paper-icon-button></div>
+                <div style="text-align:center;"><paper-icon-button title="Show less info" icon="expand-less" on-tap="resize"></paper-icon-button></div>
             </div>
         </div>
     `;
