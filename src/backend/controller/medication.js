@@ -38,7 +38,7 @@ exports.importPrescriptions = function (userId, values) {
                 clinician: null,
                 srcElement: "medication",
                 operation: "import",
-                description: medicines.length + " medicines imported"
+                description: medicines.length + " medicine entries"
             };
             HistoryController.add_to_history(info);
 

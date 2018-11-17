@@ -12,6 +12,8 @@ const historySchema = mongoose.Schema({
     },
     srcElement: {
         type: String,
+        enum: ['user', 'allergy', 'medication', 'prescription', 'vaccination', 'other'],
+        default: 'other',
         required: true
     },
     operation: {
