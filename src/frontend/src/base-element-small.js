@@ -26,21 +26,15 @@ export class BaseElementSmall extends PolymerElement {
                 width: 24px;
             }
 
-            .containerFooter {
-                text-align: center;
-            }
-
-            .resizers {
-                width: 20px;
-                height: 20px;
-                padding: 0px;
-                margin: auto;
-                display: inline-block;
+            .mainContainer {
+                display: grid;
+                grid-template-rows: auto;
+                height: 100%;
             }
 
             .card {
                 display: grid;
-                grid-template-rows: 36px auto 21px;
+                grid-template-rows: 36px auto;
             }
         </style>
 
@@ -48,22 +42,19 @@ export class BaseElementSmall extends PolymerElement {
         ${this.ironAjaxTemplate}
         ${this.dialogTemplate}
         
-        <div id="cardId" class="card" style="padding-bottom: 0px;">
-            <div class="containerHeader">
-                <h1>[[title]]</h1>
+        <div class="mainContainer">
+            <div id="cardId" class="card">
+                <div class="containerHeader">
+                    <h1>[[title]]</h1>
 
-                <div>
-                <paper-icon-button class="buttonsHeader" icon="close" on-tap="removeModule"></paper-icon-button>
+                    <div>
+                    <paper-icon-button class="buttonsHeader" icon="close" on-tap="removeModule"></paper-icon-button>
+                    </div>
                 </div>
-            </div>
 
-            <div id="content">
-                ${this.contentTemplate}
-            </div>
-                
-            <div class="containerFooter">
-                <paper-icon-button class="resizers" icon="expand-less" on-tap="resizeSmaller"></paper-icon-button>
-                <paper-icon-button class="resizers" icon="expand-more" on-tap="resizeLarger"></paper-icon-button>
+                <div id="content">
+                    ${this.contentTemplate}
+                </div>
             </div>
         </div>
     `;
@@ -95,10 +86,6 @@ export class BaseElementSmall extends PolymerElement {
             title: {
                 type: String,
                 value: "Title"
-            },
-            height: {
-                type: Number,
-                value: 210
             }
         };
     }
@@ -106,8 +93,6 @@ export class BaseElementSmall extends PolymerElement {
     ready() {
         super.ready();
         
-        this.$.cardId.style.height = this.height + "px";
-
         this.setUserId();
     }
 
@@ -123,18 +108,6 @@ export class BaseElementSmall extends PolymerElement {
         var split = document.URL.split("/");
         var param = split[split.length - 1];
         this.userId = param;
-    }
-
-    resizeSmaller(e) {
-        if (this.height > 200)
-            this.height -= 50;
-        
-        this.$.cardId.style.height = this.height + "px";
-    }
-
-    resizeLarger(e) {
-        this.height += 50;
-        this.$.cardId.style.height = this.height + "px";
     }
 
     removeModule(e) {

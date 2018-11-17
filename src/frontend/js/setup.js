@@ -98,7 +98,7 @@ function getSmallElements() {
     for (var i = 0; i < elements.length; i++) {
         var pos = {
             elementName: elements[i].children[1].tagName.toLowerCase(),
-            height: elements[i].offsetHeight - 28
+            height: elements[i].offsetHeight
         };
 
         order.push(pos);
@@ -173,7 +173,7 @@ function loadSmallLayout(elements) {
     onMainGrid = false;
     for (var i = 0; i < elements.length; i++) {
         var container = createModuleContainer(elements[i].elementName);
-        container.children[1].setAttribute("height", elements[i].height);
+        container.style.height = elements[i].height + "px";
         addContainerToGrid(container);
     }
 }
@@ -233,8 +233,9 @@ function createModuleContainer(moduleName) {
     parentDiv.classList.add("grid-item");
     parentDiv.classList.add("containerGrid");
 
-    if (!mainGrid) {
+    if (!onMainGrid) {
         parentDiv.style.minWidth = "100%";
+        parentDiv.classList.add("resizeDivVert");
     } else {
         parentDiv.classList.add("resizeDiv");
         var sizes = getModuleSize(moduleName);
