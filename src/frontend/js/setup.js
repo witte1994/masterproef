@@ -126,16 +126,16 @@ function getPosition(element) {
 function loadPatientPage() {
     clearGrids();
 
-    addUserElement();
+    addPatientElement();
 
     loadLayoutProcess();
 }
 
-function addUserElement() {
-    var userElement = document.createElement("user-element");
-    userElement.setAttribute("id", "userElement");
+function addPatientElement() {
+    var patientElement = document.createElement("patient-element");
+    patientElement.setAttribute("id", "patientElement");
     var refElement = document.querySelector('#smallGrid');
-    document.querySelector('#drawerLayout').insertBefore(userElement, refElement);
+    document.querySelector('#drawerLayout').insertBefore(patientElement, refElement);
 }
 
 function loadLayoutProcess() {
@@ -174,13 +174,9 @@ function loadMainLayout(elements) {
 }
 
 function clearGrids() {
-    var userElement = document.querySelector('#userElement');
-    if (userElement != null)
-        userElement.parentNode.removeChild(userElement);
-
-    var userElementSmall = document.querySelector('#userElementSmall');
-    if (userElementSmall != null)
-        userElementSmall.parentNode.removeChild(userElementSmall);
+    var patientElement = document.querySelector('#patientElement');
+    if (patientElement != null)
+        patientElement.parentNode.removeChild(patientElement);
 
     var elements = $grid.packery('getItemElements');
     $grid.packery('remove', elements);

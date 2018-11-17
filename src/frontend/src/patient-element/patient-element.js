@@ -7,11 +7,10 @@ import '@polymer/paper-icon-button/paper-icon-button'
  * @polymer
  * @extends HTMLElement
  */
-class UserElement extends PolymerElement {
+class PatientElement extends PolymerElement {
     static get template() {
         return html`
         <style include="shared-styles">
-
             p {
                 margin: 4px 0px 4px 0px;
             }
@@ -71,7 +70,7 @@ class UserElement extends PolymerElement {
             <div id="allInfo">
                 <div class="containerHor">
                     <p><b>Birth:</b></p>
-                    <p>[[date]]</p>
+                    <p>[[user.dateStr]]</p>
                 </div>
                 <div class="containerHor">
                     <p><b>NID:</b></p>
@@ -87,7 +86,7 @@ class UserElement extends PolymerElement {
                 </div>
                 <div class="containerHor">
                     <p><b>Height:</b></p>
-                    <p>[[heightStr]]</p>
+                    <p>[[user.heightStr]]</p>
                 </div>
                 <div class="containerHor">
                     <p><b>Address:</b></p>
@@ -102,7 +101,7 @@ class UserElement extends PolymerElement {
 
             <div id="lessInfo">
                 <div class="containerHorLessInfo">
-                    <p>[[date]]</p>
+                    <p>[[user.dateStr]]</p>
                     <p>[[gender]]</p>
                     <p>[[user.bloodType]]</p>
                 </div>
@@ -113,46 +112,29 @@ class UserElement extends PolymerElement {
     }
     static get properties() {
         return {
-            user: {
-                value: Object
-            },
-            data: {
-                value: String
-            }
         };
     }
 
     ready() {
         super.ready();
-        var split = document.URL.split("/");
-        var param = split[split.length-1];
-        this.userId = param;
+        
+        this.setUserId();
         
         this.$.ajaxUser.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
         this.$.ajaxUser.generateRequest();
     }
 
-    handleResponse(event) {
-        this.user = event.detail.response;
-        var newDate = new Date(this.user.birth);
-        this.date = ("0" + newDate.getDate()).slice(-2) + "/" + ("0" + (newDate.getMonth()+1)).slice(-2) + "/" + newDate.getFullYear();
+    setUserId() {
+        var split = document.URL.split("/");
+        var param = split[split.length - 1];
+        this.userId = param;
+    }
 
-        var heightStr = "";
-        var height = this.user.height;
-        heightStr += parseInt(Math.floor((height/100)), 10) + ",";
-        heightStr += (height % 100) + "m";
-        this.heightStr = heightStr;
+    handleResponse(e) {
+        this.user = e.detail.response;
 
-        if (this.user.gender === "F") {
-            this.gender = "Female";
-        } else {
-            this.gender = "Male";
-        }
-
-        if (this.user.smoker)
-            this.smoker = "Yes";
-        else
-            this.smoker = "No";
+        this.gender = (this.user.gender === "F") ? "Female" : "Male";
+        this.smoker = (this.user.smoker) ? "Yes" : "No";
     }
 
     resize(e) {
@@ -166,4 +148,4 @@ class UserElement extends PolymerElement {
     }
 }
 
-window.customElements.define('user-element', UserElement);
+window.customElements.define('patient-element', PatientElement);
