@@ -203,8 +203,10 @@ class AllergyElement extends BaseElement {
 
     ready() {
         super.ready();
-        this.title = "Allergies";
 
+        this.title = "Allergies";
+        this.dispatchEvent(new CustomEvent("size", {bubbles: true, composed: true, detail: this.getMinSizes() }));
+        
         this.update();
     }
 
@@ -272,6 +274,13 @@ class AllergyElement extends BaseElement {
     deleteAllergy(e) {
         this.deleteId = this.curObj._id;
         this.$.ajaxDeleteAllergy.generateRequest();
+    }
+
+    getMinSizes() {
+        return {
+            width: "500px",
+            height: "300px"
+        };
     }
 
     openDialog(e) {

@@ -110,6 +110,11 @@ export class BaseElementSmall extends PolymerElement {
         this.userId = param;
     }
 
+    getMinHeight() {
+        console.log("implement in child element");
+        return "0px";
+    }
+
     removeModule(e) {
         this.dispatchEvent(new CustomEvent('delete', { composed: true }));
     }

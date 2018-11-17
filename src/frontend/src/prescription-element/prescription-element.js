@@ -236,7 +236,9 @@ class PrescriptionElement extends BaseElement {
 
     ready() {
         super.ready();
+        
         this.title = "Prescriptions";
+        this.dispatchEvent(new CustomEvent("size", {bubbles: true, composed: true, detail: this.getMinSizes() }));
 
         this.selectedStartDate = null;
         this.selectedEndDate = null;
@@ -351,6 +353,13 @@ class PrescriptionElement extends BaseElement {
 
     receivedMedication(e) {
         this.meds = e.detail.response;
+    }
+
+    getMinSizes() {
+        return {
+            width: "582px",
+            height: "300px"
+        };
     }
 
     openDialog(e) {

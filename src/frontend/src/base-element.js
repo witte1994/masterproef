@@ -111,6 +111,14 @@ export class BaseElement extends PolymerElement {
         this.userId = param;
     }
 
+    getMinSizes() {
+        console.log("implement in child element");
+        return {
+            width: "0px",
+            height: "0px"
+        };
+    }
+
     openDialog(e) {
         console.log("implement in child element");
     }

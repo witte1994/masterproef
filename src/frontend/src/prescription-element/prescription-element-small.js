@@ -61,13 +61,19 @@ class PrescriptionElementSmall extends BaseElementSmall {
 
     ready() {
         super.ready();
+
         this.title = "Current medication";
+        this.dispatchEvent(new CustomEvent("sizeSmall", {bubbles: true, composed: true, detail: this.getMinHeight() }));
 
         var todayStr = (new Date()).toISOString().substring(0,10) + "T00:00:00.000Z";
         var today = new Date(todayStr);
 
         this.currTime = today.getTime();
         this.update();
+    }
+
+    getMinHeight() {
+        return "200px";
     }
 
     update(e) {

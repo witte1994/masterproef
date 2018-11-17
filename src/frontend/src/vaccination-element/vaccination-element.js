@@ -222,7 +222,9 @@ class VaccinationElement extends BaseElement {
 
     ready() {
         super.ready();
+
         this.title = "Vaccinations"
+        this.dispatchEvent(new CustomEvent("size", {bubbles: true, composed: true, detail: this.getMinSizes() }));
 
         this.update();
     }
@@ -334,6 +336,13 @@ class VaccinationElement extends BaseElement {
         this.deleteEntryId = this.curObjEntry._id;
 
         this.$.ajaxDeleteVaccinationEntry.generateRequest();
+    }
+
+    getMinSizes() {
+        return {
+            width: "400px",
+            height: "300px"
+        };
     }
 
     openDialog(e) {

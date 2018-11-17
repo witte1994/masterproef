@@ -61,9 +61,15 @@ class AllergyElementSmall extends BaseElementSmall {
 
     ready() {
         super.ready();
+
         this.title = "Allergies";
+        this.dispatchEvent(new CustomEvent("sizeSmall", {bubbles: true, composed: true, detail: this.getMinHeight() }));
 
         this.update();
+    }
+
+    getMinHeight() {
+        return "200px";
     }
 
     update(e) {

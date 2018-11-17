@@ -234,13 +234,17 @@ function createModuleContainer(moduleName) {
     parentDiv.classList.add("containerGrid");
 
     if (!onMainGrid) {
-        parentDiv.style.minWidth = "100%";
         parentDiv.classList.add("resizeDivVert");
+        parentDiv.style.minWidth = "100%";
+        parentDiv.addEventListener("sizeSmall", function (e) {
+            parentDiv.style.minHeight = e.detail;
+        });
     } else {
         parentDiv.classList.add("resizeDiv");
-        var sizes = getModuleSize(moduleName);
-        parentDiv.style.minWidth = sizes.width;
-        parentDiv.style.minHeight = sizes.height;
+        parentDiv.addEventListener("size", function (e) {
+            parentDiv.style.minWidth = e.detail.width;
+            parentDiv.style.minHeight = e.detail.height;
+        });
     }
     
     var handlerDiv = document.createElement("div");
@@ -266,37 +270,6 @@ function addContainerToGrid(container) {
         handle: '.handle'
     });
     tarGrid.packery('bindDraggabillyEvents', draggie);
-}
-
-function getModuleSize(moduleName) {
-    if (!onMainGrid) {
-        return {
-            width: "100%",
-            height: "100%"
-        };
-    }
-
-    if (moduleName === "allergy-element") {
-        return {
-            width: "500px",
-            height: "300px"
-        };
-    } else if (moduleName === "prescription-element") {
-        return {
-            width: "582px",
-            height: "300px"
-        };
-    } else if (moduleName === "vaccination-element") {
-        return {
-            width: "400px",
-            height: "300px"
-        };
-    } else {
-        return {
-            width: "1000px",
-            height: "300px"
-        };
-    }
 }
 
 function addSmall() {
