@@ -5,14 +5,14 @@ import '@vaadin/vaadin-grid/vaadin-grid';
 import '@vaadin/vaadin-grid/vaadin-grid-sorter';
 import '@vaadin/vaadin-grid/vaadin-grid-filter';
 import '@polymer/paper-icon-button/paper-icon-button'
-import './shared-styles.js';
+import '../shared-styles.js';
 
 /**
  * @customElement
  * @polymer
  * @extends HTMLElement
  */
-class PatientList extends PolymerElement {
+class PatientListElement extends PolymerElement {
     static get template() {
         return html`
         <style include="shared-styles">
@@ -103,4 +103,4 @@ class PatientList extends PolymerElement {
     }
 }
 
-window.customElements.define('patient-list', PatientList);
+window.customElements.define('patient-list-element', PatientListElement);

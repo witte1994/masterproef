@@ -1,21 +1,21 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 
 import '@polymer/paper-icon-button/paper-icon-button'
-import './shared-styles.js'
+import '../shared-styles.js'
 
 /**
  * @customElement
  * @polymer
  * @extends HTMLElement
  */
-export class BaseElementSmall extends PolymerElement {
+export class BaseElement extends PolymerElement {
     static get template() {
         return html`
         <style include="shared-styles">
             .containerHeader {
                 width: 100%;
                 display: grid;
-                grid-template-columns: auto 28px;
+                grid-template-columns: auto 56px;
                 align-items: center;
                 margin-bottom: 8px;
             }
@@ -48,7 +48,8 @@ export class BaseElementSmall extends PolymerElement {
                     <h1>[[title]]</h1>
 
                     <div>
-                    <paper-icon-button title="Remove module" class="buttonsHeader" icon="close" on-tap="removeModule"></paper-icon-button>
+                        <paper-icon-button title="Add entry" class="buttonsHeader" icon="add" on-tap="openDialog"></paper-icon-button>
+                        <paper-icon-button title="Remove module" class="buttonsHeader" icon="close" on-tap="removeModule"></paper-icon-button>
                     </div>
                 </div>
 
@@ -92,12 +93,12 @@ export class BaseElementSmall extends PolymerElement {
 
     ready() {
         super.ready();
-        
+    
         this.setUserId();
     }
 
     update(e) {
-        console.log("update: implement in child class - small");
+        console.log("update: implement in child class");
     }
 
     sendUpdateSignal() {
@@ -110,9 +111,16 @@ export class BaseElementSmall extends PolymerElement {
         this.userId = param;
     }
 
-    getMinHeight() {
+    getMinSizes() {
         console.log("implement in child element");
-        return "0px";
+        return {
+            width: "0px",
+            height: "0px"
+        };
+    }
+
+    openDialog(e) {
+        console.log("implement in child element");
     }
 
     removeModule(e) {
@@ -120,4 +128,4 @@ export class BaseElementSmall extends PolymerElement {
     }
 }
 
-window.customElements.define('base-element-small', BaseElementSmall);
+window.customElements.define('base-element', BaseElement);

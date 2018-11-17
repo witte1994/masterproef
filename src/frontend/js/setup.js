@@ -25,7 +25,7 @@ document.addEventListener('iron-ajax-response', function(e) {
     if (srcElement === "ajaxLogin") {
         window.sessionStorage.accessToken = e.detail.response.token;
 
-        var patientList = document.createElement("patient-list");
+        var patientList = document.createElement("patient-list-element");
         var dialog = document.querySelector('#patientDialog');
         dialog.appendChild(patientList);
         dialog.toggle();
