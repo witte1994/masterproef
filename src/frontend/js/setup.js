@@ -83,7 +83,7 @@ function getMainElements() {
             x: offset.x,
             y: offset.y,
             width: elements[i].offsetWidth,
-            height: elements[i].offsetHeight - 28
+            height: elements[i].offsetHeight
         };
         positions.push(savePos);
     }
@@ -183,7 +183,8 @@ function loadMainLayout(elements) {
 
     for (var i = 0; i < elements.length; i++) {
         var container = createModuleContainer(elements[i].elementName);
-        container.children[1].setAttribute("height", elements[i].height);
+        container.style.width = elements[i].width + "px";
+        container.style.height = elements[i].height + "px";
         addContainerToGrid(container);
         $grid.packery('fit', container, elements[i].x, elements[i].y);
     }
@@ -227,14 +228,20 @@ function add() {
 function createModuleContainer(moduleName) {
     var newModule = document.createElement(moduleName);
     newModule.setAttribute("update", false);
+
     var parentDiv = document.createElement("div");
     parentDiv.classList.add("grid-item");
+    parentDiv.classList.add("containerGrid");
 
-    if (onMainGrid)
+    if (!mainGrid) {
+        parentDiv.style.minWidth = "100%";
+    } else {
         parentDiv.classList.add("resizeDiv");
-
-    parentDiv.style.minWidth = getModuleSize(moduleName);
-
+        var sizes = getModuleSize(moduleName);
+        parentDiv.style.minWidth = sizes.width;
+        parentDiv.style.minHeight = sizes.height;
+    }
+    
     var handlerDiv = document.createElement("div");
     handlerDiv.classList.add("handle");
 
@@ -262,20 +269,33 @@ function addContainerToGrid(container) {
 
 function getModuleSize(moduleName) {
     if (!onMainGrid) {
-        return "100%"
+        return {
+            width: "100%",
+            height: "100%"
+        };
     }
 
     if (moduleName === "allergy-element") {
-        return "500px";
+        return {
+            width: "500px",
+            height: "300px"
+        };
     } else if (moduleName === "prescription-element") {
-        return "582px";
+        return {
+            width: "582px",
+            height: "300px"
+        };
     } else if (moduleName === "vaccination-element") {
-        return "400px";
+        return {
+            width: "400px",
+            height: "300px"
+        };
     } else {
-        return "1000px";
+        return {
+            width: "1000px",
+            height: "300px"
+        };
     }
-
-
 }
 
 function addSmall() {
