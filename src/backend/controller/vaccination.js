@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+const HistoryController = require('./history');
 const Vaccination = require('../models/vaccination');
 
 exports.importValues = function (userId, values) {
@@ -30,6 +31,15 @@ exports.importValues = function (userId, values) {
                 console.log(err);
             });
     }
+
+    var info = {
+        user: null,
+        clinician: null,
+        srcElement: "vaccination",
+        operation: "import",
+        description: values.length + " vaccination entries"
+    };
+    HistoryController.add_to_history(info);
 }
 
 exports.get_all_by_id = (req, res, next) => {
@@ -74,6 +84,15 @@ exports.create = (req, res, next) => {
     vaccination
         .save()
         .then(result => {
+            var info = {
+                user: userId,
+                clinician: null,
+                srcElement: "vaccination",
+                operation: "create",
+                description: vaccination.name + ": " + vaccination.description
+            }
+            HistoryController.add_to_history(info);
+
             console.log(result);
             res.status(201).json(result);
         })
@@ -86,6 +105,7 @@ exports.create = (req, res, next) => {
 };
 
 exports.update = (req, res, next) => {
+    var userId = req.originalUrl.split('/')[2];
     Vaccination.findOneAndUpdate({ _id: req.body.id },
             {
                 name: req.body.name,
@@ -95,6 +115,15 @@ exports.update = (req, res, next) => {
             { new: true })
         .exec()
         .then(doc => {
+            var info = {
+                user: userId,
+                clinician: null,
+                srcElement: "vaccination",
+                operation: "update",
+                description: req.body.name + ": " + req.body.description
+            }
+            HistoryController.add_to_history(info);
+
             console.log(doc);
             res.status(200).json(doc);
         })
@@ -105,6 +134,7 @@ exports.update = (req, res, next) => {
 };
 
 exports.delete = (req, res, next) => {
+    var userId = req.originalUrl.split('/')[2];
     Vaccination.deleteMany({ _id: req.params.id }, function(err) {
         if (err) {
             console.log(err);
@@ -112,7 +142,15 @@ exports.delete = (req, res, next) => {
                 error: err
             });
         } else {
-            console.log("DELETE ok");
+            var info = {
+                user: userId,
+                clinician: null,
+                srcElement: "vaccination",
+                operation: "delete",
+                description: "Vaccination entry removed"
+            }
+            HistoryController.add_to_history(info);
+
             res.status(200).json({
                 message: "DELETE ok"
             });
@@ -121,6 +159,7 @@ exports.delete = (req, res, next) => {
 };
 
 exports.create_entry = (req, res, next) => {
+    var userId = req.originalUrl.split('/')[2];
     var vaccinationId = req.params.id;
 
     var entry = {
@@ -136,6 +175,15 @@ exports.create_entry = (req, res, next) => {
         { new: true })
         .exec()
         .then(doc => {
+            var info = {
+                user: userId,
+                clinician: null,
+                srcElement: "vaccination",
+                operation: "create",
+                description: entry.description + " (" + getDateString(new Date(entry.date)) + ")"
+            }
+            HistoryController.add_to_history(info);
+
             console.log(doc);
             res.status(200).json(doc);
         })
@@ -146,6 +194,7 @@ exports.create_entry = (req, res, next) => {
 };
 
 exports.update_entry = (req, res, next) => {
+    var userId = req.originalUrl.split('/')[2];
     var vaccinationId = req.params.id;
 
     var entry = {
@@ -162,6 +211,15 @@ exports.update_entry = (req, res, next) => {
         { new: true })
         .exec()
         .then(doc => {
+            var info = {
+                user: userId,
+                clinician: null,
+                srcElement: "vaccination",
+                operation: "update",
+                description: entry.description + " (" + getDateString(new Date(entry.date)) + ")"
+            }
+            HistoryController.add_to_history(info);
+
             console.log(doc);
             res.status(200).json(doc);
         })
@@ -172,6 +230,7 @@ exports.update_entry = (req, res, next) => {
 };
 
 exports.delete_entry = (req, res, next) => {
+    var userId = req.originalUrl.split('/')[2];
     var vaccinationId = req.params.id;
     var entryId = req.params.entryId;
 
@@ -182,6 +241,15 @@ exports.delete_entry = (req, res, next) => {
         { new: true })
         .exec()
         .then(doc => {
+            var info = {
+                user: userId,
+                clinician: null,
+                srcElement: "vaccination",
+                operation: "delete",
+                description: "Vaccination sub entry removed"
+            }
+            HistoryController.add_to_history(info);
+
             console.log(doc);
             res.status(200).json(doc);
         })

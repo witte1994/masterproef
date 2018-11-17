@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+const HistoryController = require('./history');
 const Allergy = require('../models/allergy');
 
 exports.importValues = function (userId, values) {
@@ -20,6 +21,15 @@ exports.importValues = function (userId, values) {
                 console.log(err);
             });
     }
+
+    var info = {
+        user: userId,
+        clinician: null,
+        srcElement: "allergy",
+        operation: "import",
+        description: values.length + " allergy entries"
+    };
+    HistoryController.add_to_history(info);
 }
 
 exports.get_all_by_id = (req, res, next) => {
@@ -61,6 +71,15 @@ exports.create = (req, res, next) => {
     allergy
         .save()
         .then(result => {
+            var info = {
+                user: userId,
+                clinician: null,
+                srcElement: "allergy",
+                operation: "create",
+                description: allergy.type + ": '" + allergy.name + "' with severity of " + allergy.severity
+            };
+            HistoryController.add_to_history(info);
+
             console.log(result);
             res.status(201).json(result);
         })
@@ -73,6 +92,7 @@ exports.create = (req, res, next) => {
 };
 
 exports.update = (req, res, next) => {
+    var userId = req.originalUrl.split('/')[2];
     Allergy.findOneAndUpdate({ _id: req.body.id },
             {
                 name: req.body.name,
@@ -84,6 +104,15 @@ exports.update = (req, res, next) => {
             { new: true })
         .exec()
         .then(doc => {
+            var info = {
+                user: userId,
+                clinician: null,
+                srcElement: "allergy",
+                operation: "update",
+                description: req.body.type + ": '" + req.body.name + "' with severity of " + req.body.severity
+            };
+            HistoryController.add_to_history(info);
+
             console.log(doc);
             res.status(200).json(doc);
         })
@@ -94,6 +123,7 @@ exports.update = (req, res, next) => {
 };
 
 exports.delete = (req, res, next) => {
+    var userId = req.originalUrl.split('/')[2];
     Allergy.deleteMany({ _id: req.params.id }, function(err) {
         if (err) {
             console.log(err);
@@ -101,6 +131,15 @@ exports.delete = (req, res, next) => {
                 error: err
             });
         } else {
+            var info = {
+                user: userId,
+                clinician: null,
+                srcElement: "allergy",
+                operation: "delete",
+                description: "Allergy entry removed"
+            };
+            HistoryController.add_to_history(info);
+
             console.log("DELETE ok");
             res.status(200).json({
                 message: "DELETE ok"

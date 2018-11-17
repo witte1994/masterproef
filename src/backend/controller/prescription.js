@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+const HistoryController = require('./history');
 const Medication = require('../models/medication');
 const Prescription = require('../models/prescription');
 
@@ -7,6 +8,15 @@ exports.importValues = function (userId, values) {
     for (var i = 0; i < values.length; i++) {
         importPrescription(userId, values[i]);
     }
+
+    var info = {
+        user: null,
+        clinician: null,
+        srcElement: "prescription",
+        operation: "import",
+        description: values.length + " prescription entries"
+    };
+    HistoryController.add_to_history(info);
 }
 
 function importPrescription(userId, info) {
@@ -144,6 +154,15 @@ exports.create = (req, res, next) => {
     prescription
         .save()
         .then(result => {
+            var info = {
+                user: userId,
+                clinician: null,
+                srcElement: "prescription",
+                operation: "create",
+                description: "Dosage: " + prescription.dosage.morning + "/" + prescription.dosage.noon + "/" + prescription.dosage.evening + "/" + prescription.dosage.bed + " (" + getDateString(prescription.startDate) + " - " + getDateString(prescription.endDate) + ")"
+            }
+            HistoryController.add_to_history(info);
+
             console.log(result);
             res.status(201).json(result);
         })
@@ -156,6 +175,7 @@ exports.create = (req, res, next) => {
 };
 
 exports.update = (req, res, next) => {
+    var userId = req.originalUrl.split('/')[2];
     Prescription.findOneAndUpdate({ _id: req.body.id },
             {
                 dosage: req.body.dosage,
@@ -165,6 +185,16 @@ exports.update = (req, res, next) => {
             { new: true })
         .exec()
         .then(doc => {
+            console.log(doc.startDate);
+            var info = {
+                user: userId,
+                clinician: null,
+                srcElement: "prescription",
+                operation: "update",
+                description: "Dosage: " + doc.dosage.morning + "/" + doc.dosage.noon + "/" + doc.dosage.evening + "/" + doc.dosage.bed + " (" + getDateString(doc.startDate) + " - " + getDateString(doc.endDate) + ")"
+            }
+            HistoryController.add_to_history(info);
+
             console.log(doc);
             res.status(200).json(doc);
         })
@@ -175,7 +205,7 @@ exports.update = (req, res, next) => {
 };
 
 exports.delete = (req, res, next) => {
-    console.log(req.params.id);
+    var userId = req.originalUrl.split('/')[2];
     Prescription.deleteMany({ _id: req.params.id }, function(err) {
         if (err) {
             console.log(err);
@@ -183,7 +213,14 @@ exports.delete = (req, res, next) => {
                 error: err
             });
         } else {
-            console.log("DELETE ok");
+            var info = {
+                user: userId,
+                clinician: null,
+                srcElement: "prescription",
+                operation: "delete",
+                description: "Prescription entry removed"
+            }
+            HistoryController.add_to_history(info);
             res.status(200).json({
                 message: "DELETE ok"
             });
