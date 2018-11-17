@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const User = require('../models/user');
 
+const HistoryController = require('../controller/history');
 const LayoutController = require('../controller/layout');
 
 const AllergyController = require('../controller/allergy');
@@ -62,7 +63,15 @@ exports.importUser = function (userInfo) {
     });
     user.save()
         .then(result => {
-            //setThresholds(user._id);
+            var info = {
+                user: null,
+                clinician: null,
+                srcElement: "user",
+                operation: "import",
+                description: "new patient: " + user.firstName + " " + user.lastName + " (" + getDateString(user.birth) + ")"
+            }
+            HistoryController.add_to_history(info);
+
             importRest(user._id, userInfo);
             console.log(result);
             return user._id;
