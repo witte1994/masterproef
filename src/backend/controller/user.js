@@ -8,12 +8,6 @@ const AllergyController = require('../controller/allergy');
 const MedicationController = require('../controller/medication');
 const VaccinationController = require('../controller/vaccination');
 
-const BPController = require('../controller/bp');
-const BSController = require('../controller/bs');
-const HeartController = require('../controller/heart');
-const OxygenController = require('../controller/oxygen');
-const WeightController = require('../controller/weight');
-
 exports.create = (req, res, next) => {
     const user = new User({
         _id: new mongoose.Types.ObjectId(),
@@ -30,7 +24,6 @@ exports.create = (req, res, next) => {
     });
     user.save()
         .then(result => {
-            setThresholds(user._id);
             console.log(result);
             res.status(201).json({
                 message: "Added user",
@@ -98,22 +91,6 @@ function importRest(userId, info) {
             case 'vaccinations':
                 VaccinationController.importValues(userId, info.vaccinations);
                 break;
-            /*
-            case 'bpVals':
-                BPController.importValues(userId, info.bpVals);
-                break;
-            case 'bsVals':
-                BSController.importValues(userId, info.bsVals);
-                break;
-            case 'heartVals':
-                HeartController.importValues(userId, info.heartVals);
-                break;
-            case 'oxygenVals':
-                OxygenController.importValues(userId, info.oxygenVals);
-                break;
-            case 'weightVals':
-                WeightController.importValues(userId, info.weightVals);
-                break;*/
             case 'info':
                 console.log("info");
                 break;
@@ -122,14 +99,6 @@ function importRest(userId, info) {
                 break;
         }
     }
-}
-
-function setThresholds(userId) {
-    BPController.setThreshold(userId, null);
-    BSController.setThreshold(userId, null);
-    HeartController.setThreshold(userId, null);
-    OxygenController.setThreshold(userId, null);
-    WeightController.setThreshold(userId, null);
 }
 
 exports.get_users = (req, res, next) => {
