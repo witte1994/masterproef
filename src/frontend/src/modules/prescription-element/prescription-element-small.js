@@ -13,13 +13,6 @@ class PrescriptionElementSmall extends BaseElementSmall {
     static get cssTemplate() {
         return html`
             <style >
-                vaadin-grid-cell-content {
-                    padding: 4px 8px 4px 8px;
-                }
-
-                .header {
-                    height: 45px;
-                }
             </style>
         `;
     }
@@ -38,7 +31,7 @@ class PrescriptionElementSmall extends BaseElementSmall {
 
     static get contentTemplate() {
         return html`
-            <vaadin-grid id="vaadinGrid" style="height: 100%;" items="{{prescriptions}}">
+            <vaadin-grid theme="compact" id="vaadinGrid" style="height: 100%;" items="{{prescriptions}}">
                 <vaadin-grid-column width="160px">
                     <template class="header">
                         Medicine

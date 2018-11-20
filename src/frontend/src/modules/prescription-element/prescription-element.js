@@ -31,10 +31,6 @@ class PrescriptionElement extends BaseElement {
                     text-align: center;
                 }
 
-                vaadin-grid-cell-content {
-                    padding: 4px 8px 4px 8px;
-                }
-
                 .detailsGrid {
                     display: grid;
                     grid-template-rows: auto auto;
@@ -169,7 +165,7 @@ class PrescriptionElement extends BaseElement {
 
     static get contentTemplate() {
         return html`
-            <vaadin-grid on-active-item-changed="showDetails" id="vaadinGrid" style="height: 100%;" items="{{prescriptions}}">
+            <vaadin-grid theme="compact" on-active-item-changed="showDetails" id="vaadinGrid" style="height: 100%;" items="{{prescriptions}}">
                 <template class="row-details">
                     <div class="detailsGrid">
                         <div><small>Description:</small></div>
@@ -284,6 +280,7 @@ class PrescriptionElement extends BaseElement {
 
     showDetails(e) {
         this.$.vaadinGrid.detailsOpenedItems = [e.detail.value];
+        this.$.vaadinGrid.selectedItems = [e.detail.value];
     }
 
     openUpdatePrescriptionDialog(e) {

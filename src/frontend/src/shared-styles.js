@@ -33,6 +33,10 @@ $_documentContainer.innerHTML = `<dom-module id="shared-styles">
       h2 {
         font-weight: normal;
       }
+
+      vaadin-text-field {
+        height: 24px;
+      }
     </style>
   </template>
 </dom-module>`;

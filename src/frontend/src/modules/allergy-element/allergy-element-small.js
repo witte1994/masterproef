@@ -13,13 +13,7 @@ class AllergyElementSmall extends BaseElementSmall {
     static get cssTemplate() {
         return html`
             <style>
-                vaadin-grid-cell-content {
-                    padding: 4px 8px 4px 8px;
-                }
-
-                .header {
-                    height: 45px;
-                }
+                
             </style>
         `;
     }
@@ -38,7 +32,7 @@ class AllergyElementSmall extends BaseElementSmall {
 
     static get contentTemplate() {
         return html`
-            <vaadin-grid id="vaadinGrid" style="height: 100%;" items="{{allergies}}">
+            <vaadin-grid theme="compact" id="vaadinGrid" style="height: 100%;" items="{{allergies}}">
                 <vaadin-grid-column width="36px" flex-grow="0">
                     <template class="header"><iron-icon style="width: 20px; height: 20px;" icon="flag"></iron-icon></template>
                     <template>[[item.severity]]</template>

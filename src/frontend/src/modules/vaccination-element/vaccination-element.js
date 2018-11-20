@@ -21,10 +21,6 @@ class VaccinationElement extends BaseElement {
     static get cssTemplate() {
         return html`
             <style>
-                vaadin-grid-cell-content {
-                    padding: 4px 8px 4px 8px;
-                }
-
                 .detailsGrid {
                     display: grid;
                     grid-template-rows: auto;
@@ -175,7 +171,7 @@ class VaccinationElement extends BaseElement {
 
     static get contentTemplate() {
         return html`
-            <vaadin-grid on-active-item-changed="showDetails" id="vaadinGrid" style="height: 100%;" items="{{vaccinations}}">
+            <vaadin-grid theme="compact" on-active-item-changed="showDetails" id="vaadinGrid" style="height: 100%;" items="{{vaccinations}}">
                 <template class="row-details">
                     <div class="detailsGrid">
                         <dom-repeat items="{{item.entries}}" as="entry">
@@ -239,6 +235,7 @@ class VaccinationElement extends BaseElement {
 
     showDetails(e) {
         this.$.vaadinGrid.detailsOpenedItems = [e.detail.value];
+        this.$.vaadinGrid.selectedItems = [e.detail.value];
         this.openedObj = e.detail.value;
     }
 

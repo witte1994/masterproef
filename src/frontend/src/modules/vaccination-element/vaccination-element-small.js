@@ -13,13 +13,6 @@ class VaccinationElementSmall extends BaseElementSmall {
     static get cssTemplate() {
         return html`
             <style>
-                vaadin-grid-cell-content {
-                    padding: 4px 8px 4px 8px;
-                }
-
-                .header {
-                    height: 45px;
-                }
             </style>
         `;
     }
@@ -38,7 +31,7 @@ class VaccinationElementSmall extends BaseElementSmall {
 
     static get contentTemplate() {
         return html`
-            <vaadin-grid id="vaadinGrid" style="height: 100%;" items="{{vaccinations}}">
+            <vaadin-grid theme="compact" id="vaadinGrid" style="height: 100%;" items="{{vaccinations}}">
                 <vaadin-grid-column width="132px">
                     <template class="header">
                         Vaccination
