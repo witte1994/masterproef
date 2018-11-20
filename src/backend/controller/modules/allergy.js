@@ -1,13 +1,13 @@
 const mongoose = require('mongoose');
 
 const HistoryController = require('./history');
-const Allergy = require('../models/allergy');
+const Allergy = require('../../models/modules/allergy');
 
-exports.importValues = function (userId, values) {
+exports.importValues = function (pId, values) {
     for (var i = 0; i < values.length; i++) {
         const allergy = new Allergy({
             _id: mongoose.Types.ObjectId(),
-            user: userId,
+            patient: pId,
             name: values[i].name,
             description: values[i].description,
             severity: values[i].severity,
@@ -23,7 +23,7 @@ exports.importValues = function (userId, values) {
     }
 
     var info = {
-        user: userId,
+        patient: pId,
         clinician: null,
         srcElement: "allergy",
         operation: "import",
@@ -33,9 +33,9 @@ exports.importValues = function (userId, values) {
 }
 
 exports.get_all_by_id = (req, res, next) => {
-    var userId = req.originalUrl.split('/')[2];
+    var pId = req.originalUrl.split('/')[2];
 
-    Allergy.find({ user: userId })
+    Allergy.find({ patient: pId })
         .lean()
         .exec()
         .then(doc => {
@@ -58,10 +58,10 @@ function getDateString(date) {
 }
 
 exports.create = (req, res, next) => {
-    var userId = req.originalUrl.split('/')[2];
+    var pId = req.originalUrl.split('/')[2];
     const allergy = new Allergy({
         _id: mongoose.Types.ObjectId(),
-        user: userId,
+        patient: pId,
         name: req.body.name,
         description: req.body.description,
         severity: req.body.severity,
@@ -72,7 +72,7 @@ exports.create = (req, res, next) => {
         .save()
         .then(result => {
             var info = {
-                user: userId,
+                patient: pId,
                 clinician: null,
                 srcElement: "allergy",
                 operation: "create",
@@ -92,7 +92,7 @@ exports.create = (req, res, next) => {
 };
 
 exports.update = (req, res, next) => {
-    var userId = req.originalUrl.split('/')[2];
+    var pId = req.originalUrl.split('/')[2];
     Allergy.findOneAndUpdate({ _id: req.body.id },
             {
                 name: req.body.name,
@@ -105,7 +105,7 @@ exports.update = (req, res, next) => {
         .exec()
         .then(doc => {
             var info = {
-                user: userId,
+                patient: pId,
                 clinician: null,
                 srcElement: "allergy",
                 operation: "update",
@@ -123,7 +123,7 @@ exports.update = (req, res, next) => {
 };
 
 exports.delete = (req, res, next) => {
-    var userId = req.originalUrl.split('/')[2];
+    var pId = req.originalUrl.split('/')[2];
     Allergy.deleteMany({ _id: req.params.id }, function(err) {
         if (err) {
             console.log(err);
@@ -132,7 +132,7 @@ exports.delete = (req, res, next) => {
             });
         } else {
             var info = {
-                user: userId,
+                patient: pId,
                 clinician: null,
                 srcElement: "allergy",
                 operation: "delete",

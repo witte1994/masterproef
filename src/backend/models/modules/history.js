@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 
 const historySchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    user: {
+    patient: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'Patient'
     },
     clinician: {
         type: mongoose.Schema.Types.ObjectId,
@@ -12,7 +12,7 @@ const historySchema = mongoose.Schema({
     },
     srcElement: {
         type: String,
-        enum: ['user', 'allergy', 'medication', 'prescription', 'vaccination', 'other'],
+        enum: ['patient', 'allergy', 'medication', 'prescription', 'vaccination', 'other'],
         default: 'other',
         required: true
     },

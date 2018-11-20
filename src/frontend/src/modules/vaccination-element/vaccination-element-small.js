@@ -28,7 +28,7 @@ class VaccinationElementSmall extends BaseElementSmall {
         return html`
             <iron-ajax 
                 id="ajaxVaccinations"
-                url="http://localhost:3000/user/[[userId]]/vaccination"
+                url="http://localhost:3000/patient/[[pId]]/vaccination"
                 method="GET"
                 handle-as="json"
                 last-response="{{vaccinations}}"

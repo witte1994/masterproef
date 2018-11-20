@@ -5,9 +5,9 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const importRoutes = require('./routes/import');
-const userRoutes = require('./routes/user');
+const patientRoutes = require('./routes/patient');
 const clinicianRoutes = require('./routes/clinician');
-const medicationRoutes = require('./routes/medication');
+const medicationRoutes = require('./routes/modules/medication');
 
 mongoose.connect('mongodb://localhost:27017/dashboard', {
     useCreateIndex: true,
@@ -27,7 +27,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/import', importRoutes);
-app.use('/user', userRoutes);
+app.use('/patient', patientRoutes);
 app.use('/clinician', clinicianRoutes);
 app.use('/medication', medicationRoutes);
 

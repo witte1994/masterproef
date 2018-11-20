@@ -43,7 +43,7 @@ class VaccinationElement extends BaseElement {
         return html`
             <iron-ajax 
                 id="ajaxVaccinations"
-                url="http://localhost:3000/user/[[userId]]/vaccination"
+                url="http://localhost:3000/patient/[[pId]]/vaccination"
                 method="GET"
                 handle-as="json"
                 last-response="{{vaccinations}}"
@@ -51,7 +51,7 @@ class VaccinationElement extends BaseElement {
 
             <iron-ajax
                 id="ajaxCreateVaccination"
-                url="http://localhost:3000/user/[[userId]]/vaccination/create"
+                url="http://localhost:3000/patient/[[pId]]/vaccination/create"
                 method="POST"
                 handle-as="json"
                 content-type="application/json"
@@ -60,7 +60,7 @@ class VaccinationElement extends BaseElement {
 
             <iron-ajax
                 id="ajaxUpdateVaccination"
-                url="http://localhost:3000/user/[[userId]]/vaccination/update"
+                url="http://localhost:3000/patient/[[pId]]/vaccination/update"
                 method="POST"
                 handle-as="json"
                 content-type="application/json"
@@ -69,7 +69,7 @@ class VaccinationElement extends BaseElement {
 
             <iron-ajax
                 id="ajaxDeleteVaccination"
-                url="http://localhost:3000/user/[[userId]]/vaccination/delete/[[deleteId]]"
+                url="http://localhost:3000/patient/[[pId]]/vaccination/delete/[[deleteId]]"
                 method="DELETE"
                 handle-as="json"
                 on-response="sendUpdateSignal"
@@ -77,7 +77,7 @@ class VaccinationElement extends BaseElement {
 
             <iron-ajax
                 id="ajaxCreateVaccinationEntry"
-                url="http://localhost:3000/user/[[userId]]/vaccination/[[vaccinationId]]/create"
+                url="http://localhost:3000/patient/[[pId]]/vaccination/[[vaccinationId]]/create"
                 method="POST"
                 handle-as="json"
                 content-type="application/json"
@@ -86,7 +86,7 @@ class VaccinationElement extends BaseElement {
 
             <iron-ajax
                 id="ajaxUpdateVaccinationEntry"
-                url="http://localhost:3000/user/[[userId]]/vaccination/[[vaccinationId]]/update"
+                url="http://localhost:3000/patient/[[pId]]/vaccination/[[vaccinationId]]/update"
                 method="POST"
                 handle-as="json"
                 content-type="application/json"
@@ -95,7 +95,7 @@ class VaccinationElement extends BaseElement {
 
             <iron-ajax
                 id="ajaxDeleteVaccinationEntry"
-                url="http://localhost:3000/user/[[userId]]/vaccination/[[vaccinationId]]/delete/[[deleteEntryId]]"
+                url="http://localhost:3000/patient/[[pId]]/vaccination/[[vaccinationId]]/delete/[[deleteEntryId]]"
                 method="DELETE"
                 handle-as="json"
                 on-response="sendUpdateSignal"

@@ -32,7 +32,7 @@ class PatientListElement extends PolymerElement {
 
         <iron-ajax 
             id="ajaxPatients"
-            url="http://localhost:3000/user"
+            url="http://localhost:3000/patient"
             method="GET"
             handle-as="json"
             content-type="application/json"

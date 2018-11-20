@@ -57,28 +57,28 @@ class PatientElement extends PolymerElement {
         </style>
 
         <iron-ajax 
-            id="ajaxUser"
-            url="http://localhost:3000/user/[[userId]]"
+            id="ajaxPatient"
+            url="http://localhost:3000/patient/[[pId]]"
             method="GET"
             handle-as="json"
             on-response="handleResponse"
         ></iron-ajax>
 
         <div class="card" style="padding-bottom: 0px;">
-            <h1>[[user.lastName]] [[user.firstName]]</h1>
+            <h1>[[patient.lastName]] [[patient.firstName]]</h1>
 
             <div id="allInfo">
                 <div class="containerHor">
                     <p><b>Birth:</b></p>
-                    <p>[[user.dateStr]]</p>
+                    <p>[[patient.dateStr]]</p>
                 </div>
                 <div class="containerHor">
                     <p><b>NID:</b></p>
-                    <p>[[user.nid]]</p>
+                    <p>[[patient.nid]]</p>
                 </div>
                 <div class="containerHorGender">
-                    <p><b>Gender:</b> [[user.gender]]</p>
-                    <p style="margin-left: 8px;"><b>Blood type:</b> [[user.bloodType]]</p>
+                    <p><b>Gender:</b> [[patient.gender]]</p>
+                    <p style="margin-left: 8px;"><b>Blood type:</b> [[patient.bloodType]]</p>
                 </div>
                 <div class="containerHor">
                     <p><b>Smoker:</b></p>
@@ -86,24 +86,24 @@ class PatientElement extends PolymerElement {
                 </div>
                 <div class="containerHor">
                     <p><b>Height:</b></p>
-                    <p>[[user.heightStr]]</p>
+                    <p>[[patient.heightStr]]</p>
                 </div>
                 <div class="containerHor">
                     <p><b>Address:</b></p>
-                    <p>[[user.address]]</p>
+                    <p>[[patient.address]]</p>
                 </div>
                 <div class="containerHor">
                     <p><b>Phone:</b></p>
-                    <p>[[user.phone]]</p>
+                    <p>[[patient.phone]]</p>
                 </div>
                 <div style="text-align:center;"><paper-icon-button title="Show less info" icon="expand-less" on-tap="resize"></paper-icon-button></div>
             </div>
 
             <div id="lessInfo">
                 <div class="containerHorLessInfo">
-                    <p>[[user.dateStr]]</p>
+                    <p>[[patient.dateStr]]</p>
                     <p>[[gender]]</p>
-                    <p>[[user.bloodType]]</p>
+                    <p>[[patient.bloodType]]</p>
                 </div>
                 <div style="text-align:center;"><paper-icon-button title="Show more info" icon="expand-more" on-tap="resize"></paper-icon-button></div>
             </div>
@@ -118,23 +118,23 @@ class PatientElement extends PolymerElement {
     ready() {
         super.ready();
         
-        this.setUserId();
+        this.setPatientId();
         
-        this.$.ajaxUser.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
-        this.$.ajaxUser.generateRequest();
+        this.$.ajaxPatient.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
+        this.$.ajaxPatient.generateRequest();
     }
 
-    setUserId() {
+    setPatientId() {
         var split = document.URL.split("/");
         var param = split[split.length - 1];
-        this.userId = param;
+        this.pId = param;
     }
 
     handleResponse(e) {
-        this.user = e.detail.response;
+        this.patient = e.detail.response;
 
-        this.gender = (this.user.gender === "F") ? "Female" : "Male";
-        this.smoker = (this.user.smoker) ? "Yes" : "No";
+        this.gender = (this.patient.gender === "F") ? "Female" : "Male";
+        this.smoker = (this.patient.smoker) ? "Yes" : "No";
     }
 
     resize(e) {

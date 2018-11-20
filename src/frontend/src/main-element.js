@@ -112,7 +112,7 @@ class MainElement extends PolymerElement {
 
         <iron-ajax 
             id="ajaxSaveLayout" 
-            url="http://localhost:3000/user/"
+            url="http://localhost:3000/patient/"
             method="POST"
             handle-as="json"
             content-type="application/json"
@@ -121,7 +121,7 @@ class MainElement extends PolymerElement {
 
         <iron-ajax 
             id="ajaxGetLayout" 
-            url="http://localhost:3000/user/"
+            url="http://localhost:3000/patient/"
             method="GET"
             handle-as="json"
             content-type="application/json"
@@ -251,7 +251,7 @@ class MainElement extends PolymerElement {
         
             var split = document.URL.split("/");
             var param = split[split.length-1];
-            window.sessionStorage.setItem('userId', param);
+            window.sessionStorage.setItem('pId', param);
         
             this.loadPatientPage();
         });
@@ -331,7 +331,7 @@ class MainElement extends PolymerElement {
     }
 
     savePositions(positions) {  
-        this.$.ajaxSaveLayout.url = "http://localhost:3000/user/" + window.sessionStorage.getItem('userId') + "/layout";
+        this.$.ajaxSaveLayout.url = "http://localhost:3000/patient/" + window.sessionStorage.getItem('pId') + "/layout";
     
         this.$.ajaxSaveLayout.body = {
             layout: positions
@@ -371,7 +371,7 @@ class MainElement extends PolymerElement {
     }
 
     loadLayoutProcess() {
-        this.$.ajaxGetLayout.url = "http://localhost:3000/user/" + window.sessionStorage.getItem('userId') + "/layout";
+        this.$.ajaxGetLayout.url = "http://localhost:3000/patient/" + window.sessionStorage.getItem('pId') + "/layout";
         this.$.ajaxGetLayout.generateRequest();
     }
 

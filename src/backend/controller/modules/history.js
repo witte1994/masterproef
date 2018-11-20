@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
-const History = require('../models/history');
+const History = require('../../models/modules/history');
 
 exports.add_to_history = function (info) {
     const history = new History({
         _id: new mongoose.Types.ObjectId(),
-        user: info.user,
+        patient: info.patient,
         clinician: info.clinician,
         srcElement: info.srcElement,
         operation: info.operation,

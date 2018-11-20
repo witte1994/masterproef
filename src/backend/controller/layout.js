@@ -3,12 +3,12 @@ const mongoose = require('mongoose');
 const Layout = require('../models/layout');
 
 exports.save = (req, res, next) => {
-    var userId = req.originalUrl.split('/')[2];
+    var pId = req.originalUrl.split('/')[2];
 
     console.log(req.body.layout.small);
     console.log(req.body.layout.main);
 
-    Layout.deleteMany({ user: userId}, function(err) {
+    Layout.deleteMany({ patient: pId}, function(err) {
         if (err) {
             console.log(err);
             res.status(500).json({
@@ -17,7 +17,7 @@ exports.save = (req, res, next) => {
         } else {
             const layout = new Layout({
                 _id: mongoose.Types.ObjectId(),
-                user: userId,
+                patient: pId,
                 small: req.body.layout.small,
                 main: req.body.layout.main
             });
@@ -38,9 +38,9 @@ exports.save = (req, res, next) => {
 };
 
 exports.get = (req, res, next) => {
-    var userId = req.originalUrl.split('/')[2];
+    var pId = req.originalUrl.split('/')[2];
 
-    Layout.find({ user: userId, })
+    Layout.find({ patient: pId, })
         .select("small main")
         .exec()
         .then(doc => {
@@ -53,10 +53,10 @@ exports.get = (req, res, next) => {
         });
 };
 
-exports.default = function (userId) {
+exports.default = function (pId) {
     const layout = new Layout({
         _id: mongoose.Types.ObjectId(),
-        user: userId,
+        patient: pId,
         small: [],
         main: []
     });

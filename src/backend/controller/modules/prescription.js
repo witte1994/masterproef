@@ -1,16 +1,16 @@
 const mongoose = require('mongoose');
 
 const HistoryController = require('./history');
-const Medication = require('../models/medication');
-const Prescription = require('../models/prescription');
+const Medication = require('../../models/modules/medication');
+const Prescription = require('../../models/modules/prescription');
 
-exports.importValues = function (userId, values) {
+exports.importValues = function (pId, values) {
     for (var i = 0; i < values.length; i++) {
-        importPrescription(userId, values[i]);
+        importPrescription(pId, values[i]);
     }
 
     var info = {
-        user: null,
+        patient: null,
         clinician: null,
         srcElement: "prescription",
         operation: "import",
@@ -19,13 +19,13 @@ exports.importValues = function (userId, values) {
     HistoryController.add_to_history(info);
 }
 
-function importPrescription(userId, info) {
+function importPrescription(pId, info) {
     Medication.findOne({ name: info.medName })
         .exec()
         .then(doc => {
             const prescription = new Prescription({
                 _id: mongoose.Types.ObjectId(),
-                user: userId,
+                patient: pId,
                 medication: doc._id,
                 dosage: {
                     morning: info.dosage.morning,
@@ -51,10 +51,10 @@ function importPrescription(userId, info) {
 }
 
 exports.get_all_by_id = (req, res, next) => {
-    var userId = req.originalUrl.split('/')[2];
+    var pId = req.originalUrl.split('/')[2];
 
     Prescription.aggregate([
-        { $match: { user: mongoose.Types.ObjectId(userId) } },
+        { $match: { patient: mongoose.Types.ObjectId(pId) } },
         {
           $lookup:{
             from: "medications",
@@ -84,7 +84,7 @@ exports.get_all_by_id = (req, res, next) => {
 
 
 exports.get_all_by_date = (req, res, next) => {
-    var userId = req.originalUrl.split('/')[2];
+    var pId = req.originalUrl.split('/')[2];
 
     var start = new Date();
     start.setTime(req.params.start);
@@ -95,7 +95,7 @@ exports.get_all_by_date = (req, res, next) => {
         { $match: { 
             $and: 
             [
-                { user: mongoose.Types.ObjectId(userId) },
+                { patient: mongoose.Types.ObjectId(pId) },
                 { $or: 
                     [
                         { $and: [ { startDate: { $lte: end } }, { endDate: { $gt: end } } ] },
@@ -137,10 +137,10 @@ function getDateString(date) {
 }
 
 exports.create = (req, res, next) => {
-    var userId = req.originalUrl.split('/')[2];
+    var pId = req.originalUrl.split('/')[2];
     const prescription = new Prescription({
         _id: mongoose.Types.ObjectId(),
-        user: userId,
+        patient: pId,
         medication: req.body.medication,
         dosage: {
             morning: req.body.dosage.morning,
@@ -155,7 +155,7 @@ exports.create = (req, res, next) => {
         .save()
         .then(result => {
             var info = {
-                user: userId,
+                patient: pId,
                 clinician: null,
                 srcElement: "prescription",
                 operation: "create",
@@ -175,7 +175,7 @@ exports.create = (req, res, next) => {
 };
 
 exports.update = (req, res, next) => {
-    var userId = req.originalUrl.split('/')[2];
+    var pId = req.originalUrl.split('/')[2];
     Prescription.findOneAndUpdate({ _id: req.body.id },
             {
                 dosage: req.body.dosage,
@@ -187,7 +187,7 @@ exports.update = (req, res, next) => {
         .then(doc => {
             console.log(doc.startDate);
             var info = {
-                user: userId,
+                patient: pId,
                 clinician: null,
                 srcElement: "prescription",
                 operation: "update",
@@ -205,7 +205,7 @@ exports.update = (req, res, next) => {
 };
 
 exports.delete = (req, res, next) => {
-    var userId = req.originalUrl.split('/')[2];
+    var pId = req.originalUrl.split('/')[2];
     Prescription.deleteMany({ _id: req.params.id }, function(err) {
         if (err) {
             console.log(err);
@@ -214,7 +214,7 @@ exports.delete = (req, res, next) => {
             });
         } else {
             var info = {
-                user: userId,
+                patient: pId,
                 clinician: null,
                 srcElement: "prescription",
                 operation: "delete",

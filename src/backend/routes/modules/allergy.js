@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const checkAuth = require('../models/auth/check-auth');
+const checkAuth = require('../../models/auth/check-auth');
 
-const AllergyController = require('../controller/allergy');
+const AllergyController = require('../../controller/modules/allergy');
 
 router.get('/', checkAuth, AllergyController.get_all_by_id);
 

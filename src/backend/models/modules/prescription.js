@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 
 const prescriptionSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    user: {
+    patient: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'Patient',
         required: true
     },
     medication: {

@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const checkAuth = require('../models/auth/check-auth');
+const checkAuth = require('../../models/auth/check-auth');
 
-const VaccinationController = require('../controller/vaccination');
+const VaccinationController = require('../../controller/modules/vaccination');
 
 router.get('/', checkAuth, VaccinationController.get_all_by_id);
 

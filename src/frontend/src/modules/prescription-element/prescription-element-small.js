@@ -28,7 +28,7 @@ class PrescriptionElementSmall extends BaseElementSmall {
         return html`
             <iron-ajax 
                 id="ajaxPrescriptionsByDate"
-                url="http://localhost:3000/user/[[userId]]/prescription/[[currTime]]\&[[currTime]]"
+                url="http://localhost:3000/patient/[[patientId]]/prescription/[[currTime]]\&[[currTime]]"
                 method="GET"
                 handle-as="json"
                 last-response="{{prescriptions}}"

@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const HistoryController = require('./history');
 const PrescriptionController = require('./prescription');
-const Medication = require('../models/medication');
+const Medication = require('../../models/modules/medication');
 
 exports.import = (req, res, next) => {
     for (var i = 0; i < req.body.length; i++) {
@@ -10,7 +10,7 @@ exports.import = (req, res, next) => {
     }
 
     var info = {
-        user: null,
+        patient: null,
         clinician: null,
         srcElement: "medication",
         operation: "import",
@@ -23,7 +23,7 @@ exports.import = (req, res, next) => {
     });
 };
 
-exports.importPrescriptions = function (userId, values) {
+exports.importPrescriptions = function (pId, values) {
     var medicines = values.medicines;
     var prescriptions = values.prescriptions;
 
@@ -34,7 +34,7 @@ exports.importPrescriptions = function (userId, values) {
     Medication.create(medicines)
         .then(doc => {
             var info = {
-                user: userId,
+                patient: pId,
                 clinician: null,
                 srcElement: "medication",
                 operation: "import",
@@ -42,7 +42,7 @@ exports.importPrescriptions = function (userId, values) {
             };
             HistoryController.add_to_history(info);
 
-            PrescriptionController.importValues(userId, prescriptions);
+            PrescriptionController.importValues(pId, prescriptions);
         })
         .catch(err => {
             console.log(err);

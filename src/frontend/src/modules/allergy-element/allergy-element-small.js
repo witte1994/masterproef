@@ -28,7 +28,7 @@ class AllergyElementSmall extends BaseElementSmall {
         return html`
             <iron-ajax 
                 id="ajaxAllergies"
-                url="http://localhost:3000/user/[[userId]]/allergy"
+                url="http://localhost:3000/patient/[[pId]]/allergy"
                 method="GET"
                 handle-as="json"
                 last-response="{{allergies}}"

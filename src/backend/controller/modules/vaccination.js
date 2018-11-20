@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 const HistoryController = require('./history');
-const Vaccination = require('../models/vaccination');
+const Vaccination = require('../../models/modules/vaccination');
 
-exports.importValues = function (userId, values) {
+exports.importValues = function (pId, values) {
     for (var i = 0; i < values.length; i++) {
         var curVac = values[i];
         
@@ -16,7 +16,7 @@ exports.importValues = function (userId, values) {
         
         const vaccination = new Vaccination({
             _id: mongoose.Types.ObjectId(),
-            user: userId,
+            patient: pId,
             name: curVac.name,
             description: curVac.description,
             entries: curVac.entries,
@@ -33,7 +33,7 @@ exports.importValues = function (userId, values) {
     }
 
     var info = {
-        user: null,
+        patient: null,
         clinician: null,
         srcElement: "vaccination",
         operation: "import",
@@ -43,9 +43,9 @@ exports.importValues = function (userId, values) {
 }
 
 exports.get_all_by_id = (req, res, next) => {
-    var userId = req.originalUrl.split('/')[2];
+    var pId = req.originalUrl.split('/')[2];
 
-    Vaccination.find({ user: userId })
+    Vaccination.find({ patient: pId })
         .lean()
         .exec()
         .then(doc => {
@@ -72,10 +72,10 @@ function getDateString(date) {
 
 
 exports.create = (req, res, next) => {
-    var userId = req.originalUrl.split('/')[2];
+    var pId = req.originalUrl.split('/')[2];
     const vaccination = new Vaccination({
         _id: mongoose.Types.ObjectId(),
-        user: userId,
+        patient: pId,
         name: req.body.name,
         description: req.body.description,
         entries: [],
@@ -85,7 +85,7 @@ exports.create = (req, res, next) => {
         .save()
         .then(result => {
             var info = {
-                user: userId,
+                patient: pId,
                 clinician: null,
                 srcElement: "vaccination",
                 operation: "create",
@@ -105,7 +105,7 @@ exports.create = (req, res, next) => {
 };
 
 exports.update = (req, res, next) => {
-    var userId = req.originalUrl.split('/')[2];
+    var pId = req.originalUrl.split('/')[2];
     Vaccination.findOneAndUpdate({ _id: req.body.id },
             {
                 name: req.body.name,
@@ -116,7 +116,7 @@ exports.update = (req, res, next) => {
         .exec()
         .then(doc => {
             var info = {
-                user: userId,
+                patient: pId,
                 clinician: null,
                 srcElement: "vaccination",
                 operation: "update",
@@ -134,7 +134,7 @@ exports.update = (req, res, next) => {
 };
 
 exports.delete = (req, res, next) => {
-    var userId = req.originalUrl.split('/')[2];
+    var pId = req.originalUrl.split('/')[2];
     Vaccination.deleteMany({ _id: req.params.id }, function(err) {
         if (err) {
             console.log(err);
@@ -143,7 +143,7 @@ exports.delete = (req, res, next) => {
             });
         } else {
             var info = {
-                user: userId,
+                patient: pId,
                 clinician: null,
                 srcElement: "vaccination",
                 operation: "delete",
@@ -159,7 +159,7 @@ exports.delete = (req, res, next) => {
 };
 
 exports.create_entry = (req, res, next) => {
-    var userId = req.originalUrl.split('/')[2];
+    var pId = req.originalUrl.split('/')[2];
     var vaccinationId = req.params.id;
 
     var entry = {
@@ -176,7 +176,7 @@ exports.create_entry = (req, res, next) => {
         .exec()
         .then(doc => {
             var info = {
-                user: userId,
+                patient: pId,
                 clinician: null,
                 srcElement: "vaccination",
                 operation: "create",
@@ -194,7 +194,7 @@ exports.create_entry = (req, res, next) => {
 };
 
 exports.update_entry = (req, res, next) => {
-    var userId = req.originalUrl.split('/')[2];
+    var pId = req.originalUrl.split('/')[2];
     var vaccinationId = req.params.id;
 
     var entry = {
@@ -212,7 +212,7 @@ exports.update_entry = (req, res, next) => {
         .exec()
         .then(doc => {
             var info = {
-                user: userId,
+                patient: pId,
                 clinician: null,
                 srcElement: "vaccination",
                 operation: "update",
@@ -230,7 +230,7 @@ exports.update_entry = (req, res, next) => {
 };
 
 exports.delete_entry = (req, res, next) => {
-    var userId = req.originalUrl.split('/')[2];
+    var pId = req.originalUrl.split('/')[2];
     var vaccinationId = req.params.id;
     var entryId = req.params.entryId;
 
@@ -242,7 +242,7 @@ exports.delete_entry = (req, res, next) => {
         .exec()
         .then(doc => {
             var info = {
-                user: userId,
+                patient: pId,
                 clinician: null,
                 srcElement: "vaccination",
                 operation: "delete",

@@ -94,7 +94,7 @@ export class BaseElement extends PolymerElement {
     ready() {
         super.ready();
     
-        this.setUserId();
+        this.setPatientId();
     }
 
     update(e) {
@@ -105,10 +105,10 @@ export class BaseElement extends PolymerElement {
         console.log("sendUpdateSignal: implement in child class");
     }
 
-    setUserId() {
+    setPatientId() {
         var split = document.URL.split("/");
         var param = split[split.length - 1];
-        this.userId = param;
+        this.pId = param;
     }
 
     getMinSizes() {

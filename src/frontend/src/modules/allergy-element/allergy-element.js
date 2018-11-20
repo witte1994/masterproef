@@ -43,7 +43,7 @@ class AllergyElement extends BaseElement {
         return html`
             <iron-ajax 
                 id="ajaxAllergies"
-                url="http://localhost:3000/user/[[userId]]/allergy"
+                url="http://localhost:3000/patient/[[pId]]/allergy"
                 method="GET"
                 handle-as="json"
                 last-response="{{allergies}}"
@@ -51,7 +51,7 @@ class AllergyElement extends BaseElement {
 
             <iron-ajax
                 id="ajaxCreateAllergy"
-                url="http://localhost:3000/user/[[userId]]/allergy/create"
+                url="http://localhost:3000/patient/[[pId]]/allergy/create"
                 method="POST"
                 handle-as="json"
                 content-type="application/json"
@@ -60,7 +60,7 @@ class AllergyElement extends BaseElement {
 
             <iron-ajax
                 id="ajaxUpdateAllergy"
-                url="http://localhost:3000/user/[[userId]]/allergy/update"
+                url="http://localhost:3000/patient/[[pId]]/allergy/update"
                 method="POST"
                 handle-as="json"
                 content-type="application/json"
@@ -69,7 +69,7 @@ class AllergyElement extends BaseElement {
 
             <iron-ajax
                 id="ajaxDeleteAllergy"
-                url="http://localhost:3000/user/[[userId]]/allergy/delete/[[deleteId]]"
+                url="http://localhost:3000/patient/[[pId]]/allergy/delete/[[deleteId]]"
                 method="DELETE"
                 handle-as="json"
                 on-response="sendUpdateSignal"

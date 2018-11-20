@@ -62,7 +62,7 @@ class PrescriptionElement extends BaseElement {
 
             <iron-ajax 
                 id="ajaxPrescriptions"
-                url="http://localhost:3000/user/[[userId]]/prescription"
+                url="http://localhost:3000/patient/[[pId]]/prescription"
                 method="GET"
                 handle-as="json"
                 last-response="{{prescriptions}}"
@@ -70,7 +70,7 @@ class PrescriptionElement extends BaseElement {
 
             <iron-ajax 
                 id="ajaxPrescriptionsByDate"
-                url="http://localhost:3000/user/[[userId]]/prescription/[[startInt]]\&[[endInt]]"
+                url="http://localhost:3000/patient/[[pId]]/prescription/[[startInt]]\&[[endInt]]"
                 method="GET"
                 handle-as="json"
                 last-response="{{prescriptions}}"
@@ -78,7 +78,7 @@ class PrescriptionElement extends BaseElement {
 
             <iron-ajax
                 id="ajaxCreatePrescription"
-                url="http://localhost:3000/user/[[userId]]/prescription/create"
+                url="http://localhost:3000/patient/[[pId]]/prescription/create"
                 method="POST"
                 handle-as="json"
                 content-type="application/json"
@@ -87,7 +87,7 @@ class PrescriptionElement extends BaseElement {
 
             <iron-ajax
                 id="ajaxUpdatePrescription"
-                url="http://localhost:3000/user/[[userId]]/prescription/update"
+                url="http://localhost:3000/patient/[[pId]]/prescription/update"
                 method="POST"
                 handle-as="json"
                 content-type="application/json"
@@ -96,7 +96,7 @@ class PrescriptionElement extends BaseElement {
 
             <iron-ajax
                 id="ajaxDeletePrescription"
-                url="http://localhost:3000/user/[[userId]]/prescription/delete/[[deleteId]]"
+                url="http://localhost:3000/patient/[[pId]]/prescription/delete/[[deleteId]]"
                 method="DELETE"
                 handle-as="json"
                 on-response="sendUpdateSignal"

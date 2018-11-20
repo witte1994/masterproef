@@ -1,15 +1,15 @@
 const mongoose = require('mongoose');
-const User = require('../models/user');
+const Patient = require('../models/patient');
 
-const HistoryController = require('../controller/history');
-const LayoutController = require('../controller/layout');
+const HistoryController = require('./modules/history');
+const LayoutController = require('./layout');
 
-const AllergyController = require('../controller/allergy');
-const MedicationController = require('../controller/medication');
-const VaccinationController = require('../controller/vaccination');
+const AllergyController = require('./modules/allergy');
+const MedicationController = require('./modules/medication');
+const VaccinationController = require('./modules/vaccination');
 
 exports.create = (req, res, next) => {
-    const user = new User({
+    const patient = new Patient({
         _id: new mongoose.Types.ObjectId(),
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -22,12 +22,12 @@ exports.create = (req, res, next) => {
         phone: req.body.phone,
         smoker: req.body.smoker
     });
-    user.save()
+    patient.save()
         .then(result => {
             console.log(result);
             res.status(201).json({
-                message: "Added user",
-                createdUser: result
+                message: "Added patient",
+                createdPatient: result
             });
         })
         .catch(err => {
@@ -38,10 +38,10 @@ exports.create = (req, res, next) => {
         });
 };
 
-exports.importUser = function (userInfo) {
-    var info = userInfo.info;
+exports.importPatient = function (patientInfo) {
+    var info = patientInfo.info;
 
-    const user = new User({
+    const patient = new Patient({
         _id: new mongoose.Types.ObjectId(),
         firstName: info.firstName,
         lastName: info.lastName,
@@ -54,20 +54,20 @@ exports.importUser = function (userInfo) {
         phone: info.phone,
         smoker: info.smoker
     });
-    user.save()
+    patient.save()
         .then(result => {
             var info = {
-                user: null,
+                patient: null,
                 clinician: null,
-                srcElement: "user",
+                srcElement: "patient",
                 operation: "import",
-                description: "new patient: " + user.firstName + " " + user.lastName + " (" + getDateString(user.birth) + ")"
+                description: "new patient: " + patient.firstName + " " + patient.lastName + " (" + getDateString(patient.birth) + ")"
             }
             HistoryController.add_to_history(info);
 
-            importRest(user._id, userInfo);
+            importRest(patient._id, patientInfo);
             console.log(result);
-            return user._id;
+            return patient._id;
         })
         .catch(err => {
             console.log(err);
@@ -75,21 +75,21 @@ exports.importUser = function (userInfo) {
         });
 }
 
-function importRest(userId, info) {
-    LayoutController.default(userId);
+function importRest(pId, info) {
+    LayoutController.default(pId);
 
     var keys = Object.keys(info);
 
     for (var i = 0; i < keys.length; i++) {
         switch (keys[i]) {
             case 'allergies':
-                AllergyController.importValues(userId, info.allergies);
+                AllergyController.importValues(pId, info.allergies);
                 break;
             case 'prescriptions':
-                MedicationController.importPrescriptions(userId, info.prescriptions);
+                MedicationController.importPrescriptions(pId, info.prescriptions);
                 break;
             case 'vaccinations':
-                VaccinationController.importValues(userId, info.vaccinations);
+                VaccinationController.importValues(pId, info.vaccinations);
                 break;
             case 'info':
                 console.log("info");
@@ -101,8 +101,8 @@ function importRest(userId, info) {
     }
 }
 
-exports.get_users = (req, res, next) => {
-    User.find()
+exports.get_patients = (req, res, next) => {
+    Patient.find()
         .lean()
         .exec()
         .then(doc => {
@@ -125,10 +125,10 @@ function getDateString(date) {
     return str;
 }
 
-exports.get_user_by_id = (req, res, next) => {
-    const id = req.params.userId;
+exports.get_patient_by_id = (req, res, next) => {
+    const id = req.params.pId;
 
-    User.findById(id)
+    Patient.findById(id)
         .lean()
         .exec()
         .then(doc => {
