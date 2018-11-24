@@ -104,7 +104,6 @@ class MainElement extends PolymerElement {
             method="POST"
             handle-as="json"
             content-type="application/json"
-            bubbles="true"
             on-response="loginResponse"
             on-error="loginError">
         </iron-ajax>
@@ -114,8 +113,7 @@ class MainElement extends PolymerElement {
             url="http://localhost:3000/patient/"
             method="POST"
             handle-as="json"
-            content-type="application/json"
-            bubbles="true">
+            content-type="application/json">
         </iron-ajax>
 
         <iron-ajax 
@@ -124,8 +122,17 @@ class MainElement extends PolymerElement {
             method="GET"
             handle-as="json"
             content-type="application/json"
-            bubbles="true"
             on-response="loadLayout">
+        </iron-ajax>
+
+        <iron-ajax 
+            auto
+            id="ajaxGetModuleList" 
+            url="http://localhost:3000/modules"
+            method="GET"
+            handle-as="json"
+            content-type="application/json"
+            last-response="{{modules}}">
         </iron-ajax>
         `;
     }
@@ -138,9 +145,11 @@ class MainElement extends PolymerElement {
             
             <paper-dropdown-menu id="moduleMenu" label="Module">
                 <paper-listbox slot="dropdown-content">
-                    <paper-item value="allergy-element">Allergies</paper-item>
-                    <paper-item value="prescription-element">Prescriptions</paper-item>
-                    <paper-item value="vaccination-element">Vaccinations</paper-item>
+                    <dom-repeat items="[[modules.large]]">
+                        <template>
+                            <paper-item value$="[[item.module]]">[[item.title]]</paper-item>
+                        </template>
+                    </dom-repeat>
                 </paper-listbox>
             </paper-dropdown-menu>
 
@@ -154,9 +163,11 @@ class MainElement extends PolymerElement {
         
             <paper-dropdown-menu id="moduleMenuSmall" label="Module">
                 <paper-listbox slot="dropdown-content">
-                    <paper-item value="allergy-element-small">Allergies</paper-item>
-                    <paper-item value="prescription-element-small">Prescriptions</paper-item>
-                    <paper-item value="vaccination-element-small">Vaccinations</paper-item>
+                    <dom-repeat items="[[modules.small]]">
+                        <template>
+                            <paper-item value$="[[item.module]]">[[item.title]]</paper-item>
+                        </template>
+                    </dom-repeat>
                 </paper-listbox>
             </paper-dropdown-menu>
         
@@ -417,7 +428,7 @@ class MainElement extends PolymerElement {
     add() {
         this.onMainGrid = true;
         var moduleName = this.$.moduleMenu.selectedItem.getAttribute("value");
-    
+
         var container = this.createModuleContainer(moduleName);
         this.addContainerToGrid(container);
     }

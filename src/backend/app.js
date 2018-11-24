@@ -8,6 +8,7 @@ const importRoutes = require('./routes/import');
 const patientRoutes = require('./routes/patient');
 const clinicianRoutes = require('./routes/clinician');
 const medicationRoutes = require('./routes/modules/medication');
+const moduleRoutes = require('./routes/modules');
 
 mongoose.connect('mongodb://localhost:27017/dashboard', {
     useCreateIndex: true,
@@ -30,6 +31,7 @@ app.use('/import', importRoutes);
 app.use('/patient', patientRoutes);
 app.use('/clinician', clinicianRoutes);
 app.use('/medication', medicationRoutes);
+app.use('/modules', moduleRoutes);
 
 app.use((req, res, next) => {
     const error = new Error('Not found');
