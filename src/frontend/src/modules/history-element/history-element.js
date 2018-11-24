@@ -11,7 +11,6 @@ import '@vaadin/vaadin-grid/vaadin-grid-sorter';
 import '@vaadin/vaadin-grid/vaadin-grid-filter';
 import '@vaadin/vaadin-date-picker/vaadin-date-picker';
 import '@vaadin/vaadin-date-picker/vaadin-date-picker-light';
-import ResizeSensor from 'css-element-queries/src/ResizeSensor';
 
 /**
  * @customElement
@@ -26,6 +25,10 @@ class HistoryElement extends BaseElement {
                     display: grid;
                     grid-template-rows: auto auto;
                     grid-template-columns: 100px auto;
+                }
+
+                vaadin-grid {
+                    border: 0px;
                 }
 
                 paper-input {
@@ -119,28 +122,28 @@ class HistoryElement extends BaseElement {
                     </div>
                 </template>
 
-                <vaadin-grid-column width="109px" flex-grow="0">
+                <vaadin-grid-column width="110px" flex-grow="0">
                     <template class="header">
                         Date
                     </template>
                     <template>[[item.dateStr]]</template>
                 </vaadin-grid-column>
 
-                <vaadin-grid-column id="timeCol" width="60px" flex-grow="0">
+                <vaadin-grid-column id="timeCol" hidden width="60px" flex-grow="0">
                     <template class="header">
                         Time
                     </template>
                     <template>[[item.timeStr]]</template>
                 </vaadin-grid-column>
 
-                <vaadin-grid-column width="160px">
+                <vaadin-grid-column width="100px">
                     <template class="header">
                         Module
                     </template>
                     <template>[[item.srcElement]]</template>
                 </vaadin-grid-column>
 
-                <vaadin-grid-column width="100px">
+                <vaadin-grid-column width="80px">
                     <template class="header">
                         Operation
                     </template>
@@ -167,7 +170,20 @@ class HistoryElement extends BaseElement {
 
         this.title = "History";
         this.dispatchEvent(new CustomEvent("size", {bubbles: true, composed: true, detail: this.getMinSizes() }));
-        
+
+        var contentDiv = this.$.content;
+        var timeCol = this.$.timeCol;
+        new ResizeSensor(this.$.content, function() {
+                var dim = contentDiv.getBoundingClientRect();
+                var width = dim.right - dim.left;
+
+                if (width > 384) {
+                    timeCol.hidden = false;
+                } else {
+                    timeCol.hidden = true;
+                }
+        });
+
         this.update();
     }
 
@@ -182,14 +198,13 @@ class HistoryElement extends BaseElement {
 
     getMinSizes() {
         return {
-            width: "500px",
+            width: "324px",
             height: "300px"
         };
     }
 
     openDialog(e) {
         this.$.filterDialog.open();
-        this.$.timeCol.hidden = !this.$.timeCol.hidden;
     }
 
     toggleAll(e) {
