@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 
+const modulesController = require('../../controller/modules');
+const enums = modulesController.getEnums();
+
 const historySchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     patient: {
@@ -12,7 +15,7 @@ const historySchema = mongoose.Schema({
     },
     srcElement: {
         type: String,
-        enum: ['patient', 'allergy', 'medication', 'prescription', 'vaccination', 'other'],
+        enum: enums,
         default: 'other',
         required: true
     },

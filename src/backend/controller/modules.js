@@ -1,42 +1,59 @@
+var modulesLarge = [
+    {
+        "module": "allergy-element",
+        "title": "Allergies",
+        "enum": "allergy"
+    },
+    {
+        "module": "prescription-element",
+        "title": "Prescriptions",
+        "enum": "prescription"
+    },
+    {
+        "module": "vaccination-element",
+        "title": "Vaccinations",
+        "enum": "vaccination"
+    },
+    {
+        "module": "history-element",
+        "title": "History",
+        "enum": "history"
+    }
+];
+
+var modulesSmall = [
+    {
+        "module": "allergy-element-small",
+        "title": "Allergies"
+    },
+    {
+        "module": "prescription-element-small",
+        "title": "Prescriptions"
+    },
+    {
+        "module": "vaccination-element-small",
+        "title": "Vaccinations"
+    }
+];
+
 exports.get_module_list = (req, res, next) => {
-    var modulesLarge = [
-        {
-            "module": "allergy-element",
-            "title": "Allergies"
-        },
-        {
-            "module": "prescription-element",
-            "title": "Prescriptions"
-        },
-        {
-            "module": "vaccination-element",
-            "title": "Vaccinations"
-        },
-        {
-            "module": "history-element",
-            "title": "History"
-        }
-    ];
-
-    var modulesSmall = [
-        {
-            "module": "allergy-element-small",
-            "title": "Allergies"
-        },
-        {
-            "module": "prescription-element-small",
-            "title": "Prescriptions"
-        },
-        {
-            "module": "vaccination-element-small",
-            "title": "Vaccinations"
-        }
-    ]
-
     res.status(200).json(
         {
             "large": modulesLarge,
             "small": modulesSmall
         }
     );
+};
+
+exports.getEnums = () => {
+    var enums = [
+        "patient",
+        "medication",
+        "other"
+    ];
+
+    for (var i = 0; i < modulesLarge.length; i++)
+        enums.push(modulesLarge[i].enum);
+
+    return enums;
 };

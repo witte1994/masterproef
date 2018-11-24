@@ -5,6 +5,6 @@ const checkAuth = require('../../models/auth/check-auth');
 const HistoryController = require('../../controller/modules/history');
 
 router.get('/', checkAuth, HistoryController.get_by_id);
-router.get('/:start&:end', checkAuth, HistoryController.get_by_date);
+router.post('/', checkAuth, HistoryController.get_by_filter);
 
 module.exports = router;
