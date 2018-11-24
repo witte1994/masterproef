@@ -20,6 +20,7 @@ import '@polymer/paper-item/paper-item';
 import './patient-list-element/patient-list-element';
 import './patient-element/patient-element';
 
+import './modules/history-element/history-element';
 import './modules/allergy-element/allergy-element';
 import './modules/prescription-element/prescription-element';
 import './modules/vaccination-element/vaccination-element';

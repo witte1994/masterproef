@@ -11,6 +11,10 @@ exports.get_module_list = (req, res, next) => {
         {
             "module": "vaccination-element",
             "title": "Vaccinations"
+        },
+        {
+            "module": "history-element",
+            "title": "History"
         }
     ];
 
