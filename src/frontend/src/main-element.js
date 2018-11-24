@@ -48,7 +48,6 @@ class MainElement extends PolymerElement {
         return html`
             <style include="shared-styles">
 			app-toolbar {
-				/* Toolbar is the main header, so give it some color */
 				background-color: #1E88E5;
 				font-family: 'Roboto', Helvetica, sans-serif;
 				color: white;
@@ -213,6 +212,7 @@ class MainElement extends PolymerElement {
                             <div main-title>Dashboard</div>
                             <paper-icon-button title="Save layout" icon="save" on-tap="saveLayout"></paper-icon-button>
                             <paper-icon-button title="Add module" icon="add" on-tap="openModuleDialog"></paper-icon-button>
+                            <paper-icon-button title="Log out" icon="power-settings-new" style="margin-left: 20px;" on-tap="logout"></paper-icon-button>
                         </app-toolbar>
                     </app-header>
                     
@@ -268,13 +268,22 @@ class MainElement extends PolymerElement {
     loginResponse(e) {
         window.sessionStorage.accessToken = e.detail.response.token;
         
-        var patientList = document.createElement("patient-list-element");
-        this.$.patientDialog.appendChild(patientList);
+        this.patientList = document.createElement("patient-list-element");
+        this.$.patientDialog.appendChild(this.patientList);
         this.$.patientDialog.toggle();
     }
 
     loginError(e) {
         this.$.loginError.open();
+    }
+
+    logout() {
+        window.sessionStorage.accessToken = null;
+        this.clearGrids();
+
+        this.$.loginDialog.open();
+
+        this.patientList.parentNode.removeChild(this.patientList);
     }
 
     saveLayout() {
