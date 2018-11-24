@@ -45,7 +45,11 @@ exports.importPrescriptions = function (pId, values) {
             PrescriptionController.importValues(pId, prescriptions);
         })
         .catch(err => {
-            console.log(err);
+            if (err.code === 11000) {
+                PrescriptionController.importValues(pId, prescriptions);
+            } else {
+                console.log(err);
+            }
         });
 }
 

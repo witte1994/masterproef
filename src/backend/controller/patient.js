@@ -57,7 +57,7 @@ exports.importPatient = function (patientInfo) {
     patient.save()
         .then(result => {
             var info = {
-                patient: null,
+                patient: patient._id,
                 clinician: null,
                 srcElement: "patient",
                 operation: "import",

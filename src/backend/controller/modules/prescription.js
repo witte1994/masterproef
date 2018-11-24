@@ -10,7 +10,7 @@ exports.importValues = function (pId, values) {
     }
 
     var info = {
-        patient: null,
+        patient: pId,
         clinician: null,
         srcElement: "prescription",
         operation: "import",

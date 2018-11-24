@@ -33,7 +33,7 @@ exports.importValues = function (pId, values) {
     }
 
     var info = {
-        patient: null,
+        patient: pId,
         clinician: null,
         srcElement: "vaccination",
         operation: "import",
