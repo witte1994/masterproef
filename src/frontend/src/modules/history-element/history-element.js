@@ -27,10 +27,6 @@ class HistoryElement extends BaseElement {
                     grid-template-columns: 100px auto;
                 }
 
-                vaadin-grid {
-                    border: 0px;
-                }
-
                 paper-input {
                     margin-top: 0px;
                     height: 50px;

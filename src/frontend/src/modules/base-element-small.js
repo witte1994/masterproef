@@ -36,6 +36,12 @@ export class BaseElementSmall extends PolymerElement {
                 display: grid;
                 grid-template-rows: 36px auto;
             }
+
+            vaadin-grid {
+                margin-left: -8px;
+                margin-right: -8px;
+                border: 0px;
+            }
         </style>
 
         ${this.cssTemplate}

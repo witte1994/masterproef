@@ -14,28 +14,7 @@ export class BaseElement extends PolymerElement {
         return html`
         <style include="shared-styles">
             .containerHeader {
-                width: 100%;
-                display: grid;
                 grid-template-columns: auto 56px;
-                align-items: center;
-                margin-bottom: 8px;
-            }
-
-            .buttonsHeader {
-                padding: 0px;
-                height: 24px;
-                width: 24px;
-            }
-
-            .mainContainer {
-                display: grid;
-                grid-template-rows: auto;
-                height: 100%;
-            }
-
-            .card {
-                display: grid;
-                grid-template-rows: 36px auto;
             }
         </style>
 

@@ -21,6 +21,8 @@ $_documentContainer.innerHTML = `<dom-module id="shared-styles">
         border-radius: 5px;
         background-color: #fff;
         box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+        display: grid;
+        grid-template-rows: 36px auto;
       }
 
       h1 {
@@ -36,6 +38,35 @@ $_documentContainer.innerHTML = `<dom-module id="shared-styles">
 
       vaadin-text-field {
         height: 24px;
+      }
+
+      .containerHeader {
+          width: 100%;
+          display: grid;
+          align-items: center;
+          margin-bottom: 8px;
+      }
+
+      .buttonsHeader {
+          padding: 0px;
+          height: 24px;
+          width: 24px;
+      }
+      
+      .mainContainer {
+          display: grid;
+          grid-template-rows: auto;
+          height: 100%;
+      }
+
+      vaadin-grid {
+          margin-left: -8px;
+          margin-right: -8px;
+          border: 0px;
+      }
+
+      vaadin-grid paper-icon-button {
+        color: #757575;
       }
     </style>
   </template>

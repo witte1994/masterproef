@@ -26,6 +26,11 @@ class PatientListElement extends PolymerElement {
                 background: #e0e0e0;
             }
 
+            vaadin-grid {
+                margin-left: 0px;
+                margin-right: 0px;
+            }
+
             #titleHeader {
                 display: grid;
                 grid-template-columns: auto 100px;

@@ -291,6 +291,8 @@ class MainElement extends PolymerElement {
 
     logout() {
         window.sessionStorage.accessToken = null;
+        window.history.pushState("", "", "/");
+
         this.clearGrids();
 
         this.$.loginDialog.open();
@@ -552,10 +554,12 @@ class MainElement extends PolymerElement {
     }
 
     openLoginDialog() {
+        window.history.pushState("", "", "/" + e.srcElement.id);
         this.$.loginDialog.open()
     }
 
     openPatientDialog() {
+        window.history.pushState("", "", "/");
         this.$.patientDialog.open();
     }
 

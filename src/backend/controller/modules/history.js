@@ -54,8 +54,6 @@ exports.get_by_filter = (req, res, next) => {
     if (req.body.modules.length > 0)
         enums = req.body.modules;
 
-    console.log(enums);
-
     History.find({
             patient: pId,
             date: { 
