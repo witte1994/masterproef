@@ -18,6 +18,11 @@ var modulesLarge = [
         "module": "history-element",
         "title": "History",
         "enum": "history"
+    },
+    {
+        "module": "workflow-element",
+        "title": "Workflow",
+        "enum": "workflow"
     }
 ];
 

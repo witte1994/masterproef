@@ -75,7 +75,8 @@ exports.login = (req, res, next) => {
 
                     return res.status(200).json({
                         message: 'Authorization successful',
-                        token: token
+                        token: token,
+                        cId: clinician[0]._id
                     });
                 }
                 res.status(401).json({

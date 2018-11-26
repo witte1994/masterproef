@@ -279,6 +279,7 @@ class MainElement extends PolymerElement {
 
     loginResponse(e) {
         window.sessionStorage.accessToken = e.detail.response.token;
+        window.sessionStorage.cId = e.detail.response.cId;
         
         this.patientList = document.createElement("patient-list-element");
         this.$.patientDialog.appendChild(this.patientList);
@@ -291,6 +292,7 @@ class MainElement extends PolymerElement {
 
     logout() {
         window.sessionStorage.accessToken = null;
+        window.sessionStorage.cId = null;
         window.history.pushState("", "", "/");
 
         this.clearGrids();

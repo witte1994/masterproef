@@ -1,0 +1,44 @@
+const mongoose = require('mongoose');
+
+const workflowSchema = mongoose.Schema({
+    _id: mongoose.Schema.Types.ObjectId,
+    patient: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Patient',
+        required: true,
+        default: null
+    },
+    clinician: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Clinician',
+        required: true,
+        default: null
+    },
+    name: {
+        type: String,
+        required: true
+    },
+    description: {
+        type: String,
+        required: true
+    },
+    steps: [{
+        _id: mongoose.Schema.Types.ObjectId,
+        name: {
+            type: String,
+            required: true
+        },
+        description: {
+            type: String,
+            required: true
+        },
+        substeps: [{
+            description: {
+                type: String,
+                required: true
+            }
+        }]
+    }]
+});
+
+module.exports = mongoose.model('Workflow', workflowSchema);
