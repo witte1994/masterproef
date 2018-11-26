@@ -16,5 +16,7 @@ router.post('/:id/update', WorkflowController.update_step);
 router.delete('/:id/delete/:stepId', WorkflowController.delete_step);
 
 router.post('/:id/step/:stepId/create', WorkflowController.create_substep);
+router.post('/:id/step/:stepId/update', WorkflowController.update_substep);
+router.delete('/:id/step/:stepId/delete/:substepId', WorkflowController.delete_substep);
 
 module.exports = router;

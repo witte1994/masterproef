@@ -168,6 +168,23 @@ class WorkflowElement extends BaseElement {
                 content-type="application/json"
                 on-response="workflowReceived"
             ></iron-ajax>
+
+            <iron-ajax 
+                id="ajaxUpdateSubstep"
+                url="http://localhost:3000/patient/[[pId]]/workflow/[[workflowId]]/step/[[curStepId]]/update"
+                method="POST"
+                handle-as="json"
+                content-type="application/json"
+                on-response="workflowReceived"
+            ></iron-ajax>
+
+            <iron-ajax 
+                id="ajaxDeleteSubstep"
+                url="http://localhost:3000/patient/[[pId]]/workflow/[[workflowId]]/step/[[curStepId]]/delete/[[curSubstepId]]"
+                method="DELETE"
+                handle-as="json"
+                on-response="workflowReceived"
+            ></iron-ajax>
         `;
     }
 
@@ -302,6 +319,17 @@ class WorkflowElement extends BaseElement {
 
                 <paper-button dialog-dismiss autofocus>Cancel</paper-button>
                 <paper-button dialog-confirm on-tap="updateSubstepAction">Edit</paper-button>
+            </paper-dialog>
+
+            <paper-dialog id="deleteSubstepDialog">
+                <h2>Delete substep</h2>
+                
+                <div>
+                    Are you sure you want to delete this substep?
+                </div>
+
+                <paper-button dialog-dismiss autofocus>Cancel</paper-button>
+                <paper-button dialog-confirm on-tap="deleteSubstepAction">Delete</paper-button>
             </paper-dialog>
         `;
     }
@@ -528,6 +556,8 @@ class WorkflowElement extends BaseElement {
     updateSubstep(e) {
         var stepIndex = e.target.value.split(" ")[0];
         var substepIndex = e.target.value.split(" ")[1];
+        this.curStepId = this.currentWorkflow.steps[stepIndex]._id;
+        this.curSubstepId = this.currentWorkflow.steps[stepIndex].substeps[substepIndex]._id;
         var substep = this.currentWorkflow.steps[stepIndex].substeps[substepIndex];
 
         this.$.descriptionSubstepUpdate.value = substep.description;
@@ -536,7 +566,28 @@ class WorkflowElement extends BaseElement {
     }
 
     updateSubstepAction(e) {
-        
+        var body = {
+            "pId": this.pId,
+            "cId": window.sessionStorage.cId,
+            "id": this.curSubstepId,
+            "description": this.$.descriptionSubstepUpdate.value
+        };
+
+        this.$.ajaxUpdateSubstep.body = body;
+        this.$.ajaxUpdateSubstep.generateRequest();
+    }
+
+    deleteSubstep(e) {
+        var stepIndex = e.target.value.split(" ")[0];
+        var substepIndex = e.target.value.split(" ")[1];
+        this.curStepId = this.currentWorkflow.steps[stepIndex]._id;
+        this.curSubstepId = this.currentWorkflow.steps[stepIndex].substeps[substepIndex]._id;
+
+        this.$.deleteSubstepDialog.open();
+    }
+
+    deleteSubstepAction(e) {
+        this.$.ajaxDeleteSubstep.generateRequest();
     }
 
     sendUpdateSignal() {
@@ -583,6 +634,7 @@ class WorkflowElement extends BaseElement {
 
     loadWorkflow(workflow) {
         this.currentWorkflow = workflow;
+        this.workflowId = workflow._id;
         this.title = "Workflow: " + this.currentWorkflow.name;
         this.$.workflowContent.style.display = "block";
     }

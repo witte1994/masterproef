@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const HistoryController = require('./history');
 const Workflow = require('../../models/modules/workflow');
+const WorkflowSubstep = require('../../models/modules/workflowsubstep');
 
 exports.get_all = (req, res, next) => {
     var pId = req.body.pId;
@@ -23,7 +24,6 @@ exports.get_all = (req, res, next) => {
             ]
         })
         .select('_id name')
-        .lean()
         .exec()
         .then(doc => {
             console.log(doc);
@@ -37,7 +37,7 @@ exports.get_all = (req, res, next) => {
 
 exports.get_by_id = (req, res, next) => {
     Workflow.findById(req.params.id)
-        .lean()
+        .populate("steps.substeps")
         .exec()
         .then(doc => {
             console.log(doc);
@@ -96,6 +96,7 @@ exports.update = (req, res, next) => {
                 description: req.body.description
             },
             { new: true })
+        .populate("steps.substeps")
         .exec()
         .then(doc => {
             var info = {
@@ -160,6 +161,7 @@ exports.create_step = (req, res, next) => {
             $push: { steps: step }
         },
         { new: true })
+        .populate("steps.substeps")
         .exec()
         .then(doc => {
             var info = {
@@ -197,6 +199,7 @@ exports.update_step = (req, res, next) => {
                     "steps.$.description": step.description }
         },
         { new: true })
+        .populate("steps.substeps")
         .exec()
         .then(doc => {
             var info = {
@@ -228,6 +231,7 @@ exports.delete_step = (req, res, next) => {
             $pull: { steps: { _id: stepId } }
         },
         { new: true })
+        .populate("steps.substeps")
         .exec()
         .then(doc => {
             var info = {
@@ -254,32 +258,131 @@ exports.create_substep = (req, res, next) => {
     var workflowId = req.params.id;
     var stepId = req.params.stepId;
 
-    var substep = {
+    const workflowSubstep = new WorkflowSubstep({
         _id: mongoose.Types.ObjectId(),
+        description: req.body.description,
+    });
+    workflowSubstep
+        .save()
+        .then(result => {
+            Workflow.findOneAndUpdate({ "_id": workflowId, "steps._id": stepId },
+                {
+                    $push: { "steps.$.substeps": workflowSubstep._id }
+                },
+                { new: true })
+                .populate("steps.substeps")
+                .exec()
+                .then(doc => {
+                    var info = {
+                        patient: pId,
+                        clinician: cId,
+                        srcElement: "workflow",
+                        operation: "create",
+                        description: "Substep: " + workflowSubstep.description
+                    }
+                    HistoryController.add_to_history(info);
+
+                    console.log(doc);
+                    res.status(200).json(doc);
+                })
+                .catch(err => {
+                    console.log(err);
+                    res.status(500).json({ error: err });
+                });
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
+        });
+};
+
+exports.update_substep = (req, res, next) => {
+    var pId = req.body.pId;
+    var cId = req.body.cId;
+    var workflowId = req.params.id;
+    var stepId = req.params.stepId;
+    var substepId = req.body.id;
+
+    var substep = {
         description: req.body.description
     };
 
-    Workflow.findOneAndUpdate({ "_id": workflowId, "steps._id": stepId  },
+    WorkflowSubstep.findOneAndUpdate({ "_id": substepId },
         {
-            $push: { "steps.$.substeps": substep }
+            description: substep.description
         },
-        { new: true })
+        {
+            new: true
+        })
         .exec()
         .then(doc => {
-            var info = {
-                patient: pId,
-                clinician: cId,
-                srcElement: "workflow",
-                operation: "create",
-                description: "Substep: " + substep.description
-            }
-            HistoryController.add_to_history(info);
+            Workflow.findById(workflowId)
+                .populate("steps.substeps")
+                .exec()
+                .then(doc => {
+                    var info = {
+                        patient: pId,
+                        clinician: cId,
+                        srcElement: "workflow",
+                        operation: "update",
+                        description: "Substep: " + substep.description
+                    }
+                    HistoryController.add_to_history(info);
 
-            console.log(doc);
-            res.status(200).json(doc);
+                    console.log(doc);
+                    res.status(200).json(doc);
+                })
+                .catch(err => {
+                    console.log(err);
+                    res.status(500).json({ error: err });
+                });
         })
         .catch(err => {
             console.log(err);
             res.status(500).json({ error: err });
         });
+};
+
+exports.delete_substep = (req, res, next) => {
+    var pId = req.body.pId;
+    var cId = req.body.cId;
+    var workflowId = req.params.id;
+    var stepId = req.params.stepId;
+    var substepId = req.params.substepId;
+
+    WorkflowSubstep.deleteMany({ _id: substepId }, function(err) {
+        if (err) {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
+        } else {
+            Workflow.findOneAndUpdate({ "_id": workflowId, "steps._id": stepId },
+                {
+                    $pull: { "steps.$.substeps": substepId }
+                },
+                { new: true })
+                .populate("steps.substeps")
+                .exec()
+                .then(doc => {
+                    var info = {
+                        patient: pId,
+                        clinician: cId,
+                        srcElement: "workflow",
+                        operation: "delete",
+                        description: "Workflow substep removed"
+                    }
+                    HistoryController.add_to_history(info);
+        
+                    console.log(doc);
+                    res.status(200).json(doc);
+                })
+                .catch(err => {
+                    console.log(err);
+                    res.status(500).json({ error: err });
+                });
+        }
+    });
 };
