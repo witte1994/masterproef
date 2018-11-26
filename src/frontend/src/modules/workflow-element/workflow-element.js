@@ -159,6 +159,15 @@ class WorkflowElement extends BaseElement {
                 handle-as="json"
                 on-response="workflowReceived"
             ></iron-ajax>
+
+            <iron-ajax 
+                id="ajaxCreateSubstep"
+                url="http://localhost:3000/patient/[[pId]]/workflow/[[workflowId]]/step/[[curStepId]]/create"
+                method="POST"
+                handle-as="json"
+                content-type="application/json"
+                on-response="workflowReceived"
+            ></iron-ajax>
         `;
     }
 
@@ -272,6 +281,28 @@ class WorkflowElement extends BaseElement {
                 <paper-button dialog-dismiss autofocus>Cancel</paper-button>
                 <paper-button dialog-confirm on-tap="deleteStepAction">Delete</paper-button>
             </paper-dialog>
+
+            <paper-dialog id="createSubstepDialog">
+                <h2>Add substep</h2>
+                
+                <div style="width: 225px;">
+                    <paper-textarea style="padding: 0px;" id="descriptionSubstep" label="Description"></paper-textarea>
+                </div>
+
+                <paper-button dialog-dismiss autofocus>Cancel</paper-button>
+                <paper-button dialog-confirm on-tap="createSubstepAction">Create</paper-button>
+            </paper-dialog>
+
+            <paper-dialog id="updateSubstepDialog">
+                <h2>Edit substep</h2>
+                
+                <div style="width: 225px;">
+                    <paper-textarea style="padding: 0px;" id="descriptionSubstepUpdate" label="Description"></paper-textarea>
+                </div>
+
+                <paper-button dialog-dismiss autofocus>Cancel</paper-button>
+                <paper-button dialog-confirm on-tap="updateSubstepAction">Edit</paper-button>
+            </paper-dialog>
         `;
     }
 
@@ -298,7 +329,7 @@ class WorkflowElement extends BaseElement {
                         <vaadin-context-menu selector=".isSelector">
                             <template>
                                 <vaadin-list-box>
-                                <vaadin-item value="[[index]]" on-tap="addSubstep">Add substep</vaadin-item>
+                                <vaadin-item value="[[index]]" on-tap="createSubstep">Add substep</vaadin-item>
                                 <hr>
                                 <vaadin-item value="[[index]]" on-tap="updateStep">Edit step</vaadin-item>
                                 <vaadin-item value="[[index]]" on-tap="deleteStep">Delete step</vaadin-item>
@@ -315,19 +346,19 @@ class WorkflowElement extends BaseElement {
                             </div>
                         </vaadin-context-menu>
 
-                        <dom-repeat items="{{step.substeps}}" as="substep">
+                        <dom-repeat items="{{step.substeps}}" as="substep" index-as="substepIndex">
                             <template>
                                 <vaadin-context-menu selector=".isSelector">
                                     <template>
                                         <vaadin-list-box>
-                                        <vaadin-item value="[[index]]" on-tap="updateSubstep">Edit substep</vaadin-item>
-                                        <vaadin-item value="[[index]]" on-tap="deleteSubstep">Delete substep</vaadin-item>
+                                        <vaadin-item value="[[index]] [[substepIndex]]" on-tap="updateSubstep">Edit substep</vaadin-item>
+                                        <vaadin-item value="[[index]] [[substepIndex]]" on-tap="deleteSubstep">Delete substep</vaadin-item>
                                         </vaadin-list-box>
                                     </template>
 
                                     <div class="subStepRow isSelector">
                                         <div></div>
-                                        <div class="circleSmall">{{displayIndex(index)}}</div>
+                                        <div class="circleSmall">{{displayIndex(substepIndex)}}</div>
                                         <div style="margin-left: 6px; margin-top: 2px;">[[substep.description]]</div>
                                     </div>
                                 </vaadin-context-menu>
@@ -476,8 +507,36 @@ class WorkflowElement extends BaseElement {
         this.$.ajaxDeleteStep.generateRequest();
     }
 
-    addSubstep(e) {
-        console.log(e.target.value);
+    createSubstep(e) {
+        var index = e.target.value;
+        this.curStepId = this.currentWorkflow.steps[index]._id;
+
+        this.$.createSubstepDialog.open();
+    }
+
+    createSubstepAction(e) {
+        var body = {
+            "pId": this.pId,
+            "cId": window.sessionStorage.cId,
+            "description": this.$.descriptionSubstep.value
+        };
+
+        this.$.ajaxCreateSubstep.body = body;
+        this.$.ajaxCreateSubstep.generateRequest();
+    }
+
+    updateSubstep(e) {
+        var stepIndex = e.target.value.split(" ")[0];
+        var substepIndex = e.target.value.split(" ")[1];
+        var substep = this.currentWorkflow.steps[stepIndex].substeps[substepIndex];
+
+        this.$.descriptionSubstepUpdate.value = substep.description;
+
+        this.$.updateSubstepDialog.open();
+    }
+
+    updateSubstepAction(e) {
+        
     }
 
     sendUpdateSignal() {

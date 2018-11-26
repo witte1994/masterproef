@@ -247,3 +247,39 @@ exports.delete_step = (req, res, next) => {
             res.status(500).json({ error: err });
         });
 };
+
+exports.create_substep = (req, res, next) => {
+    var pId = req.body.pId;
+    var cId = req.body.cId;
+    var workflowId = req.params.id;
+    var stepId = req.params.stepId;
+
+    var substep = {
+        _id: mongoose.Types.ObjectId(),
+        description: req.body.description
+    };
+
+    Workflow.findOneAndUpdate({ "_id": workflowId, "steps._id": stepId  },
+        {
+            $push: { "steps.$.substeps": substep }
+        },
+        { new: true })
+        .exec()
+        .then(doc => {
+            var info = {
+                patient: pId,
+                clinician: cId,
+                srcElement: "workflow",
+                operation: "create",
+                description: "Substep: " + substep.description
+            }
+            HistoryController.add_to_history(info);
+
+            console.log(doc);
+            res.status(200).json(doc);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ error: err });
+        });
+};

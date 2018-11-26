@@ -31,6 +31,7 @@ const workflowSchema = mongoose.Schema({
             required: true
         },
         substeps: [{
+            _id: mongoose.Schema.Types.ObjectId,
             description: {
                 type: String,
                 required: true
