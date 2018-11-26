@@ -5,13 +5,11 @@ const workflowSchema = mongoose.Schema({
     patient: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Patient',
-        required: true,
         default: null
     },
     clinician: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Clinician',
-        required: true,
         default: null
     },
     name: {

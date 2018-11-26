@@ -5,6 +5,7 @@ const checkAuth = require('../../models/auth/check-auth');
 const WorkflowController = require('../../controller/modules/workflow');
 
 router.post('/', checkAuth, WorkflowController.get_all);
+router.get('/:id', checkAuth, WorkflowController.get_by_id);
 
 router.post('/create', WorkflowController.create);
 router.post('/update', WorkflowController.update);

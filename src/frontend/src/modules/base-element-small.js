@@ -13,34 +13,7 @@ export class BaseElementSmall extends PolymerElement {
         return html`
         <style include="shared-styles">
             .containerHeader {
-                width: 100%;
-                display: grid;
                 grid-template-columns: auto 28px;
-                align-items: center;
-                margin-bottom: 8px;
-            }
-
-            .buttonsHeader {
-                padding: 0px;
-                height: 24px;
-                width: 24px;
-            }
-
-            .mainContainer {
-                display: grid;
-                grid-template-rows: auto;
-                height: 100%;
-            }
-
-            .card {
-                display: grid;
-                grid-template-rows: 36px auto;
-            }
-
-            vaadin-grid {
-                margin-left: -8px;
-                margin-right: -8px;
-                border: 0px;
             }
         </style>
 
@@ -58,7 +31,7 @@ export class BaseElementSmall extends PolymerElement {
                     </div>
                 </div>
 
-                <div id="content">
+                <div>
                     ${this.contentTemplate}
                 </div>
             </div>

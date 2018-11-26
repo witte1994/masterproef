@@ -24,6 +24,7 @@ import './modules/history-element/history-element';
 import './modules/allergy-element/allergy-element';
 import './modules/prescription-element/prescription-element';
 import './modules/vaccination-element/vaccination-element';
+import './modules/workflow-element/workflow-element';
 
 import './modules/allergy-element/allergy-element-small';
 import './modules/prescription-element/prescription-element-small';

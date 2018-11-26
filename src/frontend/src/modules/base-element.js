@@ -33,7 +33,7 @@ export class BaseElement extends PolymerElement {
                     </div>
                 </div>
 
-                <div id="content">
+                <div>
                     ${this.contentTemplate}
                 </div>
             </div>

@@ -22,6 +22,21 @@ exports.get_all = (req, res, next) => {
                     ]}
             ]
         })
+        .select('_id name')
+        .lean()
+        .exec()
+        .then(doc => {
+            console.log(doc);
+            res.status(200).json(doc);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ error: err });
+        });
+};
+
+exports.get_by_id = (req, res, next) => {
+    Workflow.findById(req.params.id)
         .lean()
         .exec()
         .then(doc => {
