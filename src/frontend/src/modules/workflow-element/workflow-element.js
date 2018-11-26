@@ -118,12 +118,46 @@ class WorkflowElement extends BaseElement {
             ></iron-ajax>
 
             <iron-ajax 
+                id="ajaxUpdateWorkflow"
+                url="http://localhost:3000/patient/[[pId]]/workflow/update"
+                method="POST"
+                handle-as="json"
+                content-type="application/json"
+                on-response="workflowReceived"
+            ></iron-ajax>
+
+            <iron-ajax 
+                id="ajaxDeleteWorkflow"
+                url="http://localhost:3000/patient/[[pId]]/workflow/delete/[[workflowId]]"
+                method="DELETE"
+                handle-as="json"
+                on-response="workflowDeleted"
+            ></iron-ajax>
+
+            <iron-ajax 
                 id="ajaxCreateStep"
                 url="http://localhost:3000/patient/[[pId]]/workflow/[[workflowId]]/create"
                 method="POST"
                 handle-as="json"
                 content-type="application/json"
                 on-response="createStepResponse"
+            ></iron-ajax>
+
+            <iron-ajax 
+                id="ajaxUpdateStep"
+                url="http://localhost:3000/patient/[[pId]]/workflow/[[workflowId]]/update"
+                method="POST"
+                handle-as="json"
+                content-type="application/json"
+                on-response="workflowReceived"
+            ></iron-ajax>
+
+            <iron-ajax 
+                id="ajaxDeleteStep"
+                url="http://localhost:3000/patient/[[pId]]/workflow/[[workflowId]]/delete/[[curStepId]]"
+                method="DELETE"
+                handle-as="json"
+                on-response="workflowReceived"
             ></iron-ajax>
         `;
     }
@@ -134,7 +168,7 @@ class WorkflowElement extends BaseElement {
                 <h2>Open workflow</h2>
                 
                 <div>
-                    <paper-dropdown-menu selected="{{selected}}" label="Workflows" id="workflowList">
+                    <paper-dropdown-menu label="Workflows" id="workflowList">
                         <paper-listbox slot="dropdown-content">
                             <dom-repeat items="{{workflows}}">
                                 <template>
@@ -170,6 +204,36 @@ class WorkflowElement extends BaseElement {
                 <paper-button dialog-confirm on-tap="createNewWorkflowAction">Create</paper-button>
             </paper-dialog>
 
+            <paper-dialog id="updateWorkflowDialog">
+                <h2>Edit workflow</h2>
+                
+                <div>
+                    <div><paper-checkbox id="patientBoundUpdate">Patient bound</paper-checkbox></div>
+                    <div><paper-checkbox id="publicUpdate">Public</paper-checkbox></div>
+                </div>
+
+                <div>
+                    <paper-input style="padding: 0px;" id="nameUpdate" label="Name"></paper-input>
+                </div>
+                <div style="width: 225px;">
+                    <paper-textarea style="padding: 0px;" id="descriptionUpdate" label="Description"></paper-textarea>
+                </div>
+
+                <paper-button dialog-dismiss autofocus>Cancel</paper-button>
+                <paper-button dialog-confirm on-tap="updateWorkflowAction">Edit</paper-button>
+            </paper-dialog>
+
+            <paper-dialog id="deleteWorkflowDialog">
+                <h2>Delete workflow</h2>
+                
+                <div>
+                    Are you sure you want to delete this workflow?
+                </div>
+
+                <paper-button dialog-dismiss autofocus>Cancel</paper-button>
+                <paper-button dialog-confirm on-tap="deleteWorkflowAction">Delete</paper-button>
+            </paper-dialog>
+
             <paper-dialog id="createStepDialog">
                 <h2>Add step</h2>
                 
@@ -183,6 +247,31 @@ class WorkflowElement extends BaseElement {
                 <paper-button dialog-dismiss autofocus>Cancel</paper-button>
                 <paper-button dialog-confirm on-tap="createStepAction">Create</paper-button>
             </paper-dialog>
+
+            <paper-dialog id="updateStepDialog">
+                <h2>Edit step</h2>
+                
+                <div>
+                    <paper-input style="padding: 0px;" id="nameStepUpdate" label="Name"></paper-input>
+                </div>
+                <div style="width: 225px;">
+                    <paper-textarea style="padding: 0px;" id="descriptionStepUpdate" label="Description"></paper-textarea>
+                </div>
+
+                <paper-button dialog-dismiss autofocus>Cancel</paper-button>
+                <paper-button dialog-confirm on-tap="updateStepAction">Edit</paper-button>
+            </paper-dialog>
+
+            <paper-dialog id="deleteStepDialog">
+                <h2>Delete step</h2>
+                
+                <div>
+                    Are you sure you want to delete this step?
+                </div>
+
+                <paper-button dialog-dismiss autofocus>Cancel</paper-button>
+                <paper-button dialog-confirm on-tap="deleteStepAction">Delete</paper-button>
+            </paper-dialog>
         `;
     }
 
@@ -194,7 +283,7 @@ class WorkflowElement extends BaseElement {
                         <vaadin-list-box>
                             <vaadin-item on-tap="createStep">Add step</vaadin-item>
                             <hr>
-                            <vaadin-item on-tap="editWorkflow">Edit workflow</vaadin-item>
+                            <vaadin-item on-tap="updateWorkflow">Edit workflow</vaadin-item>
                             <vaadin-item on-tap="deleteWorkflow">Delete workflow</vaadin-item>
                         </vaadin-list-box>
                     </template>
@@ -209,10 +298,10 @@ class WorkflowElement extends BaseElement {
                         <vaadin-context-menu selector=".isSelector">
                             <template>
                                 <vaadin-list-box>
-                                <vaadin-item value="[[step._id]]" on-tap="addSubstep">Add substep</vaadin-item>
+                                <vaadin-item value="[[index]]" on-tap="addSubstep">Add substep</vaadin-item>
                                 <hr>
-                                <vaadin-item value="[[step._id]]" on-tap="editStep">Edit step</vaadin-item>
-                                <vaadin-item value="[[step._id]]" on-tap="deleteStep">Delete step</vaadin-item>
+                                <vaadin-item value="[[index]]" on-tap="updateStep">Edit step</vaadin-item>
+                                <vaadin-item value="[[index]]" on-tap="deleteStep">Delete step</vaadin-item>
                                 </vaadin-list-box>
                             </template>
 
@@ -225,6 +314,25 @@ class WorkflowElement extends BaseElement {
                                 <div style="margin-left: 6px;">[[step.description]]</div>
                             </div>
                         </vaadin-context-menu>
+
+                        <dom-repeat items="{{step.substeps}}" as="substep">
+                            <template>
+                                <vaadin-context-menu selector=".isSelector">
+                                    <template>
+                                        <vaadin-list-box>
+                                        <vaadin-item value="[[index]]" on-tap="updateSubstep">Edit substep</vaadin-item>
+                                        <vaadin-item value="[[index]]" on-tap="deleteSubstep">Delete substep</vaadin-item>
+                                        </vaadin-list-box>
+                                    </template>
+
+                                    <div class="subStepRow isSelector">
+                                        <div></div>
+                                        <div class="circleSmall">{{displayIndex(index)}}</div>
+                                        <div style="margin-left: 6px; margin-top: 2px;">[[substep.description]]</div>
+                                    </div>
+                                </vaadin-context-menu>
+                            </template>
+                        </dom-repeat>
 
                     </template>
                 </dom-repeat>
@@ -262,12 +370,57 @@ class WorkflowElement extends BaseElement {
 
     }
 
-    editWorkflow(e) {
-        console.log(e.target.value);
+    updateWorkflow(e) {
+        if (this.currentWorkflow.pId == null)
+            this.$.patientBoundUpdate.checked = false;
+        else
+            this.$.patientBoundUpdate.checked = true;
+
+        if (this.currentWorkflow.cId == null)
+            this.$.publicUpdate.checked = true;
+        else
+            this.$.publicUpdate.checked = false;
+
+        this.$.nameUpdate.value = this.currentWorkflow.name;
+        this.$.descriptionUpdate.value = this.currentWorkflow.description;
+
+        this.$.updateWorkflowDialog.open();
+    }
+
+    updateWorkflowAction(e) {
+        var pId = null;
+        if (this.$.patientBoundUpdate.checked)
+            pId = this.pId;
+
+        var cId = null;
+        if (!this.$.publicUpdate.checked) {
+            cId = window.sessionStorage.cId;
+        }
+
+        var body = {
+            "id": this.currentWorkflow._id,
+            "pId": pId,
+            "cId": cId,
+            "name": this.$.nameUpdate.value,
+            "description": this.$.descriptionUpdate.value
+        };
+
+        this.$.ajaxUpdateWorkflow.body = body;
+        this.$.ajaxUpdateWorkflow.generateRequest();
     }
 
     deleteWorkflow(e) {
-        console.log(e.target.value);
+        this.$.deleteWorkflowDialog.open();
+    }
+
+    deleteWorkflowAction(e) {
+        this.$.ajaxDeleteWorkflow.generateRequest();
+    }
+
+    workflowDeleted(e) {
+        this.$.ajaxGetAvailableWorkflows.generateRequest();
+        this.title = "Workflow"
+        this.$.workflowContent.style.display = "none";
     }
 
     createStep(e) {
@@ -290,12 +443,37 @@ class WorkflowElement extends BaseElement {
         this.loadWorkflow(e.detail.response);
     }
 
-    editStep(e) {
-        console.log(e.target.value);
+    updateStep(e) {
+        var index = e.target.value;
+        this.curStep = this.currentWorkflow.steps[index];
+
+        this.$.nameStepUpdate.value = this.curStep.name;
+        this.$.descriptionStepUpdate.value = this.curStep.description;
+
+        this.$.updateStepDialog.open();
+    }
+
+    updateStepAction(e) {
+        var body = {
+            "id": this.curStep._id,
+            "pId": this.pId,
+            "cId": window.sessionStorage.cId,
+            "name": this.$.nameStepUpdate.value,
+            "description": this.$.descriptionStepUpdate.value
+        };
+
+        this.$.ajaxUpdateStep.body = body;
+        this.$.ajaxUpdateStep.generateRequest();
     }
 
     deleteStep(e) {
-        console.log(e.target.value);
+        var index = e.target.value;
+        this.curStepId = this.currentWorkflow.steps[index]._id;
+        this.$.deleteStepDialog.open();
+    }
+
+    deleteStepAction(e) {
+        this.$.ajaxDeleteStep.generateRequest();
     }
 
     addSubstep(e) {
@@ -366,6 +544,7 @@ class WorkflowElement extends BaseElement {
     }
 
     openDialog(e) {
+
         this.$.openWorkflowDialog.open();
     }
 }
