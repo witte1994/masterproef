@@ -1,6 +1,7 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-ajax/iron-ajax'
 import '@polymer/paper-icon-button/paper-icon-button'
+import '@polymer/iron-image/iron-image'
 
 /**
  * @customElement
@@ -18,12 +19,6 @@ class PatientElement extends PolymerElement {
             h1 {
                 margin-left: 0px;
                 margin-bottom: 12px;
-            }
-
-            .containerVer {
-                display: grid;
-                grid-template-rows: repeat(7, 1fr);
-                grid-gap: 10px;
             }
 
             .containerHorGender {
@@ -47,6 +42,11 @@ class PatientElement extends PolymerElement {
                 padding: 0px;
             }
 
+            .card {
+                grid-template-rows: 158px 36px auto
+            }
+
+
             #allInfo {
                 display: block;
             }
@@ -65,7 +65,9 @@ class PatientElement extends PolymerElement {
         ></iron-ajax>
 
         <div class="card" style="padding-bottom: 0px;">
-            <h1>[[patient.lastName]] [[patient.firstName]]</h1>
+            <div style="text-align: center;"><iron-image style="width:150px; height:150px;" sizing="contain" src="/img/placeholder.jpeg"></iron-image></div>
+
+            <div style="text-align: center;"><h1>[[patient.lastName]] [[patient.firstName]]</h1></div>
 
             <div id="allInfo">
                 <div class="containerHor">
