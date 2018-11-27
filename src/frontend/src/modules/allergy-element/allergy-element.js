@@ -10,7 +10,10 @@ import '@vaadin/vaadin-grid/vaadin-grid';
 import '@vaadin/vaadin-grid/vaadin-grid-sorter';
 import '@vaadin/vaadin-grid/vaadin-grid-filter';
 import '@vaadin/vaadin-date-picker/vaadin-date-picker';
-import '@vaadin/vaadin-date-picker/vaadin-date-picker-light';
+
+import '@vaadin/vaadin-context-menu/vaadin-context-menu';
+import '@vaadin/vaadin-list-box/vaadin-list-box';
+import '@vaadin/vaadin-item/vaadin-item';
 
 /**
  * @customElement
@@ -142,6 +145,14 @@ class AllergyElement extends BaseElement {
                 
                 <paper-button dialog-dismiss autofocus>Cancel</paper-button>
                 <paper-button dialog-confirm on-tap="updateAllergy">Update</paper-button>
+            </paper-dialog>
+
+            <paper-dialog id="deleteAllergyDialog">
+                <h2>Delete allergy</h2>
+
+                <div>Are you sure you want to delete this allergy entry?</div>
+
+                <paper-button dialog-dismiss autofocus>Cancel</paper-button>
                 <paper-button dialog-dismiss on-tap="deleteAllergy">Delete</paper-button>
             </paper-dialog>
         `;
@@ -159,7 +170,19 @@ class AllergyElement extends BaseElement {
 
                 <vaadin-grid-column width="36px" flex-grow="0">
                     <template class="header"><iron-icon style="width: 20px; height: 20px;" icon="flag"></iron-icon></template>
-                    <template>[[item.severity]]</template>
+                    <template>
+                        <vaadin-context-menu>
+                            <template>
+                                <vaadin-list-box>
+                                    <vaadin-item on-tap="openUpdateAllergyDialog" data-args$="[[index]]">Edit</vaadin-item>
+                                    <hr>
+                                    <vaadin-item on-tap="openDeleteAllergyDialog" data-args$="[[index]]">Delete</vaadin-item>
+                                </vaadin-list-box>
+                            </template>
+
+                            [[item.severity]]
+                        </vaadin-context-menu>
+                    </template>
                 </vaadin-grid-column>
 
                 <vaadin-grid-column width="160px">
@@ -170,23 +193,55 @@ class AllergyElement extends BaseElement {
                             </vaadin-grid-filter>
                         </vaadin-grid-sorter>
                     </template>
-                    <template>[[item.name]]</template>
+                    <template>
+                        <vaadin-context-menu>
+                            <template>
+                                <vaadin-list-box>
+                                    <vaadin-item on-tap="openUpdateAllergyDialog" data-args$="[[index]]">Edit</vaadin-item>
+                                    <hr>
+                                    <vaadin-item on-tap="openDeleteAllergyDialog" data-args$="[[index]]">Delete</vaadin-item>
+                                </vaadin-list-box>
+                            </template>
+                            
+                            [[item.name]]
+                        </vaadin-context-menu>
+                    </template>
                 </vaadin-grid-column>
 
                 <vaadin-grid-column width="100px" flex-grow="0">
                     <template class="header">Type</template>
-                    <template>[[item.type]]</template>
+                    <template>
+                        <vaadin-context-menu>
+                            <template>
+                                <vaadin-list-box>
+                                    <vaadin-item on-tap="openUpdateAllergyDialog" data-args$="[[index]]">Edit</vaadin-item>
+                                    <hr>
+                                    <vaadin-item on-tap="openDeleteAllergyDialog" data-args$="[[index]]">Delete</vaadin-item>
+                                </vaadin-list-box>
+                            </template>
+                            
+                            [[item.type]]
+                        </vaadin-context-menu>
+                    </template>
                 </vaadin-grid-column>
 
                 <vaadin-grid-column width="109px" flex-grow="0">
                     <template class="header">
                         Date
                     </template>
-                    <template>{{getDateString(item.date)}}</template>
-                </vaadin-grid-column>
-
-                <vaadin-grid-column width="40px" flex-grow="0">
-                    <template><paper-icon-button title="Edit allergy" style="margin: 0px; padding:0px; width: 22px; height: 22px;" icon="create" on-tap="openUpdateAllergyDialog" data-args$="[[index]]"></paper-icon-button></template>
+                    <template>
+                        <vaadin-context-menu>
+                            <template>
+                                <vaadin-list-box>
+                                    <vaadin-item on-tap="openUpdateAllergyDialog" data-args$="[[index]]">Edit</vaadin-item>
+                                    <hr>
+                                    <vaadin-item on-tap="openDeleteAllergyDialog" data-args$="[[index]]">Delete</vaadin-item>
+                                </vaadin-list-box>
+                            </template>
+                            
+                            {{getDateString(item.date)}}
+                        </vaadin-context-menu>
+                    </template>
                 </vaadin-grid-column>
             </vaadin-grid>
         `;
@@ -236,6 +291,12 @@ class AllergyElement extends BaseElement {
         this.$.updateAllergyDialog.open();
     }
 
+    openDeleteAllergyDialog(e) {
+        this.curObj = this.allergies[e.target.dataset.args];
+
+        this.$.deleteAllergyDialog.open();
+    }
+
     addAllergy(e) {
         var type = this.$.allergyList.selectedItem.getAttribute("value");
         var severity = this.$.severityList.selectedItem.getAttribute("value");
@@ -278,7 +339,7 @@ class AllergyElement extends BaseElement {
 
     getMinSizes() {
         return {
-            width: "500px",
+            width: "460px",
             height: "300px"
         };
     }
