@@ -190,7 +190,7 @@ class PrescriptionElement extends BaseElement {
                         <vaadin-date-picker theme="small" id="startFilter" on-value-changed="dateSelected" placeholder="Start date" style="width:140px;">
                         </vaadin-date-picker>
                     </template>
-                    <template>[[item.startStr]]</template>
+                    <template>{{getDateString(item.startDate)}}</template>
                 </vaadin-grid-column>
 
                 <vaadin-grid-column width="156px" flex-grow="0">
@@ -198,7 +198,7 @@ class PrescriptionElement extends BaseElement {
                         <vaadin-date-picker theme="small" id="endFilter" on-value-changed="dateSelected" placeholder="End date" style="width:140px;">
                         </vaadin-date-picker>
                     </template>
-                    <template>[[item.endStr]]</template>
+                    <template>{{getDateString(item.endDate)}}</template>
                 </vaadin-grid-column>
 
                 <vaadin-grid-column width="40px" flex-grow="0">

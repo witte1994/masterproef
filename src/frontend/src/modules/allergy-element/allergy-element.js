@@ -182,7 +182,7 @@ class AllergyElement extends BaseElement {
                     <template class="header">
                         Date
                     </template>
-                    <template>[[item.dateStr]]</template>
+                    <template>{{getDateString(item.date)}}</template>
                 </vaadin-grid-column>
 
                 <vaadin-grid-column width="40px" flex-grow="0">

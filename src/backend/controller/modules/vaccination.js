@@ -49,13 +49,6 @@ exports.get_all_by_id = (req, res, next) => {
         .lean()
         .exec()
         .then(doc => {
-            for (var i = 0; i < doc.length; i++) {
-                var dateObj = new Date(doc[i].dateNext);
-                Object.assign(doc[i], { dateNextStr: getDateString(dateObj) });
-                for (var j = 0; j < doc[i].entries.length; j++) {
-                    Object.assign(doc[i].entries[j], { dateStr: getDateString(doc[i].entries[j].date) });
-                }
-            }
             console.log(doc);
             res.status(200).json(doc);
         })
@@ -69,7 +62,6 @@ function getDateString(date) {
     var str = ("0" + date.getDate()).slice(-2) + "/" + ("0" + (date.getMonth() + 1)).slice(-2) + "/" + date.getFullYear();
     return str;
 }
-
 
 exports.create = (req, res, next) => {
     var pId = req.originalUrl.split('/')[2];

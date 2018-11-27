@@ -1,5 +1,7 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 
+import moment from 'moment/src/moment'
+
 import '@polymer/iron-ajax/iron-ajax'
 import '@vaadin/vaadin-grid/vaadin-grid';
 import '@vaadin/vaadin-grid/vaadin-grid-sorter';
@@ -93,7 +95,7 @@ class PatientListElement extends PolymerElement {
 
             <vaadin-grid-column width="100px">
                 <template class="header">Birth date</template>
-                <template>[[item.dateStr]]</template>
+                <template>{{getDateString(item.birth)}}</template>
             </vaadin-grid-column>
 
             <vaadin-grid-column style="padding-right: 10px;" width="40px" flex-grow="0">
@@ -144,6 +146,10 @@ class PatientListElement extends PolymerElement {
         
         this.$.ajaxPatients.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
         this.$.ajaxPatients.generateRequest();
+    }
+
+    getDateString(date) {
+        return moment(date).format("DD/MM/YYYY");
     }
 
     patientClick(e) {

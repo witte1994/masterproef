@@ -177,7 +177,7 @@ class VaccinationElement extends BaseElement {
                         <dom-repeat items="{{item.entries}}" as="entry">
                             <template>
                                 <div></div>
-                                <div>[[entry.dateStr]]</div>
+                                <div>{{getDateString(entry.date)}}</div>
                                 <div>[[entry.description]]</div>
                                 <div><paper-icon-button title="Edit vaccination entry" style="margin: 0px; padding:0px; width: 22px; height: 22px;" icon="create" on-tap="openUpdateVaccinationEntryDialog" data-args$="[[index]]"></paper-icon-button></div>
                             </template>
@@ -198,7 +198,7 @@ class VaccinationElement extends BaseElement {
 
                 <vaadin-grid-column width="100px" flex-grow="0">
                     <template class="header">Next date</template>
-                    <template>[[item.dateNextStr]]</template>
+                    <template>{{getDateString(item.dateNext)}}</template>
                 </vaadin-grid-column>
 
                 <vaadin-grid-column width="70px" flex-grow="0">

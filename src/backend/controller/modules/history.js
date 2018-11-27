@@ -31,8 +31,6 @@ exports.get_by_id = (req, res, next) => {
         .lean()
         .exec()
         .then(doc => {
-            addTimeFields(doc);
-            
             console.log(doc);
             res.status(200).json(doc);
         })
@@ -70,28 +68,8 @@ exports.get_by_filter = (req, res, next) => {
         .lean()
         .exec()
         .then(doc => {
-            addTimeFields(doc);
-
             console.log(doc);
             res.status(200).json(doc);
         })
         .catch();
 };
-
-function addTimeFields(doc) {
-    for (var i = 0; i < doc.length; i++) {
-        var dateObj = new Date(doc[i].date);
-        Object.assign(doc[i], { dateStr: getDateString(dateObj) });
-        Object.assign(doc[i], { timeStr: getTimeString(dateObj) });
-    }
-}
-
-function getDateString(date) {
-    var str = ("0" + date.getDate()).slice(-2) + "/" + ("0" + (date.getMonth() + 1)).slice(-2) + "/" + date.getFullYear();
-    return str;
-}
-
-function getTimeString(date) {
-    var str = ("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2);
-    return str;
-}

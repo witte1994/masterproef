@@ -105,6 +105,14 @@ export class BaseElement extends PolymerElement {
         datePicker.set("i18n.parseDate", this.parseDate);
     }
 
+    getDateString(date) {
+        return moment(date).format("DD/MM/YYYY");
+    }
+
+    getTimeString(date) {
+        return moment(date).format("HH:mm");
+    }
+
     update(e) {
         console.log("update: implement in child class");
     }

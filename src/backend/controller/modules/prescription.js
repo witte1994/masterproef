@@ -67,12 +67,6 @@ exports.get_all_by_id = (req, res, next) => {
         ])
         .exec()
         .then(doc => {
-            for (var i = 0; i < doc.length; i++) {
-                var startDateObj = new Date(doc[i].startDate);
-                Object.assign(doc[i], { startStr: getDateString(startDateObj) });
-                var endDateObj = new Date(doc[i].endDate);
-                Object.assign(doc[i], { endStr: getDateString(endDateObj) });
-            }
             console.log(doc);
             res.status(200).json(doc);
         })
@@ -116,12 +110,6 @@ exports.get_all_by_date = (req, res, next) => {
         ])
         .exec()
         .then(doc => {
-            for (var i = 0; i < doc.length; i++) {
-                var startDateObj = new Date(doc[i].startDate);
-                Object.assign(doc[i], { startStr: getDateString(startDateObj) });
-                var endDateObj = new Date(doc[i].endDate);
-                Object.assign(doc[i], { endStr: getDateString(endDateObj) });
-            }
             console.log(doc);
             res.status(200).json(doc);
         })

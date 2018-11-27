@@ -41,7 +41,7 @@ class VaccinationElementSmall extends BaseElementSmall {
 
                 <vaadin-grid-column width="100px" flex-grow="0">
                     <template class="header">Next date</template>
-                    <template>[[item.dateNextStr]]</template>
+                    <template>{{getDateString(item.dateNext)}}</template>
                 </vaadin-grid-column>
             </vaadin-grid>
         `;

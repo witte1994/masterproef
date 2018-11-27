@@ -122,14 +122,14 @@ class HistoryElement extends BaseElement {
                     <template class="header">
                         Date
                     </template>
-                    <template>[[item.dateStr]]</template>
+                    <template>{{getDateString(item.date)}}</template>
                 </vaadin-grid-column>
 
                 <vaadin-grid-column id="timeCol" hidden width="60px" flex-grow="0">
                     <template class="header">
                         Time
                     </template>
-                    <template>[[item.timeStr]]</template>
+                    <template>{{getTimeString(item.date)}}</template>
                 </vaadin-grid-column>
 
                 <vaadin-grid-column width="100px">

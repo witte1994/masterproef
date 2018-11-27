@@ -1,5 +1,7 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 
+import moment from 'moment/src/moment'
+
 import '@polymer/paper-icon-button/paper-icon-button'
 import '../shared-styles.js'
 
@@ -73,6 +75,10 @@ export class BaseElementSmall extends PolymerElement {
         super.ready();
         
         this.setPatientId();
+    }
+
+    getDateString(date) {
+        return moment(date).format("DD/MM/YYYY");
     }
 
     update(e) {

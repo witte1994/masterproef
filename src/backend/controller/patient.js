@@ -124,10 +124,6 @@ exports.get_patients = (req, res, next) => {
         .lean()
         .exec()
         .then(doc => {
-            for (var i = 0; i < doc.length; i++) {
-                var dateObj = new Date(doc[i].birth);
-                Object.assign(doc[i], { dateStr: getDateString(dateObj) });
-            }
             console.log(doc);
             res.status(200).json(doc);
         })
@@ -150,10 +146,6 @@ exports.get_patient_by_id = (req, res, next) => {
         .lean()
         .exec()
         .then(doc => {
-            var dateObj = new Date(doc.birth);
-            Object.assign(doc, { dateStr: getDateString(dateObj) });
-            Object.assign(doc, { heightStr: getHeightStr(doc.height) });
-
             console.log(doc);
             res.status(200).json(doc);
         })
@@ -162,10 +154,3 @@ exports.get_patient_by_id = (req, res, next) => {
             res.status(500).json({ error: err });
         });
 };
-
-function getHeightStr(height) {
-    var heightStr = "";
-    heightStr += parseInt(Math.floor((height/100)), 10) + ",";
-    heightStr += (height % 100) + "m";
-    return heightStr;
-}

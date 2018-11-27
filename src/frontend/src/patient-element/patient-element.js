@@ -1,4 +1,7 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
+
+import moment from 'moment/src/moment'
+
 import '@polymer/iron-ajax/iron-ajax'
 import '@polymer/paper-icon-button/paper-icon-button'
 import '@polymer/iron-image/iron-image'
@@ -72,7 +75,7 @@ class PatientElement extends PolymerElement {
             <div id="allInfo">
                 <div class="containerHor">
                     <p><b>Birth:</b></p>
-                    <p>[[patient.dateStr]]</p>
+                    <p>{{getDateString(patient.birth)}}</p>
                 </div>
                 <div class="containerHor">
                     <p><b>NID:</b></p>
@@ -84,11 +87,11 @@ class PatientElement extends PolymerElement {
                 </div>
                 <div class="containerHor">
                     <p><b>Smoker:</b></p>
-                    <p>[[smoker]]</p>
+                    <p>{{getSmokerStr(patient.smoker)}}</p>
                 </div>
                 <div class="containerHor">
                     <p><b>Height:</b></p>
-                    <p>[[patient.heightStr]]</p>
+                    <p>{{getHeightStr(patient.height)}}</p>
                 </div>
                 <div class="containerHor">
                     <p><b>Address:</b></p>
@@ -103,8 +106,8 @@ class PatientElement extends PolymerElement {
 
             <div id="lessInfo">
                 <div class="containerHorLessInfo">
-                    <p>[[patient.dateStr]]</p>
-                    <p>[[gender]]</p>
+                    <p>{{getDateString(patient.birth)}}</p>
+                    <p>{{getGenderStr(patient.gender)}}</p>
                     <p>[[patient.bloodType]]</p>
                 </div>
                 <div style="text-align:center;"><paper-icon-button title="Show more info" icon="expand-more" on-tap="resize"></paper-icon-button></div>
@@ -126,6 +129,27 @@ class PatientElement extends PolymerElement {
         this.$.ajaxPatient.generateRequest();
     }
 
+    getDateString(date) {
+        return moment(date).format("DD/MM/YYYY");
+    }
+
+    getHeightStr(height) {
+        var heightStr = "";
+        heightStr += parseInt(Math.floor((height/100)), 10) + ",";
+        heightStr += (height % 100) + "m";
+        return heightStr;
+    }
+
+    getGenderStr(gender) {
+        if (gender === "F") return "Female";
+        return "Male";
+    }
+
+    getSmokerStr(smoker) {
+        if (smoker) return "Yes";
+        return "No";
+    }
+
     setPatientId() {
         var split = document.URL.split("/");
         var param = split[split.length - 1];
@@ -134,9 +158,6 @@ class PatientElement extends PolymerElement {
 
     handleResponse(e) {
         this.patient = e.detail.response;
-
-        this.gender = (this.patient.gender === "F") ? "Female" : "Male";
-        this.smoker = (this.patient.smoker) ? "Yes" : "No";
     }
 
     resize(e) {
