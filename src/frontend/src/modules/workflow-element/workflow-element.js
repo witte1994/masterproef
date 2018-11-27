@@ -603,7 +603,6 @@ class WorkflowElement extends BaseElement {
     }
 
     workflowReceived(e) {
-        console.log(e.detail.response); 
         this.loadWorkflow(e.detail.response);
     }
 
@@ -655,7 +654,6 @@ class WorkflowElement extends BaseElement {
     }
 
     openDialog(e) {
-
         this.$.openWorkflowDialog.open();
     }
 }

@@ -23,6 +23,11 @@ var modulesLarge = [
         "module": "workflow-element",
         "title": "Workflow",
         "enum": "workflow"
+    },
+    {
+        "module": "telemonitoring-element",
+        "title": "Telemonitoring",
+        "enum": "tm"
     }
 ];
 

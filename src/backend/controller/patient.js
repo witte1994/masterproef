@@ -8,6 +8,12 @@ const AllergyController = require('./modules/allergy');
 const MedicationController = require('./modules/medication');
 const VaccinationController = require('./modules/vaccination');
 
+const BPController = require('./tm/bp');
+const BSController = require('./tm/bs');
+const HeartController = require('./tm/heart');
+const OxygenController = require('./tm/oxygen');
+const WeightController = require('./tm/weight');
+
 exports.create = (req, res, next) => {
     const patient = new Patient({
         _id: new mongoose.Types.ObjectId(),
@@ -91,11 +97,23 @@ function importRest(pId, info) {
             case 'vaccinations':
                 VaccinationController.importValues(pId, info.vaccinations);
                 break;
-            case 'info':
-                console.log("info");
+            case 'bp':
+                BPController.importValues(pId, info.bp);
+                break;
+            case 'bs':
+                BSController.importValues(pId, info.bs);
+                break;
+            case 'heart':
+                HeartController.importValues(pId, info.heart);
+                break;
+            case 'oxygen':
+                OxygenController.importValues(pId, info.oxygen);
+                break;
+            case 'weight':
+                WeightController.importValues(pId, info.weight);
                 break;
             default:
-                console.log("unknown");
+                console.log("unknown tag: " + keys[i]);
                 break;
         }
     }

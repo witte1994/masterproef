@@ -12,6 +12,8 @@ const vaccinationRoutes = require('./modules/vaccination');
 const medicationRoutes = require('./modules/medication');
 const workflowRoutes = require('./modules/workflow');
 
+const tmRoutes = require('./modules/tm');
+
 const PatientController = require('../controller/patient');
 
 router.use('/:pId/layout', layoutRoutes);
@@ -22,6 +24,8 @@ router.use('/:pId/allergy', allergyRoutes);
 router.use('/:pId/vaccination', vaccinationRoutes);
 router.use('/:pId/medication', medicationRoutes);
 router.use('/:pId/workflow', workflowRoutes);
+
+router.use('/:pId/tm', tmRoutes);
 
 router.post('/', PatientController.create);
 router.get('/', checkAuth, PatientController.get_patients);
