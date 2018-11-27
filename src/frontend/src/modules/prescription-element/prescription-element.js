@@ -10,7 +10,6 @@ import '@vaadin/vaadin-grid/vaadin-grid';
 import '@vaadin/vaadin-grid/vaadin-grid-sorter';
 import '@vaadin/vaadin-grid/vaadin-grid-filter';
 import '@vaadin/vaadin-date-picker/vaadin-date-picker';
-import '@vaadin/vaadin-date-picker/vaadin-date-picker-light';
 
 /**
  * @customElement
@@ -21,16 +20,6 @@ class PrescriptionElement extends BaseElement {
     static get cssTemplate() {
         return html`
             <style>
-                .custom-date input {
-                    background: #f5f5f5;
-                    border: 2px solid #2196f3;
-                    border-radius: 4px;
-                    padding: 4px;
-                    margin-top: 4px;
-                    margin-bottom: 4px;
-                    text-align: center;
-                }
-
                 .detailsGrid {
                     display: grid;
                     grid-template-rows: auto auto;
