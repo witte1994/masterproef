@@ -196,24 +196,18 @@ class PrescriptionElement extends BaseElement {
                     <template>[[item.dosage.morning]]/[[item.dosage.noon]]/[[item.dosage.evening]]/[[item.dosage.bed]]</template>
                 </vaadin-grid-column>
 
-                <vaadin-grid-column width="109px" flex-grow="0">
+                <vaadin-grid-column width="156px" flex-grow="0">
                     <template class="header">
-                        <vaadin-date-picker-light id="startFilter" on-value-changed="dateSelected" style="justify-self: end;" class="custom-date">
-                            <iron-input id="startInput">
-                                <input id="startInputInner" placeholder="Start" size="8">
-                            </iron-input>
-                        </vaadin-date-picker-light>
+                        <vaadin-date-picker theme="small" id="startFilter" on-value-changed="dateSelected" placeholder="Start date" style="width:140px;">
+                        </vaadin-date-picker>
                     </template>
                     <template>[[item.startStr]]</template>
                 </vaadin-grid-column>
 
-                <vaadin-grid-column width="109px" flex-grow="0">
+                <vaadin-grid-column width="156px" flex-grow="0">
                     <template class="header">
-                        <vaadin-date-picker-light id="endFilter" on-value-changed="dateSelected" style="justify-self: start;" class="custom-date">
-                            <iron-input>
-                                <input placeholder="End" size="8">
-                            </iron-input>
-                        </vaadin-date-picker-light>
+                        <vaadin-date-picker theme="small" id="endFilter" on-value-changed="dateSelected" placeholder="End date" style="width:140px;">
+                        </vaadin-date-picker>
                     </template>
                     <template>[[item.endStr]]</template>
                 </vaadin-grid-column>
@@ -237,8 +231,8 @@ class PrescriptionElement extends BaseElement {
         this.setDateFormats(this.$.endDate);
         this.setDateFormats(this.$.startDateUpdate);
         this.setDateFormats(this.$.endDateUpdate);
-        //this.setDateFormats(this.$.startFilter);
-        //this.setDateFormats(this.$.endFilter);
+        this.startFilterSet = false;
+        this.endFilterSet = false;
 
         this.title = "Prescriptions";
         this.dispatchEvent(new CustomEvent("size", {bubbles: true, composed: true, detail: this.getMinSizes() }));
@@ -260,6 +254,14 @@ class PrescriptionElement extends BaseElement {
     }
 
     dateSelected(e) {
+        if (e.target.id === "startFilter" && !this.startFilterSet) {
+            this.setDateFormats(e.target);
+            this.startFilterSet = true;
+        } else if (e.target.id === "endFilter" && !this.endFilterSet) {
+            this.setDateFormats(e.target);
+            this.endFilterSet = true;
+        }
+
         if (e.detail.value !== "") {
             if (e.target.id === "startFilter") {
                 this.selectedStartDate = new Date(e.detail.value);
@@ -361,7 +363,7 @@ class PrescriptionElement extends BaseElement {
 
     getMinSizes() {
         return {
-            width: "582px",
+            width: "676px",
             height: "300px"
         };
     }
