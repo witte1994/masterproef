@@ -219,6 +219,11 @@ class VaccinationElement extends BaseElement {
     ready() {
         super.ready();
 
+        this.setDateFormats(this.$.date);
+        this.setDateFormats(this.$.dateUpdate);
+        this.setDateFormats(this.$.dateEntry);
+        this.setDateFormats(this.$.dateEntryUpdate);
+
         this.title = "Vaccinations"
         this.dispatchEvent(new CustomEvent("size", {bubbles: true, composed: true, detail: this.getMinSizes() }));
 

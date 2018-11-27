@@ -164,6 +164,9 @@ class HistoryElement extends BaseElement {
     ready() {
         super.ready();
 
+        this.setDateFormats(this.$.startDate);
+        this.setDateFormats(this.$.endDate);
+
         this.title = "History";
         this.dispatchEvent(new CustomEvent("size", {bubbles: true, composed: true, detail: this.getMinSizes() }));
 

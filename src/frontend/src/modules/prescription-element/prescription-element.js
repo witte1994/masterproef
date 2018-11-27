@@ -233,6 +233,13 @@ class PrescriptionElement extends BaseElement {
     ready() {
         super.ready();
         
+        this.setDateFormats(this.$.startDate);
+        this.setDateFormats(this.$.endDate);
+        this.setDateFormats(this.$.startDateUpdate);
+        this.setDateFormats(this.$.endDateUpdate);
+        //this.setDateFormats(this.$.startFilter);
+        //this.setDateFormats(this.$.endFilter);
+
         this.title = "Prescriptions";
         this.dispatchEvent(new CustomEvent("size", {bubbles: true, composed: true, detail: this.getMinSizes() }));
 

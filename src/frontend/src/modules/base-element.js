@@ -100,6 +100,11 @@ export class BaseElement extends PolymerElement {
         this.setPatientId();
     }
 
+    setDateFormats(datePicker) {
+        datePicker.set("i18n.formatDate", this.formatDate);
+        datePicker.set("i18n.parseDate", this.parseDate);
+    }
+
     update(e) {
         console.log("update: implement in child class");
     }

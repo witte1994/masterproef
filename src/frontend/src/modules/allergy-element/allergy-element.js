@@ -200,6 +200,9 @@ class AllergyElement extends BaseElement {
     ready() {
         super.ready();
 
+        this.setDateFormats(this.$.date);
+        this.setDateFormats(this.$.dateUpdate);
+
         this.title = "Allergies";
         this.dispatchEvent(new CustomEvent("size", {bubbles: true, composed: true, detail: this.getMinSizes() }));
 

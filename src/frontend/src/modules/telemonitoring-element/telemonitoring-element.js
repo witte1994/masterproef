@@ -130,10 +130,8 @@ class TelemonitoringElement extends BaseElement {
             this.$.weightAxis
         ];
         
-        this.$.startDate.set("i18n.formatDate", this.formatDate);
-        this.$.startDate.set("i18n.parseDate", this.parseDate);
-        this.$.endDate.set("i18n.formatDate", this.formatDate);
-        this.$.endDate.set("i18n.parseDate", this.parseDate);
+        this.setDateFormats(this.$.startDate);
+        this.setDateFormats(this.$.endDate);
 
         this.title = "Telemonitoring";
         this.dispatchEvent(new CustomEvent("size", {bubbles: true, composed: true, detail: this.getMinSizes() }));
@@ -153,7 +151,7 @@ class TelemonitoringElement extends BaseElement {
         if (this.selectedParams.length != 0) {
             this.loadData();
         } else {
-            console.log("no params selected");
+            
         }
     }
 
