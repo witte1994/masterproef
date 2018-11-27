@@ -170,14 +170,14 @@ class HistoryElement extends BaseElement {
         var contentDiv = this.$.content;
         var timeCol = this.$.timeCol;
         new ResizeSensor(this.$.content, function() {
-                var dim = contentDiv.getBoundingClientRect();
-                var width = dim.right - dim.left;
+            var dim = contentDiv.getBoundingClientRect();
+            var width = dim.right - dim.left;
 
-                if (width > 384) {
-                    timeCol.hidden = false;
-                } else {
-                    timeCol.hidden = true;
-                }
+            if (width > 384) {
+                timeCol.hidden = false;
+            } else {
+                timeCol.hidden = true;
+            }
         });
 
         this.update();

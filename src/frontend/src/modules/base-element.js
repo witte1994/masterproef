@@ -1,8 +1,11 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 
+import moment from 'moment/src/moment'
+
 import '@polymer/paper-icon-button/paper-icon-button'
 import '../../node_modules/css-element-queries/src/ResizeSensor.js';
 import '../shared-styles.js'
+
 
 /**
  * @customElement
@@ -33,7 +36,7 @@ export class BaseElement extends PolymerElement {
                     </div>
                 </div>
 
-                <div>
+                <div id="content">
                     ${this.contentTemplate}
                 </div>
             </div>
@@ -79,7 +82,21 @@ export class BaseElement extends PolymerElement {
 
     ready() {
         super.ready();
-    
+
+        this.formatDate = function(d) {
+            return moment(d).format("DD/MM/YYYY");
+        };
+
+        this.parseDate = function(str) {
+            var date = moment.utc(str, "DD/MM/YYYY").toObject();
+            var correctDate = {
+                day: date.date,
+                month: date.months,
+                year: date.years
+            };
+            return correctDate;
+        };
+
         this.setPatientId();
     }
 
