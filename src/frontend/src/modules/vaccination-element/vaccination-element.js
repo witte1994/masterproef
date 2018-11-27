@@ -12,6 +12,10 @@ import '@vaadin/vaadin-grid/vaadin-grid-filter';
 import '@vaadin/vaadin-date-picker/vaadin-date-picker';
 import '@vaadin/vaadin-date-picker/vaadin-date-picker-light';
 
+import '@vaadin/vaadin-context-menu/vaadin-context-menu';
+import '@vaadin/vaadin-list-box/vaadin-list-box';
+import '@vaadin/vaadin-item/vaadin-item';
+
 /**
  * @customElement
  * @polymer
@@ -24,7 +28,7 @@ class VaccinationElement extends BaseElement {
                 .detailsGrid {
                     display: grid;
                     grid-template-rows: auto;
-                    grid-template-columns: 10px 100px auto 24px;
+                    grid-template-columns: 10px 100px auto;
                 }
 
                 paper-input {
@@ -134,6 +138,14 @@ class VaccinationElement extends BaseElement {
                 
                 <paper-button dialog-dismiss autofocus>Cancel</paper-button>
                 <paper-button dialog-confirm on-tap="updateVaccination">Update</paper-button>
+            </paper-dialog>
+
+            <paper-dialog id="deleteVaccinationDialog">
+                <h2>Delete vaccination</h2>
+
+                <div>Are you sure you want to delete this vaccination?</div>
+
+                <paper-button dialog-dismiss autofocus>Cancel</paper-button>
                 <paper-button dialog-dismiss on-tap="deleteVaccination">Delete</paper-button>
             </paper-dialog>
 
@@ -164,7 +176,15 @@ class VaccinationElement extends BaseElement {
                 
                 <paper-button dialog-dismiss autofocus>Cancel</paper-button>
                 <paper-button dialog-confirm on-tap="updateVaccinationEntry">Update</paper-button>
-                <paper-button dialog-dismiss on-tap="deleteVaccinationEntry">Delete</paper-button>
+            </paper-dialog>
+
+            <paper-dialog id="deleteVaccinationEntryDialog">
+                <h2>Delete entry</h2>
+
+                <div>Are you sure you want to delete this vaccination entry?</div>
+
+                <paper-button dialog-dismiss autofocus>Cancel</paper-button>
+                <paper-button dialog-confirm on-tap="deleteVaccinationEntry">Delete</paper-button>
             </paper-dialog>
         `;
     }
@@ -173,16 +193,25 @@ class VaccinationElement extends BaseElement {
         return html`
             <vaadin-grid theme="compact" on-active-item-changed="showDetails" id="vaadinGrid" style="height: 100%;" items="{{vaccinations}}">
                 <template class="row-details">
-                    <div class="detailsGrid">
-                        <dom-repeat items="{{item.entries}}" as="entry">
-                            <template>
-                                <div></div>
-                                <div>{{getDateString(entry.date)}}</div>
-                                <div>[[entry.description]]</div>
-                                <div><paper-icon-button title="Edit vaccination entry" style="margin: 0px; padding:0px; width: 22px; height: 22px;" icon="create" on-tap="openUpdateVaccinationEntryDialog" data-args$="[[index]]"></paper-icon-button></div>
-                            </template>
-                        </dom-repeat>
-                    </div>
+                    <dom-repeat items="{{item.entries}}" as="entry">
+                        <template>
+                            <vaadin-context-menu>
+                                <template>
+                                    <vaadin-list-box>
+                                        <vaadin-item on-tap="openUpdateVaccinationEntryDialog" data-args$="[[index]]">Edit entry</vaadin-item>
+                                        <hr>
+                                        <vaadin-item on-tap="openDeleteVaccinationEntryDialog" data-args$="[[index]]">Delete</vaadin-item>
+                                    </vaadin-list-box>
+                                </template>
+                                <div class="detailsGrid">
+                                    <div></div>
+                                    <div>{{getDateString(entry.date)}}</div>
+                                    <div>[[entry.description]]</div>
+                                </div>
+                            </vaadin-context-menu>
+                        </template>
+                    </dom-repeat>
+
                 </template>
 
                 <vaadin-grid-column width="160px">
@@ -193,18 +222,37 @@ class VaccinationElement extends BaseElement {
                             </vaadin-grid-filter>
                         </vaadin-grid-sorter>
                     </template>
-                    <template>[[item.name]]</template>
+                    <template>
+                        <vaadin-context-menu>
+                            <template>
+                                <vaadin-list-box>
+                                    <vaadin-item on-tap="openAddVaccinationEntryDialog" data-args$="[[index]]">Add vaccination entry</vaadin-item>
+                                    <hr>
+                                    <vaadin-item on-tap="openUpdateVaccinationDialog" data-args$="[[index]]">Edit</vaadin-item>
+                                    <vaadin-item on-tap="openDeleteVaccinationDialog" data-args$="[[index]]">Delete</vaadin-item>
+                                </vaadin-list-box>
+                            </template>
+
+                            [[item.name]]
+                        </vaadin-context-menu>
+                    </template>
                 </vaadin-grid-column>
 
                 <vaadin-grid-column width="100px" flex-grow="0">
                     <template class="header">Next date</template>
-                    <template>{{getDateString(item.dateNext)}}</template>
-                </vaadin-grid-column>
-
-                <vaadin-grid-column width="70px" flex-grow="0">
                     <template>
-                        <paper-icon-button title="Add vaccination entry" style="margin: 0px; padding:0px; width: 22px; height: 22px;" icon="add" on-tap="openAddVaccinationEntryDialog" data-args$="[[index]]"></paper-icon-button>
-                        <paper-icon-button title="Edit vaccination" style="margin: 0px; padding:0px; width: 22px; height: 22px;" icon="create" on-tap="openUpdateVaccinationDialog" data-args$="[[index]]"></paper-icon-button>
+                        <vaadin-context-menu>
+                            <template>
+                                <vaadin-list-box>
+                                    <vaadin-item on-tap="openAddVaccinationEntryDialog" data-args$="[[index]]">Add vaccination entry</vaadin-item>
+                                    <hr>
+                                    <vaadin-item on-tap="openUpdateVaccinationDialog" data-args$="[[index]]">Edit</vaadin-item>
+                                    <vaadin-item on-tap="openDeleteVaccinationDialog" data-args$="[[index]]">Delete</vaadin-item>
+                                </vaadin-list-box>
+                            </template>
+
+                            {{getDateString(item.dateNext)}}
+                        </vaadin-context-menu>
                     </template>
                 </vaadin-grid-column>
             </vaadin-grid>
@@ -262,6 +310,12 @@ class VaccinationElement extends BaseElement {
         this.$.updateVaccinationDialog.open();
     }
 
+    openDeleteVaccinationDialog(e) {
+        this.curObj = this.vaccinations[e.target.dataset.args];
+        
+        this.$.deleteVaccinationDialog.open();
+    }
+
     openUpdateVaccinationEntryDialog(e) {
         this.curObjEntry = this.openedObj.entries[e.target.dataset.args];
         var curEntry = this.curObjEntry;
@@ -272,6 +326,12 @@ class VaccinationElement extends BaseElement {
         this.$.dateEntryUpdate.value = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
 
         this.$.updateVaccinationEntryDialog.open();
+    }
+
+    openDeleteVaccinationEntryDialog(e) {
+        this.curObjEntry = this.openedObj.entries[e.target.dataset.args];
+
+        this.$.deleteVaccinationEntryDialog.open();
     }
 
     addVaccination(e) {
@@ -342,7 +402,7 @@ class VaccinationElement extends BaseElement {
 
     getMinSizes() {
         return {
-            width: "400px",
+            width: "330px",
             height: "300px"
         };
     }
