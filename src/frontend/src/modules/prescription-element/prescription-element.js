@@ -287,22 +287,21 @@ class PrescriptionElement extends BaseElement {
         this.setDateFormats(this.$.endDate);
         this.setDateFormats(this.$.startDateUpdate);
         this.setDateFormats(this.$.endDateUpdate);
-        this.startFilterSet = false;
-        this.endFilterSet = false;
+        this.startFilter = null;
+        this.endFilter = null;
 
         this.title = "Prescriptions";
         this.dispatchEvent(new CustomEvent("size", {bubbles: true, composed: true, detail: this.getMinSizes() }));
-
-        this.selectedStartDate = null;
-        this.selectedEndDate = null;
 
         this.$.ajaxMeds.generateRequest();
         this.update();
     }
 
     update(e) {
-        if (!this.checkDates())
+        if (this.startFilter == null || this.endFilter == null)
             this.$.ajaxPrescriptions.generateRequest();
+        else
+            this.checkDates();
     }
 
     sendUpdateSignal() {
@@ -310,36 +309,43 @@ class PrescriptionElement extends BaseElement {
     }
 
     dateSelected(e) {
-        if (e.target.id === "startFilter" && !this.startFilterSet) {
-            this.setDateFormats(e.target);
-            this.startFilterSet = true;
-        } else if (e.target.id === "endFilter" && !this.endFilterSet) {
-            this.setDateFormats(e.target);
-            this.endFilterSet = true;
+        if (this.startFilter == null || this.endFilter == null) {
+            this.initDates(e);
+        } else {
+            this.checkDates();
         }
+    }
 
-        if (e.detail.value !== "") {
-            if (e.target.id === "startFilter") {
-                this.selectedStartDate = new Date(e.detail.value);
-            } else if (e.target.id === "endFilter") {
-                this.selectedEndDate = new Date(e.detail.value);
-            }
+    initDates(e) {
+        if (e.target.id === "startFilter") {
+            this.startFilter = e.target;
+            this.setDateFormats(e.target);
+        } else if (e.target.id === "endFilter") {
+            this.endFilter = e.target;
+            this.setDateFormats(e.target);
         }
-        
-        this.checkDates();
     }
 
     checkDates() {
-        if (this.selectedStartDate === null || this.selectedEndDate === null) {
-            return false;
-        } else if (this.selectedStartDate < this.selectedEndDate) {
-            this.startInt = this.selectedStartDate.getTime();
-            this.endInt = this.selectedEndDate.getTime();
-            
+        var start = new Date(0);
+        if (this.startFilter.value !== "")
+            start = new Date(this.startFilter.value);
+        
+        var end = new Date("2200-01-01T00:00:00");
+        if (this.endFilter.value !== "")
+            end = new Date(this.endFilter.value);
+
+        if (start < end) {
+            this.startFilter.invalid = false;
+            this.endFilter.invalid = false;
+
+            this.startInt = start.getTime();
+            this.endInt = end.getTime();
+
             this.$.ajaxPrescriptionsByDate.generateRequest();
-            return true;
         } else {
-            return false;
+            this.startFilter.invalid = true;
+            this.endFilter.invalid = true;
         }
     }
 
