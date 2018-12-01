@@ -2,16 +2,8 @@ const express = require('express');
 const router = express.Router();
 const checkAuth = require('../../models/auth/check-auth');
 
-const bpRoutes = require('../tm/bp');
-const bsRoutes = require('../tm/bs');
-const heartRoutes = require('../tm/heart');
-const oxygenRoutes = require('../tm/oxygen');
-const weightRoutes = require('../tm/weight');
+const TMController = require ('../../controller/modules/tm');
 
-router.use('/bp', bpRoutes);
-router.use('/bs', bsRoutes);
-router.use('/heart', heartRoutes);
-router.use('/oxygen', oxygenRoutes);
-router.use('/weight', weightRoutes);
+router.post('/', TMController.get_data);
 
 module.exports = router;

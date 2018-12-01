@@ -1,6 +1,10 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import {BaseElement} from '../base-element.js'
 
+import '/node_modules/css-element-queries/src/ResizeSensor.js';
+
+import moment from 'moment/src/moment';
+
 import '@polymer/iron-ajax/iron-ajax'
 import '@polymer/paper-dialog/paper-dialog'
 import '@polymer/paper-input/paper-input'
@@ -8,7 +12,6 @@ import '@polymer/paper-input/paper-textarea'
 import '@polymer/paper-dropdown-menu/paper-dropdown-menu'
 import '@polymer/paper-checkbox/paper-checkbox'
 import '@vaadin/vaadin-date-picker/vaadin-date-picker';
-import '@vaadin/vaadin-date-picker/src/vaadin-date-picker-mixin';
 
 /**
  * @customElement
@@ -18,6 +21,7 @@ import '@vaadin/vaadin-date-picker/src/vaadin-date-picker-mixin';
 class TelemonitoringElement extends BaseElement {
     static get cssTemplate() {
         return html`
+            <link rel="stylesheet" href="/node_modules/c3/c3.css">
             <style>
                 .twoCol {
                     display: grid;
@@ -35,6 +39,11 @@ class TelemonitoringElement extends BaseElement {
                     grid-template-columns: 140px 40px 140px;
                 }
 
+                #chart {
+                    min-width: 468px;
+                    max-width: 600px;
+                }
+
                 paper-input {
                     margin-top: 0px;
                     height: 50px;
@@ -45,7 +54,14 @@ class TelemonitoringElement extends BaseElement {
 
     static get ironAjaxTemplate() {
         return html`
-            
+            <iron-ajax
+                id="ajaxGetData"
+                url="http://localhost:3000/patient/[[pId]]/tm"
+                method="POST"
+                handle-as="json"
+                content-type="application/json"
+                on-response="dataReceived"
+            ></iron-ajax>
         `;
     }
 
@@ -96,12 +112,13 @@ class TelemonitoringElement extends BaseElement {
                     <div id="dateInner">
                         <vaadin-date-picker theme="small" id="startDate" placeholder="Start date">
                         </vaadin-date-picker>
-                        <paper-icon-button icon="refresh"></paper-icon-button>
+                        <paper-icon-button icon="refresh" on-tap="loadData"></paper-icon-button>
                         <vaadin-date-picker theme="small" id="endDate" placeholder="End date">
                         </vaadin-date-picker>
                     </div>
                     <div></div>
                 </div>
+                <div id="chart"></div>
             </div>
         `;
     }
@@ -132,6 +149,9 @@ class TelemonitoringElement extends BaseElement {
         
         this.setDateFormats(this.$.startDate);
         this.setDateFormats(this.$.endDate);
+        
+        this.$.startDate.value = moment().subtract(6, 'days').format("YYYY-MM-DD");
+        this.$.endDate.value = moment().format("YYYY-MM-DD");
 
         this.title = "Telemonitoring";
         this.dispatchEvent(new CustomEvent("size", {bubbles: true, composed: true, detail: this.getMinSizes() }));
@@ -150,13 +170,50 @@ class TelemonitoringElement extends BaseElement {
 
         if (this.selectedParams.length != 0) {
             this.loadData();
-        } else {
-            
         }
     }
 
     loadData() {
+        var start = new Date(this.$.startDate.value);
+        var end = new Date(this.$.endDate.value);
 
+        var body = {
+            time: {
+                start: start.toISOString(),
+                end: end.toISOString()
+            },
+            values: this.selectedParams
+        };
+
+        this.$.ajaxGetData.body = body;
+        this.$.ajaxGetData.generateRequest();
+    }
+
+    dataReceived(e) {
+        this.values = e.detail.response.values;
+
+        this.loadChart();
+    }
+
+    loadChart() {
+        var chart = c3.generate({
+            bindto: this.$.chart,
+            data: {
+                columns: [
+                    ['data1', 30, 200, 100, 400, 150, 250],
+                    ['data2', 50, 20, 10, 40, 15, 25]
+                ]
+            }
+        });
+
+        var parent = this.parentNode;
+        new ResizeSensor(this.$.cardId, function () {
+            /*var parBounds = parent.getBoundingClientRect();
+            var chartWidth = parBounds.width - 32;
+            var chartHeight = parBounds.height - 110;
+            chart.resize({ width: chartWidth, height: chartHeight});*/
+            chart.resize();
+        });
     }
 
     paramSelected(e) {

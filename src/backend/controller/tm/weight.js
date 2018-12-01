@@ -34,6 +34,14 @@ exports.get_by_date = (req, res, next) => {
         });
 };
 
+exports.getByDate = async function (start, end, pId) {
+    const query = Weight.find({ patient: pId, date: { $gte: start, $lt: end } }, "value date");
+
+    const result = await query.exec();
+    
+    return result;
+}
+
 exports.add = (req, res, next) => {
     var pId = req.originalUrl.split('/')[2];
     const weight = new Weight({
