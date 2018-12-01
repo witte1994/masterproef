@@ -11,6 +11,10 @@ import '@vaadin/vaadin-grid/vaadin-grid-sorter';
 import '@vaadin/vaadin-grid/vaadin-grid-filter';
 import '@vaadin/vaadin-date-picker/vaadin-date-picker';
 
+import '@vaadin/vaadin-context-menu/vaadin-context-menu';
+import '@vaadin/vaadin-list-box/vaadin-list-box';
+import '@vaadin/vaadin-item/vaadin-item';
+
 /**
  * @customElement
  * @polymer
@@ -147,7 +151,15 @@ class PrescriptionElement extends BaseElement {
                 
                 <paper-button dialog-dismiss autofocus>Cancel</paper-button>
                 <paper-button dialog-confirm on-tap="updatePrescription">Update</paper-button>
-                <paper-button dialog-dismiss on-tap="deletePrescription">Delete</paper-button>
+            </paper-dialog>
+
+            <paper-dialog id="deletePrescriptionDialog">
+                <h2>Delete prescription</h2>
+
+                <div>Are you sure you want to delete this prescription?</div>
+                
+                <paper-button dialog-dismiss autofocus>Cancel</paper-button>
+                <paper-button dialog-confirm on-tap="deletePrescription">Delete</paper-button>
             </paper-dialog>
         `;
     }
@@ -166,10 +178,22 @@ class PrescriptionElement extends BaseElement {
 
                 <vaadin-grid-column width="36px" flex-grow="0">
                     <template class="header"><iron-icon style="width: 20px; height: 20px;" icon="flag"></iron-icon></template>
-                    <template>0</template>
+                    <template>
+                        <vaadin-context-menu>
+                            <template>
+                                <vaadin-list-box>
+                                    <vaadin-item on-tap="openUpdatePrescriptionDialog" data-args$="[[index]]">Edit</vaadin-item>
+                                    <hr>
+                                    <vaadin-item on-tap="openDeletePrescriptionDialog" data-args$="[[index]]">Delete</vaadin-item>
+                                </vaadin-list-box>
+                            </template>
+                            
+                            0
+                        </vaadin-context-menu>
+                    </template>
                 </vaadin-grid-column>
 
-                <vaadin-grid-column width="160px">
+                <vaadin-grid-column width="140px">
                     <template class="header">
                         <vaadin-grid-sorter path="medication.name">
                             <vaadin-grid-filter aria-label="Medication" path="medication.name" value="[[_filterMedicationName]]">
@@ -177,12 +201,36 @@ class PrescriptionElement extends BaseElement {
                             </vaadin-grid-filter>
                         </vaadin-grid-sorter>
                     </template>
-                    <template>[[item.medication.name]]</template>
+                    <template>
+                        <vaadin-context-menu>
+                            <template>
+                                <vaadin-list-box>
+                                    <vaadin-item on-tap="openUpdatePrescriptionDialog" data-args$="[[index]]">Edit</vaadin-item>
+                                    <hr>
+                                    <vaadin-item on-tap="openDeletePrescriptionDialog" data-args$="[[index]]">Delete</vaadin-item>
+                                </vaadin-list-box>
+                            </template>
+                            
+                            [[item.medication.name]]
+                        </vaadin-context-menu>
+                    </template>
                 </vaadin-grid-column>
 
                 <vaadin-grid-column width="72px" flex-grow="0">
                     <template class="header">Dosage</template>
-                    <template>[[item.dosage.morning]]/[[item.dosage.noon]]/[[item.dosage.evening]]/[[item.dosage.bed]]</template>
+                    <template>
+                        <vaadin-context-menu>
+                            <template>
+                                <vaadin-list-box>
+                                    <vaadin-item on-tap="openUpdatePrescriptionDialog" data-args$="[[index]]">Edit</vaadin-item>
+                                    <hr>
+                                    <vaadin-item on-tap="openDeletePrescriptionDialog" data-args$="[[index]]">Delete</vaadin-item>
+                                </vaadin-list-box>
+                            </template>
+                            
+                            [[item.dosage.morning]]/[[item.dosage.noon]]/[[item.dosage.evening]]/[[item.dosage.bed]]
+                        </vaadin-context-menu>
+                    </template>
                 </vaadin-grid-column>
 
                 <vaadin-grid-column width="156px" flex-grow="0">
@@ -190,7 +238,19 @@ class PrescriptionElement extends BaseElement {
                         <vaadin-date-picker theme="small" id="startFilter" on-value-changed="dateSelected" placeholder="Start date" style="width:140px;">
                         </vaadin-date-picker>
                     </template>
-                    <template>{{getDateString(item.startDate)}}</template>
+                    <template>
+                        <vaadin-context-menu>
+                            <template>
+                                <vaadin-list-box>
+                                    <vaadin-item on-tap="openUpdatePrescriptionDialog" data-args$="[[index]]">Edit</vaadin-item>
+                                    <hr>
+                                    <vaadin-item on-tap="openDeletePrescriptionDialog" data-args$="[[index]]">Delete</vaadin-item>
+                                </vaadin-list-box>
+                            </template>
+                            
+                            {{getDateString(item.startDate)}}
+                        </vaadin-context-menu>
+                    </template>
                 </vaadin-grid-column>
 
                 <vaadin-grid-column width="156px" flex-grow="0">
@@ -198,13 +258,20 @@ class PrescriptionElement extends BaseElement {
                         <vaadin-date-picker theme="small" id="endFilter" on-value-changed="dateSelected" placeholder="End date" style="width:140px;">
                         </vaadin-date-picker>
                     </template>
-                    <template>{{getDateString(item.endDate)}}</template>
+                    <template>
+                        <vaadin-context-menu>
+                            <template>
+                                <vaadin-list-box>
+                                    <vaadin-item on-tap="openUpdatePrescriptionDialog" data-args$="[[index]]">Edit</vaadin-item>
+                                    <hr>
+                                    <vaadin-item on-tap="openDeletePrescriptionDialog" data-args$="[[index]]">Delete</vaadin-item>
+                                </vaadin-list-box>
+                            </template>
+                            
+                            {{getDateString(item.endDate)}}
+                        </vaadin-context-menu>
+                    </template>
                 </vaadin-grid-column>
-
-                <vaadin-grid-column width="40px" flex-grow="0">
-                    <template><paper-icon-button title="Edit prescription" style="margin: 0px; padding:0px; width: 22px; height: 22px;"icon="create" on-tap="openUpdatePrescriptionDialog" data-args$="[[index]]"></paper-icon-button></template>
-                </vaadin-grid-column>
-            </vaadin-grid>
         `;
     }
 
@@ -299,6 +366,12 @@ class PrescriptionElement extends BaseElement {
         this.$.updatePrescriptionDialog.open();
     }
 
+    openDeletePrescriptionDialog(e) {
+        this.curObj = this.prescriptions[e.target.dataset.args];
+
+        this.$.deletePrescriptionDialog.open();
+    }
+
     addPrescription(e) {
         var medicine = this.$.medList.selectedItem.getAttribute("value");
 
@@ -352,7 +425,7 @@ class PrescriptionElement extends BaseElement {
 
     getMinSizes() {
         return {
-            width: "676px",
+            width: "616px",
             height: "300px"
         };
     }
