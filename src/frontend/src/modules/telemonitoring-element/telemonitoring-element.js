@@ -167,7 +167,7 @@ class TelemonitoringElement extends BaseElement {
     selectData() {
         this.selectedParams = [];
         this.selectedAxis = [];
-        
+
         for (var i = 0; i < this.paramChecks.length; i++) {
             if (this.paramChecks[i].checked) this.selectedParams.push(this.paramChecks[i].value);
         }
@@ -184,7 +184,7 @@ class TelemonitoringElement extends BaseElement {
         if (this.$.startDate.value == "" || this.$.endDate.value == "")
             return;
         
-        if (this.selectedParams.length != 0)
+        if (this.selectedParams.length == 0)
             return;
 
         this.startObj = new Date(this.$.startDate.value)
@@ -215,9 +215,6 @@ class TelemonitoringElement extends BaseElement {
     }
 
     chartInit() {
-        this.y1Set = false;
-        this.y2Set = false;
-
         var showY1 = false;
         var showY2 = false;
 
@@ -350,7 +347,6 @@ class TelemonitoringElement extends BaseElement {
             }
         }
         
-        console.log(labels);
         this.chart.data.axes(axes);
         this.chart.axis.labels(labels);
     }
@@ -466,9 +462,10 @@ class TelemonitoringElement extends BaseElement {
         else if (range >= 12)   interval = 3;
 
         var ticks = [];
-        for (var i = 0; i < range; i++) {
+        for (var i = 0; i < range;) {
             ticks.push(this.getDateString(start.toDate()));
             start.add(interval, 'days');
+            i += interval;
         }
 
         return ticks;
