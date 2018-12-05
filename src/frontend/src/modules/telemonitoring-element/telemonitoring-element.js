@@ -29,6 +29,10 @@ class TelemonitoringElement extends BaseElement {
                     margin-bottom: 4px;
                 }
 
+                .c3-chart-line {
+                    stroke-width: 5;
+                }
+
                 #dateHeader {
                     display: grid;
                     grid-template-columns: auto 320px auto;
@@ -39,15 +43,11 @@ class TelemonitoringElement extends BaseElement {
                     grid-template-columns: 140px 40px 140px;
                 }
 
-                #chart {
-                    min-width: 468px;
-                    max-width: 600px;
-                }
-
                 paper-input {
                     margin-top: 0px;
                     height: 50px;
                 }
+
             </style>
         `;
     }
@@ -106,14 +106,14 @@ class TelemonitoringElement extends BaseElement {
 
     static get contentTemplate() {
         return html`
-            <div id="contentContainer">
+            <div id="contentContainer" style="margin-left: -8px; margin-right: -8px; margin-bottom: -8px;">
                 <div id="dateHeader">
                     <div></div>
                     <div id="dateInner">
-                        <vaadin-date-picker theme="small" id="startDate" placeholder="Start date">
+                        <vaadin-date-picker theme="small" id="startDate" placeholder="Start date" on-value-changed="loadData">
                         </vaadin-date-picker>
-                        <paper-icon-button icon="refresh" on-tap="loadData"></paper-icon-button>
-                        <vaadin-date-picker theme="small" id="endDate" placeholder="End date">
+                        <paper-icon-button icon="refresh"></paper-icon-button>
+                        <vaadin-date-picker theme="small" id="endDate" placeholder="End date" on-value-changed="loadData">
                         </vaadin-date-picker>
                     </div>
                     <div></div>
@@ -130,6 +130,11 @@ class TelemonitoringElement extends BaseElement {
 
     ready() {
         super.ready();
+
+        this.resizeSensor = null;
+
+        this.selectedParams = [];
+        this.selectedAxis = [];
 
         this.paramChecks = [
             this.$.bpCheck,
@@ -153,6 +158,8 @@ class TelemonitoringElement extends BaseElement {
         this.$.startDate.value = moment().subtract(6, 'days').format("YYYY-MM-DD");
         this.$.endDate.value = moment().format("YYYY-MM-DD");
 
+        this.getTimeTicks();
+
         this.title = "Telemonitoring";
         this.dispatchEvent(new CustomEvent("size", {bubbles: true, composed: true, detail: this.getMinSizes() }));
     }
@@ -160,7 +167,7 @@ class TelemonitoringElement extends BaseElement {
     selectData() {
         this.selectedParams = [];
         this.selectedAxis = [];
-
+        
         for (var i = 0; i < this.paramChecks.length; i++) {
             if (this.paramChecks[i].checked) this.selectedParams.push(this.paramChecks[i].value);
         }
@@ -174,13 +181,19 @@ class TelemonitoringElement extends BaseElement {
     }
 
     loadData() {
-        var start = new Date(this.$.startDate.value);
-        var end = new Date(this.$.endDate.value);
+        if (this.$.startDate.value == "" || this.$.endDate.value == "")
+            return;
+        
+        if (this.selectedParams.length != 0)
+            return;
+
+        this.startObj = new Date(this.$.startDate.value)
+        this.endObj = new Date(this.$.endDate.value);
 
         var body = {
             time: {
-                start: start.toISOString(),
-                end: end.toISOString()
+                start: this.startObj.toISOString(),
+                end: this.endObj.toISOString()
             },
             values: this.selectedParams
         };
@@ -196,23 +209,199 @@ class TelemonitoringElement extends BaseElement {
     }
 
     loadChart() {
-        var chart = c3.generate({
+        this.chartInit();
+
+        this.loadChartData();
+    }
+
+    chartInit() {
+        this.y1Set = false;
+        this.y2Set = false;
+
+        var showY1 = false;
+        var showY2 = false;
+
+        var leftPadding = 10;
+        var rightPadding = 10;
+
+        var leftLabel = "";
+        var rightLabel = "";
+
+
+        if (this.selectedAxis.length == 1) {
+            showY1 = true;
+            leftLabel = this.enumToAxisLabel(this.selectedAxis[0]);
+
+            leftPadding = 46;
+        }
+        if (this.selectedAxis.length == 2) {
+            showY1 = true;
+            showY2 = true;
+
+            leftLabel = this.enumToAxisLabel(this.selectedAxis[0]);
+            rightLabel = this.enumToAxisLabel(this.selectedAxis[1]);
+
+            leftPadding = 46;
+            rightPadding = 58;
+        }
+
+        this.chart = c3.generate({
             bindto: this.$.chart,
+            padding: {
+                left: leftPadding,
+                right: rightPadding
+            },
+            legend: {
+                show: false
+            },
             data: {
-                columns: [
-                    ['data1', 30, 200, 100, 400, 150, 250],
-                    ['data2', 50, 20, 10, 40, 15, 25]
-                ]
+                xFormat: '%d/%m/%Y',
+                columns: []
+            },
+            axis: {
+                x: {
+                    label: {
+                        text: 'Date (day/month)',
+                        position: 'outer-center'
+                    },
+                    min: this.getDateString(this.startObj),
+                    max: this.getDateString(this.endObj),
+                    type: 'timeseries',
+                    tick: {
+                        format: '%d/%m',
+                        values: this.getTimeTicks()
+                    }
+                },
+                y: {
+                    label: {
+                        text: leftLabel,
+                        position: 'outer-middle'
+                    },
+                    show: showY1
+                },
+                y2: {
+                    label: {
+                        text: rightLabel,
+                        position: 'outer-middle'
+                    },
+                    show: showY2
+                }
+            },
+            tooltip: {
+                format: {
+                    value: function (value, ratio, id, index) {
+                        switch (id) {
+                            case 'Blood pressure':
+                                return value + ' mmHg';
+                            case 'Blood sugar':
+                                return value + ' mmol/L';
+                            case 'Heart rate':
+                                return value + ' BPM';
+                            case 'Oxygen':
+                                return value + ' %SpO2';
+                            case 'Weight':
+                                return value + ' kg';
+                            default:
+                                return value;
+                        }
+                    }
+                }
             }
         });
 
+        var chart = this.chart;
         var parent = this.parentNode;
-        new ResizeSensor(this.$.cardId, function () {
-            /*var parBounds = parent.getBoundingClientRect();
-            var chartWidth = parBounds.width - 32;
-            var chartHeight = parBounds.height - 110;
-            chart.resize({ width: chartWidth, height: chartHeight});*/
-            chart.resize();
+        var resizeTimeout;
+        if (this.resizeSensor == null) {
+            this.resizeSensor = new ResizeSensor(this.$.cardId, function () {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(function() {
+                    var parBounds = parent.getBoundingClientRect();
+    
+                    var chartWidth = parBounds.width - 16;
+                    var chartHeight = parBounds.height - 102;
+    
+                    chart.resize({ width: chartWidth, height: chartHeight});
+                }, 100);
+            });
+        }
+
+        // initial resize
+        var parBounds = parent.getBoundingClientRect();
+        var chartWidth = parBounds.width - 16;
+        var chartHeight = parBounds.height - 102;
+        chart.resize({ width: chartWidth, height: chartHeight});
+    }
+
+    loadChartData() {
+        for (var i = 0; i < this.values.length; i++) {
+            this.loadParamData(this.values[i]);
+        }
+
+        var axes = {};
+        var labels = {};
+        for (var i = 0; i < this.selectedAxis.length; i++) {
+            if (i == 0) {
+                axes[this.enumToFullName(this.selectedAxis[i])] = 'y';
+                labels['y'] = this.enumToAxisLabel(this.selectedAxis[i]);
+            } else if (i == 1) {
+                axes[this.enumToFullName(this.selectedAxis[i])] = 'y2';
+                labels['y2'] = this.enumToAxisLabel(this.selectedAxis[i]);
+            }
+        }
+        
+        console.log(labels);
+        this.chart.data.axes(axes);
+        this.chart.axis.labels(labels);
+    }
+
+    enumToFullName(enumStr) {
+        switch (enumStr) {
+            case 'bp':
+                return "Blood pressure";
+            case 'bs':
+                return "Blood sugar";
+            case 'hr':
+                return "Heart rate";
+            case 'oxygen':
+                return "Oxygen";
+            case 'weight':
+                return "Weight";
+        }
+    }
+
+    enumToAxisLabel(enumStr) {
+        switch (enumStr) {
+            case 'bp':
+                return "Blood pressure (mmHg)";
+            case 'bs':
+                return "Blood sugar (mmol/L)";
+            case 'hr':
+                return "Heart rate (BPM)";
+            case 'oxygen':
+                return "Blood oxygen saturation (%SpO2)";
+            case 'weight':
+                return "Weight (kg)";
+        }
+    }
+
+    loadParamData(data) {
+        var col = [data.param];
+        var colDate = [('date'+data.param)];
+
+        for (var i = 0; i < data.values.length; i++) {
+            col.push(data.values[i].value);
+            colDate.push(this.getDateString(new Date(data.values[i].date)));
+        }
+
+        var xs = {};
+        xs[data.param] = colDate[0];
+
+        this.chart.load({
+            xs: xs,
+            columns: [
+                colDate, col
+            ]
         });
     }
 
@@ -264,6 +453,25 @@ class TelemonitoringElement extends BaseElement {
                 if (!this.paramAxis[i].checked) this.paramAxis[i].disabled = false
             }
         }
+    }
+
+    getTimeTicks() {
+        var start = moment(this.startObj);
+        var end = moment(this.endObj);
+
+        var range = end.diff(start,'days') + 1;
+
+        var interval = 1;
+        if (range >= 28)        interval = 7;
+        else if (range >= 12)   interval = 3;
+
+        var ticks = [];
+        for (var i = 0; i < range; i++) {
+            ticks.push(this.getDateString(start.toDate()));
+            start.add(interval, 'days');
+        }
+
+        return ticks;
     }
 
     getMinSizes() {
