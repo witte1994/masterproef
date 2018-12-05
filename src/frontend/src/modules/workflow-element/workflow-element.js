@@ -646,6 +646,19 @@ class WorkflowElement extends BaseElement {
         this.$.ajaxGetWorkflow.generateRequest();
     }
 
+    getSettings() {
+        return {
+            "workflowId": this.currentWorkflow._id
+        };
+    }
+
+    loadSettings(settings) {
+        this.workflowId = settings.workflowId;
+        this.$.ajaxGetWorkflow.generateRequest();
+    }
+
+
+
     getMinSizes() {
         return {
             width: "400px",
