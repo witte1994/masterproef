@@ -42,6 +42,9 @@ const layoutSchema = mongoose.Schema({
             type: Number,
             min: 0,
             required: true
+        },
+        settings: {
+            type: Object
         }
     }]
 });

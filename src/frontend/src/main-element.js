@@ -326,6 +326,8 @@ class MainElement extends PolymerElement {
         for (var i = 0; i < elements.length; i++) {
             var pos = this.getPosition(elements[i]);
     
+            var settings = elements[i].children[1].getSettings();
+
             offset.x = pos.x - posMain.x;
             offset.y = pos.y - posMain.y;
             var savePos = {
@@ -333,7 +335,8 @@ class MainElement extends PolymerElement {
                 x: offset.x,
                 y: offset.y,
                 width: elements[i].offsetWidth,
-                height: elements[i].offsetHeight
+                height: elements[i].offsetHeight,
+                settings: settings
             };
             positions.push(savePos);
         }
@@ -428,7 +431,8 @@ class MainElement extends PolymerElement {
             container.style.width = elements[i].width + "px";
             container.style.height = elements[i].height + "px";
             this.addContainerToGrid(container);
-            this.pckryMain.fit(container, elements[i].x, elements[i].y)
+            this.pckryMain.fit(container, elements[i].x, elements[i].y);
+            container.children[1].loadSettings(elements[i].settings);
         }
     }
 

@@ -135,6 +135,14 @@ export class BaseElement extends PolymerElement {
         };
     }
 
+    getSettings() {
+        return {};
+    }
+
+    loadSettings(settings) {
+
+    }
+
     openDialog(e) {
         console.log("implement in child element");
     }

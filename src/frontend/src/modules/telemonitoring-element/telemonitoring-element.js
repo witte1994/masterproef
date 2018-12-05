@@ -471,6 +471,25 @@ class TelemonitoringElement extends BaseElement {
         return ticks;
     }
 
+    getSettings() {
+        return {
+            "startDate": this.startObj.toISOString(),
+            "endDate": this.endObj.toISOString(),
+            "params": this.selectedParams,
+            "axis": this.selectedAxis
+        };
+    }
+
+    loadSettings(settings) {        
+        this.$.startDate.value = moment(new Date(settings.startDate)).format("YYYY-MM-DD");
+        this.$.endDate.value = moment(new Date(settings.endDate)).format("YYYY-MM-DD");
+
+        this.selectedParams = settings.params;
+        this.selectedAxis = settings.axis;
+
+        this.loadData();
+    }
+
     getMinSizes() {
         return {
             width: "500px",
