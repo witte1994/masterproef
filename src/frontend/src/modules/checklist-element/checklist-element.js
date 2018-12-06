@@ -48,9 +48,9 @@ class ChecklistElement extends BaseElement {
                     text-decoration: line-through;
                 }
 
-                .subStepRow {
+                .substepRow {
                     display: grid;
-                    grid-template-columns: 34px 24px auto;
+                    grid-template-columns: 34px auto;
                     margin-top: 4px;
                     margin-bottom: 4px;
                 }
@@ -132,6 +132,54 @@ class ChecklistElement extends BaseElement {
                 method="POST"
                 handle-as="json"
                 content-type="application/json"
+                last-response="{{checklist}}"
+                on-response="checklistReceived"
+            ></iron-ajax>
+
+            <iron-ajax 
+                id="ajaxDeleteStep"
+                url="http://localhost:3000/patient/[[pId]]/checklist/[[checklist._id]]/delete/[[stepId]]"
+                method="DELETE"
+                handle-as="json"
+                last-response="{{checklist}}"
+                on-response="checklistReceived"
+            ></iron-ajax>
+
+            <iron-ajax 
+                id="ajaxCreateSubstep"
+                url="http://localhost:3000/patient/[[pId]]/checklist/[[checklist._id]]/step/[[stepId]]/create"
+                method="POST"
+                handle-as="json"
+                content-type="application/json"
+                last-response="{{checklist}}"
+                on-response="checklistReceived"
+            ></iron-ajax>
+
+            <iron-ajax 
+                id="ajaxCheckSubstep"
+                url="http://localhost:3000/patient/[[pId]]/checklist/[[checklist._id]]/step/[[substepId]]/check"
+                method="POST"
+                handle-as="json"
+                content-type="application/json"
+                last-response="{{checklist}}"
+                on-response="checklistReceived"
+            ></iron-ajax>
+
+            <iron-ajax 
+                id="ajaxUpdateSubstep"
+                url="http://localhost:3000/patient/[[pId]]/checklist/[[checklist._id]]/step/[[substepId]]/update"
+                method="POST"
+                handle-as="json"
+                content-type="application/json"
+                last-response="{{checklist}}"
+                on-response="checklistReceived"
+            ></iron-ajax>
+
+            <iron-ajax 
+                id="ajaxDeleteSubstep"
+                url="http://localhost:3000/patient/[[pId]]/checklist/[[checklist._id]]/step/[[stepId]]/delete/[[substepId]]"
+                method="DELETE"
+                handle-as="json"
                 last-response="{{checklist}}"
                 on-response="checklistReceived"
             ></iron-ajax>
@@ -241,10 +289,10 @@ class ChecklistElement extends BaseElement {
                         <vaadin-context-menu selector=".isSelector">
                             <template>
                                 <vaadin-list-box>
-                                <vaadin-item value="[[step._id]]" on-tap="createSubstep">Add subtask</vaadin-item>
+                                <vaadin-item value="[[step]]" on-tap="createSubstep">Add subtask</vaadin-item>
                                 <hr>
                                 <vaadin-item value="[[step]]" on-tap="updateStep">Edit task</vaadin-item>
-                                <vaadin-item value="[[step._id]]" on-tap="deleteStep">Delete task</vaadin-item>
+                                <vaadin-item value="[[step]]" on-tap="deleteStep">Delete task</vaadin-item>
                                 </vaadin-list-box>
                             </template>
 
@@ -256,6 +304,28 @@ class ChecklistElement extends BaseElement {
                                 </paper-checkbox>
                             </div>
                         </vaadin-context-menu>
+
+                        <dom-repeat items="{{step.substeps}}" as="substep" index-as="substepIndex">
+                            <template>
+                                <vaadin-context-menu selector=".isSelector">
+                                    <template>
+                                        <vaadin-list-box>
+                                        <vaadin-item value="[[substep]]" on-tap="updateSubstep">Edit sub-task</vaadin-item>
+                                        <vaadin-item value="[[step._id]] [[substep._id]]" on-tap="deleteSubstep">Delete sub-task</vaadin-item>
+                                        </vaadin-list-box>
+                                    </template>
+
+                                    <div class="substepRow isSelector">
+                                        <div></div>
+                                        <paper-checkbox value="[[substep._id]]" checked="[[substep.checked]]" on-checked-changed="checkSubstep">
+                                            <div class$="{{getStepClass(substep.checked)}}">
+                                                [[substep.description]]
+                                            </div>
+                                        </paper-checkbox>
+                                    </div>
+                                </vaadin-context-menu>
+                            </template>
+                        </dom-repeat>
 
                     </template>
                 </dom-repeat>
@@ -329,8 +399,12 @@ class ChecklistElement extends BaseElement {
     }
 
     updateStep(e) {
-        this.$.ajaxUpdateStep.body.id = e.target.value._id;
-        
+        var step = e.target.value;
+        var body = {
+            id: step._id
+        };
+        this.$.ajaxUpdateStep.body = body;
+       
         this.$.descriptionStepUpdate.value = e.target.value.description;
 
         this.$.updateStepDialog.open();
@@ -350,6 +424,69 @@ class ChecklistElement extends BaseElement {
         };
 
         this.$.ajaxCheckStep.generateRequest();
+    }
+
+    deleteStep(e) {
+        var step = e.target.value;
+        this.stepId = step._id;
+
+        this.$.deleteStepDialog.open();
+    }
+
+    deleteStepAction(e) {
+        this.$.ajaxDeleteStep.generateRequest();
+    }
+
+    createSubstep(e) {
+        var step = e.target.value;
+        this.stepId = step._id;
+
+        this.$.createSubstepDialog.open();
+    }
+
+    createSubstepAction(e) {
+        this.$.ajaxCreateSubstep.body = {
+            cId: window.sessionStorage.cId,
+            description: this.$.descriptionSubstep.value
+        };
+        this.$.ajaxCreateSubstep.generateRequest();
+    }
+
+    checkSubstep(e) {
+        this.substepId = e.srcElement.value
+        this.$.ajaxCheckSubstep.body = {
+            "checked": e.detail.value
+        };
+
+        this.$.ajaxCheckSubstep.generateRequest();
+    }
+
+    updateSubstep(e) {
+        this.substepId = e.target.value._id;
+
+        this.$.descriptionSubstepUpdate.value = e.target.value.description;
+
+        this.$.updateSubstepDialog.open();
+    }
+
+    updateSubstepAction(e) {
+        this.$.ajaxUpdateSubstep.body = {
+            cId: window.sessionStorage.cId,
+            description: this.$.descriptionSubstepUpdate.value
+        };
+
+        this.$.ajaxUpdateSubstep.generateRequest();
+    }
+
+    deleteSubstep(e) {
+        this.stepId = e.target.value.split(" ")[0];
+        this.substepId = e.target.value.split(" ")[1];
+
+        this.$.deleteSubstepDialog.open();
+    }
+
+    deleteSubstepAction(e) {
+        this.$.ajaxDeleteSubstep.generateRequest();
     }
     
     getMinSizes() {

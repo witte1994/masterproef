@@ -54,39 +54,6 @@ function createChecklist(pId, res) {
         });
 }
 
-exports.create = (req, res, next) => {
-    var pId = req.body.pId;
-    var cId = req.body.cId;
-
-    const checklist = new Checklist({
-        _id: mongoose.Types.ObjectId(),
-        patient: pId,
-        description: req.body.description,
-        steps: []
-    });
-    checklist
-        .save()
-        .then(result => {
-            var info = {
-                patient: pId,
-                clinician: cId,
-                srcElement: "checklist",
-                operation: "create",
-                description: checklist.description
-            }
-            HistoryController.add_to_history(info);
-
-            console.log(result);
-            res.status(201).json(result);
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({
-                error: err
-            });
-        });
-};
-
 exports.update = (req, res, next) => {
     var pId = req.originalUrl.split('/')[2];
     var cId = req.body.cId;
@@ -217,7 +184,7 @@ exports.update_step = (req, res, next) => {
 };
 
 exports.delete_step = (req, res, next) => {
-    var pId = req.body.pId;
+    var pId = req.originalUrl.split('/')[2];
     var cId = req.body.cId;
     var checklistId = req.params.id;
     var stepId = req.params.stepId;
@@ -249,7 +216,7 @@ exports.delete_step = (req, res, next) => {
 };
 
 exports.create_substep = (req, res, next) => {
-    var pId = req.body.pId;
+    var pId = req.originalUrl.split('/')[2];
     var cId = req.body.cId;
     var checklistId = req.params.id;
     var stepId = req.params.stepId;
@@ -295,14 +262,48 @@ exports.create_substep = (req, res, next) => {
         });
 };
 
-exports.update_substep = (req, res, next) => {
-    var pId = req.body.pId;
-    var cId = req.body.cId;
+exports.check_substep = (req, res, next) => {
     var checklistId = req.params.id;
-    var substepId = req.body.id;
+    var substepId = req.params.substepId;
 
     var substep = {
-        checked: req.body.checked,
+        checked: req.body.checked
+    };
+
+    ChecklistSubstep.findOneAndUpdate({ "_id": substepId },
+        {
+            checked: substep.checked
+        },
+        {
+            new: true
+        })
+        .exec()
+        .then(doc => {
+            Checklist.findById(checklistId)
+                .populate("steps.substeps")
+                .exec()
+                .then(doc => {
+                    console.log(doc);
+                    res.status(200).json(doc);
+                })
+                .catch(err => {
+                    console.log(err);
+                    res.status(500).json({ error: err });
+                });
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ error: err });
+        });
+};
+
+exports.update_substep = (req, res, next) => {
+    var pId = req.originalUrl.split('/')[2];
+    var cId = req.body.cId;
+    var checklistId = req.params.id;
+    var substepId = req.params.substepId;
+
+    var substep = {
         description: req.body.description
     };
 
@@ -344,7 +345,7 @@ exports.update_substep = (req, res, next) => {
 };
 
 exports.delete_substep = (req, res, next) => {
-    var pId = req.body.pId;
+    var pId = req.originalUrl.split('/')[2];
     var cId = req.body.cId;
     var checklistId = req.params.id;
     var stepId = req.params.stepId;
