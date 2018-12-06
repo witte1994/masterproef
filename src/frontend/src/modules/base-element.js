@@ -17,7 +17,7 @@ export class BaseElement extends PolymerElement {
         return html`
         <style include="shared-styles">
             .containerHeader {
-                grid-template-columns: auto 56px;
+                grid-template-columns: auto 28px 28px;
             }
         </style>
 
@@ -32,6 +32,8 @@ export class BaseElement extends PolymerElement {
 
                     <div>
                         ${this.dialogButtonTemplate}
+                    </div>
+                    <div>
                         <paper-icon-button title="Remove module" class="buttonsHeader" icon="close" on-tap="removeModule"></paper-icon-button>
                     </div>
                 </div>

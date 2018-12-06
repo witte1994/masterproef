@@ -25,6 +25,11 @@ var modulesLarge = [
         "enum": "workflow"
     },
     {
+        "module": "checklist-element",
+        "title": "Checklist",
+        "enum": "checklist"
+    },
+    {
         "module": "telemonitoring-element",
         "title": "Telemonitoring",
         "enum": "tm"
