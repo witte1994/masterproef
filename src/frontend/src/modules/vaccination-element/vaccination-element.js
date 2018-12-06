@@ -2,6 +2,7 @@ import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import {BaseElement} from '../base-element.js'
 
 import '@polymer/iron-ajax/iron-ajax'
+import '@polymer/iron-icons/iron-icons'
 import '@polymer/paper-dialog/paper-dialog'
 import '@polymer/paper-input/paper-input'
 import '@polymer/paper-input/paper-textarea'
@@ -28,7 +29,13 @@ class VaccinationElement extends BaseElement {
                 .detailsGrid {
                     display: grid;
                     grid-template-rows: auto;
-                    grid-template-columns: 10px 100px auto;
+                    grid-template-columns: 20px 30px 110px auto;
+                }
+
+                .arrowIcon {
+                    height: 18px;
+                    width: 22px;
+                    margin-bottom: 2px;
                 }
 
                 paper-input {
@@ -205,6 +212,7 @@ class VaccinationElement extends BaseElement {
                                 </template>
                                 <div class="detailsGrid">
                                     <div></div>
+                                    <div><iron-icon class="arrowIcon" icon="arrow-forward"></iron-icon></div>
                                     <div>{{getDateString(entry.date)}}</div>
                                     <div>[[entry.description]]</div>
                                 </div>
@@ -233,7 +241,9 @@ class VaccinationElement extends BaseElement {
                                 </vaadin-list-box>
                             </template>
 
-                            [[item.name]]
+                            <div style="padding-left: 4px;">
+                                [[item.name]]
+                            </div>
                         </vaadin-context-menu>
                     </template>
                 </vaadin-grid-column>
