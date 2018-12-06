@@ -120,7 +120,7 @@ class PatientListElement extends PolymerElement {
             <h2>Import successful!</h2>
 
             <div>
-                <paper-button dialog-confirm>Continue</paper-button>
+                <paper-button dialog-confirm on-tap="loadPatients">Continue</paper-button>
             </div>
         </paper-dialog>
 
@@ -144,6 +144,10 @@ class PatientListElement extends PolymerElement {
     ready() {
         super.ready();
         
+        this.loadPatients();
+    }
+
+    loadPatients() {
         this.$.ajaxPatients.headers['authorization'] = "Bearer " + window.sessionStorage.accessToken;
         this.$.ajaxPatients.generateRequest();
     }
@@ -169,7 +173,6 @@ class PatientListElement extends PolymerElement {
 
     importSuccess() {
         this.$.importSuccess.open();
-        this.$.ajaxPatients.generateRequest();
     }
 
     importError() {

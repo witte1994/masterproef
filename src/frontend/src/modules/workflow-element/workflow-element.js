@@ -657,8 +657,6 @@ class WorkflowElement extends BaseElement {
         this.$.ajaxGetWorkflow.generateRequest();
     }
 
-
-
     getMinSizes() {
         return {
             width: "400px",
