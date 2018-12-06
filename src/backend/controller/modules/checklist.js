@@ -84,6 +84,22 @@ exports.update = (req, res, next) => {
         });
 };
 
+exports.reset_checklist = (req, res, next) => {
+    var checklistId = req.params.id;
+
+    Checklist.findOne({ _id: checklistId })
+        .populate("steps.substeps")
+        .exec()
+        .then(doc => {
+            console.log(doc);
+            res.status(200).json(doc);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ error: err });
+        });
+};
+
 exports.create_step = (req, res, next) => {
     var pId = req.originalUrl.split('/')[2];
     var cId = req.body.cId;

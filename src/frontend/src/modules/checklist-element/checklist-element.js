@@ -183,6 +183,15 @@ class ChecklistElement extends BaseElement {
                 last-response="{{checklist}}"
                 on-response="checklistReceived"
             ></iron-ajax>
+
+            <iron-ajax
+                id="ajaxResetChecklist"
+                url="http://localhost:3000/patient/[[pId]]/checklist/[[checklist._id]]/reset"
+                method="GET"
+                handle-as="json"
+                last-response="{{checklist}}"
+                on-response="checklistReceived"
+            ></iron-ajax>
         `;
     }
 
@@ -264,6 +273,17 @@ class ChecklistElement extends BaseElement {
                 <paper-button dialog-dismiss autofocus>Cancel</paper-button>
                 <paper-button dialog-confirm on-tap="deleteSubstepAction">Delete</paper-button>
             </paper-dialog>
+
+            <paper-dialog id="resetChecklistDialog">
+                <h2>Reset checklist</h2>
+                
+                <div>
+                    Are you sure you want to reset the checklist?
+                </div>
+
+                <paper-button dialog-dismiss autofocus>Cancel</paper-button>
+                <paper-button dialog-confirm on-tap="resetChecklist">Reset</paper-button>
+            </paper-dialog>
         `;
     }
 
@@ -335,6 +355,7 @@ class ChecklistElement extends BaseElement {
 
     static get dialogButtonTemplate() {
         return html`
+            <paper-icon-button title="Reset checklist" class="buttonsHeader" icon="refresh" on-tap="openDialog"></paper-icon-button>
         `;
     }
 
@@ -488,6 +509,10 @@ class ChecklistElement extends BaseElement {
     deleteSubstepAction(e) {
         this.$.ajaxDeleteSubstep.generateRequest();
     }
+
+    resetChecklist(e) {
+        this.$.ajaxResetChecklist.generateRequest();
+    }
     
     getMinSizes() {
         return {
@@ -497,7 +522,7 @@ class ChecklistElement extends BaseElement {
     }
 
     openDialog(e) {
-        this.$.openWorkflowDialog.open();
+        this.$.resetChecklistDialog.open();
     }
 }
 

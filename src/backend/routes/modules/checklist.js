@@ -6,8 +6,10 @@ const ChecklistController = require('../../controller/modules/checklist');
 
 router.get('/', checkAuth, ChecklistController.get_by_id);
 
+
 router.post('/update', ChecklistController.update);
 
+router.get('/:id/reset', ChecklistController.reset_checklist);
 router.post('/:id/create', ChecklistController.create_step);
 router.post('/:id/check', ChecklistController.check_step);
 router.post('/:id/update', ChecklistController.update_step);
