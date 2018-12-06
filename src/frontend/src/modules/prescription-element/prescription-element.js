@@ -26,13 +26,26 @@ class PrescriptionElement extends BaseElement {
             <style>
                 .detailsGrid {
                     display: grid;
-                    grid-template-rows: auto auto;
-                    grid-template-columns: 100px auto;
+                    grid-template-rows: auto auto auto;
+                    grid-template-columns: 38px 100px auto;
                 }
 
                 paper-input {
                     margin-top: 0px;
                     height: 50px;
+                }
+
+                .icon {
+                    height: 22px;
+                    width: 22px;
+                }
+
+                .green {
+                    color: #4CAF50;
+                }
+
+                .red {
+                    color: #E64A19;
                 }
             </style>
         `;
@@ -169,15 +182,20 @@ class PrescriptionElement extends BaseElement {
             <vaadin-grid theme="compact" on-active-item-changed="showDetails" id="vaadinGrid" style="height: 100%;" items="{{prescriptions}}">
                 <template class="row-details">
                     <div class="detailsGrid">
+                        <div></div>
                         <div><small>Description:</small></div>
                         <div><small>[[item.medication.description]]</small></div>
+                        <div></div>
                         <div><small>Side effects:</small></div>
                         <div><small>[[item.medication.sideEffects]]</small></div>
+                        <div></div>
+                        <div><small>Interacts with:</small></div>
+                        <div><small>{{getInteractionString(item.medication.interactsWith)}}</small></div>
                     </div>
                 </template>
 
-                <vaadin-grid-column width="36px" flex-grow="0">
-                    <template class="header"><iron-icon style="width: 20px; height: 20px;" icon="flag"></iron-icon></template>
+                <vaadin-grid-column width="38px" flex-grow="0">
+                    <template class="header"><iron-icon title="Interaction" style="width: 20px; height: 20px; color: #757575;" icon="flag"></iron-icon></template>
                     <template>
                         <vaadin-context-menu>
                             <template>
@@ -188,7 +206,9 @@ class PrescriptionElement extends BaseElement {
                                 </vaadin-list-box>
                             </template>
                             
-                            0
+                            <div>
+                                <iron-icon class$="icon {{getInteractionColor(item.medication)}}" title="{{getInteractionTitle(item.medication)}}" icon$="{{getInteractionIcon(item.medication)}}"></iron-icon>
+                            </div>
                         </vaadin-context-menu>
                     </template>
                 </vaadin-grid-column>
@@ -306,6 +326,53 @@ class PrescriptionElement extends BaseElement {
 
     sendUpdateSignal() {
         this.dispatchEvent(new CustomEvent("prescription", {bubbles: true, composed: true}));
+    }
+
+    getInteractionColor(medicine) {
+        if (this.interactionCheck(medicine.interactsWith).length == 0)
+            return "green";
+        return "red";
+    }
+
+    getInteractionTitle(medicine) {
+        var interactions = this.interactionCheck(medicine.interactsWith);
+        if (interactions.length == 0)
+            return "No interaction present.";
+
+        var str = "Interaction alert: " + this.getInteractionString(interactions);
+        return str;
+    }
+
+    getInteractionIcon(medicine) {
+        if (this.interactionCheck(medicine.interactsWith).length == 0)
+            return "check-circle";
+        return "report-problem";
+    }
+
+    getInteractionString(meds) {
+        var str = "";
+        for (var i = 0; i < meds.length; i++) {
+            str += meds[i];
+            if (i < meds.length - 1) 
+                str += ", ";
+        }
+
+        return str;
+    }
+
+    interactionCheck(interactingMeds) {
+        var foundInteractions = [];
+
+        for (var i = 0; i < this.prescriptions.length; i++) {
+            for (var j = 0; j < interactingMeds.length; j++) {
+                if (this.prescriptions[i].medication.name == interactingMeds[j])
+                    foundInteractions.push(interactingMeds[j]);
+            }
+        }
+
+        return foundInteractions.filter(function(item, pos) {
+            return foundInteractions.indexOf(item) == pos;
+        });
     }
 
     dateSelected(e) {

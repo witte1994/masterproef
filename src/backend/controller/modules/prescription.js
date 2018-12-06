@@ -110,6 +110,7 @@ exports.get_all_by_date = (req, res, next) => {
         ])
         .exec()
         .then(doc => {
+            
             console.log(doc);
             res.status(200).json(doc);
         })

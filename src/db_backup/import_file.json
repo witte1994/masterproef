@@ -1,8 +1,8 @@
 [
     {
         "info": {
-            "firstName": "Jenny",
-            "lastName": "Johnson",
+            "firstName": "Bert",
+            "lastName": "Jansen",
             "nid": "15898435",
             "birth": "1992-04-22T07:20:00",
             "gender": "F",
@@ -57,12 +57,23 @@
                 {
                     "name": "testmed1",
                     "description": "description of med 1",
-                    "sideEffects": "side effects"
+                    "sideEffects": "side effects",
+                    "interactsWith": [
+                        "med2"
+                    ]
                 },
                 {
                     "name": "med2",
                     "description": "med2",
-                    "sideEffects": "side effects 222"
+                    "sideEffects": "side effects 222",
+                    "interactsWith": [
+                        "testmed1"
+                    ]
+                },
+                {
+                    "name": "no interact",
+                    "description": "no interact",
+                    "sideEffects": "interacio"
                 }
             ],
             "prescriptions": [
@@ -74,8 +85,19 @@
                         "evening": "1",
                         "bed": "1"
                     },
-                    "startDate": "2018-08-08T07:20:00",
-                    "endDate": "2018-08-14T07:20:00"
+                    "startDate": "2018-12-01T07:20:00",
+                    "endDate": "2018-12-19T07:20:00"
+                },
+                {
+                    "medName": "testmed1",
+                    "dosage": {
+                        "morning": "0",
+                        "noon": "0",
+                        "evening": "1",
+                        "bed": "2"
+                    },
+                    "startDate": "2018-12-04T07:20:00",
+                    "endDate": "2018-12-17T07:20:00"
                 }
             ]
         }

@@ -54,11 +54,16 @@ exports.importPrescriptions = function (pId, values) {
 }
 
 function importMedication(info) {
+    var interactsWith = []
+    if (info.interactsWith != undefined)
+        interactsWith = info.interactsWith;
+
     const medication = new Medication({
         _id: mongoose.Types.ObjectId(),
         name: info.name,
         description: info.description,
-        sideEffects: info.sideEffects
+        sideEffects: info.sideEffects,
+        interactsWith: interactsWith
     });
     medication
         .save()

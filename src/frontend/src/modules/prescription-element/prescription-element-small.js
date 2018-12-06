@@ -12,7 +12,19 @@ import '@vaadin/vaadin-grid/vaadin-grid';
 class PrescriptionElementSmall extends BaseElementSmall {
     static get cssTemplate() {
         return html`
-            <style >
+            <style>
+                .icon {
+                    height: 22px;
+                    width: 22px;
+                }
+
+                .green {
+                    color: #4CAF50;
+                }
+
+                .red {
+                    color: #E64A19;
+                }
             </style>
         `;
     }
@@ -32,7 +44,15 @@ class PrescriptionElementSmall extends BaseElementSmall {
     static get contentTemplate() {
         return html`
             <vaadin-grid theme="compact" id="vaadinGrid" style="height: 100%;" items="{{prescriptions}}">
-                <vaadin-grid-column width="160px">
+                <vaadin-grid-column width="38px" flex-grow="0">
+                    <template class="header"><iron-icon title="Interaction" style="width: 20px; height: 20px; color: #757575;" icon="flag"></iron-icon></template>
+                    <template>
+                        <div>
+                            <iron-icon class$="icon {{getInteractionColor(item.medication)}}" title="{{getInteractionTitle(item.medication)}}" icon$="{{getInteractionIcon(item.medication)}}"></iron-icon>
+                        </div>
+                    </template>
+                </vaadin-grid-column>
+                <vaadin-grid-column width="122px">
                     <template class="header">
                         Medicine
                     </template>
@@ -65,8 +85,55 @@ class PrescriptionElementSmall extends BaseElementSmall {
         this.update();
     }
 
+    getInteractionColor(medicine) {
+        if (this.interactionCheck(medicine.interactsWith).length == 0)
+            return "green";
+        return "red";
+    }
+
+    getInteractionTitle(medicine) {
+        var interactions = this.interactionCheck(medicine.interactsWith);
+        if (interactions.length == 0)
+            return "No interaction present.";
+
+        var str = "Interaction alert: " + this.getInteractionString(interactions);
+        return str;
+    }
+
+    getInteractionIcon(medicine) {
+        if (this.interactionCheck(medicine.interactsWith).length == 0)
+            return "check-circle";
+        return "report-problem";
+    }
+
+    getInteractionString(meds) {
+        var str = "";
+        for (var i = 0; i < meds.length; i++) {
+            str += meds[i];
+            if (i < meds.length - 1) 
+                str += ", ";
+        }
+
+        return str;
+    }
+
+    interactionCheck(interactingMeds) {
+        var foundInteractions = [];
+
+        for (var i = 0; i < this.prescriptions.length; i++) {
+            for (var j = 0; j < interactingMeds.length; j++) {
+                if (this.prescriptions[i].medication.name == interactingMeds[j])
+                    foundInteractions.push(interactingMeds[j]);
+            }
+        }
+
+        return foundInteractions.filter(function(item, pos) {
+            return foundInteractions.indexOf(item) == pos;
+        });
+    }
+
     getMinHeight() {
-        return "200px";
+        return "140px";
     }
 
     update(e) {

@@ -15,7 +15,10 @@ const medicationSchema = mongoose.Schema({
     sideEffects: {
         type: String,
         required: true
-    }
+    },
+    interactsWith: [{
+        type: String
+    }]
 });
 
 module.exports = mongoose.model('Medication', medicationSchema);
