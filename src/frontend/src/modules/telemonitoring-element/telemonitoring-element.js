@@ -72,7 +72,7 @@ class TelemonitoringElement extends BaseElement {
 
                 <div class="twoCol">
                     <div>Parameters:</div>
-                    <div>Plot y-axis? (max 2.)</div>
+                    <div>Plot y-axis?</div>
                 </div>
                 
                 <div>
@@ -112,7 +112,7 @@ class TelemonitoringElement extends BaseElement {
                     <div id="dateInner">
                         <vaadin-date-picker theme="small" id="startDate" placeholder="Start date" on-value-changed="loadData">
                         </vaadin-date-picker>
-                        <paper-icon-button icon="refresh"></paper-icon-button>
+                        <paper-icon-button icon="refresh" on-tap="redrawChart"></paper-icon-button>
                         <vaadin-date-picker theme="small" id="endDate" placeholder="End date" on-value-changed="loadData">
                         </vaadin-date-picker>
                     </div>
@@ -130,8 +130,6 @@ class TelemonitoringElement extends BaseElement {
 
     ready() {
         super.ready();
-
-        this.resizeSensor = null;
 
         this.selectedParams = [];
         this.selectedAxis = [];
@@ -309,25 +307,28 @@ class TelemonitoringElement extends BaseElement {
         var chart = this.chart;
         var parent = this.parentNode;
         var resizeTimeout;
-        if (this.resizeSensor == null) {
-            this.resizeSensor = new ResizeSensor(this.$.cardId, function () {
-                clearTimeout(resizeTimeout);
-                resizeTimeout = setTimeout(function() {
-                    var parBounds = parent.getBoundingClientRect();
-    
-                    var chartWidth = parBounds.width - 16;
-                    var chartHeight = parBounds.height - 102;
-    
-                    chart.resize({ width: chartWidth, height: chartHeight});
-                }, 100);
-            });
-        }
+
+        new ResizeSensor(this.$.cardId, function () {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(function() {
+                var parBounds = parent.getBoundingClientRect();
+
+                var chartWidth = parBounds.width - 16;
+                var chartHeight = parBounds.height - 102;
+
+                chart.resize({ width: chartWidth, height: chartHeight});
+            }, 100);
+        });
 
         // initial resize
-        var parBounds = parent.getBoundingClientRect();
+        this.redrawChart();
+    }
+
+    redrawChart() {
+        var parBounds = this.parentNode.getBoundingClientRect();
         var chartWidth = parBounds.width - 16;
         var chartHeight = parBounds.height - 102;
-        chart.resize({ width: chartWidth, height: chartHeight});
+        this.chart.resize({ width: chartWidth, height: chartHeight});
     }
 
     loadChartData() {
@@ -402,6 +403,22 @@ class TelemonitoringElement extends BaseElement {
     }
 
     paramSelected(e) {
+        var checkedCount = 0;
+
+        for (var i = 0; i < this.paramChecks.length; i++) {
+            if (this.paramChecks[i].checked) checkedCount++;
+        }
+
+        if (checkedCount == 2) {
+            for (var i = 0; i < this.paramChecks.length; i++) {
+                if (!this.paramChecks[i].checked) this.paramChecks[i].disabled = true
+            }
+        } else if (checkedCount < 2) {
+            for (var i = 0; i < this.paramChecks.length; i++) {
+                if (!this.paramChecks[i].checked) this.paramChecks[i].disabled = false
+            }
+        }
+
         var id = e.srcElement.id;
         var checked = e.srcElement.checked;
         var axisElement;

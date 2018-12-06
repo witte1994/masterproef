@@ -62,7 +62,7 @@ class VaccinationElementSmall extends BaseElementSmall {
     }
 
     getMinHeight() {
-        return "200px";
+        return "140px";
     }
 
     update(e) {
