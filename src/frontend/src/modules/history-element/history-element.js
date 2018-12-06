@@ -2,6 +2,7 @@ import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import {BaseElement} from '../base-element.js';
 
 import '@polymer/iron-ajax/iron-ajax';
+import '@polymer/iron-icons/iron-icons';
 import '@polymer/paper-dialog/paper-dialog';
 import '@polymer/paper-input/paper-input';
 import '@polymer/paper-dropdown-menu/paper-dropdown-menu';
@@ -30,6 +31,26 @@ class HistoryElement extends BaseElement {
                 paper-input {
                     margin-top: 0px;
                     height: 50px;
+                }
+
+                .create {
+                    color: #4CAF50;
+                }
+
+                .update {
+                    color: #FFD600;
+                }
+
+                .delete {
+                    color: #E64A19;
+                }
+
+                .import {
+                    color: #1E88E5;
+                }
+
+                .other {
+                    color: #757575;
                 }
             </style>
         `;
@@ -132,6 +153,14 @@ class HistoryElement extends BaseElement {
                     <template>{{getTimeString(item.date)}}</template>
                 </vaadin-grid-column>
 
+                <vaadin-grid-column width="40px" flex-grow="0">
+                    <template>
+                        <div>
+                            <iron-icon class$="[[item.operation]]" title$="[[item.operation]]" icon$="{{getOperationIcon(item.operation)}}"></iron-icon>
+                        </div>
+                    </template>
+                </vaadin-grid-column>
+
                 <vaadin-grid-column width="100px">
                     <template class="header">
                         Module
@@ -139,12 +168,7 @@ class HistoryElement extends BaseElement {
                     <template>[[item.srcElement]]</template>
                 </vaadin-grid-column>
 
-                <vaadin-grid-column width="80px">
-                    <template class="header">
-                        Operation
-                    </template>
-                    <template>[[item.operation]]</template>
-                </vaadin-grid-column>
+                
             </vaadin-grid>
         `;
     }
@@ -164,6 +188,9 @@ class HistoryElement extends BaseElement {
     ready() {
         super.ready();
 
+        this.settingsBody = {};
+        this.settingsBody.isEmpty = true;
+
         this.setDateFormats(this.$.startDate);
         this.setDateFormats(this.$.endDate);
 
@@ -176,12 +203,20 @@ class HistoryElement extends BaseElement {
             var dim = contentDiv.getBoundingClientRect();
             var width = dim.right - dim.left;
 
-            if (width > 384) {
+            if (width > 304) {
                 timeCol.hidden = false;
             } else {
                 timeCol.hidden = true;
             }
         });
+
+        var dim = contentDiv.getBoundingClientRect();
+        var width = dim.right - dim.left;
+        if (width > 304) {
+            timeCol.hidden = false;
+        } else {
+            timeCol.hidden = true;
+        }
 
         this.update();
     }
@@ -197,9 +232,22 @@ class HistoryElement extends BaseElement {
 
     getMinSizes() {
         return {
-            width: "324px",
+            width: "284px",
             height: "300px"
         };
+    }
+
+    getOperationIcon(operation) {
+        if (operation == "create")
+            return "add-circle";
+        if (operation == "update")
+            return "info";
+        if (operation == "delete")
+            return "remove-circle";
+        if (operation == "import")
+            return "offline-pin";
+
+        return "help";
     }
 
     openDialog(e) {
@@ -269,8 +317,25 @@ class HistoryElement extends BaseElement {
             "operations": operations
         };
 
+        this.settingsBody = body;
+        this.settingsBody.isEmpty = false;
+
         this.$.ajaxHistoryByFilter.body = body;
         this.$.ajaxHistoryByFilter.generateRequest();
+    }
+
+    getSettings() {
+        console.log(this.settingsBody);
+        return this.settingsBody;
+    }
+
+    loadSettings(settings) {
+        this.settingsBody = settings;
+
+        if (!settings.isEmpty) {
+            this.$.ajaxHistoryByFilter.body = settings;
+            this.$.ajaxHistoryByFilter.generateRequest();
+        }       
     }
 }
 

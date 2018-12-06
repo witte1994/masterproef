@@ -192,7 +192,7 @@ class AllergyElement extends BaseElement {
                 </template>
 
                 <vaadin-grid-column width="36px" flex-grow="0">
-                    <template class="header"><iron-icon style="width: 20px; height: 20px;" icon="flag"></iron-icon></template>
+                    <template class="header"><iron-icon title="Severity" style="width: 20px; height: 20px;" icon="flag"></iron-icon></template>
                     <template>
                         <vaadin-context-menu>
                             <template>
