@@ -325,7 +325,6 @@ class HistoryElement extends BaseElement {
     }
 
     getSettings() {
-        console.log(this.settingsBody);
         return this.settingsBody;
     }
 
