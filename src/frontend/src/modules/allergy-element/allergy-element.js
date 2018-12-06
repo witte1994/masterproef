@@ -30,6 +30,29 @@ class AllergyElement extends BaseElement {
                     grid-template-columns: 100px auto;
                 }
 
+                .circle {
+                    height: 20px;
+                    width: 20px;
+                    border-radius: 50%;
+                    display: inline-block;
+                    text-align: center;
+                    line-height: 20px;
+                    border-style: solid;
+                    border-width: 1px;
+                }
+
+                .yellow {
+                    background-color: #FFEA00;
+                }
+
+                .orange {
+                    background-color: #FFA000;
+                }
+
+                .red {
+                    background-color: #E64A19;
+                }
+
                 paper-input {
                     margin-top: 0px;
                     height: 50px;
@@ -95,11 +118,11 @@ class AllergyElement extends BaseElement {
                 <div>
                     <paper-dropdown-menu label="Severity" id="severityList">
                         <paper-listbox slot="dropdown-content" selected="0">
-                            <paper-item value="0">0</paper-item>
-                            <paper-item value="1">1</paper-item>
-                            <paper-item value="2">2</paper-item>
-                            <paper-item value="3">3</paper-item>
-                            <paper-item value="4">4</paper-item>
+                            <paper-item value="0">1</paper-item>
+                            <paper-item value="1">2</paper-item>
+                            <paper-item value="2">3</paper-item>
+                            <paper-item value="3">4</paper-item>
+                            <paper-item value="4">5</paper-item>
                         </paper-listbox>
                     </paper-dropdown-menu>
                 </div>
@@ -124,11 +147,11 @@ class AllergyElement extends BaseElement {
                 <div>
                     <paper-dropdown-menu label="Severity" id="severityListUpdate">
                         <paper-listbox id="severityListboxUpdate" slot="dropdown-content" selected="0">
-                            <paper-item value="0">0</paper-item>
-                            <paper-item value="1">1</paper-item>
-                            <paper-item value="2">2</paper-item>
-                            <paper-item value="3">3</paper-item>
-                            <paper-item value="4">4</paper-item>
+                            <paper-item value="0">1</paper-item>
+                            <paper-item value="1">2</paper-item>
+                            <paper-item value="2">3</paper-item>
+                            <paper-item value="3">4</paper-item>
+                            <paper-item value="4">5</paper-item>
                         </paper-listbox>
                     </paper-dropdown-menu>
                 </div>
@@ -180,7 +203,9 @@ class AllergyElement extends BaseElement {
                                 </vaadin-list-box>
                             </template>
 
-                            [[item.severity]]
+                            <div class$="circle {{getSeverityColor(item.severity)}}">
+                                {{incrementSeverity(item.severity)}}
+                            </div>
                         </vaadin-context-menu>
                     </template>
                 </vaadin-grid-column>
@@ -335,6 +360,20 @@ class AllergyElement extends BaseElement {
     deleteAllergy(e) {
         this.deleteId = this.curObj._id;
         this.$.ajaxDeleteAllergy.generateRequest();
+    }
+
+    incrementSeverity(severity) {
+        return severity + 1;
+    }
+
+    getSeverityColor(severity) {
+        if (severity == 0 || severity == 1) {
+            return "yellow";
+        } 
+        if (severity == 2 || severity == 3) {
+            return "orange";
+        }
+        return "red";
     }
 
     getMinSizes() {
