@@ -42,6 +42,9 @@ class ChecklistElement extends BaseElement {
                 .stepRow {
                     display: grid;
                     grid-template-columns: auto;
+                    margin-top: 8px;
+                    margin-bottom: 8px;
+                    font-size: 16px;
                 }
 
                 .striked {
@@ -51,8 +54,8 @@ class ChecklistElement extends BaseElement {
                 .substepRow {
                     display: grid;
                     grid-template-columns: 34px auto;
-                    margin-top: 4px;
-                    margin-bottom: 4px;
+                    margin-bottom: 6px;
+                    font-size: 14px;
                 }
 
                 .circle {
