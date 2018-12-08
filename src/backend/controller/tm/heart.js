@@ -12,6 +12,17 @@ exports.getByDate = async function (start, end, pId) {
     return result;
 }
 
+exports.getAvailability = async function (pId) {
+    const query = Heart.find({ patient: pId });
+
+    const result = await query.exec();
+
+    if (result.length == 0)
+        return false;
+    else
+        return true;
+}
+
 exports.importValues = function (pId, values) {
     for (var i = 0; i < values.length; i++) {
         const heart = new Heart({

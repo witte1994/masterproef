@@ -62,6 +62,15 @@ class TelemonitoringElement extends BaseElement {
                 content-type="application/json"
                 on-response="dataReceived"
             ></iron-ajax>
+
+            <iron-ajax
+                auto
+                id="ajaxGetAvailableParams"
+                url="http://localhost:3000/patient/[[pId]]/tm/available"
+                method="GET"
+                handle-as="json"
+                last-response="{{availableParams}}"
+            ></iron-ajax>
         `;
     }
 
@@ -76,23 +85,23 @@ class TelemonitoringElement extends BaseElement {
                 </div>
                 
                 <div>
-                    <div class="twoCol">
+                    <div class="twoCol" style="{{boolToDisplay(availableParams.bp)}}">
                         <paper-checkbox id="bpCheck" on-tap="paramSelected" value="bp">Blood pressure</paper-checkbox>
                         <paper-checkbox id="bpAxis" style="display:none;" on-tap="axisSelected" value="bp"></paper-checkbox>
                     </div>
-                    <div class="twoCol">
+                    <div class="twoCol" style="{{boolToDisplay(availableParams.bs)}}">
                         <paper-checkbox id="bsCheck" on-tap="paramSelected" value="bs">Blood sugar</paper-checkbox>
                         <paper-checkbox id="bsAxis" style="display:none;" on-tap="axisSelected" value="bs"></paper-checkbox>
                     </div>
-                    <div class="twoCol">
+                    <div class="twoCol" style="{{boolToDisplay(availableParams.hr)}}">
                         <paper-checkbox id="hrCheck" on-tap="paramSelected" value="hr">Heart rate</paper-checkbox>
                         <paper-checkbox id="hrAxis" style="display:none;" on-tap="axisSelected" value="hr"></paper-checkbox>
                     </div>
-                    <div class="twoCol">
+                    <div class="twoCol" style="{{boolToDisplay(availableParams.oxygen)}}">
                         <paper-checkbox id="oxygenCheck" on-tap="paramSelected" value="oxygen">Blood oxygen</paper-checkbox>
                         <paper-checkbox id="oxygenAxis" style="display:none;" on-tap="axisSelected" value="oxygen"></paper-checkbox>
                     </div>
-                    <div class="twoCol">
+                    <div class="twoCol" style="{{boolToDisplay(availableParams.weight)}}">
                         <paper-checkbox id="weightCheck" on-tap="paramSelected" value="weight">Weight</paper-checkbox>
                         <paper-checkbox id="weightAxis" style="display:none;" on-tap="axisSelected" value="weight"></paper-checkbox>
                     </div>
@@ -134,6 +143,14 @@ class TelemonitoringElement extends BaseElement {
         this.selectedParams = [];
         this.selectedAxis = [];
 
+        this.availableParams = {
+            'bp': false,
+            'bs': false,
+            'hr': false,
+            'oxygen': false,
+            'weight': false
+        }
+
         this.paramChecks = [
             this.$.bpCheck,
             this.$.bsCheck,
@@ -160,6 +177,13 @@ class TelemonitoringElement extends BaseElement {
 
         this.title = "Telemonitoring";
         this.dispatchEvent(new CustomEvent("size", {bubbles: true, composed: true, detail: this.getMinSizes() }));
+    }
+
+    boolToDisplay(available) {
+        if (!available)
+            return "display: none;";
+        else
+            return "";
     }
 
     selectData() {
@@ -251,7 +275,12 @@ class TelemonitoringElement extends BaseElement {
             },
             data: {
                 xFormat: '%d/%m/%Y',
-                columns: []
+                columns: [],
+                empty: {
+                    label: {
+                        text: 'No data available for selected time period'
+                    }
+                }
             },
             axis: {
                 x: {
@@ -383,6 +412,10 @@ class TelemonitoringElement extends BaseElement {
     }
 
     loadParamData(data) {
+        if (data.values.length == 0) {
+            return;
+        }
+
         var col = [data.param];
         var colDate = [('date'+data.param)];
 

@@ -50,3 +50,23 @@ exports.get_data = async (req, res, next) => {
         values
     });
 };
+
+exports.get_available_params = async (req, res, next) => {
+    var pId = req.originalUrl.split('/')[2];
+
+    var availability = {
+        'bp': false,
+        'bs': false,
+        'hr': false,
+        'oxygen': false,
+        'weight': false
+    };
+
+    availability.bp = await BPController.getAvailability(pId);
+    availability.bs = await BSController.getAvailability(pId);
+    availability.hr = await HeartController.getAvailability(pId);
+    availability.oxygen = await OxygenController.getAvailability(pId);
+    availability.weight = await WeightController.getAvailability(pId);
+
+    res.status(201).json(availability);
+};
