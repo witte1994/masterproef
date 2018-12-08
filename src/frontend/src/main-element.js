@@ -4,7 +4,7 @@ import './shared-styles.js';
 
 import '../node_modules/packery/dist/packery.pkgd.min.js';
 import '../node_modules/draggabilly/dist/draggabilly.pkgd.js';
-import '../node_modules/css-element-queries/src/ResizeSensor.js';
+import 'interactjs/dist/interact';
 
 import '@polymer/app-layout/app-layout';
 import '@polymer/paper-icon-button/paper-icon-button';
@@ -80,16 +80,6 @@ class MainElement extends PolymerElement {
 				margin-left: 8px;
 				margin-right: 8px;
 				margin-bottom: 2px;
-			}
-
-			.resizeDiv {
-				resize: both;
-    			overflow: auto;
-			}
-
-			.resizeDivVert {
-				resize: vertical;
-				overflow: auto;
 			}
 
 			.containerGrid {
@@ -225,7 +215,6 @@ class MainElement extends PolymerElement {
                         <app-toolbar>
                             <paper-icon-button title="Open summary panel" icon="menu" drawer-toggle></paper-icon-button>
                             <div main-title>Dashboard</div>
-                            <paper-icon-button title="Save layout" icon="save" on-tap="saveLayout"></paper-icon-button>
                             <paper-icon-button title="Add module" icon="add" on-tap="openModuleDialog"></paper-icon-button>
                             <paper-icon-button title="Log out" icon="power-settings-new" style="margin-left: 20px;" on-tap="logout"></paper-icon-button>
                         </app-toolbar>
@@ -270,6 +259,8 @@ class MainElement extends PolymerElement {
         
             this.loadPatientPage();
         });
+
+        
     }
 
     login() {
@@ -454,13 +445,14 @@ class MainElement extends PolymerElement {
         parentDiv.classList.add("containerGrid");
     
         if (!this.onMainGrid) {
+            this.setResizeSmall(parentDiv);
             parentDiv.classList.add("resizeDivVert");
             parentDiv.style.minWidth = "100%";
             parentDiv.addEventListener("sizeSmall", function (e) {
                 parentDiv.style.minHeight = e.detail;
             });
         } else {
-            parentDiv.classList.add("resizeDiv");
+            this.setResizeMain(parentDiv);
             parentDiv.addEventListener("size", function (e) {
                 parentDiv.style.minWidth = e.detail.width;
                 parentDiv.style.minHeight = e.detail.height;
@@ -476,6 +468,54 @@ class MainElement extends PolymerElement {
         this.addListeners(parentDiv, newModule);
     
         return parentDiv;
+    }
+
+    setResizeSmall(parentDiv) {
+        var pckrySmall = this.pckrySmall;
+        var outerThis = this;
+        interact(parentDiv)
+            .resizable({
+                preserveAspectRatio: false,
+                edges: { left: false, right: false, bottom: true, top: false }
+            })
+            .on('resizemove', function (event) {
+                var target = event.target;
+
+                var newHeight = (event.rect.height - event.rect.height % 20) + 'px';
+
+                if (target.style.height != newHeight) {
+                    target.style.height = newHeight;
+                    pckrySmall.shiftLayout();
+                }
+            })
+            .on('resizeend', function (event) {
+                outerThis.saveLayout();
+            });
+    }
+
+    setResizeMain(parentDiv) {
+        var pckryMain = this.pckryMain;
+        var outerThis = this;
+        interact(parentDiv)
+            .resizable({
+                preserveAspectRatio: false,
+                edges: { left: false, right: true, bottom: true, top: false }
+            })
+            .on('resizemove', function (event) {
+                var target = event.target;
+
+                var newWidth = (event.rect.width - event.rect.width % 20) + 'px';
+                var newHeight = (event.rect.height - event.rect.height % 20) + 'px';
+
+                if (target.style.width != newWidth || target.style.height != newHeight) {
+                    target.style.width  = newWidth;
+                    target.style.height = newHeight;
+                    pckryMain.shiftLayout();
+                }
+            })
+            .on('resizeend', function (event) {
+                outerThis.saveLayout();
+            });
     }
 
     addContainerToGrid(container) {
@@ -508,17 +548,6 @@ class MainElement extends PolymerElement {
         var outerThis = this;
         mod.addEventListener(updateStr, function (e) {
             outerThis.broadcastUpdate(updateStr);
-        });
-    
-        var tarPackery = this.getTargetPackery();
-
-        var resizeTimeout;
-        new ResizeSensor(parent, function () {
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(function() {
-                tarPackery.shiftLayout();
-            }, 100);
-            
         });
     }
 
