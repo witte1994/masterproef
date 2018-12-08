@@ -462,7 +462,11 @@ class MainElement extends PolymerElement {
                 parentDiv.style.minHeight = e.detail;
             });
         } else {
-            this.setResizeMain(parentDiv);
+            if (moduleName == "telemonitoring-element" || moduleName == "history-element")
+                this.setResizeSpecial(parentDiv, newModule);
+            else
+                this.setResizeMain(parentDiv);
+            
             parentDiv.addEventListener("size", function (e) {
                 parentDiv.style.minWidth = e.detail.width;
                 parentDiv.style.minHeight = e.detail.height;
@@ -516,10 +520,36 @@ class MainElement extends PolymerElement {
 
                 var newWidth = (event.rect.width - event.rect.width % 20) + 'px';
                 var newHeight = (event.rect.height - event.rect.height % 20) + 'px';
-
+                
                 if (target.style.width != newWidth || target.style.height != newHeight) {
                     target.style.width  = newWidth;
                     target.style.height = newHeight;
+                    pckryMain.shiftLayout();
+                }
+            })
+            .on('resizeend', function (event) {
+                outerThis.saveLayout();
+            });
+    }
+
+    setResizeSpecial(parentDiv, newModule) {
+        var pckryMain = this.pckryMain;
+        var outerThis = this;
+        interact(parentDiv)
+            .resizable({
+                preserveAspectRatio: false,
+                edges: { left: false, right: true, bottom: true, top: false }
+            })
+            .on('resizemove', function (event) {
+                var target = event.target;
+
+                var newWidth = (event.rect.width - event.rect.width % 20) + 'px';
+                var newHeight = (event.rect.height - event.rect.height % 20) + 'px';
+                
+                if (target.style.width != newWidth || target.style.height != newHeight) {
+                    target.style.width  = newWidth;
+                    target.style.height = newHeight;
+                    newModule.resizeElement();
                     pckryMain.shiftLayout();
                 }
             })

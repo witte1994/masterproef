@@ -1,8 +1,6 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import {BaseElement} from '../base-element.js'
 
-import '/node_modules/css-element-queries/src/ResizeSensor.js';
-
 import moment from 'moment/src/moment';
 
 import '@polymer/iron-ajax/iron-ajax'
@@ -121,7 +119,7 @@ class TelemonitoringElement extends BaseElement {
                     <div id="dateInner">
                         <vaadin-date-picker theme="small" id="startDate" placeholder="Start date" on-value-changed="loadData">
                         </vaadin-date-picker>
-                        <paper-icon-button icon="refresh" on-tap="redrawChart"></paper-icon-button>
+                        <paper-icon-button icon="refresh" on-tap="resizeElement"></paper-icon-button>
                         <vaadin-date-picker theme="small" id="endDate" placeholder="End date" on-value-changed="loadData">
                         </vaadin-date-picker>
                     </div>
@@ -340,27 +338,10 @@ class TelemonitoringElement extends BaseElement {
             }
         });
 
-        var chart = this.chart;
-        var parent = this.parentNode;
-        var resizeTimeout;
-
-        new ResizeSensor(this.$.cardId, function () {
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(function() {
-                var parBounds = parent.getBoundingClientRect();
-
-                var chartWidth = parBounds.width - 16;
-                var chartHeight = parBounds.height - 102;
-
-                chart.resize({ width: chartWidth, height: chartHeight});
-            }, 100);
-        });
-
-        // initial resize
-        this.redrawChart();
+        this.resizeElement();
     }
 
-    redrawChart() {
+    resizeElement() {
         var parBounds = this.parentNode.getBoundingClientRect();
         var chartWidth = parBounds.width - 16;
         var chartHeight = parBounds.height - 102;

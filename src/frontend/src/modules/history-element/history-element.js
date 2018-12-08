@@ -197,32 +197,22 @@ class HistoryElement extends BaseElement {
         this.title = "Patient Data History";
         this.dispatchEvent(new CustomEvent("size", {bubbles: true, composed: true, detail: this.getMinSizes() }));
 
-        var contentDiv = this.$.content;
-        var timeCol = this.$.timeCol;
-        new ResizeSensor(this.$.content, function() {
-            var dim = contentDiv.getBoundingClientRect();
-            var width = dim.right - dim.left;
-
-            if (width > 304) {
-                timeCol.hidden = false;
-            } else {
-                timeCol.hidden = true;
-            }
-        });
-
-        var dim = contentDiv.getBoundingClientRect();
-        var width = dim.right - dim.left;
-        if (width > 304) {
-            timeCol.hidden = false;
-        } else {
-            timeCol.hidden = true;
-        }
-
         this.update();
     }
 
     update(e) {
         this.$.ajaxHistory.generateRequest();
+    }
+
+    resizeElement() {
+        var dim = this.$.content.getBoundingClientRect();
+        var width = dim.right - dim.left;
+
+        if (width > 304) {
+            this.$.timeCol.hidden = false;
+        } else {
+            this.$.timeCol.hidden = true;
+        }
     }
 
     showDetails(e) {
