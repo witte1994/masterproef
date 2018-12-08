@@ -84,21 +84,51 @@ exports.update = (req, res, next) => {
         });
 };
 
-exports.reset_checklist = (req, res, next) => {
+exports.reset_checklist = async (req, res, next) => {
     var checklistId = req.params.id;
 
-    Checklist.findOne({ _id: checklistId })
-        .populate("steps.substeps")
-        .exec()
-        .then(doc => {
-            console.log(doc);
-            res.status(200).json(doc);
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({ error: err });
-        });
+    const query =  Checklist.findOne({ _id: checklistId })
+        .populate("steps.substeps");
+
+    const result = await query.exec();
+
+    for (var i = 0; i < result.steps.length; i++) {
+        await resetStep(result._id, result.steps[i]);
+    }
+
+    var resetResult = await query.exec();
+
+    console.log(resetResult);
+    res.status(200).json(resetResult);
 };
+
+async function resetStep(checklistId, step) {
+    const query = Checklist.findOneAndUpdate({ "_id": checklistId, "steps._id": step._id  },
+        {
+            $set: { "steps.$.checked": false }
+        },
+        { new: true });
+
+    const result = await query.exec();
+
+    for (var i = 0; i < step.substeps.length; i++) {
+        await resetSubstep(step.substeps[i]._id);
+    }
+}
+
+async function resetSubstep(substepId) {
+    const query = ChecklistSubstep.findOneAndUpdate({ "_id": substepId },
+        {
+            checked: false
+        },
+        {
+            new: true
+        });
+
+    const result = await query.exec();
+
+    return;
+}
 
 exports.create_step = (req, res, next) => {
     var pId = req.originalUrl.split('/')[2];

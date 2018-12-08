@@ -57,32 +57,6 @@ class ChecklistElement extends BaseElement {
                     margin-bottom: 6px;
                     font-size: 14px;
                 }
-
-                .circle {
-                    height: 28px;
-                    width: 28px;
-                    background-color: #1E88E5;
-                    color: white;
-                    border-radius: 50%;
-                    display: inline-block;
-                    text-align: center;
-                    line-height: 28px;
-                }
-                .circleSmall {
-                    height: 24px;
-                    width: 24px;
-                    background-color: #1E88E5;
-                    color: white;
-                    border-radius: 50%;
-                    display: inline-block;
-                    text-align: center;
-                    line-height: 24px;
-                    font-weight: bold;
-                }
-
-                .substeps {
-                    margin-bottom: 8px;
-                }
             </style>
         `;
     }
