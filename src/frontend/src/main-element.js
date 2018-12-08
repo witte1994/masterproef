@@ -238,16 +238,23 @@ class MainElement extends PolymerElement {
         super.ready();
         this.onMainGrid = true;
 
+        var outerThis = this;
         this.pckryMain = new Packery( this.$.mainGrid, {
             itemSelector: '.grid-item',
             columnWidth: 20,
             transitionDuration: 0
+        });
+        this.pckryMain.on('dragItemPositioned', function(e) {
+            outerThis.saveLayout();
         });
 
         this.pckrySmall = new Packery( this.$.smallGrid, {
             itemSelector: '.grid-item',
             columnWidth: 20,
             transitionDuration: 0
+        });
+        this.pckrySmall.on('dragItemPositioned', function(e) {
+            outerThis.saveLayout();
         });
 
         this.addEventListener('patient-click', function (e) {
@@ -434,6 +441,7 @@ class MainElement extends PolymerElement {
 
         var container = this.createModuleContainer(moduleName);
         this.addContainerToGrid(container);
+        this.saveLayout();
     }
 
     createModuleContainer(moduleName) {
@@ -539,6 +547,7 @@ class MainElement extends PolymerElement {
     
         var container = this.createModuleContainer(moduleName);
         this.addContainerToGrid(container);
+        this.saveLayout();
     }
 
     addListeners(parent, mod) {
@@ -577,9 +586,11 @@ class MainElement extends PolymerElement {
     addRemoveListener(parent, mod) {
         var tarPackery = this.getTargetPackery();
     
+        var outerThis = this;
         mod.addEventListener('delete', function (e) {
             tarPackery.remove(parent);
             tarPackery.shiftLayout();
+            outerThis.saveLayout();
         });
     }
 

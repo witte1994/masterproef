@@ -210,7 +210,7 @@ class AllergyElement extends BaseElement {
                     </template>
                 </vaadin-grid-column>
 
-                <vaadin-grid-column width="160px">
+                <vaadin-grid-column width="150px">
                     <template class="header">
                         <vaadin-grid-sorter path="name">
                             <vaadin-grid-filter aria-label="Allergy" path="name" value="[[_filterName]]">
