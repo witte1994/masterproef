@@ -410,6 +410,8 @@ class WorkflowElement extends BaseElement {
         this.title = "Workflow"
         this.dispatchEvent(new CustomEvent("size", {bubbles: true, composed: true, detail: this.getMinSizes() }));
 
+        this.currentWorkflow = null;
+
         var body = {
             "pId": this.pId,
             "cId": window.sessionStorage.cId
@@ -633,6 +635,7 @@ class WorkflowElement extends BaseElement {
 
     loadWorkflow(workflow) {
         this.currentWorkflow = workflow;
+        this.dispatchEvent(new CustomEvent("save-layout", { bubbles: true, composed: true }));
         this.workflowId = workflow._id;
         this.title = "Workflow: " + this.currentWorkflow.name;
         this.$.workflowContent.style.display = "block";
@@ -647,14 +650,22 @@ class WorkflowElement extends BaseElement {
     }
 
     getSettings() {
-        return {
-            "workflowId": this.currentWorkflow._id
-        };
+        if (this.currentWorkflow == null) {
+            return {
+                "workflowId": null
+            };
+        } else {
+            return {
+                "workflowId": this.currentWorkflow._id
+            };
+        }
     }
 
     loadSettings(settings) {
-        this.workflowId = settings.workflowId;
-        this.$.ajaxGetWorkflow.generateRequest();
+        if (settings.workflowId != null) {
+            this.workflowId = settings.workflowId;
+            this.$.ajaxGetWorkflow.generateRequest();
+        }
     }
 
     getMinSizes() {

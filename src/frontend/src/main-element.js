@@ -267,7 +267,9 @@ class MainElement extends PolymerElement {
             this.loadPatientPage();
         });
 
-        
+        this.addEventListener('save-layout', function(e) {
+            outerThis.saveLayout();
+        });
     }
 
     login() {

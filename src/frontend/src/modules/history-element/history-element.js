@@ -319,6 +319,7 @@ class HistoryElement extends BaseElement {
 
         this.settingsBody = body;
         this.settingsBody.isEmpty = false;
+        this.dispatchEvent(new CustomEvent("save-layout", { bubbles: true, composed: true }));
 
         this.$.ajaxHistoryByFilter.body = body;
         this.$.ajaxHistoryByFilter.generateRequest();

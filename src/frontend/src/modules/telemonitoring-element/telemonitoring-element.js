@@ -173,6 +173,9 @@ class TelemonitoringElement extends BaseElement {
         this.$.startDate.value = moment().subtract(6, 'days').format("YYYY-MM-DD");
         this.$.endDate.value = moment().format("YYYY-MM-DD");
 
+        this.startObj = new Date(this.$.startDate.value)
+        this.endObj = new Date(this.$.endDate.value);
+
         this.getTimeTicks();
 
         this.title = "Telemonitoring";
@@ -219,6 +222,8 @@ class TelemonitoringElement extends BaseElement {
             },
             values: this.selectedParams
         };
+
+        this.dispatchEvent(new CustomEvent("save-layout", { bubbles: true, composed: true }));
 
         this.$.ajaxGetData.body = body;
         this.$.ajaxGetData.generateRequest();
@@ -419,10 +424,8 @@ class TelemonitoringElement extends BaseElement {
         }
 
         if (data.param == 'Blood pressure') {
-            console.log("spescial");
             this.loadParamBP(data);
         } else {
-            console.log("normal");
             this.loadParamRest(data);
         }        
     }
