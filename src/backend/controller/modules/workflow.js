@@ -69,7 +69,6 @@ async function importSubstep(substep) {
     });
     const result = await workflowSubstep.save();
 
-    console.log("imported substep");
     return result._id;
 }
 

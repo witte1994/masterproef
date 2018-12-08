@@ -4,6 +4,63 @@ const HistoryController = require('./history');
 const Checklist = require('../../models/modules/checklist');
 const ChecklistSubstep = require('../../models/modules/checklistsubstep');
 
+exports.importValues = async function (pId, checklist) {
+    var steps = [];
+
+    for (var i = 0; i < checklist.steps.length; i++) {
+        var stepObj = await getStepObject(checklist.steps[i]);
+        steps.push(stepObj);
+    }
+
+    const newChecklist = new Checklist({
+        _id: mongoose.Types.ObjectId(),
+        patient: pId,
+        description: checklist.description,
+        steps: steps
+    });
+    newChecklist
+        .save()
+        .then(result => {
+            var info = {
+                patient: pId,
+                clinician: null,
+                srcElement: "checklist",
+                operation: "import",
+                description: "checklist: " + checklist.description
+            };
+            HistoryController.add_to_history(info);
+        })
+        .catch(err => {
+        });
+}
+
+async function getStepObject(step) {
+    var stepObj = {
+        _id: mongoose.Types.ObjectId(),
+        checked: false,
+        description: step.description,
+        substeps: []
+    };
+
+    for (var i = 0; i < step.substeps.length; i++) {
+        var substepId = await importSubstep(step.substeps[i]);
+        stepObj.substeps.push(substepId);
+    }
+
+    return stepObj;
+}
+
+async function importSubstep(substep) {
+    const checklistSubstep = new ChecklistSubstep({
+        _id: mongoose.Types.ObjectId(),
+        checked: false,
+        description: substep.description,
+    });
+    const result = await checklistSubstep.save();
+
+    return result._id;
+}
+
 exports.get_by_id = (req, res, next) => {
     var pId = req.originalUrl.split('/')[2];
 

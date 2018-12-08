@@ -8,6 +8,7 @@ const AllergyController = require('./modules/allergy');
 const MedicationController = require('./modules/medication');
 const VaccinationController = require('./modules/vaccination');
 const WorkflowController = require('./modules/workflow');
+const ChecklistController = require('./modules/checklist');
 
 const BPController = require('./tm/bp');
 const BSController = require('./tm/bs');
@@ -99,6 +100,9 @@ function importRest(pId, info) {
                 break;
             case 'workflows':
                 WorkflowController.importValues(pId, info.workflows);
+                break;
+            case 'checklist':
+                ChecklistController.importValues(pId,info.checklist);
                 break;
             case 'bp':
                 BPController.importValues(pId, info.bp);
