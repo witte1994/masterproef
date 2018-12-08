@@ -64,6 +64,7 @@ class HistoryElement extends BaseElement {
                 method="GET"
                 handle-as="json"
                 last-response="{{history}}"
+                on-response="resizeElement"
             ></iron-ajax>
 
             <iron-ajax 
