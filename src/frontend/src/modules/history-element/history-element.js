@@ -194,7 +194,7 @@ class HistoryElement extends BaseElement {
         this.setDateFormats(this.$.startDate);
         this.setDateFormats(this.$.endDate);
 
-        this.title = "History";
+        this.title = "Patient Data History";
         this.dispatchEvent(new CustomEvent("size", {bubbles: true, composed: true, detail: this.getMinSizes() }));
 
         var contentDiv = this.$.content;
@@ -232,7 +232,7 @@ class HistoryElement extends BaseElement {
 
     getMinSizes() {
         return {
-            width: "284px",
+            width: "300px",
             height: "300px"
         };
     }
