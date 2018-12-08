@@ -251,7 +251,7 @@ class TelemonitoringElement extends BaseElement {
             showY1 = true;
             leftLabel = this.enumToAxisLabel(this.selectedAxis[0]);
 
-            leftPadding = 46;
+            leftPadding = 52;
         }
         if (this.selectedAxis.length == 2) {
             showY1 = true;
@@ -260,7 +260,7 @@ class TelemonitoringElement extends BaseElement {
             leftLabel = this.enumToAxisLabel(this.selectedAxis[0]);
             rightLabel = this.enumToAxisLabel(this.selectedAxis[1]);
 
-            leftPadding = 46;
+            leftPadding = 52;
             rightPadding = 58;
         }
 
@@ -315,7 +315,9 @@ class TelemonitoringElement extends BaseElement {
                 format: {
                     value: function (value, ratio, id, index) {
                         switch (id) {
-                            case 'Blood pressure':
+                            case 'Systolic BP':
+                                return value + ' mmHg';
+                            case 'Diastolic BP':
                                 return value + ' mmHg';
                             case 'Blood sugar':
                                 return value + ' mmol/L';
@@ -416,6 +418,47 @@ class TelemonitoringElement extends BaseElement {
             return;
         }
 
+        if (data.param == 'Blood pressure') {
+            console.log("spescial");
+            this.loadParamBP(data);
+        } else {
+            console.log("normal");
+            this.loadParamRest(data);
+        }        
+    }
+
+    loadParamBP(data) {
+        var systolicParam = "Systolic BP";
+        var diastolicParam = "Diastolic BP";
+
+        var colSys = [systolicParam];
+        var colSysDate = [('date'+systolicParam)];
+
+        var colDia = [diastolicParam];
+        var colDiaDate = [('date'+diastolicParam)];
+
+        for (var i = 0; i < data.values.length; i++) {
+            colSys.push(data.values[i].systolic);
+            colDia.push(data.values[i].diastolic);
+
+            var date = this.getDateString(new Date(data.values[i].date))
+            colSysDate.push(date);
+            colDiaDate.push(date);
+        }
+
+        var xs = {};
+        xs[systolicParam] = colSysDate[0];
+        xs[diastolicParam] = colDiaDate[0];
+
+        this.chart.load({
+            xs: xs,
+            columns: [
+                colSysDate, colDiaDate, colSys, colDia
+            ]
+        });
+    }
+
+    loadParamRest(data) {
         var col = [data.param];
         var colDate = [('date'+data.param)];
 

@@ -511,8 +511,18 @@ class MainElement extends PolymerElement {
         });
     
         var tarPackery = this.getTargetPackery();
+
+        var resizeTimeout;
         new ResizeSensor(parent, function () {
-            tarPackery.shiftLayout();
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(function() {
+                console.log("width: " + parent.offsetWidth);
+
+                parent.offsetWidth = 500;
+                console.log("height: " + parent.offsetHeight);
+                tarPackery.shiftLayout();
+            }, 100);
+            
         });
     }
 
