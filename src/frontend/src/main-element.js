@@ -564,7 +564,6 @@ class MainElement extends PolymerElement {
     
         tarGrid.appendChild(container);
         tarPackery.appended(container);
-        tarPackery.layout();
 
         var draggie = new Draggabilly(container, {
             handle: '.handle'
