@@ -412,7 +412,7 @@ class VaccinationElement extends BaseElement {
 
     getMinSizes() {
         return {
-            width: "330px",
+            width: "380px",
             height: "300px"
         };
     }

@@ -378,7 +378,7 @@ class AllergyElement extends BaseElement {
 
     getMinSizes() {
         return {
-            width: "460px",
+            width: "420px",
             height: "300px"
         };
     }
