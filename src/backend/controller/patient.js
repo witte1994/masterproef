@@ -7,6 +7,7 @@ const LayoutController = require('./layout');
 const AllergyController = require('./modules/allergy');
 const MedicationController = require('./modules/medication');
 const VaccinationController = require('./modules/vaccination');
+const WorkflowController = require('./modules/workflow');
 
 const BPController = require('./tm/bp');
 const BSController = require('./tm/bs');
@@ -72,7 +73,6 @@ exports.importPatient = function (patientInfo) {
             HistoryController.add_to_history(info);
 
             importRest(patient._id, patientInfo);
-            console.log(result);
             return patient._id;
         })
         .catch(err => {
@@ -96,6 +96,9 @@ function importRest(pId, info) {
                 break;
             case 'vaccinations':
                 VaccinationController.importValues(pId, info.vaccinations);
+                break;
+            case 'workflows':
+                WorkflowController.importValues(pId, info.workflows);
                 break;
             case 'bp':
                 BPController.importValues(pId, info.bp);
@@ -124,7 +127,6 @@ exports.get_patients = (req, res, next) => {
         .lean()
         .exec()
         .then(doc => {
-            console.log(doc);
             res.status(200).json(doc);
         })
         .catch(err => {
@@ -146,7 +148,6 @@ exports.get_patient_by_id = (req, res, next) => {
         .lean()
         .exec()
         .then(doc => {
-            console.log(doc);
             res.status(200).json(doc);
         })
         .catch(err => {

@@ -4,6 +4,75 @@ const HistoryController = require('./history');
 const Workflow = require('../../models/modules/workflow');
 const WorkflowSubstep = require('../../models/modules/workflowsubstep');
 
+exports.importValues = function (pId, workflows) {
+   
+    for (var i = 0; i < workflows.length; i++) {
+        console.log(workflows[i]);
+        importWorkflow(pId, workflows[i]);
+    }
+
+    var info = {
+        patient: pId,
+        clinician: null,
+        srcElement: "workflow",
+        operation: "import",
+        description: workflows.length + " workflows"
+    };
+    HistoryController.add_to_history(info);
+}
+
+async function importWorkflow(pId, workflow) {
+    var steps = [];
+
+    for (var i = 0; i < workflow.steps.length; i++) {
+        var stepObj = await getStepObject(workflow.steps[i]);
+        steps.push(stepObj);
+    }
+
+    const newWorkflow = new Workflow({
+        _id: mongoose.Types.ObjectId(),
+        patient: pId,
+        clinician: null,
+        name: workflow.name,
+        description: workflow.description,
+        steps: steps
+    });
+    newWorkflow
+        .save()
+        .then(result => {
+            console.log(result);
+        })
+        .catch(err => {
+        });
+}
+
+async function getStepObject(step) {
+    var stepObj = {
+        _id: mongoose.Types.ObjectId(),
+        name: step.name,
+        description: step.description,
+        substeps: []
+    }
+
+    for (var i = 0; i < step.substeps.length; i++) {
+        var substepId = await importSubstep(step.substeps[i]);
+        stepObj.substeps.push(substepId);
+    }
+
+    return stepObj;
+}
+
+async function importSubstep(substep) {
+    const workflowSubstep = new WorkflowSubstep({
+        _id: mongoose.Types.ObjectId(),
+        description: substep.description,
+    });
+    const result = await workflowSubstep.save();
+
+    console.log("imported substep");
+    return result._id;
+}
+
 exports.get_all = (req, res, next) => {
     var pId = req.body.pId;
     var cId = req.body.cId;
