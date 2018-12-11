@@ -29,7 +29,7 @@ export class BaseElementSmall extends PolymerElement {
                     <h1>[[title]]</h1>
 
                     <div>
-                    <paper-icon-button title="Remove module" class="buttonsHeader" icon="close" on-tap="removeModule"></paper-icon-button>
+                        <paper-icon-button title="Remove module" class="buttonsHeader" icon="close" on-tap="removeModule"></paper-icon-button>
                     </div>
                 </div>
 
@@ -94,6 +94,15 @@ export class BaseElementSmall extends PolymerElement {
         var param = split[split.length - 1];
         this.pId = param;
     }
+
+    getSettings() {
+        return {};
+    }
+
+    loadSettings(settings) {
+
+    }
+
 
     getMinHeight() {
         console.log("implement in child element");

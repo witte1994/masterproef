@@ -31,6 +31,7 @@ import './modules/telemonitoring-element/telemonitoring-element';
 import './modules/allergy-element/allergy-element-small';
 import './modules/prescription-element/prescription-element-small';
 import './modules/vaccination-element/vaccination-element-small';
+import './modules/telemonitoring-element/telemonitoring-element-small';
 
 /**
  * @customElement

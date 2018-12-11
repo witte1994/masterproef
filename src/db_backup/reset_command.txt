@@ -1,3 +1,4 @@
+db.allergies.drop()
 db.bps.drop()
 db.bs.drop()
 db.hearts.drop()

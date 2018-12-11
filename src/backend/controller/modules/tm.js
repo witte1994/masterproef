@@ -51,6 +51,47 @@ exports.get_data = async (req, res, next) => {
     });
 };
 
+exports.get_data_small = async (req, res, next) => {
+    var pId = req.originalUrl.split('/')[2];
+
+    var params = req.body.params;
+
+    var values = [];
+
+    for (var i = 0; i < params.length; i++) {
+        var paramData = {
+            enum: params[i]
+        };
+        switch (params[i]) {
+            case 'bp':
+                paramData.param = "Blood pressure";
+                paramData.summary = await BPController.getSummary(params[i].time, pId);
+                break;
+            case 'bs':
+                paramData.param = "Blood sugar";
+                paramData.summary = await BSController.getSummary(params[i].time, pId);
+                break;
+            case 'hr':
+                paramData.param = "Heart rate";
+                paramData.summary = await HeartController.getSummary(params[i].time, pId);
+                break;
+            case 'oxygen':
+                paramData.param = "Oxygen";
+                paramData.summary = await OxygenController.getSummary(params[i].time, pId);
+                break;
+            case 'weight':
+                paramData.param = "Weight";
+                paramData.summary = await WeightController.getSummary(params[i].time, pId);
+                break;
+        }
+        values.push(paramData);
+    }
+
+    res.status(201).json({
+        values
+    });
+};
+
 exports.get_available_params = async (req, res, next) => {
     var pId = req.originalUrl.split('/')[2];
 
