@@ -26,10 +26,10 @@ exports.getAvailability = async function (pId) {
 exports.importValues = function (pId, values) {
     for (var i = 0; i < values.length; i++) {
         const weight = new Weight({
-            _id: mongoHeartose.Types.ObjectId(),
-            patient: pHeartId,
-            value: valHeartues[i].value,
-            date: valuHeartes[i].date
+            _id: mongoose.Types.ObjectId(),
+            patient: pId,
+            value: values[i].value,
+            date: values[i].date
         });
         weight
             .save()
