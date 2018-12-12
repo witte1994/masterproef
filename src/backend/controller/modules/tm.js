@@ -54,10 +54,15 @@ exports.get_data = async (req, res, next) => {
 exports.get_data_small = async (req, res, next) => {
     var pId = req.originalUrl.split('/')[2];
 
+    var start = req.body.time.start;
+    var end = req.body.time.end;
     var params = req.body.params;
 
     var values = [];
 
+    console.log(req.body);
+
+    
     for (var i = 0; i < params.length; i++) {
         var paramData = {
             enum: params[i]
@@ -65,23 +70,23 @@ exports.get_data_small = async (req, res, next) => {
         switch (params[i]) {
             case 'bp':
                 paramData.param = "Blood pressure";
-                paramData.summary = await BPController.getSummary(params[i].time, pId);
+                paramData.summary = await BPController.getSummary(start, end, pId);
                 break;
             case 'bs':
                 paramData.param = "Blood sugar";
-                paramData.summary = await BSController.getSummary(params[i].time, pId);
+                paramData.summary = await BSController.getSummary(start, end, pId);
                 break;
             case 'hr':
                 paramData.param = "Heart rate";
-                paramData.summary = await HeartController.getSummary(params[i].time, pId);
+                paramData.summary = await HeartController.getSummary(start, end, pId);
                 break;
             case 'oxygen':
                 paramData.param = "Oxygen";
-                paramData.summary = await OxygenController.getSummary(params[i].time, pId);
+                paramData.summary = await OxygenController.getSummary(start, end, pId);
                 break;
             case 'weight':
                 paramData.param = "Weight";
-                paramData.summary = await WeightController.getSummary(params[i].time, pId);
+                paramData.summary = await WeightController.getSummary(start, end, pId);
                 break;
         }
         values.push(paramData);

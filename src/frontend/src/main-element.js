@@ -170,7 +170,7 @@ class MainElement extends PolymerElement {
             <paper-button dialog-confirm on-tap="addSmall">Accept</paper-button>
         </paper-dialog>
 
-        <paper-dialog opened id="loginDialog" no-cancel-on-esc-key="true" no-cancel-on-outside-click="true" with-backdrop="true">
+        <paper-dialog id="loginDialog" no-cancel-on-esc-key="true" no-cancel-on-outside-click="true" with-backdrop="true">
             <h2>Log in</h2>
             <p>Please log in:</p>
         
@@ -271,6 +271,15 @@ class MainElement extends PolymerElement {
         this.addEventListener('save-layout', function(e) {
             outerThis.saveLayout();
         });
+
+        if (true) {
+            this.$.login.value = "clinician1";
+            this.$.password.value = "test";
+            this.login();
+        } else {
+            this.$.loginDialog.open();
+        }
+        
     }
 
     login() {

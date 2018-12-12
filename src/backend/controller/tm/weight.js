@@ -12,6 +12,28 @@ exports.getByDate = async function (start, end, pId) {
     return result;
 }
 
+exports.getSummary = async function (start, end, pId) {
+    const query = Weight.find({ patient: pId, date: { $gte: start, $lt: end } }, "value date").sort({ date: 1 });
+
+    const result = await query.exec();
+
+    if (result.length == 0) {
+        return {
+            values: 0,
+            start: "-",
+            current: "-",
+            diff: "-"
+        };
+    }
+
+    return {
+        values: result.length,
+        start: result[0].value,
+        current: result[result.length-1].value,
+        diff: (Math.round((result[result.length-1].value - result[0].value) * 100) / 100)
+    }
+}
+
 exports.getAvailability = async function (pId) {
     const query = Weight.find({ patient: pId });
 
