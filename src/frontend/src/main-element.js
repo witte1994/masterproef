@@ -272,6 +272,12 @@ class MainElement extends PolymerElement {
             outerThis.saveLayout();
         });
 
+        var pckrySmall = this.pckrySmall;
+        this.addEventListener('shift-small', function(e) {
+            pckrySmall.shiftLayout();
+        });
+        
+
         if (true) {
             this.$.login.value = "clinician1";
             this.$.password.value = "test";
@@ -357,14 +363,20 @@ class MainElement extends PolymerElement {
 
     getSmallElements() {
         var elements = this.pckrySmall.getItemElements();
-    
+
+        var posSmall = this.getPosition(this.$.smallGrid);
         var order = [];
         for (var i = 0; i < elements.length; i++) {
+            var posItem = this.getPosition(elements[i]);
+            var offsetY = posItem.y - posSmall.y
+
             var pos = {
                 elementName: elements[i].children[1].tagName.toLowerCase(),
-                height: elements[i].offsetHeight
+                height: elements[i].offsetHeight,
+                y: offsetY,
+                settings: elements[i].children[1].getSettings()
             };
-    
+
             order.push(pos);
         }
     
@@ -427,10 +439,21 @@ class MainElement extends PolymerElement {
 
     loadSmallLayout(elements) {
         this.onMainGrid = false;
+
+        console.log("---- load -----");
         for (var i = 0; i < elements.length; i++) {
+            console.log(elements[i]);
             var container = this.createModuleContainer(elements[i].elementName);
-            container.style.height = elements[i].height + "px";
+
+            if (elements[i].elementName != "telemonitoring-element-small")
+                container.style.height = elements[i].height + "px";
+
             this.addContainerToGrid(container);
+            this.pckrySmall.fit(container, 0, elements[i].y);
+
+            if (elements[i].elementName == "telemonitoring-element-small")
+                container.children[1].loadSettings(elements[i].settings);
+            
         }
     }
 
@@ -465,7 +488,8 @@ class MainElement extends PolymerElement {
         parentDiv.classList.add("containerGrid");
     
         if (!this.onMainGrid) {
-            this.setResizeSmall(parentDiv);
+            if (moduleName != "telemonitoring-element-small")
+                this.setResizeSmall(parentDiv);
             parentDiv.classList.add("resizeDivVert");
             parentDiv.style.minWidth = "100%";
             parentDiv.addEventListener("sizeSmall", function (e) {

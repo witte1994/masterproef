@@ -43,6 +43,11 @@ class TelemonitoringElementSmall extends BaseElementSmall {
                     margin-left: -8px;
                     margin-right: -8px;
                     margin-bottom: -8px;
+                    overflow: auto;
+                }
+
+                #paramSelection {
+                    overflow: auto;
                 }
 
                 .paramBlock {
@@ -305,13 +310,15 @@ class TelemonitoringElementSmall extends BaseElementSmall {
     ready() {
         super.ready();
 
+        this.data = {};
+
+        this.settings = {};
+
         this.showContent = "none";
         this.showSelection = "block";
 
         this.title = "Telemonitoring";
         this.dispatchEvent(new CustomEvent("sizeSmall", { bubbles: true, composed: true, detail: this.getMinHeight() }));
-
-        this.update();
     }
 
     selectParams(e) {
@@ -353,28 +360,38 @@ class TelemonitoringElementSmall extends BaseElementSmall {
             return;
         }
 
-        this.showParamBlocks();
+        this.showParamBlocks(obj.params);
+
+        this.settings = obj;
 
         this.$.ajaxGetData.body = obj;
         this.$.ajaxGetData.generateRequest();
     }
 
-    showParamBlocks() {
-        if (!this.$.bpCheck.checked) {
-            this.$.bpBlock.style.display = "none";
-        }
-        if (!this.$.bsCheck.checked) {
-            this.$.bsBlock.style.display = "none";
-        }
-        if (!this.$.hrCheck.checked) {
-            this.$.hrBlock.style.display = "none";
-        }
-        if (!this.$.oxygenCheck.checked) {
-            this.$.oxygenBlock.style.display = "none";
-        }
-        if (!this.$.weightCheck.checked) {
-            this.$.weightBlock.style.display = "none";
-        }
+    showParamBlocks(params) {
+        this.$.bpBlock.style.display = "none";
+        this.$.bsBlock.style.display = "none";
+        this.$.hrBlock.style.display = "none";
+        this.$.oxygenBlock.style.display = "none";
+        this.$.weightBlock.style.display = "none";
+
+        for (var i = 0; i < params.length; i++) {
+            if (params[i] == "bp") {
+                this.$.bpBlock.style.display = "block";
+            }
+            if (params[i] == "bs") {
+                this.$.bsBlock.style.display = "block";
+            }
+            if (params[i] == "hr") {
+                this.$.hrBlock.style.display = "block";
+            }
+            if (params[i] == "oxygen") {
+                this.$.oxygenBlock.style.display = "block";
+            }
+            if (params[i] == "weight") {
+                this.$.weightBlock.style.display = "block";
+            }
+        }        
     }
 
     hideParam(e) {
@@ -385,17 +402,30 @@ class TelemonitoringElementSmall extends BaseElementSmall {
         if (param == "hr") this.$.hrBlock.style.display = "none";
         if (param == "oxygen") this.$.oxygenBlock.style.display = "none";
         if (param == "weight") this.$.weightBlock.style.display = "none";
+
+        var index = this.settings.params.indexOf(param);
+        if (index !== -1) this.settings.params.splice(index, 1);
+
+        this.dispatchEvent(new CustomEvent("save-layout", { bubbles: true, composed: true }));
+        this.dispatchEvent(new CustomEvent("shift-small", { bubbles: true, composed: true }));
     }
 
     resetConfiguration(e) {
         this.showContent = "none";
         this.showSelection = "block";
 
-        this.$.bpBlock.style.display = "block";
-        this.$.bsBlock.style.display = "block";
-        this.$.hrBlock.style.display = "block";
-        this.$.oxygenBlock.style.display = "block";
-        this.$.weightBlock.style.display = "block";
+        this.data = {};
+
+        this.$.bpBlock.style.display = "none";
+        this.$.bsBlock.style.display = "none";
+        this.$.hrBlock.style.display = "none";
+        this.$.oxygenBlock.style.display = "none";
+        this.$.weightBlock.style.display = "none";
+
+        this.settings = {};
+
+        this.dispatchEvent(new CustomEvent("shift-small", { bubbles: true, composed: true }));
+        this.dispatchEvent(new CustomEvent("save-layout", { bubbles: true, composed: true }));
     }
 
     periodCheck() {
@@ -410,10 +440,60 @@ class TelemonitoringElementSmall extends BaseElementSmall {
     dataReceived(e) {
         this.showContent = "block";
         this.showSelection = "none";
+
+        this.dispatchEvent(new CustomEvent("shift-small", { bubbles: true, composed: true }));
+        this.dispatchEvent(new CustomEvent("save-layout", { bubbles: true, composed: true }));
+    }
+
+    getSettings() {
+        var settings = {
+            time: this.settings.time,
+            params: this.settings.params,
+            data: this.data
+        };
+
+        console.log(settings);
+
+        return settings;
+    }
+
+    loadSettings(settings) {
+        if (this.settingsUndefined(settings)) {
+            return;
+        }
+
+        this.showSelection = "none";
+        this.start = new Date(settings.time.start);
+        this.end = new Date(settings.time.end);
+
+        this.settings = settings;
+        
+        this.showParamBlocks(settings.params);
+
+        this.showContent = "block";
+        this.showSelection = "none";
+        
+        this.data = settings.data;
+
+        this.dispatchEvent(new CustomEvent("shift-small", { bubbles: true, composed: true }));
+    }
+
+    settingsUndefined(settings) {
+        if (settings == undefined || settings.isEmpty) {
+            return true;
+        }
+        if (settings.data == undefined || settings.data.isEmpty)
+            return true;
+        if (settings.params == undefined)
+            return true;
+        if (settings.time == undefined)
+            return true;
+
+        return false;
     }
 
     getMinHeight() {
-        return "140px";
+        return "100px";
     }
 
     boolToDisplay(available) {

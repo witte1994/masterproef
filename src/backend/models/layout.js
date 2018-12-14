@@ -16,6 +16,14 @@ const layoutSchema = mongoose.Schema({
             type: Number,
             min: 0,
             required: true
+        },
+        y: {
+            type: Number,
+            min: 0,
+            required: true
+        },
+        settings: {
+            type: Object
         }
     }],
     main: [{

@@ -50,7 +50,7 @@ var modulesSmall = [
         "title": "Vaccinations"
     },
     {
-        "module": "Telemonitoring-element-small",
+        "module": "telemonitoring-element-small",
         "title": "Telemonitoring"
     }
 ];
