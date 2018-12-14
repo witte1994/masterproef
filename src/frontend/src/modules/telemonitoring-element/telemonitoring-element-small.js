@@ -68,6 +68,12 @@ class TelemonitoringElementSmall extends BaseElementSmall {
                     text-align: center;
                     margin-bottom: 4px;
                 }
+                
+                #dateDiv {
+                    text-align: center;
+                    margin-top: 4px;
+                    margin-bottom: 8px;
+                }
             </style>
         `;
     }
@@ -81,6 +87,7 @@ class TelemonitoringElementSmall extends BaseElementSmall {
                 handle-as="json"
                 content-type="application/json"
                 on-response="dataReceived"
+                last-response="{{data}}"
             ></iron-ajax>
 
             <iron-ajax
@@ -97,96 +104,162 @@ class TelemonitoringElementSmall extends BaseElementSmall {
     static get contentTemplate() {
         return html`
             <div id="paramContent" style$="display: {{showContent}};">
-                <div id="bpBlock" class="paramBlock">
-                    <div class="title">Blood pressure (mmHg)</div>
-                    <div class="contentGrid">
-                        <div class="contentRow" style="font-weight: bold;">
-                            <div># vals</div>
-                            <div>avg.</div>
-                            <div>low</div>
-                            <div>high</div>
-                        </div>
+                <vaadin-context-menu>
+                    <template>
+                        <vaadin-list-box>
+                            <vaadin-item on-tap="resetConfiguration">Reset</vaadin-item>
+                        </vaadin-list-box>
+                    </template>
+                    
+                    <div id="dateDiv">{{getDateString(start)}} - {{getDateString(end)}}</div>
+                </vaadin-context-menu>
+                
 
-                        <div class="contentRow">
-                            <div>{{data.bp.values}}</div>
-                            <div>{{data.bp.avg}}</div>
-                            <div>{{data.bp.low}}</div>
-                            <div>{{data.bp.high}}</div>
+                <vaadin-context-menu>
+                    <template>
+                        <vaadin-list-box>
+                            <vaadin-item on-tap="hideParam" data-args="bp">Hide parameter</vaadin-item>
+                            <hr>
+                            <vaadin-item on-tap="resetConfiguration">Reset</vaadin-item>
+                        </vaadin-list-box>
+                    </template>
+                    
+                    <div id="bpBlock" class="paramBlock">
+                        <div class="title">Blood pressure (mmHg)</div>
+                        <div class="contentGrid">
+                            <div class="contentRow" style="font-weight: bold;">
+                                <div># vals</div>
+                                <div>avg.</div>
+                                <div>low</div>
+                                <div>high</div>
+                            </div>
+
+                            <div class="contentRow">
+                                <div>{{data.bp.values}}</div>
+                                <div>{{data.bp.avg}}</div>
+                                <div>{{data.bp.low}}</div>
+                                <div>{{data.bp.high}}</div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div id="bsBlock" class="paramBlock">
-                    <div class="title">Blood sugar (mmol/L)</div>
-                    <div class="contentGrid">
-                        <div class="contentRow" style="font-weight: bold;">
-                            <div># vals</div>
-                            <div>avg.</div>
-                            <div>low</div>
-                            <div>high</div>
-                        </div>
+                </vaadin-context-menu>
+                
+                <vaadin-context-menu>
+                    <template>
+                        <vaadin-list-box>
+                            <vaadin-item on-tap="hideParam" data-args="bs">Hide parameter</vaadin-item>
+                            <hr>
+                            <vaadin-item on-tap="resetConfiguration">Reset</vaadin-item>
+                        </vaadin-list-box>
+                    </template>
+                    
+                    <div id="bsBlock" class="paramBlock">
+                        <div class="title">Blood sugar (mmol/L)</div>
+                        <div class="contentGrid">
+                            <div class="contentRow" style="font-weight: bold;">
+                                <div># vals</div>
+                                <div>avg.</div>
+                                <div>low</div>
+                                <div>high</div>
+                            </div>
 
-                        <div class="contentRow">
-                            <div>{{data.bs.values}}</div>
-                            <div>{{data.bs.avg}}</div>
-                            <div>{{data.bs.low}}</div>
-                            <div>{{data.bs.high}}</div>
+                            <div class="contentRow">
+                                <div>{{data.bs.values}}</div>
+                                <div>{{data.bs.avg}}</div>
+                                <div>{{data.bs.low}}</div>
+                                <div>{{data.bs.high}}</div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div id="hrBlock" class="paramBlock">
-                    <div class="title">Heart rate (BPM)</div>
-                    <div class="contentGrid">
-                        <div class="contentRow" style="font-weight: bold;">
-                            <div># vals</div>
-                            <div>avg.</div>
-                            <div>low</div>
-                            <div>high</div>
-                        </div>
+                </vaadin-context-menu>
 
-                        <div class="contentRow">
-                            <div>{{data.hr.values}}</div>
-                            <div>{{data.hr.avg}}</div>
-                            <div>{{data.hr.low}}</div>
-                            <div>{{data.hr.high}}</div>
+                <vaadin-context-menu>
+                    <template>
+                        <vaadin-list-box>
+                            <vaadin-item on-tap="hideParam" data-args="hr">Hide parameter</vaadin-item>
+                            <hr>
+                            <vaadin-item on-tap="resetConfiguration">Reset</vaadin-item>
+                        </vaadin-list-box>
+                    </template>
+                    
+                    <div id="hrBlock" class="paramBlock">
+                        <div class="title">Heart rate (BPM)</div>
+                        <div class="contentGrid">
+                            <div class="contentRow" style="font-weight: bold;">
+                                <div># vals</div>
+                                <div>avg.</div>
+                                <div>low</div>
+                                <div>high</div>
+                            </div>
+
+                            <div class="contentRow">
+                                <div>{{data.hr.values}}</div>
+                                <div>{{data.hr.avg}}</div>
+                                <div>{{data.hr.low}}</div>
+                                <div>{{data.hr.high}}</div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div id="oxygenBlock" class="paramBlock">
-                    <div class="title">Oxygen (%SpO2)</div>
-                    <div class="contentGrid">
-                        <div class="contentRow" style="font-weight: bold;">
-                            <div># vals</div>
-                            <div>avg.</div>
-                            <div>low</div>
-                            <div>high</div>
-                        </div>
+                </vaadin-context-menu>
 
-                        <div class="contentRow">
-                            <div>{{data.oxygen.values}}</div>
-                            <div>{{data.oxygen.avg}}</div>
-                            <div>{{data.oxygen.low}}</div>
-                            <div>{{data.oxygen.high}}</div>
+                <vaadin-context-menu>
+                    <template>
+                        <vaadin-list-box>
+                            <vaadin-item on-tap="hideParam" data-args="oxygen">Hide parameter</vaadin-item>
+                            <hr>
+                            <vaadin-item on-tap="resetConfiguration">Reset</vaadin-item>
+                        </vaadin-list-box>
+                    </template>
+                    
+                    <div id="oxygenBlock" class="paramBlock">
+                        <div class="title">Oxygen (%SpO2)</div>
+                        <div class="contentGrid">
+                            <div class="contentRow" style="font-weight: bold;">
+                                <div># vals</div>
+                                <div>avg.</div>
+                                <div>low</div>
+                                <div>high</div>
+                            </div>
+
+                            <div class="contentRow">
+                                <div>{{data.oxygen.values}}</div>
+                                <div>{{data.oxygen.avg}}</div>
+                                <div>{{data.oxygen.low}}</div>
+                                <div>{{data.oxygen.high}}</div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div id="weightBlock" class="paramBlock">
-                    <div class="title">Weight (kg)</div>
-                    <div class="contentGrid">
-                        <div class="contentRow" style="font-weight: bold;">
-                            <div># vals</div>
-                            <div>start.</div>
-                            <div>current</div>
-                            <div>diff.</div>
-                        </div>
+                </vaadin-context-menu>
+                
+                <vaadin-context-menu>
+                    <template>
+                        <vaadin-list-box>
+                            <vaadin-item on-tap="hideParam" data-args="weight">Hide parameter</vaadin-item>
+                            <hr>
+                            <vaadin-item on-tap="resetConfiguration">Reset</vaadin-item>
+                        </vaadin-list-box>
+                    </template>
+                    
+                    <div id="weightBlock" class="paramBlock">
+                        <div class="title">Weight (kg)</div>
+                        <div class="contentGrid">
+                            <div class="contentRow" style="font-weight: bold;">
+                                <div># vals</div>
+                                <div>start.</div>
+                                <div>current</div>
+                                <div>diff.</div>
+                            </div>
 
-                        <div class="contentRow">
-                            <div>{{data.weight.values}}</div>
-                            <div>{{data.weight.start}}</div>
-                            <div>{{data.weight.current}}</div>
-                            <div>{{data.weight.diff}}</div>
+                            <div class="contentRow">
+                                <div>{{data.weight.values}}</div>
+                                <div>{{data.weight.start}}</div>
+                                <div>{{data.weight.current}}</div>
+                                <div>{{data.weight.diff}}</div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </vaadin-context-menu>
+                
             </div>
 
             <div id="paramSelection" style$="display: {{showSelection}}; margin-left: 4px;">
@@ -232,40 +305,6 @@ class TelemonitoringElementSmall extends BaseElementSmall {
     ready() {
         super.ready();
 
-        this.data = {
-            "bp": {
-                values: 0,
-                avg: "-",
-                low: "-",
-                high: "-"
-            },
-            "bs": {
-                values: 0,
-                avg: "-",
-                low: "-",
-                high: "-"
-            },
-            "hr": {
-                values: 0,
-                avg: "-",
-                low: "-",
-                high: "-"
-            },
-            "oxygen": {
-                values: 0,
-                avg: "-",
-                low: "-",
-                high: "-"
-            },
-            "weight": {
-                values: 0,
-                start: "-",
-                current: "-",
-                diff: "-"
-            }
-        }
-
-
         this.showContent = "none";
         this.showSelection = "block";
 
@@ -280,8 +319,11 @@ class TelemonitoringElementSmall extends BaseElementSmall {
             return;
         }
 
-        var start = moment().utc().startOf('day').subtract(this.$.period.value, 'days').format();
-        var end = moment().utc().endOf('day').format();
+        var start = moment().startOf('day').subtract(this.$.period.value, 'days').format();
+        var end = moment().endOf('day').format();
+
+        this.start = new Date(start);
+        this.end = new Date(end);
 
         var obj = {
             time: {
@@ -311,8 +353,49 @@ class TelemonitoringElementSmall extends BaseElementSmall {
             return;
         }
 
+        this.showParamBlocks();
+
         this.$.ajaxGetData.body = obj;
         this.$.ajaxGetData.generateRequest();
+    }
+
+    showParamBlocks() {
+        if (!this.$.bpCheck.checked) {
+            this.$.bpBlock.style.display = "none";
+        }
+        if (!this.$.bsCheck.checked) {
+            this.$.bsBlock.style.display = "none";
+        }
+        if (!this.$.hrCheck.checked) {
+            this.$.hrBlock.style.display = "none";
+        }
+        if (!this.$.oxygenCheck.checked) {
+            this.$.oxygenBlock.style.display = "none";
+        }
+        if (!this.$.weightCheck.checked) {
+            this.$.weightBlock.style.display = "none";
+        }
+    }
+
+    hideParam(e) {
+        var param = e.target.dataset.args
+
+        if (param == "bp") this.$.bpBlock.style.display = "none";
+        if (param == "bs") this.$.bsBlock.style.display = "none";
+        if (param == "hr") this.$.hrBlock.style.display = "none";
+        if (param == "oxygen") this.$.oxygenBlock.style.display = "none";
+        if (param == "weight") this.$.weightBlock.style.display = "none";
+    }
+
+    resetConfiguration(e) {
+        this.showContent = "none";
+        this.showSelection = "block";
+
+        this.$.bpBlock.style.display = "block";
+        this.$.bsBlock.style.display = "block";
+        this.$.hrBlock.style.display = "block";
+        this.$.oxygenBlock.style.display = "block";
+        this.$.weightBlock.style.display = "block";
     }
 
     periodCheck() {
@@ -327,7 +410,6 @@ class TelemonitoringElementSmall extends BaseElementSmall {
     dataReceived(e) {
         this.showContent = "block";
         this.showSelection = "none";
-        console.log(e.detail.response);
     }
 
     getMinHeight() {

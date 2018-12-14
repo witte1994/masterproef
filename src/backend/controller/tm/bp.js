@@ -52,10 +52,10 @@ exports.getSummary = async function (start, end, pId) {
     }
 
     avgSys /= result.length;
-    avgSys = Math.round(avgSys * 100) / 100;
+    avgSys = Math.round(avgSys);
 
     avgDia /= result.length;
-    avgDia = Math.round(avgDia * 100) / 100;
+    avgDia = Math.round(avgDia);
 
     return {
         values: result.length,

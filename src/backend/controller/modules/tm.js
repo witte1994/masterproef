@@ -58,43 +58,80 @@ exports.get_data_small = async (req, res, next) => {
     var end = req.body.time.end;
     var params = req.body.params;
 
-    var values = [];
+    var summaries = {
+        "bp": {
+            values: 0,
+            avg: "-",
+            low: "-",
+            high: "-"
+        },
+        "bs": {
+            values: 0,
+            avg: "-",
+            low: "-",
+            high: "-"
+        },
+        "hr": {
+            values: 0,
+            avg: "-",
+            low: "-",
+            high: "-"
+        },
+        "oxygen": {
+            values: 0,
+            avg: "-",
+            low: "-",
+            high: "-"
+        },
+        "weight": {
+            values: 0,
+            start: "-",
+            current: "-",
+            diff: "-"
+        }
+    };
 
-    console.log(req.body);
-
-    
     for (var i = 0; i < params.length; i++) {
-        var paramData = {
-            enum: params[i]
-        };
         switch (params[i]) {
             case 'bp':
-                paramData.param = "Blood pressure";
-                paramData.summary = await BPController.getSummary(start, end, pId);
+                var summary = await BPController.getSummary(start, end, pId);
+                summaries.bp.values = summary.values;
+                summaries.bp.avg = summary.avg;
+                summaries.bp.low = summary.low;
+                summaries.bp.high = summary.high;
                 break;
             case 'bs':
-                paramData.param = "Blood sugar";
-                paramData.summary = await BSController.getSummary(start, end, pId);
+                var summary = await BSController.getSummary(start, end, pId);
+                summaries.bs.values = summary.values;
+                summaries.bs.avg = summary.avg;
+                summaries.bs.low = summary.low;
+                summaries.bs.high = summary.high;
                 break;
             case 'hr':
-                paramData.param = "Heart rate";
-                paramData.summary = await HeartController.getSummary(start, end, pId);
+                var summary = await HeartController.getSummary(start, end, pId);
+                summaries.hr.values = summary.values;
+                summaries.hr.avg = summary.avg;
+                summaries.hr.low = summary.low;
+                summaries.hr.high = summary.high;
                 break;
             case 'oxygen':
-                paramData.param = "Oxygen";
-                paramData.summary = await OxygenController.getSummary(start, end, pId);
+                var summary = await OxygenController.getSummary(start, end, pId);
+                summaries.oxygen.values = summary.values;
+                summaries.oxygen.avg = summary.avg;
+                summaries.oxygen.low = summary.low;
+                summaries.oxygen.high = summary.high;
                 break;
             case 'weight':
-                paramData.param = "Weight";
-                paramData.summary = await WeightController.getSummary(start, end, pId);
+                var summary = await WeightController.getSummary(start, end, pId);
+                summaries.weight.values = summary.values;
+                summaries.weight.start = summary.start;
+                summaries.weight.current = summary.current;
+                summaries.weight.diff = summary.diff;
                 break;
         }
-        values.push(paramData);
     }
 
-    res.status(201).json({
-        values
-    });
+    res.status(201).json(summaries);
 };
 
 exports.get_available_params = async (req, res, next) => {
