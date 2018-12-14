@@ -70,7 +70,6 @@ class ChecklistElement extends BaseElement {
                 method="GET"
                 handle-as="json"
                 last-response="{{checklist}}"
-                on-response="checklistReceived"
             ></iron-ajax>
 
             <iron-ajax 
@@ -80,7 +79,6 @@ class ChecklistElement extends BaseElement {
                 handle-as="json"
                 content-type="application/json"
                 last-response="{{checklist}}"
-                on-response="checklistReceived"
             ></iron-ajax>
 
             <iron-ajax 
@@ -90,7 +88,6 @@ class ChecklistElement extends BaseElement {
                 handle-as="json"
                 content-type="application/json"
                 last-response="{{checklist}}"
-                on-response="checklistReceived"
             ></iron-ajax>
 
             <iron-ajax 
@@ -100,7 +97,6 @@ class ChecklistElement extends BaseElement {
                 handle-as="json"
                 content-type="application/json"
                 last-response="{{checklist}}"
-                on-response="checklistReceived"
             ></iron-ajax>
 
             <iron-ajax 
@@ -110,7 +106,6 @@ class ChecklistElement extends BaseElement {
                 handle-as="json"
                 content-type="application/json"
                 last-response="{{checklist}}"
-                on-response="checklistReceived"
             ></iron-ajax>
 
             <iron-ajax 
@@ -119,7 +114,6 @@ class ChecklistElement extends BaseElement {
                 method="DELETE"
                 handle-as="json"
                 last-response="{{checklist}}"
-                on-response="checklistReceived"
             ></iron-ajax>
 
             <iron-ajax 
@@ -129,7 +123,6 @@ class ChecklistElement extends BaseElement {
                 handle-as="json"
                 content-type="application/json"
                 last-response="{{checklist}}"
-                on-response="checklistReceived"
             ></iron-ajax>
 
             <iron-ajax 
@@ -139,7 +132,6 @@ class ChecklistElement extends BaseElement {
                 handle-as="json"
                 content-type="application/json"
                 last-response="{{checklist}}"
-                on-response="checklistReceived"
             ></iron-ajax>
 
             <iron-ajax 
@@ -149,7 +141,6 @@ class ChecklistElement extends BaseElement {
                 handle-as="json"
                 content-type="application/json"
                 last-response="{{checklist}}"
-                on-response="checklistReceived"
             ></iron-ajax>
 
             <iron-ajax 
@@ -158,7 +149,6 @@ class ChecklistElement extends BaseElement {
                 method="DELETE"
                 handle-as="json"
                 last-response="{{checklist}}"
-                on-response="checklistReceived"
             ></iron-ajax>
 
             <iron-ajax
@@ -167,7 +157,6 @@ class ChecklistElement extends BaseElement {
                 method="GET"
                 handle-as="json"
                 last-response="{{checklist}}"
-                on-response="checklistReceived"
             ></iron-ajax>
         `;
     }
@@ -359,10 +348,6 @@ class ChecklistElement extends BaseElement {
             return "striked";
         
         return null;
-    }
-
-    checklistReceived(e) {
-        //console.log(this.checklist);
     }
 
     updateChecklist(e) {

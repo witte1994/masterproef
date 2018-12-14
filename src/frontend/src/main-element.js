@@ -446,9 +446,7 @@ class MainElement extends PolymerElement {
     loadSmallLayout(elements) {
         this.onMainGrid = false;
 
-        console.log("---- load -----");
         for (var i = 0; i < elements.length; i++) {
-            console.log(elements[i]);
             var container = this.createModuleContainer(elements[i].elementName);
 
             if (elements[i].elementName != "telemonitoring-element-small")
