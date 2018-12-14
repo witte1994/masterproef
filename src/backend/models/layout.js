@@ -7,6 +7,10 @@ const layoutSchema = mongoose.Schema({
         ref: 'Patient',
         required: true
     },
+    patientElementSize: {
+        type: String,
+        required: true
+    },
     small: [{
         elementName: {
             type: String,

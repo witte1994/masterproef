@@ -122,6 +122,8 @@ class PatientElement extends PolymerElement {
 
     ready() {
         super.ready();
+
+        this.isSmall = false;
         
         this.setPatientId();
         
@@ -160,14 +162,38 @@ class PatientElement extends PolymerElement {
         this.patient = e.detail.response;
     }
 
-    resize(e) {
-        if (this.$.allInfo.style.display === "none") {
+    getSize() {
+        if (this.isSmall)
+            return "small";
+        else
+            return "large";
+    }
+
+    setSize(size) {
+        if (size == "small") {
+            this.$.allInfo.style.display = "none";
+            this.$.lessInfo.style.display = "block";
+            this.isSmall = true;
+        }
+        else {
             this.$.allInfo.style.display = "block";
             this.$.lessInfo.style.display = "none";
+            this.isSmall = false;
+        }
+    }
+
+    resize(e) {
+        if (this.isSmall) {
+            this.$.allInfo.style.display = "block";
+            this.$.lessInfo.style.display = "none";
+            this.isSmall = false;
         } else {
             this.$.allInfo.style.display = "none";
             this.$.lessInfo.style.display = "block";
+            this.isSmall = true;
         }
+
+        this.dispatchEvent(new CustomEvent("save-layout", { bubbles: true, composed: true }));
     }
 }
 

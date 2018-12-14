@@ -331,7 +331,11 @@ class MainElement extends PolymerElement {
         var mainPositions = this.getMainElements();
         var smallPositions = this.getSmallElements();
     
-        return {small: smallPositions, main: mainPositions};
+        return {
+            patientElementSize: this.patientElement.getSize(),
+            small: smallPositions,
+            main: mainPositions
+        };
     }
 
     getMainElements() {
@@ -433,6 +437,8 @@ class MainElement extends PolymerElement {
         if (elements == null)
             return;
     
+        this.patientElement.setSize(elements.patientElementSize);
+
         this.loadSmallLayout(elements.small);
         this.loadMainLayout(elements.main);
     }

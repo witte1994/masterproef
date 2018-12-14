@@ -18,6 +18,7 @@ exports.save = (req, res, next) => {
             const layout = new Layout({
                 _id: mongoose.Types.ObjectId(),
                 patient: pId,
+                patientElementSize: req.body.layout.patientElementSize,
                 small: req.body.layout.small,
                 main: req.body.layout.main
             });
@@ -41,7 +42,7 @@ exports.get = (req, res, next) => {
     var pId = req.originalUrl.split('/')[2];
 
     Layout.find({ patient: pId, })
-        .select("small main")
+        .select("patientElementSize small main")
         .exec()
         .then(doc => {
             console.log(doc[0]);
