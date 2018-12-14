@@ -296,9 +296,7 @@ class TelemonitoringElementSmall extends BaseElementSmall {
                 <div style="text-align: center;">
                     <paper-button on-tap="selectParams">Select</paper-button>
                 </div>
-                
             </div>
-            
         `;
     }
 
@@ -311,7 +309,6 @@ class TelemonitoringElementSmall extends BaseElementSmall {
         super.ready();
 
         this.data = {};
-
         this.settings = {};
 
         this.showContent = "none";
@@ -452,8 +449,6 @@ class TelemonitoringElementSmall extends BaseElementSmall {
             data: this.data
         };
 
-        console.log(settings);
-
         return settings;
     }
 
@@ -462,16 +457,15 @@ class TelemonitoringElementSmall extends BaseElementSmall {
             return;
         }
 
+        this.settings = settings;
+
         this.showSelection = "none";
         this.start = new Date(settings.time.start);
         this.end = new Date(settings.time.end);
 
-        this.settings = settings;
-        
         this.showParamBlocks(settings.params);
 
         this.showContent = "block";
-        this.showSelection = "none";
         
         this.data = settings.data;
 
