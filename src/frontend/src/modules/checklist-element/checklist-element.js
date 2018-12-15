@@ -478,8 +478,8 @@ class ChecklistElement extends BaseElement {
     
     getMinSizes() {
         return {
-            width: "400px",
-            height: "300px"
+            width: "300px",
+            height: "200px"
         };
     }
 

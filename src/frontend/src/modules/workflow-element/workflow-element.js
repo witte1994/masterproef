@@ -670,8 +670,8 @@ class WorkflowElement extends BaseElement {
 
     getMinSizes() {
         return {
-            width: "400px",
-            height: "300px"
+            width: "360px",
+            height: "200px"
         };
     }
 

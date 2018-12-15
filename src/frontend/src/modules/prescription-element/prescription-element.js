@@ -499,7 +499,7 @@ class PrescriptionElement extends BaseElement {
     getMinSizes() {
         return {
             width: "620px",
-            height: "300px"
+            height: "220px"
         };
     }
 

@@ -224,7 +224,7 @@ class HistoryElement extends BaseElement {
     getMinSizes() {
         return {
             width: "300px",
-            height: "300px"
+            height: "200px"
         };
     }
 

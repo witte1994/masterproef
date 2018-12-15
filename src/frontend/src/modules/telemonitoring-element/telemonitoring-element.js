@@ -342,6 +342,9 @@ class TelemonitoringElement extends BaseElement {
     }
 
     resizeElement() {
+        if (this.chart == undefined)
+            return;
+
         var parBounds = this.parentNode.getBoundingClientRect();
         var chartWidth = parBounds.width - 16;
         var chartHeight = parBounds.height - 102;
