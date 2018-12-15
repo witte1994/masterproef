@@ -1,6 +1,8 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import {BaseElement} from '../base-element.js';
 
+import moment from 'moment/src/moment';
+
 import '@polymer/iron-ajax/iron-ajax';
 import '@polymer/iron-icons/iron-icons';
 import '@polymer/paper-dialog/paper-dialog';
@@ -272,7 +274,7 @@ class HistoryElement extends BaseElement {
 
         var endDate = null;
         if (this.$.endDate.value !== "")
-            endDate = (new Date(this.$.endDate.value)).toISOString();
+            endDate = moment(this.$.endDate.value).endOf('day').format();
 
         var children = [...this.$.moduleDiv.children];
         children.pop();
