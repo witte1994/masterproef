@@ -578,7 +578,7 @@ class TelemonitoringElement extends BaseElement {
 
     getMinSizes() {
         return {
-            width: "500px",
+            width: "440px",
             height: "300px"
         };
     }
