@@ -171,7 +171,7 @@ class TelemonitoringElement extends BaseElement {
         this.$.startDate.value = moment().subtract(6, 'days').format("YYYY-MM-DD");
         this.$.endDate.value = moment().format("YYYY-MM-DD");
 
-        this.startObj = new Date(this.$.startDate.value)
+        this.startObj = new Date(this.$.startDate.value);
         this.endObj = new Date(this.$.endDate.value);
 
         this.getTimeTicks();
