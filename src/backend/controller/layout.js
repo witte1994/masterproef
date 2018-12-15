@@ -58,6 +58,7 @@ exports.default = function (pId) {
     const layout = new Layout({
         _id: mongoose.Types.ObjectId(),
         patient: pId,
+        patientElementSize: "large",
         small: [],
         main: []
     });

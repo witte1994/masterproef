@@ -210,8 +210,8 @@ class TelemonitoringElement extends BaseElement {
         if (this.selectedParams.length == 0)
             return;
 
-        this.startObj = new Date(this.$.startDate.value)
-        this.endObj = new Date(this.$.endDate.value);
+        this.startObj = moment(this.$.startDate.value).startOf('day').toDate();
+        this.endObj = moment(this.$.endDate.value).endOf('day').toDate();
 
         var body = {
             time: {
@@ -566,9 +566,9 @@ class TelemonitoringElement extends BaseElement {
         };
     }
 
-    loadSettings(settings) {        
-        this.$.startDate.value = moment(new Date(settings.startDate)).format("YYYY-MM-DD");
-        this.$.endDate.value = moment(new Date(settings.endDate)).format("YYYY-MM-DD");
+    loadSettings(settings) {
+        this.$.startDate.value = moment(settings.startDate).format("YYYY-MM-DD");
+        this.$.endDate.value = moment(settings.endDate).format("YYYY-MM-DD");
 
         this.selectedParams = settings.params;
         this.selectedAxis = settings.axis;
