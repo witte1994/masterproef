@@ -203,7 +203,7 @@ class TelemonitoringElement extends BaseElement {
         }
     }
 
-    loadData() {
+    loadData(dontSave) {
         if (this.$.startDate.value == "" || this.$.endDate.value == "")
             return;
         
@@ -221,8 +221,9 @@ class TelemonitoringElement extends BaseElement {
             values: this.selectedParams
         };
 
-        this.dispatchEvent(new CustomEvent("save-layout", { bubbles: true, composed: true }));
-
+        if (!(dontSave == true))
+            this.dispatchEvent(new CustomEvent("save-layout", { bubbles: true, composed: true }));
+        
         this.$.ajaxGetData.body = body;
         this.$.ajaxGetData.generateRequest();
     }
@@ -573,7 +574,7 @@ class TelemonitoringElement extends BaseElement {
         this.selectedParams = settings.params;
         this.selectedAxis = settings.axis;
 
-        this.loadData();
+        this.loadData(true);
     }
 
     getMinSizes() {

@@ -27,8 +27,7 @@ const vaccinationSchema = mongoose.Schema({
         }
     }],
     dateNext: {
-        type: Date,
-        required: true
+        type: Date
     }
 });
 

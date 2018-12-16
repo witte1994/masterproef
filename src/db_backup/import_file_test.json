@@ -1,0 +1,1653 @@
+[
+    {
+        "info": {
+            "firstName": "Kenny",
+            "lastName": "Martens",
+            "nid": "19872883",
+            "birth": "1963-08-13T07:20:00",
+            "gender": "M",
+            "bloodType": "O-",
+            "height": "178",
+            "address": "Dorpsstraat 14, 1000 Brussel",
+            "phone": "0226/479631",
+            "smoker": "true"
+        },
+        "prescriptions": {
+            "medicines": [
+                {
+                    "name": "Omeprazol",
+                    "description": "Vermindert de aanmaak van zuur in de maag.",
+                    "sideEffects": "Maag-darmklachten, hoofdpijn, duizeligheid en overgevoeligheid.",
+                    "interactsWith": [
+                        "Simvastatine"
+                    ]
+                },
+                {
+                    "name": "Metoprolol",
+                    "description": "Zorgt ervoor dat het hartritme vertraagt, de bloeddruk verlaagt en de pompkracht van het hart tijdelijk vermindert.",
+                    "sideEffects": "Koude handen en voeten, duizeligheid, vermoeidheid, erg trage hartslag."
+                },
+                {
+                    "name": "Acetylsalicylzuur",
+                    "description": "Zorgt ervoor dat het bloed minder snel stolt, het cholesterolgehalte in het bloed wordt verlaagd.",
+                    "sideEffects": "Langer nabloeden bij verwondingen, snel bloeduitstortingen, spierpijn, maag-darmklachten."
+                },
+                {
+                    "name": "Simvastatine",
+                    "description": "Het cholesterolgehalte in het bloed wordt verlaagd.",
+                    "sideEffects": "Spierpijn, maag-darmklachten.",
+                    "interactsWith": [
+                        "Omeprazol"
+                    ]
+                },
+                {
+                    "name": "Metformine",
+                    "description": "Verlaagt het glucosegehalte in het bloed.",
+                    "sideEffects": "Maag-darmklachten, misselijkheid, diarree, verlies van eetlust."
+                },
+                {
+                    "name": "Furosemide",
+                    "description": "Het lichaam verliest extra vocht.",
+                    "sideEffects": "Dorst, duizeligheid, hoofdpijn, buikpijn, spierkrampen, belastend voor nieren."
+                }
+            ],
+            "prescriptions": [
+                {
+                    "medName": "Omeprazol",
+                    "dosage": {
+                        "morning": "0",
+                        "noon": "1",
+                        "evening": "0",
+                        "bed": "1"
+                    },
+                    "startDate": "2018-11-22T07:20:00",
+                    "endDate": "2018-12-19T07:20:00"
+                },
+                {
+                    "medName": "Simvastatine",
+                    "dosage": {
+                        "morning": "0",
+                        "noon": "1",
+                        "evening": "1",
+                        "bed": "1"
+                    },
+                    "startDate": "2018-12-04T07:20:00",
+                    "endDate": "2018-12-18T07:20:00"
+                },
+                {
+                    "medName": "Metoprolol",
+                    "dosage": {
+                        "morning": "1",
+                        "noon": "1",
+                        "evening": "1",
+                        "bed": "1"
+                    },
+                    "startDate": "2018-12-03T07:20:00",
+                    "endDate": "2018-12-20T07:20:00"
+                }
+            ]
+        },
+        "bp": [
+            {
+                "systolic": "138",
+                "diastolic": "87",
+                "date": "2018-11-16T07:20:00"
+            },
+            {
+                "systolic": "141",
+                "diastolic": "92",
+                "date": "2018-11-17T07:20:00"
+            },
+            {
+                "systolic": "140",
+                "diastolic": "90",
+                "date": "2018-11-18T07:20:00"
+            },
+            {
+                "systolic": "139",
+                "diastolic": "91",
+                "date": "2018-11-19T07:20:00"
+            },
+            {
+                "systolic": "137",
+                "diastolic": "89",
+                "date": "2018-11-20T07:20:00"
+            },
+            {
+                "systolic": "137",
+                "diastolic": "88",
+                "date": "2018-11-21T07:20:00"
+            },
+            {
+                "systolic": "135",
+                "diastolic": "87",
+                "date": "2018-11-22T07:20:00"
+            },
+            {
+                "systolic": "137",
+                "diastolic": "88",
+                "date": "2018-11-23T07:20:00"
+            },
+            {
+                "systolic": "134",
+                "diastolic": "86",
+                "date": "2018-11-24T07:20:00"
+            },
+            {
+                "systolic": "133",
+                "diastolic": "86",
+                "date": "2018-11-25T07:20:00"
+            },
+            {
+                "systolic": "135",
+                "diastolic": "88",
+                "date": "2018-11-26T07:20:00"
+            },
+            {
+                "systolic": "134",
+                "diastolic": "87",
+                "date": "2018-11-27T07:20:00"
+            },
+            {
+                "systolic": "132",
+                "diastolic": "86",
+                "date": "2018-11-28T07:20:00"
+            },
+            {
+                "systolic": "132",
+                "diastolic": "87",
+                "date": "2018-11-29T07:20:00"
+            },
+            {
+                "systolic": "133",
+                "diastolic": "86",
+                "date": "2018-11-30T07:20:00"
+            },
+            {
+                "systolic": "131",
+                "diastolic": "85",
+                "date": "2018-12-01T07:20:00"
+            },
+            {
+                "systolic": "129",
+                "diastolic": "84",
+                "date": "2018-12-02T07:20:00"
+            },
+            {
+                "systolic": "130",
+                "diastolic": "86",
+                "date": "2018-12-03T07:20:00"
+            },
+            {
+                "systolic": "128",
+                "diastolic": "86",
+                "date": "2018-12-04T07:20:00"
+            },
+            {
+                "systolic": "127",
+                "diastolic": "85",
+                "date": "2018-12-05T07:20:00"
+            },
+            {
+                "systolic": "128",
+                "diastolic": "85",
+                "date": "2018-12-06T07:20:00"
+            },
+            {
+                "systolic": "124",
+                "diastolic": "83",
+                "date": "2018-12-07T07:20:00"
+            },
+            {
+                "systolic": "126",
+                "diastolic": "85",
+                "date": "2018-12-08T07:20:00"
+            },
+            {
+                "systolic": "125",
+                "diastolic": "84",
+                "date": "2018-12-09T07:20:00"
+            },
+            {
+                "systolic": "127",
+                "diastolic": "86",
+                "date": "2018-12-10T07:20:00"
+            },
+            {
+                "systolic": "124",
+                "diastolic": "83",
+                "date": "2018-12-11T07:20:00"
+            },
+            {
+                "systolic": "124",
+                "diastolic": "84",
+                "date": "2018-12-12T07:20:00"
+            },
+            {
+                "systolic": "122",
+                "diastolic": "82",
+                "date": "2018-12-13T07:20:00"
+            },
+            {
+                "systolic": "124",
+                "diastolic": "83",
+                "date": "2018-12-14T07:20:00"
+            },
+            {
+                "systolic": "125",
+                "diastolic": "83",
+                "date": "2018-12-15T07:20:00"
+            },
+            {
+                "systolic": "124",
+                "diastolic": "84",
+                "date": "2018-12-16T07:20:00"
+            },
+            {
+                "systolic": "122",
+                "diastolic": "82",
+                "date": "2018-12-17T07:20:00"
+            },
+            {
+                "systolic": "121",
+                "diastolic": "82",
+                "date": "2018-12-18T07:20:00"
+            },
+            {
+                "systolic": "124",
+                "diastolic": "82",
+                "date": "2018-12-19T07:20:00"
+            },
+            {
+                "systolic": "120",
+                "diastolic": "79",
+                "date": "2018-12-20T07:20:00"
+            },
+            {
+                "systolic": "121",
+                "diastolic": "82",
+                "date": "2018-12-21T07:20:00"
+            },
+            {
+                "systolic": "122",
+                "diastolic": "81",
+                "date": "2018-12-22T07:20:00"
+            },
+            {
+                "systolic": "119",
+                "diastolic": "80",
+                "date": "2018-12-23T07:20:00"
+            },
+            {
+                "systolic": "122",
+                "diastolic": "81",
+                "date": "2018-12-24T07:20:00"
+            },
+            {
+                "systolic": "124",
+                "diastolic": "82",
+                "date": "2018-12-25T07:20:00"
+            },
+            {
+                "systolic": "122",
+                "diastolic": "81",
+                "date": "2018-12-26T07:20:00"
+            },
+            {
+                "systolic": "118",
+                "diastolic": "78",
+                "date": "2018-12-27T07:20:00"
+            },
+            {
+                "systolic": "121",
+                "diastolic": "80",
+                "date": "2018-12-28T07:20:00"
+            },
+            {
+                "systolic": "120",
+                "diastolic": "78",
+                "date": "2018-12-29T07:20:00"
+            },
+            {
+                "systolic": "122",
+                "diastolic": "81",
+                "date": "2018-12-30T07:20:00"
+            },
+            {
+                "systolic": "119",
+                "diastolic": "81",
+                "date": "2018-12-31T07:20:00"
+            }
+        ],
+        "heart": [
+            {
+                "value": "97",
+                "date": "2018-11-16T07:20:00"
+            },
+            {
+                "value": "90",
+                "date": "2018-11-17T07:20:00"
+            },
+            {
+                "value": "87",
+                "date": "2018-11-18T07:20:00"
+            },
+            {
+                "value": "95",
+                "date": "2018-11-19T07:20:00"
+            },
+            {
+                "value": "85",
+                "date": "2018-11-20T07:20:00"
+            },
+            {
+                "value": "90",
+                "date": "2018-11-21T07:20:00"
+            },
+            {
+                "value": "84",
+                "date": "2018-11-22T07:20:00"
+            },
+            {
+                "value": "87",
+                "date": "2018-11-23T07:20:00"
+            },
+            {
+                "value": "91",
+                "date": "2018-11-24T07:20:00"
+            },
+            {
+                "value": "82",
+                "date": "2018-11-25T07:20:00"
+            },
+            {
+                "value": "86",
+                "date": "2018-11-26T07:20:00"
+            },
+            {
+                "value": "88",
+                "date": "2018-11-27T07:20:00"
+            },
+            {
+                "value": "82",
+                "date": "2018-11-28T07:20:00"
+            },
+            {
+                "value": "78",
+                "date": "2018-11-29T07:20:00"
+            },
+            {
+                "value": "84",
+                "date": "2018-11-30T07:20:00"
+            },
+            {
+                "value": "82",
+                "date": "2018-12-01T07:20:00"
+            },
+            {
+                "value": "77",
+                "date": "2018-12-02T07:20:00"
+            },
+            {
+                "value": "83",
+                "date": "2018-12-03T07:20:00"
+            },
+            {
+                "value": "75",
+                "date": "2018-12-04T07:20:00"
+            },
+            {
+                "value": "81",
+                "date": "2018-12-05T07:20:00"
+            },
+            {
+                "value": "83",
+                "date": "2018-12-06T07:20:00"
+            },
+            {
+                "value": "75",
+                "date": "2018-12-07T07:20:00"
+            },
+            {
+                "value": "77",
+                "date": "2018-12-08T07:20:00"
+            },
+            {
+                "value": "78",
+                "date": "2018-12-09T07:20:00"
+            },
+            {
+                "value": "74",
+                "date": "2018-12-10T07:20:00"
+            },
+            {
+                "value": "78",
+                "date": "2018-12-11T07:20:00"
+            },
+            {
+                "value": "76",
+                "date": "2018-12-12T07:20:00"
+            },
+            {
+                "value": "74",
+                "date": "2018-12-13T07:20:00"
+            },
+            {
+                "value": "76",
+                "date": "2018-12-14T07:20:00"
+            },
+            {
+                "value": "73",
+                "date": "2018-12-15T07:20:00"
+            },
+            {
+                "value": "76",
+                "date": "2018-12-16T07:20:00"
+            },
+            {
+                "value": "72",
+                "date": "2018-12-17T07:20:00"
+            },
+            {
+                "value": "74",
+                "date": "2018-12-18T07:20:00"
+            },
+            {
+                "value": "72",
+                "date": "2018-12-19T07:20:00"
+            },
+            {
+                "value": "71",
+                "date": "2018-12-20T07:20:00"
+            },
+            {
+                "value": "73",
+                "date": "2018-12-21T07:20:00"
+            },
+            {
+                "value": "69",
+                "date": "2018-12-22T07:20:00"
+            },
+            {
+                "value": "72",
+                "date": "2018-12-23T07:20:00"
+            },
+            {
+                "value": "73",
+                "date": "2018-12-24T07:20:00"
+            },
+            {
+                "value": "74",
+                "date": "2018-12-25T07:20:00"
+            },
+            {
+                "value": "71",
+                "date": "2018-12-26T07:20:00"
+            },
+            {
+                "value": "73",
+                "date": "2018-12-27T07:20:00"
+            },
+            {
+                "value": "69",
+                "date": "2018-12-28T07:20:00"
+            },
+            {
+                "value": "71",
+                "date": "2018-12-29T07:20:00"
+            },
+            {
+                "value": "72",
+                "date": "2018-12-30T07:20:00"
+            },
+            {
+                "value": "68",
+                "date": "2018-12-31T07:20:00"
+            }
+        ],
+        "weight": [
+            {
+                "value": "93.8",
+                "date": "2018-11-16T07:20:00"
+            },
+            {
+                "value": "93.4",
+                "date": "2018-11-17T07:20:00"
+            },
+            {
+                "value": "93.6",
+                "date": "2018-11-18T07:20:00"
+            },
+            {
+                "value": "93.1",
+                "date": "2018-11-19T07:20:00"
+            },
+            {
+                "value": "92.7",
+                "date": "2018-11-20T07:20:00"
+            },
+            {
+                "value": "92.1",
+                "date": "2018-11-21T07:20:00"
+            },
+            {
+                "value": "91.9",
+                "date": "2018-11-22T07:20:00"
+            },
+            {
+                "value": "91.7",
+                "date": "2018-11-23T07:20:00"
+            },
+            {
+                "value": "91.1",
+                "date": "2018-11-24T07:20:00"
+            },
+            {
+                "value": "90.4",
+                "date": "2018-11-25T07:20:00"
+            },
+            {
+                "value": "90.1",
+                "date": "2018-11-26T07:20:00"
+            },
+            {
+                "value": "89.7",
+                "date": "2018-11-27T07:20:00"
+            },
+            {
+                "value": "89.4",
+                "date": "2018-11-28T07:20:00"
+            },
+            {
+                "value": "89.1",
+                "date": "2018-11-29T07:20:00"
+            },
+            {
+                "value": "88.4",
+                "date": "2018-11-30T07:20:00"
+            },
+            {
+                "value": "88.0",
+                "date": "2018-12-01T07:20:00"
+            },
+            {
+                "value": "87.4",
+                "date": "2018-12-02T07:20:00"
+            },
+            {
+                "value": "87.3",
+                "date": "2018-12-03T07:20:00"
+            },
+            {
+                "value": "86.7",
+                "date": "2018-12-04T07:20:00"
+            },
+            {
+                "value": "86.4",
+                "date": "2018-12-05T07:20:00"
+            },
+            {
+                "value": "85.9",
+                "date": "2018-12-06T07:20:00"
+            },
+            {
+                "value": "85.6",
+                "date": "2018-12-07T07:20:00"
+            },
+            {
+                "value": "85.1",
+                "date": "2018-12-08T07:20:00"
+            },
+            {
+                "value": "84.7",
+                "date": "2018-12-09T07:20:00"
+            },
+            {
+                "value": "84.4",
+                "date": "2018-12-10T07:20:00"
+            },
+            {
+                "value": "84.1",
+                "date": "2018-12-11T07:20:00"
+            },
+            {
+                "value": "83.7",
+                "date": "2018-12-12T07:20:00"
+            },
+            {
+                "value": "83.6",
+                "date": "2018-12-13T07:20:00"
+            },
+            {
+                "value": "84.1",
+                "date": "2018-12-14T07:20:00"
+            },
+            {
+                "value": "83.4",
+                "date": "2018-12-15T07:20:00"
+            },
+            {
+                "value": "82.8",
+                "date": "2018-12-16T07:20:00"
+            },
+            {
+                "value": "82.4",
+                "date": "2018-12-17T07:20:00"
+            },
+            {
+                "value": "81.9",
+                "date": "2018-12-18T07:20:00"
+            },
+            {
+                "value": "81.7",
+                "date": "2018-12-19T07:20:00"
+            },
+            {
+                "value": "81.4",
+                "date": "2018-12-20T07:20:00"
+            },
+            {
+                "value": "80.8",
+                "date": "2018-12-21T07:20:00"
+            },
+            {
+                "value": "80.4",
+                "date": "2018-12-22T07:20:00"
+            },
+            {
+                "value": "80.2",
+                "date": "2018-12-23T07:20:00"
+            },
+            {
+                "value": "81.0",
+                "date": "2018-12-24T07:20:00"
+            },
+            {
+                "value": "81.5",
+                "date": "2018-12-25T07:20:00"
+            },
+            {
+                "value": "82.0",
+                "date": "2018-12-26T07:20:00"
+            },
+            {
+                "value": "81.4",
+                "date": "2018-12-27T07:20:00"
+            },
+            {
+                "value": "80.9",
+                "date": "2018-12-28T07:20:00"
+            },
+            {
+                "value": "80.4",
+                "date": "2018-12-29T07:20:00"
+            },
+            {
+                "value": "79.7",
+                "date": "2018-12-30T07:20:00"
+            },
+            {
+                "value": "80.2",
+                "date": "2018-12-31T07:20:00"
+            }
+        ]
+    },
+    {
+        "info": {
+            "firstName": "Jozefien",
+            "lastName": "Hendrix",
+            "nid": "10891684",
+            "birth": "1951-08-13T17:00:00",
+            "gender": "F",
+            "bloodType": "A+",
+            "height": "157",
+            "address": "Stadsplein 34A, 3500 Hasselt",
+            "phone": "0852/418271",
+            "smoker": "false"
+        },
+        "prescriptions": {
+            "medicines": [
+                {
+                    "name": "Omeprazol",
+                    "description": "Vermindert de aanmaak van zuur in de maag.",
+                    "sideEffects": "Maag-darmklachten, hoofdpijn, duizeligheid en overgevoeligheid.",
+                    "interactsWith": [
+                        "Simvastatine"
+                    ]
+                },
+                {
+                    "name": "Metoprolol",
+                    "description": "Zorgt ervoor dat het hartritme vertraagt, de bloeddruk verlaagt en de pompkracht van het hart tijdelijk vermindert.",
+                    "sideEffects": "Koude handen en voeten, duizeligheid, vermoeidheid, erg trage hartslag."
+                },
+                {
+                    "name": "Acetylsalicylzuur",
+                    "description": "Zorgt ervoor dat het bloed minder snel stolt, het cholesterolgehalte in het bloed wordt verlaagd.",
+                    "sideEffects": "Langer nabloeden bij verwondingen, snel bloeduitstortingen, spierpijn, maag-darmklachten."
+                },
+                {
+                    "name": "Simvastatine",
+                    "description": "Het cholesterolgehalte in het bloed wordt verlaagd.",
+                    "sideEffects": "Spierpijn, maag-darmklachten.",
+                    "interactsWith": [
+                        "Omeprazol"
+                    ]
+                },
+                {
+                    "name": "Metformine",
+                    "description": "Verlaagt het glucosegehalte in het bloed.",
+                    "sideEffects": "Maag-darmklachten, misselijkheid, diarree, verlies van eetlust."
+                },
+                {
+                    "name": "Furosemide",
+                    "description": "Het lichaam verliest extra vocht.",
+                    "sideEffects": "Dorst, duizeligheid, hoofdpijn, buikpijn, spierkrampen, belastend voor nieren."
+                }
+            ],
+            "prescriptions": [
+                {
+                    "medName": "Omeprazol",
+                    "dosage": {
+                        "morning": "1",
+                        "noon": "1",
+                        "evening": "0",
+                        "bed": "1"
+                    },
+                    "startDate": "2018-11-22T07:20:00",
+                    "endDate": "2018-12-19T07:20:00"
+                },
+                {
+                    "medName": "Acetylsalicylzuur",
+                    "dosage": {
+                        "morning": "0",
+                        "noon": "1",
+                        "evening": "0",
+                        "bed": "1"
+                    },
+                    "startDate": "2018-12-14T07:20:00",
+                    "endDate": "2019-01-10T07:20:00"
+                },
+                {
+                    "medName": "Metoprolol",
+                    "dosage": {
+                        "morning": "1",
+                        "noon": "1",
+                        "evening": "1",
+                        "bed": "1"
+                    },
+                    "startDate": "2018-12-10T07:20:00",
+                    "endDate": "2018-12-24T07:20:00"
+                },
+                {
+                    "medName": "Furosemide",
+                    "dosage": {
+                        "morning": "0",
+                        "noon": "0",
+                        "evening": "0",
+                        "bed": "1"
+                    },
+                    "startDate": "2018-12-03T07:20:00",
+                    "endDate": "2019-01-14T07:20:00"
+                }
+            ]
+        },
+        "allergies": [
+            {
+                "name": "Noten",
+                "description": "Buikkrampen en misselijkheid, soms jeuk aan de ogen en huid.",
+                "severity": "1",
+                "type": "Food",
+                "date": "1998-12-04T07:20:00"
+            },
+            {
+                "name": "Katten/honden",
+                "description": "Niezen, snotterig en kortademigheid.",
+                "severity": "2",
+                "type": "Other",
+                "date": "2002-08-07T07:20:00"
+            },
+            {
+                "name": "Hooikoorts",
+                "description": "Niezen, snotterig en kortademigheid.",
+                "severity": "2",
+                "type": "Respiratory",
+                "date": "1988-04-24T07:20:00"
+            }
+        ],
+        "checklist": {
+            "description": "Consultatie routine",
+            "steps": [
+                {
+                    "description": "Metingen uitvoeren",
+                    "substeps": [
+                        {
+                            "description": "Hartslag"
+                        },
+                        {
+                            "description": "Bloeddruk"
+                        }
+                    ]
+                },
+                {
+                    "description": "Status opvragen ten opzichte van vorige consultatie",
+                    "substeps": [
+                    ]
+                }
+            ]
+        },
+        "workflows": [
+            {
+                "name": "consultatieprocedure",
+                "description": "Stappenplan af te lopen bij elke consultatie van de patient.",
+                "steps": [
+                    {
+                        "name": "Nieuwe patient",
+                        "description": "Correctheid van patientendossier nakijken",
+                        "substeps": [
+                        ]
+                    },
+                    {
+                        "name": "Pre-consultatie",
+                        "description": "Overlopen van nieuwe data.",
+                        "substeps": [
+                            {
+                                "description": "Bloeddruk, hartslag en gewicht"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Consultatie",
+                        "description": "Checklist afgaan.",
+                        "substeps": [
+                            {
+                                "description": "Reset checklist bij begin"
+                            },
+                            {
+                                "description": "Reset checklist bij einde"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Post-consultatie",
+                        "description": "Verwerking nieuwe gegevens en nota's.",
+                        "substeps": [
+                            {
+                                "description": "Nieuwe nota's toevoegen aan dashboard"
+                            },
+                            {
+                                "description": "Checklist indien nodig aanpassen"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "opvolgingsprocedure",
+                "description": "Stappenplan af te lopen bij elke consultatie van de patient.",
+                "steps": [
+                ]
+            }
+        ],
+        "bp": [
+            {
+                "systolic": "138",
+                "diastolic": "87",
+                "date": "2018-11-16T07:20:00"
+            },
+            {
+                "systolic": "127",
+                "diastolic": "82",
+                "date": "2018-11-17T07:20:00"
+            },
+            {
+                "systolic": "131",
+                "diastolic": "86",
+                "date": "2018-11-18T07:20:00"
+            },
+            {
+                "systolic": "134",
+                "diastolic": "86",
+                "date": "2018-11-19T07:20:00"
+            },
+            {
+                "systolic": "137",
+                "diastolic": "88",
+                "date": "2018-11-20T07:20:00"
+            },
+            {
+                "systolic": "138",
+                "diastolic": "89",
+                "date": "2018-11-21T07:20:00"
+            },
+            {
+                "systolic": "127",
+                "diastolic": "84",
+                "date": "2018-11-22T07:20:00"
+            },
+            {
+                "systolic": "124",
+                "diastolic": "82",
+                "date": "2018-11-23T07:20:00"
+            },
+            {
+                "systolic": "137",
+                "diastolic": "89",
+                "date": "2018-11-24T07:20:00"
+            },
+            {
+                "systolic": "132",
+                "diastolic": "84",
+                "date": "2018-11-25T07:20:00"
+            },
+            {
+                "systolic": "138",
+                "diastolic": "89",
+                "date": "2018-11-26T07:20:00"
+            },
+            {
+                "systolic": "122",
+                "diastolic": "81",
+                "date": "2018-11-27T07:20:00"
+            },
+            {
+                "systolic": "132",
+                "diastolic": "87",
+                "date": "2018-11-28T07:20:00"
+            },
+            {
+                "systolic": "138",
+                "diastolic": "89",
+                "date": "2018-11-29T07:20:00"
+            },
+            {
+                "systolic": "123",
+                "diastolic": "82",
+                "date": "2018-11-30T07:20:00"
+            },
+            {
+                "systolic": "130",
+                "diastolic": "86",
+                "date": "2018-12-01T07:20:00"
+            },
+            {
+                "systolic": "127",
+                "diastolic": "83",
+                "date": "2018-12-02T07:20:00"
+            },
+            {
+                "systolic": "129",
+                "diastolic": "86",
+                "date": "2018-12-03T07:20:00"
+            },
+            {
+                "systolic": "134",
+                "diastolic": "87",
+                "date": "2018-12-04T07:20:00"
+            },
+            {
+                "systolic": "122",
+                "diastolic": "81",
+                "date": "2018-12-05T07:20:00"
+            },
+            {
+                "systolic": "137",
+                "diastolic": "88",
+                "date": "2018-12-06T07:20:00"
+            },
+            {
+                "systolic": "127",
+                "diastolic": "85",
+                "date": "2018-12-07T07:20:00"
+            },
+            {
+                "systolic": "131",
+                "diastolic": "85",
+                "date": "2018-12-08T07:20:00"
+            },
+            {
+                "systolic": "132",
+                "diastolic": "86",
+                "date": "2018-12-09T07:20:00"
+            },
+            {
+                "systolic": "124",
+                "diastolic": "83",
+                "date": "2018-12-10T07:20:00"
+            },
+            {
+                "systolic": "128",
+                "diastolic": "84",
+                "date": "2018-12-11T07:20:00"
+            },
+            {
+                "systolic": "134",
+                "diastolic": "87",
+                "date": "2018-12-12T07:20:00"
+            },
+            {
+                "systolic": "139",
+                "diastolic": "88",
+                "date": "2018-12-13T07:20:00"
+            },
+            {
+                "systolic": "141",
+                "diastolic": "91",
+                "date": "2018-12-14T07:20:00"
+            },
+            {
+                "systolic": "131",
+                "diastolic": "86",
+                "date": "2018-12-15T07:20:00"
+            },
+            {
+                "systolic": "130",
+                "diastolic": "86",
+                "date": "2018-12-16T07:20:00"
+            },
+            {
+                "systolic": "136",
+                "diastolic": "86",
+                "date": "2018-12-17T07:20:00"
+            },
+            {
+                "systolic": "128",
+                "diastolic": "85",
+                "date": "2018-12-18T07:20:00"
+            },
+            {
+                "systolic": "124",
+                "diastolic": "82",
+                "date": "2018-12-19T07:20:00"
+            },
+            {
+                "systolic": "130",
+                "diastolic": "84",
+                "date": "2018-12-20T07:20:00"
+            },
+            {
+                "systolic": "128",
+                "diastolic": "84",
+                "date": "2018-12-21T07:20:00"
+            },
+            {
+                "systolic": "131",
+                "diastolic": "85",
+                "date": "2018-12-22T07:20:00"
+            },
+            {
+                "systolic": "134",
+                "diastolic": "87",
+                "date": "2018-12-23T07:20:00"
+            },
+            {
+                "systolic": "128",
+                "diastolic": "86",
+                "date": "2018-12-24T07:20:00"
+            },
+            {
+                "systolic": "122",
+                "diastolic": "83",
+                "date": "2018-12-25T07:20:00"
+            },
+            {
+                "systolic": "132",
+                "diastolic": "86",
+                "date": "2018-12-26T07:20:00"
+            },
+            {
+                "systolic": "128",
+                "diastolic": "85",
+                "date": "2018-12-27T07:20:00"
+            },
+            {
+                "systolic": "131",
+                "diastolic": "85",
+                "date": "2018-12-28T07:20:00"
+            },
+            {
+                "systolic": "134",
+                "diastolic": "87",
+                "date": "2018-12-29T07:20:00"
+            },
+            {
+                "systolic": "124",
+                "diastolic": "83",
+                "date": "2018-12-30T07:20:00"
+            },
+            {
+                "systolic": "128",
+                "diastolic": "85",
+                "date": "2018-12-31T07:20:00"
+            }
+        ],
+        "weight": [
+            {
+                "value": "74.8",
+                "date": "2018-11-16T07:20:00"
+            },
+            {
+                "value": "75.3",
+                "date": "2018-11-17T07:20:00"
+            },
+            {
+                "value": "75.7",
+                "date": "2018-11-18T07:20:00"
+            },
+            {
+                "value": "76.2",
+                "date": "2018-11-19T07:20:00"
+            },
+            {
+                "value": "75.7",
+                "date": "2018-11-20T07:20:00"
+            },
+            {
+                "value": "76.1",
+                "date": "2018-11-21T07:20:00"
+            },
+            {
+                "value": "76.4",
+                "date": "2018-11-22T07:20:00"
+            },
+            {
+                "value": "76.8",
+                "date": "2018-11-23T07:20:00"
+            },
+            {
+                "value": "76.9",
+                "date": "2018-11-24T07:20:00"
+            },
+            {
+                "value": "77.2",
+                "date": "2018-11-25T07:20:00"
+            },
+            {
+                "value": "77.4",
+                "date": "2018-11-26T07:20:00"
+            },
+            {
+                "value": "77.8",
+                "date": "2018-11-27T07:20:00"
+            },
+            {
+                "value": "78.1",
+                "date": "2018-11-28T07:20:00"
+            },
+            {
+                "value": "77.7",
+                "date": "2018-11-29T07:20:00"
+            },
+            {
+                "value": "77.8",
+                "date": "2018-11-30T07:20:00"
+            },
+            {
+                "value": "77.4",
+                "date": "2018-12-01T07:20:00"
+            },
+            {
+                "value": "77.1",
+                "date": "2018-12-02T07:20:00"
+            },
+            {
+                "value": "76.7",
+                "date": "2018-12-03T07:20:00"
+            },
+            {
+                "value": "76.4",
+                "date": "2018-12-04T07:20:00"
+            },
+            {
+                "value": "75.8",
+                "date": "2018-12-05T07:20:00"
+            },
+            {
+                "value": "75.4",
+                "date": "2018-12-06T07:20:00"
+            },
+            {
+                "value": "74.9",
+                "date": "2018-12-07T07:20:00"
+            },
+            {
+                "value": "74.7",
+                "date": "2018-12-08T07:20:00"
+            },
+            {
+                "value": "74.3",
+                "date": "2018-12-09T07:20:00"
+            },
+            {
+                "value": "74.8",
+                "date": "2018-12-10T07:20:00"
+            },
+            {
+                "value": "74.6",
+                "date": "2018-12-11T07:20:00"
+            },
+            {
+                "value": "75.1",
+                "date": "2018-12-12T07:20:00"
+            },
+            {
+                "value": "75.4",
+                "date": "2018-12-13T07:20:00"
+            },
+            {
+                "value": "75.6",
+                "date": "2018-12-14T07:20:00"
+            },
+            {
+                "value": "75.9",
+                "date": "2018-12-15T07:20:00"
+            },
+            {
+                "value": "76.2",
+                "date": "2018-12-16T07:20:00"
+            },
+            {
+                "value": "76.4",
+                "date": "2018-12-17T07:20:00"
+            },
+            {
+                "value": "76.8",
+                "date": "2018-12-18T07:20:00"
+            },
+            {
+                "value": "76.4",
+                "date": "2018-12-19T07:20:00"
+            },
+            {
+                "value": "76.2",
+                "date": "2018-12-20T07:20:00"
+            },
+            {
+                "value": "75.7",
+                "date": "2018-12-21T07:20:00"
+            },
+            {
+                "value": "75.2",
+                "date": "2018-12-22T07:20:00"
+            },
+            {
+                "value": "75.8",
+                "date": "2018-12-23T07:20:00"
+            },
+            {
+                "value": "76.4",
+                "date": "2018-12-24T07:20:00"
+            },
+            {
+                "value": "76.8",
+                "date": "2018-12-25T07:20:00"
+            },
+            {
+                "value": "77.1",
+                "date": "2018-12-26T07:20:00"
+            },
+            {
+                "value": "77.4",
+                "date": "2018-12-27T07:20:00"
+            },
+            {
+                "value": "77.8",
+                "date": "2018-12-28T07:20:00"
+            },
+            {
+                "value": "78.1",
+                "date": "2018-12-29T07:20:00"
+            },
+            {
+                "value": "78.4",
+                "date": "2018-12-30T07:20:00"
+            },
+            {
+                "value": "78.2",
+                "date": "2018-12-31T07:20:00"
+            }
+        ],
+        "oxygen": [
+            {
+                "value": "98",
+                "date": "2018-12-16T07:20:00"
+            }
+        ]
+    },
+    {
+        "info": {
+            "firstName": "Bert",
+            "lastName": "Nieuwenhuize",
+            "nid": "2085468",
+            "birth": "1978-01-22T17:00:00",
+            "gender": "M",
+            "bloodType": "O-",
+            "height": "176",
+            "address": "Stadsplein 34A, 3500 Gent",
+            "phone": "0648/238476",
+            "smoker": "false"
+        },
+        "prescriptions": {
+            "medicines": [
+                {
+                    "name": "Omeprazol",
+                    "description": "Vermindert de aanmaak van zuur in de maag.",
+                    "sideEffects": "Maag-darmklachten, hoofdpijn, duizeligheid en overgevoeligheid.",
+                    "interactsWith": [
+                        "Simvastatine"
+                    ]
+                },
+                {
+                    "name": "Metoprolol",
+                    "description": "Zorgt ervoor dat het hartritme vertraagt, de bloeddruk verlaagt en de pompkracht van het hart tijdelijk vermindert.",
+                    "sideEffects": "Koude handen en voeten, duizeligheid, vermoeidheid, erg trage hartslag."
+                },
+                {
+                    "name": "Acetylsalicylzuur",
+                    "description": "Zorgt ervoor dat het bloed minder snel stolt, het cholesterolgehalte in het bloed wordt verlaagd.",
+                    "sideEffects": "Langer nabloeden bij verwondingen, snel bloeduitstortingen, spierpijn, maag-darmklachten."
+                },
+                {
+                    "name": "Simvastatine",
+                    "description": "Het cholesterolgehalte in het bloed wordt verlaagd.",
+                    "sideEffects": "Spierpijn, maag-darmklachten.",
+                    "interactsWith": [
+                        "Omeprazol"
+                    ]
+                },
+                {
+                    "name": "Metformine",
+                    "description": "Verlaagt het glucosegehalte in het bloed.",
+                    "sideEffects": "Maag-darmklachten, misselijkheid, diarree, verlies van eetlust."
+                },
+                {
+                    "name": "Furosemide",
+                    "description": "Het lichaam verliest extra vocht.",
+                    "sideEffects": "Dorst, duizeligheid, hoofdpijn, buikpijn, spierkrampen, belastend voor nieren."
+                }
+            ],
+            "prescriptions": [
+                {
+                    "medName": "Omeprazol",
+                    "dosage": {
+                        "morning": "0",
+                        "noon": "1",
+                        "evening": "0",
+                        "bed": "1"
+                    },
+                    "startDate": "2018-11-22T07:20:00",
+                    "endDate": "2018-12-19T07:20:00"
+                },
+                {
+                    "medName": "Acetylsalicylzuur",
+                    "dosage": {
+                        "morning": "1",
+                        "noon": "1",
+                        "evening": "0",
+                        "bed": "0"
+                    },
+                    "startDate": "2018-12-01T07:20:00",
+                    "endDate": "2018-12-21T07:20:00"
+                },
+                {
+                    "medName": "Metformine",
+                    "dosage": {
+                        "morning": "1",
+                        "noon": "0",
+                        "evening": "1",
+                        "bed": "1"
+                    },
+                    "startDate": "2018-12-12T07:20:00",
+                    "endDate": "2019-01-28T07:20:00"
+                },
+                {
+                    "medName": "Metoprolol",
+                    "dosage": {
+                        "morning": "0",
+                        "noon": "0",
+                        "evening": "1",
+                        "bed": "1"
+                    },
+                    "startDate": "2018-12-14T07:20:00",
+                    "endDate": "2019-01-22T07:20:00"
+                }
+            ]
+        },
+        "allergies": [
+            {
+                "name": "Koeienmelk",
+                "description": "Maag- en darmklachten, vermoeidheid en luchtwegproblemen.",
+                "severity": "3",
+                "type": "Food",
+                "date": "1986-08-17T07:20:00"
+            },
+            {
+                "name": "Gluten",
+                "description": "Gebrek aan eetlust, maag- en darmklachten",
+                "severity": "1",
+                "type": "Food",
+                "date": "1997-03-19T07:20:00"
+            }
+        ],
+        "vaccinations": [
+            {
+                "name": "test",
+                "description": "test",
+                "dateNext": "2100-01-01T17:00:00",
+                "entries": [
+                ]
+            },
+            {
+                "name": "Waterpokken",
+                "description": "Rode vlekjes op de huid, kunnen hevig jeuken.",
+                "dateNext": "",
+                "entries": [
+                    {
+                        "description": "1ste vaccinatie, patient was 13 maanden oud.",
+                        "date": "1979-03-02T17:00:00"
+                    },
+                    {
+                        "description": "2de vaccinatie, patient was 5 jaar oud.",
+                        "date": "1983-02-17T17:00:00"
+                    }
+                ]
+            },
+            {
+                "name": "Tetanus",
+                "description": "Infectieziekte.",
+                "dateNext": "",
+                "entries": [
+                    {
+                        "description": "1ste vaccinatie, patient was 2 jaar oud.",
+                        "date": "1980-04-11T17:00:00"
+                    }
+                ]
+            }
+        ],
+        "oxygen": [
+            {
+                "value": "97.7",
+                "date": "2018-11-16T07:20:00"
+            },
+            {
+                "value": "98.2",
+                "date": "2018-11-17T07:20:00"
+            },
+            {
+                "value": "96.4",
+                "date": "2018-11-18T07:20:00"
+            },
+            {
+                "value": "98.1",
+                "date": "2018-11-19T07:20:00"
+            },
+            {
+                "value": "96.8",
+                "date": "2018-11-20T07:20:00"
+            },
+            {
+                "value": "97.4",
+                "date": "2018-11-21T07:20:00"
+            },
+            {
+                "value": "97.9",
+                "date": "2018-11-22T07:20:00"
+            },
+            {
+                "value": "98.2",
+                "date": "2018-11-23T07:20:00"
+            },
+            {
+                "value": "96.6",
+                "date": "2018-11-24T07:20:00"
+            },
+            {
+                "value": "98.8",
+                "date": "2018-11-25T07:20:00"
+            },
+            {
+                "value": "95.4",
+                "date": "2018-11-26T07:20:00"
+            },
+            {
+                "value": "96.3",
+                "date": "2018-11-27T07:20:00"
+            },
+            {
+                "value": "97.2",
+                "date": "2018-11-28T07:20:00"
+            },
+            {
+                "value": "97.8",
+                "date": "2018-11-29T07:20:00"
+            },
+            {
+                "value": "98.3",
+                "date": "2018-11-30T07:20:00"
+            },
+            {
+                "value": "97.4",
+                "date": "2018-12-01T07:20:00"
+            },
+            {
+                "value": "95.2",
+                "date": "2018-12-02T07:20:00"
+            },
+            {
+                "value": "96.8",
+                "date": "2018-12-03T07:20:00"
+            },
+            {
+                "value": "97.8",
+                "date": "2018-12-04T07:20:00"
+            },
+            {
+                "value": "98.1",
+                "date": "2018-12-05T07:20:00"
+            },
+            {
+                "value": "94.8",
+                "date": "2018-12-06T07:20:00"
+            },
+            {
+                "value": "97.6",
+                "date": "2018-12-07T07:20:00"
+            },
+            {
+                "value": "98.6",
+                "date": "2018-12-08T07:20:00"
+            },
+            {
+                "value": "97.2",
+                "date": "2018-12-09T07:20:00"
+            },
+            {
+                "value": "98.3",
+                "date": "2018-12-10T07:20:00"
+            },
+            {
+                "value": "96.4",
+                "date": "2018-12-11T07:20:00"
+            },
+            {
+                "value": "97.3",
+                "date": "2018-12-12T07:20:00"
+            },
+            {
+                "value": "98.8",
+                "date": "2018-12-13T07:20:00"
+            },
+            {
+                "value": "97.4",
+                "date": "2018-12-14T07:20:00"
+            },
+            {
+                "value": "98.0",
+                "date": "2018-12-15T07:20:00"
+            },
+            {
+                "value": "97.7",
+                "date": "2018-12-16T07:20:00"
+            },
+            {
+                "value": "94.8",
+                "date": "2018-12-17T07:20:00"
+            },
+            {
+                "value": "98.7",
+                "date": "2018-12-18T07:20:00"
+            },
+            {
+                "value": "99.0",
+                "date": "2018-12-19T07:20:00"
+            },
+            {
+                "value": "96.7",
+                "date": "2018-12-20T07:20:00"
+            },
+            {
+                "value": "98.4",
+                "date": "2018-12-21T07:20:00"
+            },
+            {
+                "value": "97.7",
+                "date": "2018-12-22T07:20:00"
+            },
+            {
+                "value": "96.6",
+                "date": "2018-12-23T07:20:00"
+            },
+            {
+                "value": "95.8",
+                "date": "2018-12-24T07:20:00"
+            },
+            {
+                "value": "98.2",
+                "date": "2018-12-25T07:20:00"
+            },
+            {
+                "value": "98.7",
+                "date": "2018-12-26T07:20:00"
+            },
+            {
+                "value": "98.1",
+                "date": "2018-12-27T07:20:00"
+            },
+            {
+                "value": "97.4",
+                "date": "2018-12-28T07:20:00"
+            },
+            {
+                "value": "96.9",
+                "date": "2018-12-29T07:20:00"
+            },
+            {
+                "value": "97.7",
+                "date": "2018-12-30T07:20:00"
+            },
+            {
+                "value": "96.7",
+                "date": "2018-12-31T07:20:00"
+            }
+        ]
+    }
+]

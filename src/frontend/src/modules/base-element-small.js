@@ -78,6 +78,9 @@ export class BaseElementSmall extends PolymerElement {
     }
 
     getDateString(date) {
+        if (date == "" || date == undefined || date == null)
+            return "-";
+
         return moment(date).format("DD/MM/YYYY");
     }
 

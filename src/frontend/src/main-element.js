@@ -276,16 +276,8 @@ class MainElement extends PolymerElement {
         this.addEventListener('shift-small', function(e) {
             pckrySmall.shiftLayout();
         });
-        
-
-        if (true) {
-            this.$.login.value = "clinician1";
-            this.$.password.value = "test";
-            this.login();
-        } else {
-            this.$.loginDialog.open();
-        }
-        
+    
+        this.$.loginDialog.open();
     }
 
     login() {
@@ -330,7 +322,7 @@ class MainElement extends PolymerElement {
     getElementPositions() {
         var mainPositions = this.getMainElements();
         var smallPositions = this.getSmallElements();
-    
+
         return {
             patientElementSize: this.patientElement.getSize(),
             small: smallPositions,
