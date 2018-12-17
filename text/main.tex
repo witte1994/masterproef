@@ -1,0 +1,37 @@
+\documentclass{article}
+\usepackage{graphicx}
+
+\begin{document}
+    \include{chapters/title_page/title_page}
+
+	\pagenumbering{roman}
+	
+	\include{chapters/00_preface/preface}
+	
+    \include{chapters/01_abstract/abstract}
+    
+    \tableofcontents
+	\newpage
+    \pagenumbering{arabic}
+    
+    \include{chapters/1_introduction/introduction}
+	
+	\include{chapters/2_background/background}
+
+	\include{chapters/3_design/design}
+
+	\include{chapters/4_implementation/implementation}
+
+	\include{chapters/5_test/test}
+
+	\include{chapters/6_discussion/discussion}
+
+	\include{chapters/7_conclusion/conclusion}
+
+    \include{chapters/appendix/appendix}
+
+    \newpage
+	\bibliographystyle{unsrt}
+	\bibliography{refs}
+
+\end{document}
