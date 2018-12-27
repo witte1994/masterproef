@@ -12,98 +12,128 @@ fdsafdsa
 
     This combination allows the clinician to customize the dashboard according to the needs of each patient, facilitating effective care. Data is found rapidly, albeit summarized or detailed, and not hidden away behind multiple screens. Developers should be able to create modules that will fit into the dashboard, negating the use of multiple applications. The following section describes how the system will work and how the users interact with it.
 
-    \subsection{Dashboard design}\label{2_dashboards}
+    \subsection{Guiding principles}
 
-    Dashboards are used in many contexts. The most common examples include a car speedometer and stock analysis. In computer networking, dashboards are used to quickly interpret network traffic. In our case, we want to gather all relevant health data for a specific patient. To create an effective dashboard, multiple design principles should be kept in mind.
-    
-    While some dashboards provide fancy graphics, many miss the key point of what they are supposed to accomplish. The primary goal of a dashboard is clear communication, which is achieved through effective design. A formal definition is as follows: ``A dashboard is a visual display of the most important information need to achieve one or more objectives; consolidated and arranged on a single screen so information can be monitored at a glance.''\cite{dashboard}. This definition contains four key characteristics:
+    The translation of the aforementioned proposal to an intuitive prototype is guided by several principles. It was paramount during the design and implementation phases that the final prototype provided a positive user experience. This final prototype is the result of a series of steps defined by the MuiCSer framework, which is explained first. Hereafter, several design principles are mentioned that serve as helpful guidelines during the design process of a dashboard application.
 
-    \paragraph{Dashboards are visual displays.} It is important that data is represented visually. Displaying charts and other graphics allows more efficient communication compared to textual information. For example, trends and outliers are easier to spot in a line chart compared to a table with the same values. Instead of using a different visualization for the sake of variety, one should always use the visualization which is best suited to effectively communicate the data\cite{few2005intelligent}.
+        \subsubsection{MuiCSer}\label{muicser}
+        % description of process
+        This section describes the MuiCSer framework, designed for user-centered software engineering processes in a multidisciplinary context\cite{Haesen2008}. This framework focuses on optimizing the user experience during the entire software engineering cycle to ensure that the needs of the end user are fulfilled. By combining user-centered design methodologies and software engineering principles, the user experience of the final product can be improved substantially. Given the multidisciplinary context of this thesis, MuiCSer guided the entire development process leading to the final prototype described in section \ref{implementation}. % chktex 2
+        
+        \begin{figure}[!t]
+            \centering
+            \includegraphics[width=0.8\textwidth]{chapters/3_design/muicser}
+            \caption{The MuiCSer process.}\label{fig:muicser}
+        \end{figure}
 
-    \paragraph{Dashboards display information needed to achieve specific objectives.} The data that is shown, must be of use for the job that needs to be done. It is possible that the data needs to be gathered from multiple sources and tailored to the specific context so an efficient visualization can be created.
+        The MuiCSer process is summarized in figure \ref{fig:muicser}. After each phase, the result is evaluated, verified and validated to ensure that the required functionality is present. In turn, the received feedback can be used to reiterate over the previous phase. On the figure, this is denoted with the light blue arrows, while the single dark arrow represents the overall direction of the process. What follows is a brief description of each phase: % chktex 2
 
-    \paragraph{A dashboard fits on a single computer screen.} In order to see all information at a glance, scrolling must be prevented. If multiple screens are present, then it is no longer a single dashboard. This leads to another question: what type of display is the information shown on? Due to the wide variety of screen sizes and aspect ratios, a responsive dashboard would be most beneficial.
+        \paragraph{1. New or legacy system} The MuiCSer process starts with either an existing system in need of improvement, or with a new system which needs to be built from the ground up. This requires an analysis of the tasks and needs of the user, as well as the objects and resources required to perform these tasks. Personas and scenarios are the resulting artifacts of this phase. First, personas describe the personalities of the potential end users including hobbies, skills and the environment they surround themselves in\cite{persona_scenario}. Its goal is to uncover behavior patterns which can be of use when designing a user interface. Second, scenarios tell stories describing the use of a fictitious system from the point of view of a persona\cite{persona_scenario}. To summarize, personas and scenarios try to sketch the usage of the system for which a design must be made. These artifacts are found in section \ref{3_personas_scenarios}. % chktex 2
 
-    \paragraph{Dashboards are used to monitor information at a glance.} Important data should be immediately noticed, whereas very specific details should be hidden. This means data must be summarized or aggregated in order to be effectively shown. However, if the user wishes to view the detailed data, the dashboard should provide means to do so.\bigskip
+        \paragraph{2. Structured interaction analysis} During this phase, the results of the analysis are used to create task models. These models specify concrete tasks and goals which can be dissected into specific actions or steps the user has to take. These artifacts lay the foundation for designing a user interface which supports these tasks and goals. Task models were not created. Instead, via a brainstorm session (section \ref{module_brainstorm}), common tasks of a health system were grouped to form modules. The user interface will be designed to support these modules. % chktex 2
 
-    \noindent To create an effective dashboard, the user-base must be well known and understood. What type of users are we dealing with? What are their characteristics? These are important questions to ask, as one user may not comprehend one visualization while another one can. This means that the focus should be put on the user\cite{brath2004dashboard}. We can ask the following question to better understand the user's needs:
-    
-    \begin{itemize}
-        \item What metrics does the user need to see?
-        \item What context does each metric require to make it meaningful? Do we need to visualize the variance, target to reach, trend\ldots?
-        \item What visualization best communicates the metric?
-    \end{itemize}
+        \paragraph{3. Low fidelity prototyping} After the task definition, low fidelity prototypes are created. Paper sketches and mockups are examples of low fidelity prototypes. Without spending too much time and resources, presenting these prototypes to the end-user or customer can yield valuable feedback. However, there is often no functionality present. Typically multiple versions of these prototypes are created until the customer is satisfied, after which the development of a high fidelity prototype starts. Low fidelity prototypes were created for all modules defined during the brainstorm session and are found in section \ref{app_definition}. % chktex 2
 
-    \noindent On that end, sketches and mockups can significantly help the design process. Multiple iterations, each incorporating feedback from the users, ensure that the end result is satisfactory.
+        \paragraph{4. High fidelity prototyping} The development of high fidelity prototypes requires a lot more effort compared to low fidelity prototypes, as they offer functionality closely resembling the final product. However, the end user can now test both the design \emph{and} the functionality. This yields much more meaningful feedback. Section \ref{implementation} describes the development of the high fidelity prototype. % chktex 2
+
+        \paragraph{5. Final user interface} When the latest iteration of the high fidelity prototype satisfies all user requirements, the final user interface can be created. The high fidelity prototype may serve as the starting point of the final product in order to save time and resources. As a final step, the task models are checked against the resulting interface to check if all required functionality is present. No final product was created during the period of this thesis. However, the results of the usability test described in section \ref{discussion} should determine if it is feasible to commit further research towards the prototype. % chktex 2
+
+        \subsubsection{Dashboard design}\label{2_dashboards}
+
+        The proposal mentions a dashboard. However, dashboards are used in many contexts. Common examples include a car speedometer and stock analysis. In computer networking, dashboards are used to quickly interpret network traffic. In our case, we want to empower the user to create his or her own dashboard. To facilitate this goal, several design principles should be kept in mind.
+        
+        While some dashboards provide fancy graphics, many miss the key point of what they are supposed to accomplish. The primary goal of a dashboard is clear communication, which is achieved through effective design. A formal definition is as follows: ``A dashboard is a visual display of the most important information need to achieve one or more objectives; consolidated and arranged on a single screen so information can be monitored at a glance.''\cite{Few2006}. This definition contains four key characteristics:
+
+        \paragraph{Dashboards are visual displays.} It is important that data is represented visually. Graphics such as charts allow more efficient communication compared to textual information. For example, trends and outliers are easier spotted in a line chart when compared to a table containing the same data. Instead of using different visualizations for the sake of variety, one should \emph{always} choose the visualization which best suits effective communication of the data in question\cite{Few2005}.
+
+        \paragraph{Dashboards display information needed to achieve specific objectives.} The data that is shown, must be relevant to the job at hand. Sometimes data needs to aggregated from multiple sources after which it can be tailored according to the context wherein it must be presented. This manner of processing data yields effective data visualizations.
+
+        \paragraph{A dashboard fits on a single computer screen.} In order to see as much information at a glance, scrolling should be prevented. If multiple screens are present, then it is no longer a single dashboard. This leads to another question: what type of display is the information shown on? In today's world, computer displays come in many shapes and sizes. Therefore, a responsive layout can be very beneficial, but scrolling becomes inevitable as the screen decreases in size. As an example, it is impossible to present the same dashboard built for a Full HD monitor on a smartphone display. While the latter display may have the same resolution, the content will be too small to read comfortably.
+
+        \paragraph{Dashboards are used to monitor information at a glance.} Important data should be immediately noticeable, whereas specific details should be hidden. Therefore, by summarizing or aggregating the data a more effective visualization may be achieved. However, if the user wishes to view the detailed data, the dashboard should provide means to do so. Also, careful thought must be given to what information is of importance so it is never hidden.\bigskip
+
+        \noindent To create an effective dashboard, the user-base must be well known and understood. What type of users are we dealing with? What are their characteristics? These are important questions to ask, as one user may not comprehend one visualization while the other can. Therefore, the focus should be put on the user during the design of the dashboard\cite{Brath2004}. We can ask the following questions to better understand the needs of the user:
+        
+        \begin{itemize}
+            \item What metrics does the user need to see?
+            \item What context does each metric require to make it meaningful? Do we need to visualize the variance, target to reach, trend\ldots?
+            \item What visualization best communicates the metric?
+        \end{itemize}
+
+        \noindent On that end, sketches and mockups are helpful during the design process. Multiple iterations each incorporating feedback received from the users, ensure that the end result is satisfactory.
 
     \subsection{Personas \& scenarios}\label{3_personas_scenarios}
 
-    Based on the proposal mentioned in the previous section, personas and scenarios were created to get a better understanding of its users and how the system will work. Each of these tries to highlight the problems the users face and how the new system tries to solve them.
+    The first step of the MuiCSer involves creating personas and scenarios. These artifacts should give us a better understanding of the system's users and how they will use it. Each persona and scenario pair tries to highlight problems the users face and how the new system tries to solve them.
 
         % highlights customization and dashboard
         \subsubsection{Jake}
 
         \paragraph{Persona} Jake is a 25-year-old male who currently works as a nurse at the hospital in his city. He has been working there for four years and lives alone in his apartment. Still being a young adult, Jake grew up with technology. As a result, he experiences no difficulties when using new software on his computer or smartphone. His hobbies include music, playing the guitar, and video gaming.
 
-        Currently, the workflow at the hospital is dated. A new health information system was introduced to summarize and gather all medical data in a singular space. Because this is an all-in-one system, a lot of features that Jake does not need still clutter the screen. Navigating the system is difficult and customization is not present. Jake wishes to only see the features he uses most while hiding the features he does not need.
+        Currently, the workflow at the hospital is dated. A new health information system was introduced to summarize and gather all medical data in a single program. Because this is an all-in-one system, a lot of features that Jake does not need still clutter the screen. Navigating the system is difficult and customization is not present. Jake wishes to only view the features he uses most while hiding the features he does not need.
         
-        \paragraph{Scenario} Jake starts his first day using the new system by reading the manual that is accompanied with it. He starts the application and for each patient he is presented with a list of modules that can be added to the dashboard. These modules can help with the following: cardiovascular disease, respiratory disease, diabetes, and others.
+        \paragraph{Scenario} Jake starts his first day using the new system by reading the manual that is accompanied with it. He starts the application which shows a list of patients for which he can create a personalized dashboard. When Jake opens the dashboard associated with a patient, he notices that many modules can be selected.
 
-        After selecting a few modules, Jake is presented with a dashboard. The dashboard contains all the wanted functionality of the system, where each ``block'' represents a module that was added. Jake moves a few blocks around until he is satisfied with the layout. He noticed a module he does not need anymore and promptly deletes it by selecting the option on the module. After a while, Jake got transferred to another department and wants to add a new module to support his new workflow. He opens the module list and selects the he wants, which is then added to the dashboard.
+        After adding a few modules to the dashboard, Jake has all the functionality he needs to do his work. During this process, he added a wrong module which was easily removed. Hereafter, Jake resizes and moves the modules until he is satisfied with the layout. Over time, Jake updated the dashboard of several patients by adding a module due to changes in his workflow. All he had to do was to open the module list and select the module he needed.
 
-        By examining the new module Jake quickly notices that on the dashboard a summary is given. But when Jake clicks on the enlarge button, the module expands to fill a larger area where detailed information is shown. Jake feels he is in control of the system and that it will improve his productivity.\bigskip
+        By examining the new module Jake quickly notices that it looks similar and is customizable in the same manner as the other modules. Jake feels he is in control of the system and convinced it will boost his productivity.\bigskip
         
-        \noindent This scenario highlights the benefits of customization. Hiding unwanted components, while adding the useful ones allow for a clear dashboard to be displayed. The user is in control and is able to quickly view data of importance. It is still possible to view detailed data.
+        \noindent This scenario highlights the benefits of customization. Hiding unwanted and adding useful components allow for a clear dashboard to be displayed. The user is in control and is able to quickly view data of importance.
         
         % highlights customization
         \subsubsection{Dan}
 
         \paragraph{Persona} Dan is a general practitioner since he graduated from university. He is on the job for 21 years and he is the preferred doctor in his town. Throughout the years Dan has used a multitude of systems and he always tries new ones to improve his workflow. Because he has been a general practitioner for such a long time, he has 500 patients that visit him at least twice a year. Some patients, especially the elderly, visit as much as once a month.
 
-        Most of Dan's patients visit for illnesses such as fever and a cold. To diagnose these illnesses no data is necessarily needed, just a description of the patient's symptoms will suffice most of the time. If Dan performs such a diagnosis, he promptly adds it to the information system and to the electronic health record of the patient.
+        Most of Dan's patients visit for illnesses such as fever and a cold. To diagnose these illnesses, a description of the patient's symptoms suffices most of the time. If Dan performs such a diagnosis, he promptly adds it to the electronic health record of the patient.
 
-        However, if a patient visits that has a lot of problems regarding his blood pressure, then Dan has to perform a more complex diagnosis using historical data. In the current system that Dan uses, it is very difficult to search for this data. But what bugs Dan the most is that he has to do it every time this patient visits.
+        However, if a patient visits that has a lot of problems regarding his blood pressure, then Dan has to perform a more complex diagnosis involving historical data. In the current system that Dan uses, it is very difficult to search for and work with this data. But what bugs Dan the most is that he has to do it every time this patient visits.
 
-        \paragraph{Scenario} Because of Dan's ongoing curiosity, he tries a new health information system which allows customization for each specific patient. Because the diagnoses of most patients can be very different from time to time, Dan creates a default module group which is displayed for each patient, unless that patient has a specific module configuration. The default module group includes past diagnoses, known allergies, patient information (blood type, last weight, height\ldots), and a current medication list.
+        \paragraph{Scenario} Dan tries a new health information system which allows customization for each specific patient. Because the diagnoses of most patients can be very different from time to time, Dan creates a default module group which is displayed for each patient, unless that patient has a specific module configuration. The default module group includes past diagnoses, known allergies, patient information (blood type, last weight, height\ldots), and a current medication list.
 
-        The first patient of the day describes what sounds like a fever. Dan confirms this and hands the patient a prescription. The diagnosis is added to the `past diagnoses' module and the prescribed medication to the `current medication list' module. Dan did not need other health data to perform the diagnosis. Therefore, Dan does not change the configuration of this patient.
+        The first patient of the day describes what sounds like a fever. Dan confirms this and hands the patient a prescription. The diagnosis is added to the respective module and the prescribed medication to the module containing prescription data. Dan did not need other health data to perform the diagnosis. Therefore, Dan does not change the configuration of this patient.
 
-        The next patient, an elderly woman, came for her second visit of this month. Dan knows from the past that it will probably be a heart related problem. Dan searches for a `heart' module and adds it to the configuration of the elderly woman. Now both the default module group and a heart rate module are present, which is unnecessary according to Dan. He removes some modules of the default module group. Now, the next time the elderly woman visits, that configuration will be automatically loaded.
+        The next patient, an elderly woman, visited Dan for the second time this month. Dan knows from the past that it will probably be a heart related issue. Dan searches for a `heart' module and adds it to the configuration of the elderly woman. Now both the default module group and a heart rate module are present, which is unnecessary according to Dan. He removes some modules of the default module group. Now, the next time the elderly woman visits, that configuration will be automatically loaded.
 
         One specific patient had broken his arm three times in less than a year. When the patient came for a routine visit, Dan immediately added a module to easily view x-ray photos and view them in a timeline.\bigskip
 
-        \noindent Again, the benefits of system customization for each patient are obvious. Initially, it will take some time to configure each dashboard for all the patients, but the system will try to make this process quick to complete. Once the configuration is done, the time spent during a consultation will decrease.
+        \noindent Providing customization options as described in this scenario has immediate benefits. Initially, it will take some time to configure each dashboard for all the patients, but the system will try to make this process quick to complete. Once the configuration is finished, time spent during a consultation can decrease dramatically.
         
         % highlights telemonitoring
         \subsubsection{Emily}
 
-        \paragraph{Persona} Just like Dan, Emily has been a successful general practitioner for quite some time. However, she has different needs of an EHRS\@. Between each patient visit, there is a period of time in which Emily does not know what happens to patients regarding certain parameters. For example, if a person has to regularly measure his heart rate and blood pressure because of cardiovascular disease, it is imperative that the doctor is made aware of these values. If Emily sees that these values are not looking well, she can contact the patient to come in for a checkup.
+        \paragraph{Persona} Just like Dan, Emily has been a successful general practitioner for quite some time. However, she has different needs of an EHRS\@. Between each patient visit, there is a period of time in which Emily does not know what happens to patients regarding certain parameters. For example, if a person regularly measures his heart rate and blood pressure because of cardiovascular disease, then it is important that the doctor is made aware of these values. If Emily notices a negative trend, she can contact the patient to schedule an early consultation.
+        
+        In this case, Emily would like to visually see the progression of the heart rate and blood pressure values. Also, easy side-by-side comparison of both parameters would be useful. Currently, she needs to navigate from one screen to the other to do the comparison.
+        
+        \paragraph{Scenario} Emily recently received notice of a new platform that allows 3rd party applications to easily integrate with it. Now, a mobile application can send new values towards the platform. This allows Emily to monitor the patient remotely, which saves precious time for both parties. The platform can be customized to display multiple charts of data values.
 
-        If a patient has sleep issues, Emily wishes to not see detailed measurement values, but regular descriptions of the night’s sleep. This includes the hours of sleep, amount of wake-ups, subjective feeling of tiredness. Currently, Emily has no way of regularly receiving this information without having the patient visit.
+        A patient who recently had a cardiac arrest is continuing rehabilitation at home. However, the patient has chest pains and pays Emily a visit. She tells the patient to regularly measure his blood pressure and heart rate, and to take note of these values in a mobile application. After they have scheduled the next visit, the patient is sent home. As the next few weeks pass by, Emily notices a climbing trend on this patient's blood pressure chart. She tells herself to regularly check up on this patient as there is currently no reason to panic.
         
-        \paragraph{Scenario} Emily recently received notice of a new platform that includes telemonitoring support. Several mobile applications are developed that can send data using an API to the platform, which in turn processes the values and can notify Emily of any anomalies. It includes customization for certain parameters in which Emily can individually assign thresholds for each patient.
+        After another two weeks, Emily takes another look at the blood pressure data. The chart clearly shows that the blood pressure values keep rising. Emily decides to call the patient to schedule an early visit. The system helped Emily to intervene as soon as the situation seemed to worsen.\bigskip
 
-        A patient who recently had a cardiac arrest is continuing rehabilitation at home. However, the patient has chest pains and pays Emily a visit. She tells the patient to regularly measure his blood pressure and heart rate, and to take note of these values in a mobile application. This application also allows taking general notes, such as feeling pain or having caught a cold. After they have scheduled the next visit, the patient is sent home.
-        
-        As the next few weeks pass by, Emily is notified that this patient has crossed a threshold regarding his blood pressure. Immediately Emily checks the measured data and sees a graph of all measured values. This dataset delivers insight into the history of the patient and Emily sees that there is currently no need to panic. She decides to not take action and configures a weekly reminder to keep monitoring the blood pressure.
-        
-        The next week, Emily receives a notification that the patient has made a note. It reads that he experienced chest pains. Again, Emily takes a look at the blood pressure data and sees a worsening trend leading to hypertension. Emily decides to call the patient to schedule an early visit. The system helped Emily to intervene as soon as the situation seemed to worsen while avoiding having the patient visit too early which in turn saves Emily time.
-        
-        Another patient has sleep issues. Emily encourages the patient to use a sleep monitor, which is a wristband. This device is connected to a smartphone which communicates the quantitative data to the new platform. The application on the smartphone allows the patient to take note of qualitative data such as a general description of the night or what food he ate. One night the patient slept only three hours and took note that he went out and drank a lot of alcohol. This could explain for example the bad sleeping rhythm for the next few days. Emily wishes to keep track of this patient on a weekly basis and configures the platform to notify her.\bigskip
-
-        \noindent Here, the effects of telemonitoring are highlighted. By generating reports and alerts, the caregiver can intervene when necessary. Combine this with the aforementioned dashboard platform, greater efficiency of care can be accomplished.
+        \noindent This scenario gives an example of interoperability and highlights the effect of data visualization. By allowing the caregiver to monitor the patient at home the onset of a disease can be detected.
 
         % highlights integration
         \subsubsection{Anna}
 
-        \paragraph{Persona} Anna is a software engineer working at the local hospital. From the early 2000's, she was responsible for the integration of health software systems. As such, she has experienced the continuous change associated with health software. Each unit of the hospital uses different software, while they all share a general system to view patient records. The interaction between these applications is one of Anna's responsibilities.
+        \paragraph{Persona} Anna is a software engineer working at the local hospital. From the early 2000's, she was responsible for the integration of health software systems. As such, she has experienced the continuous change associated with health software firsthand. Each unit of the hospital uses different software, while they all share a central system to view patient records. The interaction between these applications is one of Anna's responsibilities.
 
         As time goes on, new software and medical instruments that improve workflow are purchased. Sometimes these replace old systems, otherwise they are added to work alongside them. Both are becoming increasingly difficult to do, as the codebase of the EHRS grows. When an older system gets replaced, Anna has to weed through the code and delete little pieces, hoping other parts wont break. It is a frustrating task as often band-aid solutions are applied.
 
-        \paragraph{Scenario} A new EHRS was installed that should improve integration of other applications. Anna skims through the documentation and starts the transition process. She quickly notices that for each device or application she needs to create a back end data structure and a module that represents it in the EHRS\@. The new EHRS is designed that these modules can serve as complete standalone applications or be part of a larger set of modules.
+        \paragraph{Scenario} A new EHRS was installed that should improve integration of other applications. Anna skims through the documentation and starts the transition process. She quickly notices that for each device or application she needs to create a back end data structure and a module that represents it in the EHRS\@. The new EHRS can integrate with minimal downtime.
 
-        After the initial transition period, everything is put into place. Not soon after, new bedside monitors with accompanying software were purchased. These replace the old bedside monitors and consequently, the software. Thanks to the new EHRS, Anna deletes the old module without much hassle. Also, she reworked the back end data structure to work with the readings from the new device. The data of the old device is ported to the new data structure, so no data is lost. Anna designed the new module to be similar in appearance and functionality. After implementing the module, the staff barely notices any change and workflow resumes with minor disruption.\bigskip
+        After the initial transition period, everything is put into place. Not soon after, new bedside monitors with accompanying software were purchased. These replace the old bedside monitors and consequently, the software. As a first step, Anna reworked the back end data structure to work with the readings from the new device. The data of the old device is converted to the new data structure, so no data is lost. Anna designed the new module to be similar in appearance and functionality. After implementing the module, the staff barely notices any change and workflow resumes with minor disruption.\bigskip
 
-        \noindent This persona and scenario highlight the importance of integration. Significant time and effort can be saved if this process is simplified. Also, maintenance is easier due to looser coupling of the modules.
+        \noindent This persona and scenario highlight the importance of interoperability. Significant time and effort can be saved if this process is simplified. Also, maintenance is easier due to looser coupling of the modules.
 
-    
+    \subsection{Module definition process}\label{module_brainstorm}
+
+    \subsection{Application definition}\label{app_definition}
+
+        \subsubsection{General structure}
+
+
+
+        \subsubsection{Modules}

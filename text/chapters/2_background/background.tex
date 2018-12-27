@@ -1,70 +1,118 @@
 % definition, purpose
 \section{The Electronic Health Record}\label{background}
 
-Health information systems have become an integral part of health care. They support patient care as well as administrative and financial tools. At the heart of these systems lies the electronic health record. An electronic health record (EHR) is a repository of electronically maintained information about an individual's health status and health care, stored such that it can serve multiple legitimate uses and users of the record\cite{biomedical_informatics}. An electronic health record system (EHRS) provides tools to manage and interact with these records. These tools include reminder generation, data analysis, and decision support. It helps the clinician to organize, interpret and react to medical data. A record where the patient manages its health information is called a personal health record\cite{tang2006personal}.
-
-The first section describes the transition from paper-based records to digital and its implications for the medical world. A summary of the main components present in an EHRS is described in the next section. The functionality of an EHRS can be categorized into two types: a monolithic system tries to provide more general care, while smaller and more specialized systems cater to more specific types of care. The last section compares the two types and highlights the benefits and drawbacks of both.
-
-No existing EHRS were reviewed. Access to these systems is limited to open-source solutions as most are commercial and sometimes off-the-shelf products. Consequently, reviews of these systems are difficult to find as institutions only purchase software after thorough review of its features. Only one article was found which compared three open-source health systems\cite{de2012overview}. However, no literature was found for proprietary systems.
+Health information systems have become an integral part of health care. They support patient care as well as administrative and financial tools. At the heart of these systems lies the electronic health record. An electronic health record (EHR) is a repository of electronically maintained information about an individual's health status and health care, stored such that it can serve multiple legitimate uses and users of the record\cite{Shortliffe2014}. An electronic health record system (EHRS) provides tools to manage and interact with these records. These tools include reminder generation, data analysis, and decision support. It helps the clinician to organize, interpret and react to medical data. A record where the  health information is managed by the patient, is called a personal health record\cite{Tang2006}.
 
     % nog altijd veel in gebruik
     % signify importance
-    \subsection{Moving away from paper}\label{2_ehrs_paper}
+    \subsection{Moving away from paper}\label{bg_paper}
 
     For modern medicine, traditional paper-based medical records are not suited for today's world filled with technology. The drawbacks of information on paper are obvious when compared to digitally stored information.
 
-    \paragraph{Functionality} Digital records allow systems to aggregate, process and create statistics of the data it contains. For example, a system can generate heart rate graphs with statistics, summarizing many values. If the user hovers over a data point in the graph, the exact value is shown. Printed tables and graphs showing the same data lack this interaction. Also, paper records demand more effort from clinicians as data is often spread across multiple dossiers.
+    % misplaced, lost -> retests, duplication
+    % difficult to organize
+    % physical space
+    % high costs, not eco friendly
+    \paragraph{Storage} Paper records need to be stored in a safe location and require a lot of physical space. More so, the organization of these records is a daunting task in case they are fragmented across multiple locations. This is a process that wastes time and therefore increases health care costs. Also, losing or misplacing records is a possibility. If this for example happens to lab results, tests have to be redone which again wastes time and increases costs. Finally, the amount of paper added to the records on a weekly basis is significant and very eco-unfriendly\cite{Saleem2009}. The ink and paper costs should not be underestimated. Storing data in a digital format solves these issues, but raises several other questions such as: shall we store the data on premise or choose a cloud provider? What is our backup policy? 
 
-    A paper-based medical dossier can store for example medical images, such as x-rays. Compared to a digital image, paper loses a significant amount of detail. As such, most multimedia types can only be stored digitally and not on paper. Tools to interact with these file types are provided by an EHRS\@.
+    % not computable
+    % incomplete -> poor quality care
+    % illegible
+    \paragraph{Data quality} The medical information available on paper is static and more effort is required from clinicians in processing it. For example, comparing data values by reading two forms side by side. What if the data is illegible due to poor handwriting or worn down over time? What if data is incorrectly read from the computer display or simply not written down? These medical errors directly impact the quality of care that is delivered\cite{Elnahal2011}\cite{Hillestad2005}. Computation is possible for digital records which allows data aggregation, data processing and statistics generation. Also, a computerized system detects false data input and ensures that all data fields are filled in correctly. A summarizing paper noted that the use of EHRS leads to more complete, accurate, comprehensive, and reliable data compared to paper-based records\cite{Hayrinen2008}.
 
-    In terms of data input, an EHRS can detect and prevent false data input. The system ensures that all necessary data fields are filled in and in the correct format. This results in more complete and accurate data gathering with fewer errors, increasing the information quality.
+    Medical data such as printed x-ray images are prone to data loss, which in turn increases the chance of medical errors. A high resolution monitor allows zooming, whereas the paper is severely limited in this regard. In case of audio files, bundling for example a cassette tape with a paper dossier is problematic in terms of storage and transportation. The last two examples can both be stored digitally and paired to a digital record.
 
-    \paragraph{Information quality} A summarizing paper noted that the use of EHRS leads to more complete, accurate, comprehensive, and reliable data compared to paper-based records\cite{ehrs_summary}. As mentioned in the previous paragraph, a digital system can impose rules on data fields to avoid missing or entering the wrong data. In terms of comprehensibility, poor handwriting leads to wrong or loss of information, which digital systems avoid. Medical instruments can save measurements immediately into system, avoiding copying by hand.
+    % sent via mail/scanned in or converted to digital lot of work and resources
+    % 1 person at a time access to medical dossier, changes slow to reach other locations
+    % limited by location
+    \paragraph{Accessibility} Paper records are bound by their location and can often only be accessed by one person at a time. Transferring the paper record requires a lot of manual work: either the clinician sends the actual record or a copy of it, or converts the record to a digital format. One study described that updating several copies of medical records was a very cumbersome process for clinicians\cite{Tange1999}. If such a copy is updated, how can these changes be reflected in the other existing copies? Where are these copies even located? Converting the paper records to a digital format raises several other questions: where can the data values found in the paper record be stored in the digital system? What if there are extra notes scribbled on the document? What if values are missing? Data transfer and dealing with changes seems simpler for digital records, however the interoperability of different systems is complex. This is discussed in section \ref{bg_interoperability}. % chktex 2
 
-    \paragraph{Accessibility} Paper records are difficult to access because most of the time only one copy exists. Therefore, transferring these records to other branches or institutions is difficult as the record needs to be located in the often large medical dossier. Also, misfiling, flooding or fires lead to irrecoverable loss of the data. Creating backups of the digital records avoids the last issue, but difficulties surrounding data transfer are still present. Most institutions have their own database structures which hinders the transfer of raw medical data. To remedy this, interfaces are created by the IT staff to interpret and store the data. Sending for example PDF-reports via email is a convenient alternative, although limited in functionality comparable to an actual paper record. Therefore, integration capabilities and the use of standards (section \ref{2_privacy}) are important for an EHRS\@. % chktex 2
+    % break-in: steal/alteration/destroy data
+    % natural disaster
+    % backups not feasible
+    \paragraph{Security} While paper records can be safely stored under lock and key in a basement, several security issues still exist. For example, the storage location can be broken into. This allows the perpetrator to retrieve, alter, or destroy critical medical information. Other possibilities of data loss include flooding and fires. These are scenarios that can't be predicted and can happen at any time. 
 
-    Moving data from paper to a digital format requires a lot of manual work. While automation is possible, such as scanning and processing the paper forms with software, verification is still necessary. All the data fields from the documents need to find a place in the system, which is difficult to achieve. Extra diagnostic information scribbled all over the the document, will be lost during this process. Also, what do we do with unreadable data due to poor handwriting? What happens with two forms which contain partly the same information? Do we save the information twice or do we add extra checks to prevent duplication? Because of these reasons, adopting an EHRS is a significant undertaking for an institution. As such, the benefits are not immediately apparent.
+    A common strategy to detect data alteration and prevent data destruction is to create regular backups. However, for paper-based medical records this is simply not feasible. As mentioned before, the resources required to create copies of such a large data set is enormous. For digital records this is a much easier process, but in this case other security issues arise. These are discussed in section FILl. Also, data breaches have important privacy implications. This topic is discussed in section \ref{bg_privacy}.\bigskip % chktex 2
 
-    Because digital storage increases accessibility significantly, security measurements have to be taken. If not, data can be stolen, deleted or even altered, which means a breach of privacy (section \ref{2_privacy}). This also adds to the complexity of developing EHRS\@. % chktex 2
+    \noindent Electronic health record systems deal with most of the issues mentioned in the previous paragraphs. However, there are other factors which are responsible for the continuing presence of paper in clinical environments. Three categories are predicted to be the cause of paper generation: policy requirements, suboptimal system design, and EHRS user interface flaws\cite{Saleem2009}. The study focused on the last source with the following subcategories:
+    \begin{itemize}
+        \item Cumbersome interface design leads to handwritten notes on paper.
+        \item The EHRS is not well integrated into the clinical workflow. This leads to paper-based workarounds which \emph{do} align with the workflow.
+        \item The visual organization of the data in the EHRS is incompatible with the mental model of the clinician, which leads to manual transformation of patient data.
+    \end{itemize}
 
-    \paragraph{Efficiency} An important task of an EHRS is to facilitate effective care. An early study saw a 6\% increase in productivity when EHRS were deployed in health care institutions\cite{ehrs_efficiency}. However, other factors are at play, such as the adoption rate. The transition from paper-based documenting to digital is accompanied by a learning curve, which can be steep. After the switch, the productivity will most likely be lower at the start. As the users become more experienced with the software, it will increase. Today most institutions have already made the transition to an EHRS, so this has become less of an issue.
+    \noindent Notice that these subcategories relate to usability and human-computer interaction issues. Twenty persons practicing varying roles in a clinical environment were interviewed concerning the use of paper in their workflow. Afterwards, recurrent paper-based workaround strategies highlighted during analysis were categorized. Eleven distinct categories were found, ordered by frequency of use:
+    \begin{itemize}
+        \item Efficiency: paper use enhanced perceived or actual efficiency.
+        \item Workarounds related to the clinician's knowledge of the health system, skill level with technology, and ease of use of the health system. Example: using paper because the software is difficult to use.
+        \item Memory: cases where paper is used as a reminder tool.
+        \item Sensorimotor preferences: using paper as a means of having something concrete to deliver or to quickly jot down some notes.
+        \item Awareness: using paper to make clinicians aware of new information.
+        \item Task specificity: cases where the health system lacks specificity, is not customizable, or sends too many alerts (alert overload).
+        \item Task complexity: paper processes are used because the health system does not support it. An oncology order is an example of a complex task, tailored specifically for each patient.
+        \item Data organization: using paper when data is poorly organized on the computer screen.
+        \item Longitudinal data processes: using paper instead of the health system when data needed to be tracked over time.
+        \item Trust: using paper as a form of providing proof the health system cannot provide.
+        \item Security: using paper when the health system is insecure.
+    \end{itemize}
+
+    \noindent While these workarounds can improve efficiency, they also circumvent the health system which minimizes medical errors frequently made when dealing with paper records. However, they also imply that the EHRS is not in line with the workflow of the clinicians. Several of these workarounds are caused by poor usability, which is the topic of section \ref{bg_usability}. % chktex 2
 
     % component
-    \subsection{Components}\label{ehrs_components}
+    \subsection{Components}\label{bg_components}
 
-    As mentioned before, EHRS do not simply store patient records. They consist of many components which ultimately defines how well they perform in health care. Literature defines many lists of essential components. However, we define the following five high level components as key\cite{biomedical_informatics}:
+    As mentioned before, EHRS do not simply store patient records. They consist of many components which ultimately define how well they perform in health care. We define the following five functional components as key\cite{Shortliffe2014}:
 
-    \paragraph{Integrated view of patient data} An EHR must allow storage of a wide range of data types. This can be text, numbers, images, video, and others. Some data can still be on paper due to lacking support of the EHRS, as mentioned in section \ref{2_ehrs_paper}. To display more complex data types, such as x-ray images, standards are used. A brief overview of medical standards is described in section \ref{2_standards}. % chktex 2
+    \paragraph{Integrated view of patient data} An EHR must allow storage of a wide range of data types. This can be text, numbers, images, video, and others. Some data can still be on paper due to lacking support of the EHRS, as mentioned in section \ref{bg_paper}. Data standards were developed to store simple and complex data types, ranging from numeric values to x-ray images. Medical data standards are the central topic of section \ref{bg_standards}. % chktex 2
 
-    \paragraph{Clinician order entry} The point at which the clinician enters treatment instructions is called order entry. An order entry system assists the clinician during the decision-making process to ensure that the instructions are correct. It also reduces errors and costs compared to paper order entry for the same reasons already mentioned in section \ref{2_ehrs_paper}. % chktex 2
+    \paragraph{Clinician order entry} The procedure in which the clinician enters treatment instructions is called order entry. An order entry system assists the clinician during the decision-making process to ensure that the instructions are correct. It reduces medical errors as a result of more complete and correct data as mentioned before in section \ref{bg_paper}. Also, costs associated with the use of paper are saved. % chktex 2
 
-    \paragraph{Clinical decision support} A decision support system embed into an EHRS aids the clinician by suggesting certain actions when certain situations occur. If for example, a patient is due for vaccination, the system notifies the clinician by presenting a constructed order which needs to be confirmed or denied. The system can do this for a bulk of patients, so manual checkups are not required, thus saving time.
+    \paragraph{Clinical decision support} A decision support system aids the clinician by suggesting actions when certain situations occur. If for example, a patient is due for vaccination, the system notifies the clinician by presenting a pre-filled order which only needs to be confirmed or denied. The system can do this for a bulk of patients, so manual checkups are not required, thus saving time. Decision-support implementations benefit from artificial intelligence. As such, these systems are often complex, due to the many parameters involved in the decision-making process.
 
-    \paragraph{Access to knowledge resources} During the writing of notes or orders for a patient, clinical questions often arise. Instead of asking colleagues or searching through multiple manuals, the EHRS searches for relevant literature to address the question. Due to the internet, a very large source of information is readily available.
+    \paragraph{Access to knowledge resources} Clinical questions often arise during the clinician's workflow. Instead of asking colleagues or searching through multiple manuals, the clinician can consult the EHRS for literature. Thanks to the internet, large sources of information are readily available. Also, if the EHRS is aware of the current medical context, searching for the required information takes even less time. 
 
-    \paragraph{Integrated communication and reporting support} Communication is an important part of health care. Often clinicians spread across multiple institutions provide care for the same patient. Communication, therefore, directly affects the effectiveness of patient care. Tools that simplify this process are essential for a health system. 
+    \paragraph{Integrated communication and reporting support} Communication lies at the heart of health care delivery. It is common for patients to receive care from several clinicians spread across multiple institutions or departments. As mentioned in section \ref{bg_paper}, using paper as a form of communication should be avoided. Therefore, the availability of communication tools directly affects the quality of care. The use of standards and high interoperability of health systems facilitate efficient communication (section \ref{bg_interoperability}).\bigskip % chktex 2
 
-    Most institutions are bound by their own EHRS\@. If data resides in another institution's health system, then access has to be requested. Health Information Exchange removes the need to manually ask for data access as institutions are able to reach beyond their own system. This, however, needs to be supported by the institution.\bigskip
+    \noindent Each of these components must be present in health software. This example of a prescription management tool, features all five components:
+    \begin{itemize}
+        \item Present list of medication currently taken in a clear manner.
+        \item Create, edit, or remove prescriptions.
+        \item Provide alerts for drug-drug and drug-allergy interactions. Suggest medication dosage with respect to parameters such as weight.
+        \item Provide extra information regarding medicines, such as side effects.
+        \item Send prescription orders to the pharmacy.
+    \end{itemize}
+
+    \noindent An EHRS features many tools such as prescription management and many examples are given in section Fill. Ideally, all tools are bundled in a single software package. In case this is not possible, multiple applications are used to provide all the required functionality. In section \ref{bg_interoperability} the advantages and drawbacks of both scenarios are discussed. % chktex 2
+
     
-    \noindent In section FILL, more specific components are listed, such as prescription management. Throughout the years, many EHRS have been developed which may or may not integrate all of the above components. Should an essential component be missing, an institution may add another software system. This has its own benefits and drawbacks.
 
-    \subsection{Recent advancements: telemonitoring}
 
-    \subsection{Interoperability}\label{ehrs_comparison}
+    % health information exchange
+    \subsection{Interoperability}\label{bg_interoperability}
 
     Health care institutions can opt for a monolithic EHRS or combine multiple EHRS to achieve all required functionality. There advantages and drawbacks to both\cite{multiple_ehrs}. Elements that influence this choice include IT infrastructure, safety risks, the volume of care, and frequency with which patients move facilities. It is possible that a single EHRS does not satisfy the requirements of an institution. A reason for this is that certain branches require specially tailored software for their clinical practice, which the current EHRS in use lacks.
 
     Functionality wise, a monolithic EHRS tends to appeal to more general types of care, whereas it lacks in very specific ones. Also, vendors that offer these all-in-one solutions tend to have less experience with these special types of care which reduces the chance it will be added to the system. Vendors of specific EHRS do have this expertise and can tailor the system to the needs of the customer. In this case, combining a system that supports general care with special care systems seems like the best choice. However, other factors have to be considered.
 
-    The advantage of a monolithic system is that the data it uses is centralized. This ensures that all data is accessible anywhere throughout the system and is easier to maintain. When multiple systems are in place, data has to be exchanged between them. As a result, searching for data is more difficult. As mentioned in section\ref{2_ehrs_paper}, due to different data structures, data exchange is difficult. To solve this issue, an intermediate EHRS can be developed. This system serves solely for the purpose of data collection and transformation. All other systems search for data in this intermediate system. However, this leads to another system, requiring additional costs, development effort, and maintenance.
+    The advantage of a monolithic system is that the data it uses is centralized. This ensures that all data is accessible anywhere throughout the system and is easier to maintain. When multiple systems are in place, data has to be exchanged between them. As a result, searching for data is more difficult. As mentioned in section\ref{bg_paper}, due to different data structures, data exchange is difficult. To solve this issue, an intermediate EHRS can be developed. This system serves solely for the purpose of data collection and transformation. All other systems search for data in this intermediate system. However, this leads to another system, requiring additional costs, development effort, and maintenance.
 
-    \subsection{Customization}
+        \subsubsection{Standards}\label{bg_standards}
 
-    
+        When excessive diversity creates inefficiencies and affects effectiveness standards are required\cite{Shortliffe2014}. A hospital contains many independent units spread across primary, secondary, and tertiary care. These units use software best fit for their practice and all record different types of data. For example, the hospital admissions system records patient diagnosis, the pharmacy records prescriptions that were handed out, and the laboratory system records test results. Inevitably, transfer of data between these units is required. 
 
-    \subsection{Privacy}\label{2_privacy}
+        To coordinate multiple systems, data transfer is essential. Nowadays too many different systems exist to create point-to-point interfaces for. Standards try to resolve this problem by defining guidelines software system should follow in order to communicate data. An efficient standard requires that data can be easily stored and presented towards the users of an EHRS\@. Also, security measures, such as authentication and access control, need to be interwoven with these standards.
 
-    Privacy refers to the desire of a person to control the disclosure of personal health and other information\cite{biomedical_informatics}. On the other hand, confidentiality is the ability to control the release of personal health information to a care provider under the agreement that the information will not be spread or used further. Security is the protection of privacy and security, which is achieved through policies, procedures, and safeguards.
+        The use of standards in an EHRS leads to easier integration which in turn leads to lower development costs. Integration of many proprietary data structures leads to difficult to maintain software and a higher chance of components breaking. New medical devices and software that comply to these standards prevent this.
+
+        One of the most used and implemented standard set is Health Level 7. These messaging-based standards are created to exchange clinical and administrative data. Another standard such as DICOM is used for the communication and management of medical imaging information\cite{mildenberger2002introduction}. Medical device interface standards are created by IEEE\@. Many more standards exist, but these are the more prominent ones.
+
+    \subsection{Usability}\label{bg_usability}
+
+    \subsection{Recent advancements: telehealth}
+
+    \subsection{Privacy}\label{bg_privacy}
+
+    Privacy refers to the desire of a person to control the disclosure of personal health and other information\cite{Shortliffe2014}. On the other hand, confidentiality is the ability to control the release of personal health information to a care provider under the agreement that the information will not be spread or used further. Security is the protection of privacy and security, which is achieved through policies, procedures, and safeguards. 
 
     We can ask several questions related to health information data access and storage: who owns the data? Is it the health provider or the patient? What type and how much of data needs to be stored? Who can read the data? Who can write to the data? Can someone access specific health information without consent? In order to deal with the some of the challenges concerning data access and storage, these questions need to be answered\cite{meingast2006security}.
 
@@ -73,13 +121,3 @@ No existing EHRS were reviewed. Access to these systems is limited to open-sourc
     Compared to paper records, electronic records are easily accessible, such as through the internet. This calls for extra security measures to prevent data breaches. If someone wants to access a medical record, this person must first authenticate himself. In turn, the system checks if the person is allowed to access this information. Regardless of the outcome, the audit system logs the access attempt. Such systems need clear rules and policies defined by the institution on who can access what. Another obvious security measure is data encryption.
 
     To further prevent malicious use of health data, medical staff should follow education and training programs to make them aware of the privacy rules and policies that are in place. In case of privacy violation, the person in question should be punished appropriately.
-
-    \subsection{Standards}\label{2_standards}
-
-    When excessive diversity creates inefficiencies and affects effectiveness standards are required\cite{biomedical_informatics}. A hospital contains many independent units spread across primary, secondary, and tertiary care. These units use software best fit for their practice and all record different types of data. For example, the hospital admissions system records patient diagnosis, the pharmacy records prescriptions that were handed out, and the laboratory system records test results. Inevitably, transfer of data between these units is required. 
-
-    To coordinate multiple systems, data transfer is essential. Nowadays too many different systems exist to create point-to-point interfaces for. Standards try to resolve this problem by defining guidelines software system should follow in order to communicate data. An efficient standard requires that data can be easily stored and presented towards the users of an EHRS\@. Also, security measures, such as authentication and access control, need to be interwoven with these standards.
-
-    The use of standards in an EHRS leads to easier integration which in turn leads to lower development costs. Integration of many proprietary data structures leads to difficult to maintain software and a higher chance of components breaking. New medical devices and software that comply to these standards prevent this.
-
-    One of the most used and implemented standard set is Health Level 7. These messaging-based standards are created to exchange clinical and administrative data. Another standard such as DICOM is used for the communication and management of medical imaging information\cite{mildenberger2002introduction}. Medical device interface standards are created by IEEE\@. Many more standards exist, but these are the more prominent ones.
