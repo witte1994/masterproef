@@ -82,7 +82,7 @@ Health information systems have become an integral part of health care. They sup
         \item Send prescription orders to the pharmacy.
     \end{itemize}
 
-    \noindent An EHRS features many tools such as prescription management and many examples are given in section Fill. Ideally, all tools are bundled in a single software package. In case this is not possible, multiple applications are used to provide all the required functionality. In section \ref{bg_interoperability} the advantages and drawbacks of both scenarios are discussed. % chktex 2
+    \noindent An EHRS features many tools such as prescription management and many examples are given in section \ref{module_brainstorm}. Ideally, all tools are bundled in a single software package. In case this is not possible, multiple applications are used to provide all the required functionality. In section \ref{bg_interoperability} the advantages and drawbacks of both scenarios are discussed. % chktex 2
 
     
 
@@ -90,7 +90,7 @@ Health information systems have become an integral part of health care. They sup
     % health information exchange
     \subsection{Interoperability}\label{bg_interoperability}
 
-    Health care institutions can opt for a monolithic EHRS or combine multiple EHRS to achieve all required functionality. There advantages and drawbacks to both\cite{multiple_ehrs}. Elements that influence this choice include IT infrastructure, safety risks, the volume of care, and frequency with which patients move facilities. It is possible that a single EHRS does not satisfy the requirements of an institution. A reason for this is that certain branches require specially tailored software for their clinical practice, which the current EHRS in use lacks.
+    Health care institutions can opt for a monolithic EHRS or combine multiple EHRS to achieve all required functionality. There advantages and drawbacks to both\cite{Payne2012}. Elements that influence this choice include IT infrastructure, safety risks, the volume of care, and frequency with which patients move facilities. It is possible that a single EHRS does not satisfy the requirements of an institution. A reason for this is that certain branches require specially tailored software for their clinical practice, which the current EHRS in use lacks.
 
     Functionality wise, a monolithic EHRS tends to appeal to more general types of care, whereas it lacks in very specific ones. Also, vendors that offer these all-in-one solutions tend to have less experience with these special types of care which reduces the chance it will be added to the system. Vendors of specific EHRS do have this expertise and can tailor the system to the needs of the customer. In this case, combining a system that supports general care with special care systems seems like the best choice. However, other factors have to be considered.
 
@@ -104,7 +104,7 @@ Health information systems have become an integral part of health care. They sup
 
         The use of standards in an EHRS leads to easier integration which in turn leads to lower development costs. Integration of many proprietary data structures leads to difficult to maintain software and a higher chance of components breaking. New medical devices and software that comply to these standards prevent this.
 
-        One of the most used and implemented standard set is Health Level 7. These messaging-based standards are created to exchange clinical and administrative data. Another standard such as DICOM is used for the communication and management of medical imaging information\cite{mildenberger2002introduction}. Medical device interface standards are created by IEEE\@. Many more standards exist, but these are the more prominent ones.
+        One of the most used and implemented standard set is Health Level 7. These messaging-based standards are created to exchange clinical and administrative data. Another standard such as DICOM is used for the communication and management of medical imaging information\cite{Mildenberger2002}. Medical device interface standards are created by IEEE\@. Many more standards exist, but these are the more prominent ones.
 
     \subsection{Usability}\label{bg_usability}
 
@@ -114,7 +114,7 @@ Health information systems have become an integral part of health care. They sup
 
     Privacy refers to the desire of a person to control the disclosure of personal health and other information\cite{Shortliffe2014}. On the other hand, confidentiality is the ability to control the release of personal health information to a care provider under the agreement that the information will not be spread or used further. Security is the protection of privacy and security, which is achieved through policies, procedures, and safeguards. 
 
-    We can ask several questions related to health information data access and storage: who owns the data? Is it the health provider or the patient? What type and how much of data needs to be stored? Who can read the data? Who can write to the data? Can someone access specific health information without consent? In order to deal with the some of the challenges concerning data access and storage, these questions need to be answered\cite{meingast2006security}.
+    We can ask several questions related to health information data access and storage: who owns the data? Is it the health provider or the patient? What type and how much of data needs to be stored? Who can read the data? Who can write to the data? Can someone access specific health information without consent? In order to deal with the some of the challenges concerning data access and storage, these questions need to be answered\cite{Meingast2006}.
 
     An important issue surrounding privacy is medical data access. For example, researching the medical data of a large population can uncover looming threats or an epidemic. Also, disease incidence and intervention analysis benefits from data pooling. However, medical data should not be too accessible. As more and more people gain access to health data of the population, the chance that data is misused or confidentiality is broken increases. Therefore, striking a balance between free information access and protection of privacy and confidentiality is difficult. An argument that promotes free access is to anonymize the data by removing identifiers such as the person's name. However, the individual pieces of information can still reveal the their identity.
 
