@@ -215,8 +215,8 @@ class WorkflowElement extends BaseElement {
                 <h2>New workflow</h2>
                 
                 <div>
-                    <div><paper-checkbox id="patientBound">Patient bound</paper-checkbox></div>
-                    <div><paper-checkbox id="public">Public</paper-checkbox></div>
+                    <div><paper-checkbox id="patientBound">Is this workflow bound to this patient only?</paper-checkbox></div>
+                    <div><paper-checkbox id="public">Share this workflow with other clinicians?</paper-checkbox></div>
                 </div>
 
                 <div>

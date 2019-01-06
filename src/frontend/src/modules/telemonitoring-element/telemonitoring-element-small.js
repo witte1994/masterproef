@@ -323,8 +323,8 @@ class TelemonitoringElementSmall extends BaseElementSmall {
             return;
         }
 
-        var start = moment().startOf('day').subtract(this.$.period.value, 'days').format();
-        var end = moment().endOf('day').format();
+        var start = moment("2018-12-16T00:00:00.000Z").startOf('day').subtract(this.$.period.value, 'days').format();
+        var end = moment("2018-12-16T00:00:00.000Z").endOf('day').format();
 
         this.start = new Date(start);
         this.end = new Date(end);

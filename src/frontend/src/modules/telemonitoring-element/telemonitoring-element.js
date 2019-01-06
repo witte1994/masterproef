@@ -361,13 +361,20 @@ class TelemonitoringElement extends BaseElement {
         var labels = {};
 
         var title = "";
+
+        for (var i = 0; i < this.selectedParams.length; i++) {
+            if (i == 0) {
+                title += this.enumToFullName(this.selectedParams[i]);
+            } else if (i == 1) {
+                title += " & " + this.enumToFullName(this.selectedParams[i]);
+            }
+        }
+
         for (var i = 0; i < this.selectedAxis.length; i++) {
             if (i == 0) {
-                title += this.enumToFullName(this.selectedAxis[i]);
                 axes[this.enumToFullName(this.selectedAxis[i])] = 'y';
                 labels['y'] = this.enumToAxisLabel(this.selectedAxis[i]);
             } else if (i == 1) {
-                title += " & " + this.enumToFullName(this.selectedAxis[i]);
                 axes[this.enumToFullName(this.selectedAxis[i])] = 'y2';
                 labels['y2'] = this.enumToAxisLabel(this.selectedAxis[i]);
             }
