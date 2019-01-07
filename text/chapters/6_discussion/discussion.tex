@@ -1,6 +1,6 @@
 \section{Discussion}\label{discussion}
 
-The search for participants began immediately after the usability test design was completed. This section describes the recruitment process. Hereafter the findings of the usability tests are noted.
+The search for participants began immediately after the usability test design was completed. This section describes the recruitment process, whereafter the results of the usability tests are noted.
 
     \subsection{Recruiting participants}
 
@@ -16,7 +16,7 @@ The search for participants began immediately after the usability test design wa
         \item 4 general practitioners, all work together under one practice.
     \end{myitemize}
 
-    \noindent Five individuals immediately were scheduled to test the prototype. The two home nurses and one nursing student declined due to time constraints. The paramedic expressed interest but was unreachable for two weeks until the start of the new year. The practice with the four general practitioners were contacted three times via their shared secretary, twice via phone and one time in person. The secretary promised each time to provide an answer the next day via email, but this did not happen. Six participants have tested the prototype. The first five tests were conducted between the 16th and 26th of December, and the last one on the 5th of January.
+    \noindent Five individuals immediately were scheduled to test the prototype. The two home nurses and one nursing student declined due to time constraints. The paramedic expressed interest but was unreachable for two weeks until the start of the new year. The practice with the four general practitioners were contacted three times via their shared secretary, twice via phone and one time in person. The secretary promised each time to provide an answer the next day via email, but this did not happen. Six participants have tested the prototype. We fall one role short of the ones mentioned in section~\ref{test_participants}: a general practioner. The first five tests were conducted between the 16th and 26th of December, and the last one on the 5th of January.
 
     \subsection{Results}
 
@@ -62,7 +62,7 @@ The search for participants began immediately after the usability test design wa
 
     \subsubsection{Prototype test: observations}
 
-    All participants were able to complete the test within the allotted time of 20 to 25 minutes. The two intensive care nurses were noticeably faster in completing all the steps, nearing the 15 minute mark. The elderly care nurse and the laboratory head were often unsure on where to click and often asked questions before trying. This may explain the fact that they took a bit longer to complete the test compared to the other participants. However, every participant received the same brief tour of the prototype, so no participant had more knowledge of the prototype compared to the others. We now go over the comments made by the participants during the test.
+    All participants were able to complete the test within the allotted time of 20 to 25 minutes. The two intensive care nurses were noticeably faster in completing all the steps, nearing the 15 minute mark. The elderly care nurse and the laboratory head were often unsure on where to click and often asked questions instead of trying. This may explain the fact that they took a bit longer to complete the test compared to the other participants. However, every participant received the same brief tour of the prototype, so no participant had more knowledge of the prototype compared to the others. We now go over the comments made by the participants during the test.
 
     There were several comments regarding the prescription module. One participant noted that it would be useful if empty dosage fields were automatically filled with zeroes. Currently, the user needs to fill all fields manually. Another participant suggested something similar. Because today's date had to be filled in multiple times throughout the test, the participant would've liked a button that would automatically fill it in. This participant stressed that error checking was a very important component of the systems they currently use. Regarding the end date of prescriptions, one participant noted that they sometimes have to administer medication indefinitely, which the module does not support at the moment. In case there are interactions between medicines, one participant noted that it would be helpful to see the actual interaction effects in addition to the interacting medicine.
 
@@ -95,4 +95,42 @@ The search for participants began immediately after the usability test design wa
 
     \subsubsection{Interview}
 
-    Several topics were brought up during the interview, such as the current EHR system that is in use, the existence of paper in the work setting, potential modules to add to the dashboard, use cases for the current modules, what was good or bad, and other suggestions.
+    Several topics were brought up during the interview, such as potential modules to add to the dashboard, use cases for the current modules, the current EHR system that is in use, the existence of paper in the work setting, what was good or bad, and other suggestions. For each topic, we discuss the feedback the participants gave us.
+
+    \paragraph{Module suggestions} Two participants suggested a drip management module. A drip, or intravenous therapy, is the administration of a fluid solution directly into a vein. This is often done via syringes. The module would help regulate and track the volume of the drip. Also, the drip administers a medicine which affects blood pressure, then the module tracks this parameter aswell. In case something is happening to the parameter, the module alerts the caregivers. This was suggested as it much more practical than doing this the manual way. A computer can easily help with the tracking of many ongoing drips.
+
+    Another module was suggested twice and it closely relates to the previous one. Fluid balance is the balance between fluid that enters the body and fluid that leaves the body. This closely relates to drips, which serves as fluid input. A fluid balance module helps tracking the amount of fluid that enters and leaves a patient's body. In case any abnormalities occur, then the module can notify the clinician. This again is an example how these systems can automate several steps of these processes.
+
+    Wound management is tedious process, as no wound is the same. A cut needs to be treated different than a stab from a needle. There exists a large variety of these wounds that each have their own step-by-step guide to treat them. A wound management module can provide the right guide at the right time. This way clinicians don't need to search through a thick file. Also, a participant suggested that if the module was used on a smartphone, the camera can take pictures of the wound which serve as a logging system.
+
+    A participant also suggested an emergency contact module, which contains for example family members of the patient. But it may also contain the contact information of the doctor on night duty. Since these doctors rotate their night shift periodically, it takes time look up the information manually  via a paper calendar. If this again was used on a mobile phone, calls can be directly initiated from the module.
+
+    Other suggestions included body temperature monitoring, diabetes management, diet management, and pain status or relief modules. However, the previously mentioned ones were thoroughly explained by the participants on how they would see it being used in practice. One participant suggested a notification hub. This would be very beneficial for the dashboard, but also difficult to realize. A notification hub is not a module, but it is deeply rooted in the architecture of the application. From our approach, all integrated modules need to have a standardized way to implement the firing of notifications.
+
+    \paragraph{Use cases current modules}
+
+    Every participant was asked if they could devise a scenario in which they would use the dashboard or a module from it. This resulted in several use cases, in particular to the workflow and checklist modules. Where one participant mentioned wound management as a potential module, another participant would use the workflow module to do this. In this case, every specific wound represents a workflow. 
+    
+    Another participant mentioned that every operation leads to a specific care path that needs to be followed. The participant saw this as an opportunity to model these paths in the workflow module. Furthermore, another workflow use case was to store patient specific requests in there. The participant gave following example: ``An elderly lady wants to visit the chapel of the hospital every Sunday morning. However, she may not go alone and someone needs to accompany her.'' The workflow module serves as a reminder tool in this case.
+
+    If the workflow module allowed branching in the form of ``if A happens, do B, else C'', then a lot more possible use cases would arise, according to a participant. Another suggestion was to extend the patient information module by logging the ``Do Not Resuscitate'' order, or in other words, allow natural death to occur. To conclude, the checklist module also generated some use cases, such as: record the current administered medications, log the steps of the morning care routine, checking of parameters, and wound management.
+
+    \paragraph{Current EHR system}
+
+    Four out of six participants mentioned that their current system is not customizable. When the other two participants were asked to clarify the customization aspect in their EHR system, they both mentioned that ``a doctor gets a very different layout compared to mine'' and that the IT staff listens to their feedback. This is not what we meant by customization, which turned out to be limited in those two systems aswell.
+
+    Some participants used a few software packages next to their EHR system. For one participant, the functions of these extra software packages were as follows: a consultation and transportation planner for patients, a diet planner which was connected to the catering service, and a support service for technical issues. One participant noted that next to their EHR system, they used a software package retrieve lab results and send lab orders. When taking blood samples, these had to be recorded in both applications, which seemed useless to the participant.
+
+    Several other issues were highlighted regarding the current EHR systems. In one case, the system changes often, which causes it to break occasionally. Also, whenever an external digital document was received, the records it contained needed to be entered manually into the EHR system. Another participant highlighted that the system required a significant amount of training and that the application was not easy to use.
+
+    Lastly, a participant emphasized the fine-grained privacy rules and access control measures that were in place in their system. However, this resulted in some cases that there was no access to a medical record when there should be, hindering care delivery. The participant concluded that striking a balance between data availability and strict privacy rules is a difficult subject for such software. Another participant noted that the EHR system gave away too much information, thinking that they should not be able to see some pieces of information.
+
+    \paragraph{Paper usage}
+
+    Generally, paper usage was fairly limited for all participants. The intensive care nurses used no paper for internal care delivery. However, lab, prescription, and imaging orders were transferred on paper to other departments. The laboratory manager does not use any paper anymore since the latest upgrade of their EHR system. One participant mentioned that the administered medication for patients was still written down on paper, which seems troubling.
+
+    To conclude, one participant made the interesting comparison of paper usage with the use of laptop carts. These carts make it possible for clinicians to have more mobility in terms of computer access. However, the participant noted that these carts would get lost or get in the way, and wanted a truly mobile solution such as tablet computers. This participant noted aswell that tablets may solve some other innefficiencies. When recording health parameters of patients, then the clinicians might be required out of protocol to immediately enter the data into the digital system. This results in a lot of walking from room to room which can be avoided by having a mobile device available to directly record the data with.
+    
+    \paragraph{General}
+    
+    One participant described that the customization aspect will be helpful to remind the clinician with what patient they are dealing with. Currently, the same layout is displayed for each patient, which may lead to confusion during a high workload. However, the same participant and another one, felt that the customization would be a lot of work for patients that wont stay long. A solution for this, suggested by three participants in total, was to provide default module configurations, either provided by the system or created by the clinician. One participant mentioned that it should be possible to prohibit the removal of some modules that are absolutely necessary in a given setting. The laboratory manager did not see the added benefit of customization in their work setting. Mainly, because their workflow does not frequently change, and because the software they currently use is very satisfactory.
