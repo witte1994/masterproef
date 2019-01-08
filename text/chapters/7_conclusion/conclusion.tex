@@ -6,20 +6,38 @@ The literature study brought the following problems caused by EHR systems to lig
     \item Heavy workflow disruption caused by the adoption or the update process of the system, resulting in productivity loss and negative motions.
 \end{myitemize}
 
-\noindent The design of the dashboard put a heavy focus on both usability and interoperability to solve these problems. The test indicated that the dashboard had good usability. This partly solves the first problem. The dashboard application was also easy to learn. As a result, clinicians adapt quickly to the new system, limiting a loss in productivity. Also, the good usability of the dashboard facilitates a positive user experience. It seems like the second problem is completely solved, which is not the case.
+\noindent The design of the dashboard put a heavy focus on both usability and interoperability to solve these problems. The test indicated that the dashboard had good usability. This partly solves the first problem. The dashboard application was also easy to learn. As a result, clinicians adapt quickly to the new system, limiting a loss in productivity. Also, the good usability of the dashboard facilitates a positive user experience. It seems this solves the second problem, which is not the case.
 
-The usability test featured a simple version of the dashboard, not suitable for providing care. Therefore, the test won't affect the medical error rate, nor the workflow disruption, in any actual care setting. It is only during real use that these problems arise. However, clinical trails very complex studies in terms of organization.
+The usability test featured a simple version of the dashboard, not suitable for deployment in a care setting. Therefore, the test can not measure whether these two problems are solved. This requires a clinical trial wherein the prototype is tested in a real clinical setting. The problems arise only for these scenarios. However, clinical trials are complex studies and often require a prototype that closely resembles the final product. Also, real patient data is involved which requires security and privacy measurements to be in place. We discuss clinical trials later on.
 
-% interoperability
+Another test needs to be designed to assess the interoperability aspect of the prototype and how it solves the two problems. Such a test requires the IT staff of an institution to integrate and change several components that possibly interrupt the workflow of clinicians. This also evaluates the base components and the MVC architecture.
 
-%korte conclusie en dan future work
+The last paragraphs indicate shortcomings of the study. However, the prototype was received very well by the test participants. The feedback from the usability test, together with the insights gained during development, brought forth an extensive collection of future improvements and ideas. We conclude the thesis by providing a list of interesting topics for future research.
 
     \subsection{Future work}\label{future_work}
+
+    In this section, we present a list of topics that future research may focus on. We go into more detail on some of these by indicating, for example, the requirements, the goals, and the process. The topics are mentioned in no particular order.
 
     % grand scheme
     % plan test
     % plan developer test
+    \subsubsection{Clinical trial}
 
+    Clinical trials are used to generate data on safety, efficacy, and/or effectiveness of treatments~\cite{Minneci2018}. The design and implementation of clinical trials is challenging, but they are necessary to improve health care. Before the trial may start, approval is needed from an ethics committee of the country wherein the trail takes place. A clinical trial needs a more advanced prototype of the dashboard compared to the one described here. It should already have some security and privacy measures in place. Also, the prototype should feature more advanced components that suitable for the testing environment.
+
+    Assume the following scenario where we have built an advanced prototype. At the first stage of a clinical trial, this is tested by a small group of users. The gathered feedback is then implemented in the next version of the prototype. The new version is tested again, but by a larger sample group. This cycle repeats a few times. At a certain stage, the prototype is tested by hundreds of users. This indicates that clinical trials can be very costly. Therefore, a clinical trail for the dashboard application is not for the near future.
+
+    \subsubsection{Evaluate effect of interoperability}
+
+    The evaluation of the interoperability aspect requires two different tests. The benefits of the module-based approach mentioned in section~\ref{proposal} should minimize the loss in productivity due to workflow disruption. This requires a testing environment where such disruptions happen, which is difficult to control. Therefore, the prototype should repeatedly lead to positive results. Also, the test requires the prototype to be advanced enough to support the testing environment under normal conditions. A clinical trial of the dashboard prototype can include this test.
+
+    A second test involves the IT staff of a health care institution. The goal of this test is to evaluate the integration of new modules into the dashboard. The effect this has on workflow disruption needs to be thoroughly observed during the test. Again, this is a difficult environment to control. The feedback we receive from the IT staff will help to improve the base components and the back end structure.
+    
+    \subsubsection{Prototype improvement}
+
+    The prototype can be improved on two levels: on a dashboard level, and on a module level. Dashboard improvements relate to module-independent changes. Changing the way layouts are saved is such an example. Currently, clinicians can create create a custom dashboard for each patient. 
+
+    
 
     %% dashboard specific
     %% module specific
