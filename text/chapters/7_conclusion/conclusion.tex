@@ -12,32 +12,39 @@ The usability test featured a simple version of the dashboard, not suitable for 
 
 Another test needs to be designed to assess the interoperability aspect of the prototype and how it solves the two problems. Such a test requires the IT staff of an institution to integrate and change several components that possibly interrupt the workflow of clinicians. This also evaluates the base components and the MVC architecture.
 
-The last paragraphs indicate shortcomings of the study. However, the prototype was received very well by the test participants. The feedback from the usability test, together with the insights gained during development, brought forth an extensive collection of future improvements and ideas. We conclude the thesis by providing a list of interesting topics for future research.
+The last paragraphs indicate the shortcomings of the study. However, the prototype was received very well by the test participants. The feedback from the usability test, together with the insights gained during development, brought forth an extensive collection of future improvements and ideas. We conclude the thesis by providing a list of interesting topics for future research.
 
     \subsection{Future work}\label{future_work}
 
-    In this section, we present a list of topics that future research may focus on. We go into more detail on some of these by indicating, for example, the requirements, the goals, and the process. The topics are mentioned in no particular order.
+    In this section, we present a list of topics that future research may focus on. We go into more detail on some of these by indicating, for example, the requirements, the goals, and the process. All the topics are related to each other are mentioned in no particular order.
 
     % grand scheme
     % plan test
     % plan developer test
     \subsubsection{Clinical trial}
 
-    Clinical trials are used to generate data on safety, efficacy, and/or effectiveness of treatments~\cite{Minneci2018}. The design and implementation of clinical trials is challenging, but they are necessary to improve health care. Before the trial may start, approval is needed from an ethics committee of the country wherein the trail takes place. A clinical trial needs a more advanced prototype of the dashboard compared to the one described here. It should already have some security and privacy measures in place. Also, the prototype should feature more advanced components that suitable for the testing environment.
+    Clinical trials are used to generate data on safety, efficacy, and/or effectiveness of treatments~\cite{Minneci2018}. The design and implementation of clinical trials is challenging, but they are necessary to improve health care. Before the trial may start, approval is needed from an ethics committee of the country wherein the trail takes place. A clinical trial needs a more advanced prototype of the dashboard compared to the one described here. It should already have some security and privacy measures in place. Also, the prototype should feature more advanced components that are suitable for the testing environment.
 
     Assume the following scenario where we have built an advanced prototype. At the first stage of a clinical trial, this is tested by a small group of users. The gathered feedback is then implemented in the next version of the prototype. The new version is tested again, but by a larger sample group. This cycle repeats a few times. At a certain stage, the prototype is tested by hundreds of users. This indicates that clinical trials can be very costly. Therefore, a clinical trail for the dashboard application is not for the near future.
 
     \subsubsection{Evaluate effect of interoperability}
 
-    The evaluation of the interoperability aspect requires two different tests. The benefits of the module-based approach mentioned in section~\ref{proposal} should minimize the loss in productivity due to workflow disruption. This requires a testing environment where such disruptions happen, which is difficult to control. Therefore, the prototype should repeatedly lead to positive results. Also, the test requires the prototype to be advanced enough to support the testing environment under normal conditions. A clinical trial of the dashboard prototype can include this test.
+    The evaluation of the interoperability aspect requires two different tests. The benefits of the module-based approach mentioned in section~\ref{proposal} should minimize the loss in productivity due to workflow disruption. This requires a testing environment where such disruptions happen, which is difficult to control. Therefore, the prototype should repeatedly lead to positive results. Also, the test requires the prototype to be advanced enough to support the testing environment under normal conditions. The clinical trial of the dashboard prototype can include this test.
 
     A second test involves the IT staff of a health care institution. The goal of this test is to evaluate the integration of new modules into the dashboard. The effect this has on workflow disruption needs to be thoroughly observed during the test. Again, this is a difficult environment to control. The feedback we receive from the IT staff will help to improve the base components and the back end structure.
     
     \subsubsection{Prototype improvement}
 
-    The prototype can be improved on two levels: on a dashboard level, and on a module level. Dashboard improvements relate to module-independent changes. Changing the way layouts are saved is such an example. Currently, clinicians can create create a custom dashboard for each patient. 
-
+    The prototype can be improved on two levels: on a dashboard level, and on a module level. Dashboard improvements relate to changes that affect the entire dashboard, while module improvements only change the inner workings of a certain module. 
     
+    \paragraph{Dashboard improvements} Currently, clinicians can create a custom dashboard for each patient. In the future, every clinician has one personal dashboard. This dashboard can contain other modules which are only of use to the caregiver. It may be filled with shortcuts to patients, an agenda, a personal routine, and more.
+
+    One participant wished for a notification module in the prototype. This module gathers all the notifications that modules or the dashboard sends. To support this, the base components need to be updated so modules can override a function which creates the notification. Also, two participants suggested that the dashboard should provide default layouts which are also editable. It should also be possible to mark modules of layouts as necessary, to prevent them from being removed. Sometimes a module is absolutely necessary in a certain workflow.
+
+    \paragraph{Module improvements} The base components need to be updated to support notifications. It should help the modules define their own notifications according to the template the base component defines. Also, modules should be able to show or hide certain data according to its size. This removes the need for the small component definitions, because a small sized normal module will look the same.
+
+    Test participants suggested several modules. A wound management module would serve as a collection of steps to treat many different wounds. This removes the need for ring binders, which are difficult to search through. A drip management module was also suggested. This module helps the tracking of the drips of many patients. It may provide suggestions based on the vital signs of the patient and the currently configured drip. Finally, a fluid balance module helps tracking the fluid intake and output of a patient. The intake should include the same information of the drips managed with the previous module. During the clinical trail, many more useful modules may come to light.
+
 
     %% dashboard specific
     %% module specific
