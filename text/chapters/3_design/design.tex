@@ -52,7 +52,7 @@ This section describes the design process that was followed to create the applic
 
         \paragraph{2. Structured interaction analysis} During this phase, the results of the analysis of the previous step are used to create task models. These models specify concrete tasks and goals which can be dissected into specific actions or steps the user has to take. These artifacts lay the foundation for designing a user interface which supports these tasks and goals. Task models were not created. Instead, via a brainstorm session (section~\ref{module_brainstorm}), common tasks of a health system were grouped to form modules. The user interface will be designed to support these modules.
 
-        \paragraph{3. Low fidelity prototyping} After the task definition, low fidelity prototypes are created. Paper sketches and mockups are examples of low fidelity prototypes. Without spending too much time and resources, presenting these prototypes to the end-user or customer can yield valuable feedback. However, there is often no functionality present. Typically multiple versions of these prototypes are created until the customer is satisfied, after which the development of a high fidelity prototype starts. Low fidelity prototypes were created for all modules defined during the brainstorm session and are found in section~\ref{app_specification}.
+        \paragraph{3. Low fidelity prototyping} After the task definition, low fidelity prototypes are created. Paper sketches and mockups are examples of low fidelity prototypes. Without spending too much time and resources, presenting these prototypes to the end-user or customer can yield valuable feedback. However, there is often no functionality present. Typically multiple versions of these prototypes are created until the customer is satisfied, after which the development of a high fidelity prototype starts. Low fidelity prototypes were created for all modules defined during the brainstorm session. However, they were mostly unchanged compared to the high fidelity prototype. Therefore it was not worthwhile to recreate these paper mockups to digital ones.
 
         \paragraph{4. High fidelity prototyping} The development of high fidelity prototypes requires a lot more effort compared to low fidelity prototypes, as they offer functionality closely resembling the final product. However, the end user can now test both the design \emph{and} the functionality. This yields much more meaningful feedback. Section~\ref{implementation} describes the development of the high fidelity prototype.
 
@@ -192,7 +192,7 @@ This section describes the design process that was followed to create the applic
             \item Decision support: clinical guidelines, clinical reminders, drug-drug interaction alerts, drug allergy alerts, drug-lab interaction support, and drug dosing support.
         \end{myitemize}
 
-        \noindent To conclude, the \textbf{National Center for Research Resources (2006)} described the following key components and subcomponents~\cite{NCRR2006}:
+        \noindent To conclude, the \textbf{National Center for Research Resources (2006)} described the following key components and sub-components~\cite{NCRR2006}:
         \begin{myitemize}
             \item Administrative system components: registration, admission, discharge, and transfer of patients, and links from the patient to resources such as observations, tests, procedures, evaluations, and diagnoses.
             \item Laboratory system components: integrate orders, results, schedules, and billing.
@@ -245,7 +245,7 @@ This section describes the design process that was followed to create the applic
 
         \subsubsection{General structure}
 
-        After the application fnished loading, the user is greeted with a login screen. Once the user successfully authenticated, the patient list is shown. This list shows basic information of all the patients available to the user. It is possible to sort and filter this list. Selecting a patient opens the dashboard and loads its corresponding configuration.
+        After the application finished loading, the user is greeted with a login screen. Once the user successfully authenticated, the patient list is shown. This list shows basic information of all the patients available to the user. It is possible to sort and filter this list. Selecting a patient opens the dashboard and loads its corresponding configuration.
 
         \paragraph{Dashboard} The dashboard consists of two panels. A small panel on the left hand side features the patient information module. Smaller versions of some modules can be added to the panel that each display a concise summary. Generating a summary is not relevant for every module, which is why some of them will not have smaller counterpart. The smaller modules can only be vertically arranged and resized. Due to the limited size of the left panel, these modules will take up the entire available width. In case the display of the device is small, the left panel is automatically hidden to give more space to the main panel. Pressing a button in the top left corner will show the summarizing panel on top of the main panel. By supporting smaller screen sizes, the application can be used on mobile devices such as tablets.
 

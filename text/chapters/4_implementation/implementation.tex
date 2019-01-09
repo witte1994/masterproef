@@ -80,7 +80,7 @@ It is without question that during the implementation small changes were made to
             \item Depending on the operation, the controller can send data retrieved from the model back to the view. This transaction does not pass by the router.
         \end{myenumerate}
 
-        \noindent In order to extend the dashboard application, these three files need to be created for each component. More concrete steps are given in appendix TODO.
+        \noindent In order to extend the dashboard application, these three files need to be created for each component.
 
         \paragraph{Routing} The routes defined in the back end follow a simple structure. The application starts at the root endpoint: \texttt{/}. Suppose the server receives a request destined for the following endpoint: \texttt{/clinician/login}. At the root level, in \texttt{app.js}, the server forwards all routes starting with ``clinician'' to the routes defined in \texttt{routes/clinician.js}, due to the following line:\\
         \centerline{\texttt{app.use(`/clinician', clinicianRoutes);}}\\ % chktex 36
@@ -91,7 +91,7 @@ It is without question that during the implementation small changes were made to
         
         \subsubsection{Components and dashboard modules}
 
-        We now briefly describe the purpose of every component within the back end of the prototype. The detailed documentation of these components is found in appendix TODO.
+        We now briefly describe the purpose of every component within the back end of the prototype.
 
             \paragraph{Clinician} This component allows users to sign up an log in to the system. The controller uses the previously mentioned bcrypt package to provide encryption. Also, the JSON Web Token package is used to return a authentication token should the authentication be successful. The model simply saves the username, encrypted password, and a clearance level. The last field was added to provide basic access control. However, this is not present in the prototype.
 
@@ -115,7 +115,7 @@ It is without question that during the implementation small changes were made to
 
         HTML provides us with standard elements such as \texttt{h1} and \texttt{img}. Web components allow the developer to create custom elements which are used in the same manner as the ones HTML provides. Suppose a calendar web component was created, a developer could add the element to any web page as follows: \texttt{<calendar></calendar>}. The actual definition of the calendar module resides in another file which is imported on the page where it will be used. This approach promotes the creation of reusable components. This also means that the dashboard application can be easily extended with these components. This is largely made possible by the shadow DOM\@.
 
-        \paragraph{Shadow DOM} The Document Object Model describes a tree of documents. The web browser builds such a tree for every web page it loads. The shadow DOM can be seen as a scoped subtree inside a custom element. The root of this subtree is called the shadow root. The structure, styling, and behavior of the children within the shadow DOM do not affect any elements outside of it. Therefore, the appearance and functionality of the custom element is encapsulated and hidden at the document level. Only events fired by elements in the shadow DOM can be pickup outside the shadow DOM boundary. This idea of encapsulation is important for our approach towards the dashboard, as each module is responsible for its own appearance and functionality. Developers of custom modules should not need to worry about what happens outside of the shadow DOM\@.
+        \paragraph{Shadow DOM} The Document Object Model describes a tree of documents. The web browser builds such a tree for every web page it loads. The shadow DOM can be seen as a scoped subtree inside a custom element. The root of this subtree is called the shadow root. The structure, styling, and behavior of the children within the shadow DOM do not affect any elements outside of it. Therefore, the appearance and functionality of the custom element is encapsulated and hidden at the document level. Only events fired by elements in the shadow DOM can be caught outside the shadow DOM boundary. This idea of encapsulation is important for our approach towards the dashboard, as each module is responsible for its own appearance and functionality. Developers of custom modules should not need to worry about what happens outside of the shadow DOM\@.
 
         \subsubsection{Libraries}
 
@@ -123,23 +123,24 @@ It is without question that during the implementation small changes were made to
 
             \paragraph{Packery \& Draggabilly} Packery is a JavaScript library that makes gapless and draggable layouts~\cite{Packery}. As items are added and removed from the grid, Packery reorders the layout. The documentation of the library mentions that drag and dropping is supported via the Draggabilly library. This built-in support was the main reason Packery was chosen. There are two Packery grids in the prototype, one for the left panel and one for the main panel. 
 
-            \paragraph{Interact.js} This library implements JavaScript drag and drop, resizing, and multi-touch gestures for modern browsers~\cite{Interact}. However, Draggabilly already provides drag and drop functionality. Since Interact is not supported by Packery, Draggabilly was be removed to avoid any potential issues. Therefore, Interact serves as the library that implements the resizing functionality for the modules.
+            \paragraph{Interact.js} This library implements JavaScript drag and drop, resizing, and multi-touch gestures for modern browsers~\cite{Interact}. However, Draggabilly already provides drag and drop functionality. Since Interact is not supported by Packery, we can't replace Draggabilly with it. Therefore, Interact serves as the library that implements the resizing functionality for the modules.
 
             \paragraph{Other} The handling of dates throughout the dashboard is done via the Moment library. This library provides very intuitive manipulation methods which are of great help when communicating dates back and forth to the back end. The charts of the telemonitoring are generated via the C3 library, which is a wrapper on top of the D3 library.
 
         \subsubsection{Structure}
 
-        To start, the entire dashboard is packaged as web component. The application is loaded by placing \texttt{<main-element></main-element>} as the single child in the of the body found in the \texttt{index.html} file. This opens up the ability of having multiple instances of the application open side by side. However, this was not further explored.
+        To start, the entire dashboard is packaged as web component. The application is loaded by placing \texttt{<main-element></main-element>} as the single child in the of the body found in the \texttt{index.html} file. This opens up the ability of having multiple instances of the application open side by side. However, this was not explored further.
 
-        All modules are placed in the \texttt{src} folder. This includes the \texttt{main-element}, but also the following web components: all modules that can be placed on the dashboard, the patient list (\texttt{patient-list-element}), and the patient information module (\texttt{patient-element}). Inside the \texttt{src/modules} folder each module is placed into its own folder. In case the module has both a small and a normal version, two files are found within this directory. Small variants of modules always end with the \texttt{-small} suffix.
+        All modules are placed in the \texttt{src} folder. This includes the \texttt{main-element}, but also the following web components: all modules that can be placed on the dashboard, the patient list (\texttt{patient-list-element}), and the patient information module (\texttt{patient-element}). Inside the \texttt{src/modules} folder each module is placed into its own folder. In case the module has both a small and a normal version, two files are found within this directory. Small variants of modules always end with the \texttt{-small} suffix. For example, the allergy module folder contains the files \texttt{allergy-element.js} and \texttt{allergy-element-small.js}.
 
-        At the root of the \texttt{src/modules} folder the following two files are found: \texttt{base-element.js} and \texttt{base-element-small.js}. These are base web components which all other modules have to extend. This gives each module a streamlined look and design. Also, these base components provide templates which may/need to be overridden for the module to work with the dashboard. We describe both base components now in detail.
+        The root of the \texttt{src/modules} folder contains the following two files: \texttt{base-
+        element.js} and \texttt{base-element-small.js}. These are base web components which all other modules have to extend. This gives each module a streamlined look and design. Also, these base components provide templates which may or must be overridden for the module to work with the dashboard. We describe both base components now in detail.
 
             \subsubsubsection{Base components}\label{base_components}
 
-            Both base components provide the functions, interface elements, styling, and properties that all modules in the dashboard should have. They serve as a starting point for the developer when creating a new module. It saves the developer time as a basic layout along with utility functions will already be defined. They also prevent code duplication. For example, the format of dates displayed in the modules is defined in the base component. Change this format in the base component and it will reflect to all other modules. The next paragraphs go into detail what both the normal and small base components provide.
+            Both base components provide the functions, interface elements, styling, and properties that all modules in the dashboard should have. They serve as a starting point for the developer when creating a new module. It saves the developer time as a basic layout along with utility functions are already defined. They also prevent code duplication. For example, the format of dates displayed in the modules is defined in the base component. Change this format in the base component and it will reflect to all other modules. The next paragraphs go into detail what both the normal and small base components provide.
 
-            \paragraph{Normal base component} The component provides a small block in which a header is defined. This header contains a placeholder title and dialog button. A button in the top right corner to remove the module is also present in the header, which can not be removed. Five templates exist which can be overridden: 
+            \paragraph{Normal base component} The component provides a small block in which a header is defined. This header contains a placeholder title and dialog button. A button in the top right corner to remove the module is also present in the header, which can not be overridden or removed. Five templates exist which can be overridden: 
             \vspace{-6pt}
             \begin{myenumerate}
                 \item \texttt{cssTemplate}: define the CSS styling here. Is empty in the base module.
@@ -154,14 +155,14 @@ It is without question that during the implementation small changes were made to
             \noindent Finally, the base component provides several functions, some of which are placeholders that need to be overridden. These functions serve either as utilities for use within the module, such as getting a formatted date string, or as a function that is called from the \texttt{main-element}, such as getting the minimum size of the module. We now list these functions:
             \vspace{-6pt}
             \begin{myitemize}
-                \item \texttt{setDateFormats(datePicker)}: sets the format of the datepicker if one should be present in the module.
+                \item \texttt{setDateFormats(datePicker)}: sets the format of the date picker if one is present in the module.
                 \item \texttt{getDateString(date)}: converts a date to a string in the DD/MM/YYYY format.
                 \item \texttt{getTimeString(date)}: gets the specific time from a date in the HH:mm format.
                 \item \texttt{setPatientId()}: stores the id of the current loaded patient to a class variable.
-                \item \texttt{update(e)}: called by the \texttt{main-element} to signal that the module should refresh its data. Needs to be overridden to do the data requests.
-                \item \texttt{sendUpdateSignal()}: should be overridden to fire a signal telling the \texttt{main-element} all instances of this module should update their data. The dashboard will do this by calling \texttt{update(e)} from those modules.
+                \item \texttt{update(e)}: called by the \texttt{main-element} to signal that the module should refresh its data. Needs to be overridden to send the data requests to the correct route.
+                \item \texttt{sendUpdateSignal()}: should be overridden to fire a signal telling the \texttt{main-element} all instances of this module should refresh their data. The dashboard will do this by calling \texttt{update(e)} from those modules.
                 \item \texttt{getMinSizes()}: called by the \texttt{main-element} when creating the module. Should be overridden by returning the minimum width and height of the module.
-                \item \texttt{getSettings()}: called by the \texttt{main-element} when saving the module layout. Should be overridden in case the state of the module needs to be saved.
+                \item \texttt{getSettings()}: called by the \texttt{main-element} when saving the module layout. Should be overridden to return the state of the module in case it needs to be saved.
                 \item \texttt{loadSettings(settings)}: called by the \texttt{main-element} when loading the layout. Should be overridden in order to restore the state of the module.
             \end{myitemize}
 
@@ -170,10 +171,10 @@ It is without question that during the implementation small changes were made to
             \begin{myitemize}
                 \item \texttt{getDateString(date)}: converts a date to a string in the DD/MM/YYYY format.
                 \item \texttt{setPatientId()}: stores the id of the current loaded patient to a class variable.
-                \item \texttt{update(e)}: called by the \texttt{main-element} to signal that the module should refresh its data. Needs to be overridden to do the data requests.
+                \item \texttt{update(e)}: called by the \texttt{main-element} to signal that the module should refresh its data. Needs to be overridden to send the data requests to the correct route.
                 \item \texttt{sendUpdateSignal()}: should be overridden to fire a signal telling the \texttt{main-element} all instances of this module should update their data. The dashboard will do this by calling \texttt{update(e)} from those modules.
                 \item \texttt{getMinHeight()}: called by the \texttt{main-element} when creating the module. Should be overridden by returning the minimum height of the module.
-                \item \texttt{getSettings()}: called by the \texttt{main-element} when saving the module layout. Should be overridden in case the state of the module needs to be saved.
+                \item \texttt{getSettings()}: called by the \texttt{main-element} when saving the module layout. Should be overridden to return the state of the module in case it needs to be saved.
                 \item \texttt{loadSettings(settings)}: called by the \texttt{main-element} when loading the layout. Should be overridden in order to restore the state of the module.
             \end{myitemize}
 
@@ -183,7 +184,7 @@ It is without question that during the implementation small changes were made to
 
             \subsubsubsection{Layouting}
 
-            \paragraph{Load configuration} As soon as a patient is selected, Packery removes all modules it that are present in the two grids. Hereafter, the patient information module is added to the left panel. Now the module configuration can be loaded, which consists of the following steps:
+            \paragraph{Load configuration} As soon as a patient is selected, Packery removes all modules that are present in the two grids. Hereafter, the patient information module is added to the left panel. Now the module configuration can be loaded, which consists of the following steps:
             \vspace{-6pt}
             \begin{myenumerate}
                 \item Call the API to receive the layout configuration of the current patient.
@@ -203,7 +204,7 @@ It is without question that during the implementation small changes were made to
                 \end{myenumerate}
             \end{myenumerate}
             
-            \noindent If there is no configuration, the dashboard will be empty. This process only occurs when switching between patients.
+            \noindent This process only occurs when switching between patients. If there is no configuration, the dashboard will be empty.
 
             \paragraph{Save configuration} Whenever the user makes changes to the layout of the dashboard, the layout is automatically saved. The auto-save happens after one of the following events occur in either panel: adding or removing a module, moving a module, resizing a module, or changing the state of a module. The save process is as follows:
             \vspace{-6pt}
@@ -227,14 +228,14 @@ It is without question that during the implementation small changes were made to
                 \item Create the handle with its corresponding class name.
                 \item Append the handler to the container.
                 \item Append the new module to the container.
-                \item Create the remove and broadcast event listeners.
+                \item Set the remove and broadcast event listeners.
                 \item Add the container to the Packery grid.
                 \item Create a Draggabilly object for the container and bind it to Packery.
             \end{myenumerate}
 
             \subsubsubsection{Resizing}
 
-            As mentioned before, the Interact library was used to implement resizable components. For small modules, resizing is only possible by dragging the bottom edge. The normal modules can be resized by dragging the bottom and right edges. In order to provide a clean layout, the modules are resized in chunks of 20 pixels. This simplifies the process of arranging into a neat layout. This was done subtracting the remainder of dividing by 20 of both the width and height during the resize. In case the new width or height is different from the current one, then the resize occurs. While resizing, Packery wil move other modules out of the way. Interact also provides a listener to detect when the resizing has ended. After each resize end, the dashboard layout saves the changes.
+            As mentioned before, the Interact library was used to implement resizable components. For small modules, resizing is only possible by dragging the bottom edge. The normal modules can be resized by dragging the bottom and right edges. In order to provide a clean layout, the modules are resized in chunks of 20 pixels. This simplifies the process of arranging into a neat layout. This was done by subtracting the remainder of the division by 20 of both the width and height during the resize. In case the new width or height is different from the current one, then the resize occurs. While resizing, Packery wil move other modules out of the way. Interact also provides a listener to detect when the resizing has ended. After each resize end, the dashboard saves the layout changes.
 
         \subsubsection{Modules}
 
@@ -249,7 +250,7 @@ It is without question that during the implementation small changes were made to
 
         \paragraph{Vaadin grid} The \texttt{vaadin-grid} component creates data tables that have a clear interface and has support to show details of data rows. Throughout the dashboard, all data lists are made with this component.
 
-        \paragraph{Vaadin date picker} This component provides a date selection field. All dates are entered via this component. The user enters dates by either typing them in a correct format, or by selecting the date using the tooltip. Figure~\ref{fig:vaadin-comps} shows the widget on the left.
+        \paragraph{Vaadin date picker} This component provides a date selection field. All dates are entered via this component. The user enters dates by either typing them in a correct format, or by selecting the date using the widget, which figure~\ref{fig:vaadin-comps} shows shows on the left.
 
         \paragraph{Vaadin context menu} The user can press the right mouse button on certain data to delete or update it. Otherwise, buttons would need to be displayed to provide these actions, which may clutter the screen. The data displayed in the Vaadin grid components can be edited this way. Two examples of such context menus are displayed on the right side of figure~\ref{fig:vaadin-comps}.
 
@@ -271,7 +272,7 @@ It is without question that during the implementation small changes were made to
                 \caption{The two possible sizes of the patient information module.}\label{fig:patient-info}
             \end{figure}
 
-            The patient information module is always present on the left panel of the dashboard and it can not be removed. The reasoning behind this, is that clinicians should always be able to see which dashboard is open. It is possible that the name of the patient only appears in this module and if it is removed, confusion may arise. By pressing the arrow button on the bottom, the size of the module changes, which in turn triggers a layout save. Figure~\ref{fig:patient-info} shows the two possible sizes. This was implemented by swapping between two \texttt{div}'s every time the arrow button was pressed. There are no notable changes made to this module, compared to the design. The picture at the top of the module is a placeholder. This module also does not extend the base component, because it can't be freely placed on the dashboard.
+            The patient information module is always present on the left panel of the dashboard and it can not be removed. The reasoning behind this, is that clinicians should always be able to see which dashboard is open. It is possible that the name of the patient only appears in this particular module and if it is removed, confusion may arise. By pressing the arrow button on the bottom, the size of the module changes, which in turn triggers a layout save. Figure~\ref{fig:patient-info} shows the two possible sizes. This was implemented by swapping between two \texttt{div}'s every time the arrow button was pressed. There are no notable changes made to this module, compared to the design. The picture at the top of the module is a placeholder. This module also does not extend the base component, because it can't be freely placed on the dashboard.
 
             \subsubsubsection{Prescription}
 
@@ -345,9 +346,9 @@ It is without question that during the implementation small changes were made to
                 \caption{The top chart labels both parameters on the y-axis, while the bottom one doesn't.}\label{fig:tm-compare}
             \end{figure}
 
-            The telemonitoring module was the last one to be added to the dashboard. As previously mentioned, C3 was just to plot the data onto a line chart. When the module is added to the dashboard, it will show no data until the user selects the parameters to plot on the chart. This is done by pressing the plus button in the top right corner. Here the available parameters are listed. A maximum of two parameters can be shown on the same chart at a time. In case there are no values for a certain parameter, then the user can't select it. Once a parameter is selected, the user may choose to plot it according to the y-axis. To compare two parameters in relation to each other, it is suggested to plot both these data sets on the y-axis. This normalizes the data on the chart, which in turn makes it easier to compare the data. Figure~\ref{fig:tm-compare} shows the difference. The differences of the green line are in the top chart much more noticeable. However, one can argue that the differences are exaggerated while there is not much difference, which the bottom chart implies.
+            The telemonitoring module was the last one to be added to the dashboard. As previously mentioned, C3 was used to plot the data onto a line chart. When the module is added to the dashboard, it will show no data until the user selects the parameters to plot on the chart. This is done by pressing the plus button in the top right corner, which opens a dialog to select the parameters. A maximum of two parameters can be shown on the same chart at a time. In case there are no values for a certain parameter, then the user can't select it. Once a parameter is selected, the user may choose to plot it according to the y-axis. To compare two parameters in relation to each other, it is suggested to plot both these data sets on the y-axis. This normalizes the data on the chart, which in turn makes it easier to compare the data. Figure~\ref{fig:tm-compare} shows the difference. The differences of the green line are in the top chart much more noticeable. However, one can argue that the differences are exaggerated while there is not much difference, which the bottom chart implies.
 
-            Currently, the chart is completely redrawn every time the module changes size. Drawing the chart once and only resize that one resulted into unexpected behavior where the chart could only grow, but not shrink. Others have reported this on the GitHub page of the library and it is a known issue. As a result the chart is redrawn every time. Thankfully, we did not notice any slowdown. Also, changing the options of the chart will trigger a layout save.
+            Currently, the chart is completely redrawn every time the module changes size. Drawing the chart once and repeatedly resize that one resulted into unexpected behavior where the chart could only grow, but not shrink. Others have reported this on the GitHub page of the library and it is a known issue. As a result the chart is redrawn every time. Thankfully, we did not notice any slowdown. Also, changing the options of the chart will trigger a layout save.
 
             \begin{figure}[t]
                 \centering

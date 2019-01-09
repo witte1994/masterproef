@@ -1,14 +1,14 @@
 \section{Conclusion}
 
-The literature study brought the following problems caused by EHR systems to light:
+The literature study brought the following issues caused by EHR systems to light:
 \begin{myitemize}
     \item An increase in the medical error rate after the installation of an EHR system, caused by poor usability and paper workarounds for missing functions.
     \item Heavy workflow disruption caused by the adoption or the update process of the system, resulting in productivity loss and negative motions.
 \end{myitemize}
 
-\noindent The design of the dashboard put a heavy focus on both usability and interoperability to solve these problems. The test indicated that the dashboard had good usability. This partly solves the first problem. The dashboard application was also easy to learn. As a result, clinicians adapt quickly to the new system, limiting a loss in productivity. Also, the good usability of the dashboard facilitates a positive user experience. It seems this solves the second problem, which is not the case.
+\noindent The design of the dashboard put a heavy focus on both usability and interoperability to resolve these issues. The test indicated that the dashboard had good usability. This partly resolves the first issue. The dashboard application was also easy to learn. As a result, clinicians adapt quickly to the new system, limiting a loss in productivity. Also, the good usability of the dashboard facilitates a positive user experience. It seems this resolves the second issue, which is not the case.
 
-The usability test featured a simple version of the dashboard, not suitable for deployment in a care setting. Therefore, the test can not measure whether these two problems are solved. This requires a clinical trial wherein the prototype is tested in a real clinical setting. The problems arise only for these scenarios. However, clinical trials are complex studies and often require a prototype that closely resembles the final product. Also, real patient data is involved which requires security and privacy measurements to be in place. We discuss clinical trials later on.
+The usability test featured a simple version of the dashboard, not suitable for deployment in a care setting. Therefore, the test can not measure whether these two issues are resolved. This requires a clinical trial wherein the prototype is tested in a real clinical setting. The issues arise only for these scenarios. However, clinical trials are complex studies and often require a prototype that closely resembles the final product. Also, real patient data is involved which requires security and privacy measurements to be in place. We discuss clinical trials later on.
 
 Another test needs to be designed to assess the interoperability aspect of the prototype and how it solves the two problems. Such a test requires the IT staff of an institution to integrate and change several components that possibly interrupt the workflow of clinicians. This also evaluates the base components and the MVC architecture.
 
@@ -23,7 +23,7 @@ The last paragraphs indicate the shortcomings of the study. However, the prototy
     % plan developer test
     \subsubsection{Clinical trial}
 
-    Clinical trials are used to generate data on safety, efficacy, and/or effectiveness of treatments~\cite{Minneci2018}. The design and implementation of clinical trials is challenging, but they are necessary to improve health care. Before the trial may start, approval is needed from an ethics committee of the country wherein it will take place. A clinical trial needs a more advanced prototype of the dashboard compared to the one described here. It should already have some security and privacy measures in place. Also, the prototype should feature more advanced components that are suitable for the testing environment.
+    Clinical trials are used to generate data on safety, efficacy, and/or effectiveness of treatments~\cite{Minneci2018}. The design and implementation of clinical trials is challenging, but they are necessary to improve health care. Before the trial may start, approval is needed from an ethics committee of the country wherein it will take place. A clinical trial needs a more advanced prototype of the dashboard compared to the one developed here. It should already have some security and privacy measures in place. Also, the prototype should feature more advanced components that are suitable for the testing environment.
 
     Assume the following scenario where we have built an advanced prototype. At the first stage of a clinical trial, this is tested by a small group of users. The gathered feedback is then implemented in the next version of the prototype. The new version is tested again, but by a larger sample group. This cycle repeats a few times. At a certain stage, the prototype is tested by hundreds of users. This indicates that clinical trials can be very costly. Therefore, a clinical trial for the dashboard application is not for the near future.
 
@@ -37,7 +37,7 @@ The last paragraphs indicate the shortcomings of the study. However, the prototy
 
     The prototype can be improved on two levels: on a dashboard level, and on a module level. Dashboard improvements relate to changes that affect the entire dashboard, while module improvements only change the inner workings of a certain module. 
     
-    \paragraph{Dashboard improvements} Currently, clinicians can create a custom dashboard for each patient. In the future, every clinician has one personal dashboard. This dashboard can contain other modules which are only of use to the caregiver. It may be filled with shortcuts to patients, an agenda, a personal routine, and more.
+    \paragraph{Dashboard improvements} Currently, clinicians can create a custom dashboard for each patient. In the future, every clinician has one personal dashboard. This dashboard can contain other modules which are only of use to the caregiver. It may be filled with shortcuts to patients, an agenda, a personal routine, and more. Examples of modules for this type of dashboard were already uncovered during the brainstorm session in section~\ref{module_brainstorm}.
 
     One participant wished for a notification module in the prototype. This module gathers all the notifications that modules or the dashboard sends. To support this, the base components need to be updated so modules can override a function which creates the notification. Also, two participants suggested that the dashboard should provide default layouts which are also editable. It should also be possible to mark modules of layouts as necessary, to prevent them from being removed. Sometimes a module is absolutely necessary in a certain workflow.
 
