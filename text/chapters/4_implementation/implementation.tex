@@ -6,7 +6,7 @@ This section describes the implementation process. The design highlighted the us
 
 First, an overview of the entire application is given, after which we go into more detail. The dashboard consists of two major parts common to web development. The back end is described first. This section explains the reasoning behind the chosen technology stack and the general structure. We also specify the back end structures and REST API calls for each module and component which the front end has access to. For the front end, we explain how the Polymer 3 library supports our modular design and its underlying principles. Hereafter, other libraries used during the implementation, the general front end structure, and the resulting dashboard and its modules are explained. 
 
-It is without question that during the implementation small changes were made to the design. These changes are documented for both parts. During the entire development process, only basic authentication was implemented. The implementation of standards, privacy rules, and security techniques do not contribute towards the goal of the dashboard we defined in the design section. Therefore, no effort was put in these topics.
+It is without question that during the implementation small changes were made to the design. These changes are documented for both parts. During the entire development process, only basic authentication was implemented. The implementation of standards, privacy rules, and security techniques do not contribute towards the goal of the dashboard we defined in the design section. Therefore, we consider these topics out of the scope of the prototype.
 
     \subsection{Overview}
 
@@ -22,7 +22,7 @@ It is without question that during the implementation small changes were made to
         \caption{The communication flow by which every module communicates.}\label{fig:structure}
     \end{figure}
 
-    A typical web application consists of two parts: the back end and the front end. In software engineering principles, these refer to the separation of the data access layer and the presentation layer of the web application. For example, the back end fetches data requested by the front end. In turn, the front end presents the retrieved data towards the user. Due to the modular design of the dashboard, each module needs to have its own back and front end structures, visualized by figure~\ref{fig:structure}. As the figure indicates, there is no direct interaction between the modules, which facilitates low coupling. The next sections describe the back end and front end in detail. Changes made to the design from section~\ref{design} are explained.
+    A typical web application consists of two parts: the back end and the front end. In software engineering principles, these refer to the separation of the data access layer and the presentation layer of the web application. For example, the back end fetches data requested by the front end. In turn, the front end presents the retrieved data towards the user. Due to the modular design of the dashboard, each module needs to have its own back and front end structures, visualized by figure~\ref{fig:structure}. As the figure indicates, there is no direct interaction between the modules, which facilitates low coupling. The next sections describe the back end and front end in detail. Changes made to the design from section~\ref{design} are explained whenever they occur.
 
     \subsection{Back end}
 
@@ -42,13 +42,13 @@ It is without question that during the implementation small changes were made to
 
             \subsubsubsection{Node.js}
 
-            The back end server forms the heart of the dashboard application and Node.js was the preferred choice to implement it. Node.js (or simply Node) is a Java-Script runtime built on Google Chrome's V8 JavaScript engine~\cite{NodeJS}. Node avoids the classic thread-based approach of concurrency, which is relatively inefficient and can be very difficult to use. Instead, it provides concurrency via a single event loop that can support thousands of simultaneous connections, using non-blocking I/O calls. Node also has the added bonus of streamlining web development to the use of a single language.
+            The back end server forms the heart of the dashboard application and Node.js was the preferred choice to implement it. Node.js (or simply Node) is a Java-Script runtime built on Google Chrome's V8 JavaScript engine~\cite{NodeJS}. Node avoids the classic thread-based approach to concurrency, which is relatively inefficient and can be very difficult to use. Instead, it provides concurrency via a single event loop that can support thousands of simultaneous connections, using non-blocking I/O calls. Node also has the added bonus of streamlining web development to the use of a single language.
             
             The main reason Node was chosen, was due to the very large collection of packages that is available through the Node Package Manager (npm). For example, the Express package is only available via Node. This package was of significant help during the entire development process. Also, documentation is easily found thanks to the very large community that develops with Node.
 
             \subsubsubsection{MongoDB} 
             
-            A SQL database is table-based, whereas MongoDB is document-based~\cite{MongoDB}. This type of structure enables highly flexible data schemas, as new data fields can be added without affecting existing rows. This is especially useful when a new data structure from a 3rd party vendor needs to be added to the database. This supports the dashboard's goal of simple extensibility. Also, the developers of MongoDB officially support Node.
+            A SQL database is table-based, whereas MongoDB is document-based~\cite{MongoDB}. This type of structure enables highly flexible data schemas, as new data fields can be added without affecting existing documents. This is especially useful when a new data structure from a 3rd party vendor needs to be added to the database. This supports the dashboard's goal of simple extensibility. Also, the developers of MongoDB officially support Node.
 
             \subsubsubsection{Node packages}
 
@@ -56,7 +56,7 @@ It is without question that during the implementation small changes were made to
 
             \paragraph{Mongoose} Using Node without a library to communicate with MongoDB is very difficult, as data validation and casting must be written manually. By installing Mongoose, a MongoDB object modeling package, this will be taken care of~\cite{Mongoose}. Via this package we can define data schemas and its parameters. Hereafter, a data model is created by compiling the schema. It is now possible to create MongoDB documents in a very similar fashion to object-oriented programming, which encapsulates the more complex inner workings of MongoDB\@. The entire database is constructed via these models.
 
-            \paragraph{Express} Express is a Node web application framework, which helps with the management of routing, connecting middleware, handling requests, and others~\cite{Express}. It can also be of help with organizing a web application on the server side into a MVC architecture. Furthermore, Express makes the creation of a REST API server a much faster process compared to vanilla Node. Since we need to transfer data from MongoDB to our front end via a REST API, this framework is absolutely essential. Section~\ref{backend_structure} goes into detail how Express helped define the structure of the back end of the dashboard application.
+            \paragraph{Express} Express is a Node web application framework, which helps with the management of routing, connecting middleware, handling requests, and others~\cite{Express}. It can also be of help with organizing a web application on the server side into a MVC architecture. Furthermore, Express makes the creation of a REST API server a much faster process compared to vanilla Node. Since we need to transfer data from MongoDB to our front end via a REST API, this framework is essential. Section~\ref{backend_structure} goes into detail how Express helped define the structure of the back end of the dashboard application.
 
             \paragraph{Bcrypt \& JSON Web Tokens} Basic encryption is provided by the bcrypt package~\cite{Bcrypt}. Whenever a user registers, the password is hashed and then stored into MongoDB via Mongoose. In case the user successfully authenticates, the JSON Web Tokens package generates a token based on the login name, user id, clearance level, and a secret phrase~\cite{JWT}. This token is sent back to the front end and from now on, must be embed into every future request. After one hour, the token expires and the user must authenticate again.
 
@@ -65,14 +65,14 @@ It is without question that during the implementation small changes were made to
 
         \subsubsection{Structure}\label{backend_structure}
         
-        As mentioned before, the Express framework can help with organizing a web application into a MVC architecture. As such, the entire dashboard prototype is built around this architecture. The MVC architecture consists of three parts:
+        As mentioned before, the Express framework can help with organizing a web application into a MVC architecture. As such, the entire dashboard prototype is built around this architecture. A MVC architecture consists of three parts:
         \begin{itemize}
             \item Model: the part that manages the data and receives input from the controller. This is handled by Mongoose.
             \item View: the view presents the model or in other words, the data. The front end is our view, which is a Polymer 3 server.
-            \item Controller: the controller handles incoming requests from the view. Hereafter it calls upon the model to receive the desired data, which it then returns to the view. This is done on the back end Node server with the help of Express.
+            \item Controller: the controller handles incoming requests from the view. Hereafter it calls the model to receive the desired data, which it then returns to the view. This is realized on the back end Node server with the help of Express.
         \end{itemize}
 
-        \noindent Every module present in the back end has three files of the same name, but are spread across the following three folders: controller, models, and routes. The following example explains how they are connected:
+        \noindent Every module present in the back end has three files of the same name that are spread across the following three folders: controller, models, and routes. The following example explains how they are connected:
         \begin{myenumerate}
             \item The front end sends a request to a certain route. Express checks this route and sees that the file \texttt{routes/patient.js} uses it. 
             \item \texttt{routes/patient.js} has every possible API endpoint mapped to a controller function which executes certain logic to retrieve data. All these controller functions are found in the \texttt{controller/patient.js} file.
@@ -82,7 +82,7 @@ It is without question that during the implementation small changes were made to
 
         \noindent In order to extend the dashboard application, these three files need to be created for each component. More concrete steps are given in appendix TODO.
 
-        \paragraph{Routing} The routes defined in the back end follow a simple structure. The application start at the root endpoint: \texttt{/}. Suppose the server receives a request destined for the following endpoint: \texttt{/clinician/login}. At the root level, in \texttt{app.js}, the server forwards all routes starting with ``clinician'' to the routes defined in \texttt{routes/clinician.js}, due to the following line:\\
+        \paragraph{Routing} The routes defined in the back end follow a simple structure. The application starts at the root endpoint: \texttt{/}. Suppose the server receives a request destined for the following endpoint: \texttt{/clinician/login}. At the root level, in \texttt{app.js}, the server forwards all routes starting with ``clinician'' to the routes defined in \texttt{routes/clinician.js}, due to the following line:\\
         \centerline{\texttt{app.use(`/clinician', clinicianRoutes);}}\\ % chktex 36
         All routes defined in \texttt{routes/clinician.js} are therefore called sub-routes, since they aren't defined at the root level.\medskip
 
@@ -91,7 +91,7 @@ It is without question that during the implementation small changes were made to
         
         \subsubsection{Components and dashboard modules}
 
-        We now briefly describe the purpose of every component within the back end of the prototype. The detailed documentation of these components is found in appendix~\ref{backend_structure}.
+        We now briefly describe the purpose of every component within the back end of the prototype. The detailed documentation of these components is found in appendix TODO.
 
             \paragraph{Clinician} This component allows users to sign up an log in to the system. The controller uses the previously mentioned bcrypt package to provide encryption. Also, the JSON Web Token package is used to return a authentication token should the authentication be successful. The model simply saves the username, encrypted password, and a clearance level. The last field was added to provide basic access control. However, this is not present in the prototype.
 
