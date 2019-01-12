@@ -1,1 +1,1 @@
-{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"dashboard.clinicians"},{"v":2,"unique":true,"key":{"login":1},"name":"login_1","ns":"dashboard.clinicians","background":true}],"uuid":"d401557c71d649388ad0f6a4417f567f"}
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"dashboard.clinicians"},{"v":2,"unique":true,"key":{"login":1},"name":"login_1","ns":"dashboard.clinicians","background":true}],"uuid":"1b1d7524ad2249b09396cb25fc30a3bb"}
