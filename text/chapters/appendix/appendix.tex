@@ -66,11 +66,11 @@
 }
 \end{lstlisting}
 
-    We now define each key and describe the structure of its value. By giving an example we define the structure. The comment after the key-value pair indicates the type of the value. The examples show all values within quotes. However, this does not mean they are all strings. All dates are entered as an ISO 8601 string value.
+    We now define each key and describe the structure of its value. The structures are defined via examples. The comment after the key-value pair indicates the type of the value. The examples show all values within quotes. However, this does not mean they are all strings. All dates are entered as an ISO 8601 string value.
 
     \subsubsection{General patient information}
 
-    The demographic information is imported by the controller of the patient information module (section~\ref{mod_patient_info}). The ``info'' key is the only key that is mandatory. The structure of the JSON object is as follows:
+    The demographic information is imported by the controller of the patient information module (section~\ref{mod_patient_info}). The ``info'' key is the only key that is mandatory to import a patient. All keys are mandatory. The structure of the JSON object is as follows:
 
 \begin{lstlisting}[language=json,firstnumber=1]
 "info": {
@@ -89,25 +89,25 @@
 
     \subsubsection{Allergies}
 
-    The allergy information is imported by the allergy module (section~\ref{mod_allergy}). The value of the key ``allergies'' is an array. Each object in this array defines an allergy. The object has the following structure:
+    The allergy information is imported by the allergy module (section~\ref{mod_allergy}). The value of the key ``allergies'' is an array. Each object in this array defines an allergy. All keys are mandatory. The object has the following structure:
 
 \begin{lstlisting}[language=json,firstnumber=1]
-{
+"allergies": [{
     "name": "Nuts", // String
     "description": "Nausea", // String
     "severity": "2", // Integer
     "type": "Food", // String, enum: ['Food', 'Skin', 'Respiratory', 'Drug', 'Other']
     "date": "1998-12-04T00:00:00" // String
-}
+}]
 \end{lstlisting}
 
     \subsubsection{Vaccinations}
 
     The vaccination information is imported by the vaccination module (section
-    \ref{mod_vaccination}). The value of the key ``vaccinations'' is an array. Each object in this array defines a vaccination. Each vaccination can have multiple entries, which are defined in the array of the key ``entries''. The object has the following structure:
+    \ref{mod_vaccination}). The value of the key ``vaccinations'' is an array. Each object in this array defines a vaccination. Each vaccination can have multiple entries, which are defined in the array of the key ``entries''. All keys except ``dateNext'' are mandatory. The object has the following structure:
 
 \begin{lstlisting}[language=json,firstnumber=1]
-{
+"vaccinations": [{
     "name": "Hepatitis B", // String
     "description": "Liver disease.", // String
     "dateNext": "2019-03-23T16:30:00", // String
@@ -117,10 +117,114 @@
             "date": "2014-11-14T13:45:00" // String
         }
     ]
+}]
+\end{lstlisting}
+
+    \subsubsection{Prescriptions}
+
+    The prescription information is imported by the prescription module (section
+    \ref{mod_prescription}) and the medication controller. The value of the key ``prescriptions'' contains two objects: ``medicines'' and ``prescriptions''. The medicines key defines the medicines that are used in the prescriptions of the patient. If the medicines are already defined in the database, the medicine is not imported. All keys except ``interactsWith'' are mandatory. The structure is as follows:
+
+\begin{lstlisting}[language=json,firstnumber=1]
+"prescriptions": {
+    "medicines": [ // array of objects
+        {
+            "name": "Omeprazol", // String
+            "description": "Decreases the amount of acid the stomach makes.", // String
+            "sideEffects": "Nausea, headaches.", // String
+            "interactsWith": [ // array of Strings
+                "Simvastatine" // String
+            ]
+        }
+    ],
+    "prescriptions": [ // array of objects
+        {
+            "medName": "Omeprazol", // String
+            "dosage": { // object
+                "morning": "0", // Integer
+                "noon": "1", // Integer
+                "evening": "0", // Integer
+                "bed": "1" // Integer
+            },
+            "startDate": "2018-11-22T07:20:00", // String
+            "endDate": "2018-12-19T07:20:00" // String
+        }
+    ]
 }
 \end{lstlisting}
 
+    \subsubsection{Workflows}
+    
+    The workflow information is imported by the workflow module (section~\ref{mod_workflow}). The value of the key ``workflows'' is an array. Each object in this array defines a workflow. Each workflow consists of multiple steps, which in turn can have substeps. All keys except ``steps'' and ``substeps'' are mandatory. The object has the following structure:
 
+\begin{lstlisting}[language=json,firstnumber=1]
+"workflows": [{
+    "name": "Consultation procedure", // String
+    "description": "This series of steps must be followed each time.", // String
+    "steps": [ // array of objects
+        {
+            "name": "Pre-consultation", // String
+            "description": "Check new data.", // String
+            "substeps": [ // array of Strings
+                {
+                    "description": "Blood pressure and weight" // String
+                }
+            ]
+        }
+    ]
+}]
+\end{lstlisting}
+
+    \subsubsection{Checklist}
+    
+    The checklist information is imported by the checklist module (section~\ref{mod_checklist}). The value of the key ``checklist'' is an object. The checklist consists of multiple steps, which in turn can have substeps. All keys except ``steps'' and ``substeps'' are mandatory. The object has the following structure:
+
+\begin{lstlisting}[language=json,firstnumber=1]
+"checklist": {
+    "description": "Consultation checklist", // String
+    "steps": [ // array of objects
+        {
+            "description": "Do measurements", // String
+            "substeps": [ // array of Strings
+                {
+                    "description": "Heart rate" // String
+                },
+                {
+                    "description": "Blood sugar" // String
+                }
+            ]
+        }
+    ]
+}
+\end{lstlisting}
+
+    \subsubsection{Telemonitoring}
+
+    The telemonitoring information is imported by the controllers of each of the following parameters: blood pressure, blood sugar, heart rate, oxygen, and weight. Every value of each parameter is an array which contains the values. All keys are mandatory of every parameter. The objects have the following structures:
+
+\begin{lstlisting}[language=json,firstnumber=1]
+"bp": [{ // array of objects
+    "systolic": "138", // float
+    "diastolic": "87", // float
+    "date": "2018-12-13T09:40:00" // String
+}],
+"bs": [{ // array of objects
+    "value": "3.4", // float
+    "date": "2018-11-12T20:04:00" // String
+}],
+"hr": [{ // array of objects
+    "value": "72", // float
+    "date": "2018-12-22T23:29:00" // String
+}],
+"oxygen": [{ // array of objects
+    "value": "98", // float
+    "date": "2018-10-28T17:20:00" // String
+}],
+"weight": [{ // array of objects
+    "value": "74.8", // float
+    "date": "2018-12-02T12:30:00" // String
+}]
+\end{lstlisting}
 
 \newpage
 \subsection{Usability test documents}\label{appendix_test_docs}

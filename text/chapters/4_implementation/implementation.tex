@@ -318,7 +318,7 @@ It is without question that during the implementation small changes were made to
 
             The workflow module was difficult to implement. However, there are no significant changes compared to the design. Figure~\ref{fig:workflow} shows a workflow and also the dialog to create a new one. Whenever the user loads a workflow the layout is saved. The module overrides the \texttt{loadSettings(settings)} and \texttt{getSettings()} functions of the base component to save and load the identifier of the currently loaded workflow. It should be noted that multiple instances of this module may be added to the dashboard, with each showing a different procedure. They will not interfere with each other. Because these workflows can contain a lot of information, no small module was made. Providing a summary in this case is not useful, nor clarifying.
 
-            \subsubsubsection{Checklist}\label{mod_workflow}
+            \subsubsubsection{Checklist}\label{mod_checklist}
 
             \begin{figure}[t]
                 \centering
