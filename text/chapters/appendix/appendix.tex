@@ -22,6 +22,106 @@
 \newpage
 \subsection{Patient JSON import specification}\label{json_import}
 
+    The dashboard allows to import the medical data of multiple patients in a JSON format. The application only accepts the structure that is defined in this section. The root structure is an array in which each object contains the info of a patient:
+
+\begin{lstlisting}[language=json,firstnumber=1]
+[
+    {
+        // patient 1 info
+    },
+    {
+        // patient 2 info
+    },
+    ...
+    {
+        // patient n info
+    }
+]
+\end{lstlisting}
+
+    Each patient object contains key-value pairs in which the key indicates the type of information it value contains. For example, the key ``info'' contains as a value an object containing the demographic information of the patient. The following example imports a patient with an allergy:
+\begin{lstlisting}[language=json,firstnumber=1]
+{
+    "info": {
+        "firstName": "Michael",
+        "lastName": "Johnson",
+        "nid": "123454321",
+        "birth": "1983-02-09T11:23:00",
+        "gender": "M",
+        "bloodType": "O-",
+        "height": "173",
+        "address": "Largestreet 22, 12345 Bigtown",
+        "phone": "0123/9890777",
+        "smoker": "true"
+    },
+    "allergies": [
+        {
+            "name": "Nuts",
+            "description": "Nausea",
+            "severity": "2",
+            "type": "Food",
+            "date": "1998-12-04T00:00:00"
+        }
+    ]
+}
+\end{lstlisting}
+
+    We now define each key and describe the structure of its value. By giving an example we define the structure. The comment after the key-value pair indicates the type of the value. The examples show all values within quotes. However, this does not mean they are all strings. All dates are entered as an ISO 8601 string value.
+
+    \subsubsection{General patient information}
+
+    The demographic information is imported by the controller of the patient information module (section~\ref{mod_patient_info}). The ``info'' key is the only key that is mandatory. The structure of the JSON object is as follows:
+
+\begin{lstlisting}[language=json,firstnumber=1]
+"info": {
+    "firstName": "Michael", // String
+    "lastName": "Johnson", // String
+    "nid": "123454321", // String
+    "birth": "1983-02-09T11:23:00", // String
+    "gender": "M", // String, enum: ['M', 'F']
+    "bloodType": "O-", // String, enum: ['O+', 'O-', 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-']
+    "height": "173", // Integer
+    "address": "Largestreet 22, 12345 Bigtown", // String
+    "phone": "0123/9890777", // String
+    "smoker": "true" // Boolean
+}
+\end{lstlisting}
+
+    \subsubsection{Allergies}
+
+    The allergy information is imported by the allergy module (section~\ref{mod_allergy}). The value of the key ``allergies'' is an array. Each object in this array defines an allergy. The object has the following structure:
+
+\begin{lstlisting}[language=json,firstnumber=1]
+{
+    "name": "Nuts", // String
+    "description": "Nausea", // String
+    "severity": "2", // Integer
+    "type": "Food", // String, enum: ['Food', 'Skin', 'Respiratory', 'Drug', 'Other']
+    "date": "1998-12-04T00:00:00" // String
+}
+\end{lstlisting}
+
+    \subsubsection{Vaccinations}
+
+    The vaccination information is imported by the vaccination module (section
+    \ref{mod_vaccination}). The value of the key ``vaccinations'' is an array. Each object in this array defines a vaccination. Each vaccination can have multiple entries, which are defined in the array of the key ``entries''. The object has the following structure:
+
+\begin{lstlisting}[language=json,firstnumber=1]
+{
+    "name": "Hepatitis B", // String
+    "description": "Liver disease.", // String
+    "dateNext": "2019-03-23T16:30:00", // String
+    "entries": [ // array of objects
+        {
+            "description": "1ste vaccination, patient was 13 months old.", // String
+            "date": "2014-11-14T13:45:00" // String
+        }
+    ]
+}
+\end{lstlisting}
+
+
+
 \newpage
 \subsection{Usability test documents}\label{appendix_test_docs}
 
