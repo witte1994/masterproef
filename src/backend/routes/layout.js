@@ -5,6 +5,6 @@ const checkAuth = require('../models/auth/check-auth');
 const LayoutController = require('../controller/layout');
 
 router.post('/', LayoutController.save);
-router.get('/', LayoutController.get);
+router.get('/:cId', LayoutController.get);
 
 module.exports = router;

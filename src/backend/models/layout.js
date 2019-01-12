@@ -7,6 +7,10 @@ const layoutSchema = mongoose.Schema({
         ref: 'Patient',
         required: true
     },
+    clinician: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Clinician'
+    },
     patientElementSize: {
         type: String,
         required: true

@@ -383,6 +383,7 @@ class MainElement extends PolymerElement {
         this.$.ajaxSaveLayout.url = "http://localhost:3000/patient/" + window.sessionStorage.getItem('pId') + "/layout";
     
         this.$.ajaxSaveLayout.body = {
+            cId: window.sessionStorage.cId,
             layout: positions
         };
         this.$.ajaxSaveLayout.generateRequest();
@@ -420,7 +421,7 @@ class MainElement extends PolymerElement {
     }
 
     loadLayoutProcess() {
-        this.$.ajaxGetLayout.url = "http://localhost:3000/patient/" + window.sessionStorage.getItem('pId') + "/layout";
+        this.$.ajaxGetLayout.url = "http://localhost:3000/patient/" + window.sessionStorage.getItem('pId') + "/layout/" +  window.sessionStorage.getItem('cId');
         this.$.ajaxGetLayout.generateRequest();
     }
 

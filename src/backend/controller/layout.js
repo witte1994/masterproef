@@ -5,10 +5,7 @@ const Layout = require('../models/layout');
 exports.save = (req, res, next) => {
     var pId = req.originalUrl.split('/')[2];
 
-    console.log(req.body.layout.small);
-    console.log(req.body.layout.main);
-
-    Layout.deleteMany({ patient: pId}, function(err) {
+    Layout.deleteMany({ patient: pId, clinician: req.body.cId}, function(err) {
         if (err) {
             console.log(err);
             res.status(500).json({
@@ -18,6 +15,7 @@ exports.save = (req, res, next) => {
             const layout = new Layout({
                 _id: mongoose.Types.ObjectId(),
                 patient: pId,
+                clinician: req.body.cId,
                 patientElementSize: req.body.layout.patientElementSize,
                 small: req.body.layout.small,
                 main: req.body.layout.main
@@ -40,8 +38,11 @@ exports.save = (req, res, next) => {
 
 exports.get = (req, res, next) => {
     var pId = req.originalUrl.split('/')[2];
+    var cId = req.originalUrl.split('/')[4];
 
-    Layout.find({ patient: pId, })
+    console.log(cId);
+
+    Layout.find({ patient: pId, clinician: cId})
         .select("patientElementSize small main")
         .exec()
         .then(doc => {
