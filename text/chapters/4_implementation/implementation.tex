@@ -16,7 +16,7 @@ It is without question that during the implementation small changes were made to
 
     With this in mind, the choice to create a web application was evident. Users can view the dashboard regardless of the device they use, without sacrificing functionality. It should be noted that complex operations will not fit easily into a web application. The strength of web apps also leads to its major drawback: poor performance. A native application can draw much more computational power from the device it was made for. To transfer the computation burden to the server is also not a viable solution as this puts additional strain on the network. In case of real-time applications, latency becomes an issue due to continuous data transfer. However, the dashboard application should not experience any performance issues as the modules that were defined in section~\ref{app_specification} do not require complex operations.
 
-    \begin{figure}[!t]
+    \begin{figure}[t]
         \centering
         \includegraphics[width=1\textwidth]{chapters/4_implementation/structure}
         \caption{The communication flow by which every module communicates.}\label{fig:structure}
@@ -26,7 +26,7 @@ It is without question that during the implementation small changes were made to
 
     \subsection{Back end}
 
-    \begin{figure}[!t]
+    \begin{figure}[t]
         \centering
         \includegraphics[width=1\textwidth]{chapters/4_implementation/tech}
         \caption{The three core technologies used to build the application.}\label{fig:tech}
@@ -239,7 +239,7 @@ It is without question that during the implementation small changes were made to
 
         \subsubsection{Modules}
 
-        \begin{figure}[t]
+        \begin{figure}[h!]
             \centering
             \includegraphics[width=0.8\textwidth]{chapters/4_implementation/vaadin-comps}
             \caption{Left: the \texttt{vaadin-date-picker} component, right: two examples of the \texttt{vaadin-context-menu} component.}\label{fig:vaadin-comps}
@@ -254,6 +254,7 @@ It is without question that during the implementation small changes were made to
 
         \paragraph{Vaadin context menu} The user can press the right mouse button on certain data to delete or update it. Otherwise, buttons would need to be displayed to provide these actions, which may clutter the screen. The data displayed in the Vaadin grid components can be edited this way. Two examples of such context menus are displayed on the right side of figure~\ref{fig:vaadin-comps}.
 
+            \newpage
             \subsubsubsection{Patient list}
 
             \begin{figure}[t]
@@ -264,6 +265,7 @@ It is without question that during the implementation small changes were made to
 
             After successful authentication, the user sees the patient list. This list shows basic information concerning the patients that are in the system. Also, it is possible to sort and search by first or last name. As figure~\ref{fig:patient-list} shows, the user can import patients by pressing the button in the top right corner. This opens a dialog box that accepts raw JSON data. The JSON data must follow the specification from appendix~\ref{json_import}. Also, this module does not extend the base component mentioned in section~\ref{base_components} because it will never be placed on the dashboard.
 
+            \newpage
             \subsubsubsection{Patient information}\label{mod_patient_info}
 
             \begin{figure}[t]
@@ -274,6 +276,7 @@ It is without question that during the implementation small changes were made to
 
             The patient information module is always present on the left panel of the dashboard and it can not be removed. The reasoning behind this, is that clinicians should always be able to see which dashboard is open. It is possible that the name of the patient only appears in this particular module and if it is removed, confusion may arise. By pressing the arrow button on the bottom, the size of the module changes, which in turn triggers a layout save. Figure~\ref{fig:patient-info} shows the two possible sizes. This was implemented by swapping between two \texttt{div}'s every time the arrow button was pressed. There are no notable changes made to this module, compared to the design. The picture at the top of the module is a placeholder. This module also does not extend the base component, because it can't be freely placed on the dashboard.
 
+            \newpage
             \subsubsubsection{Prescription}\label{mod_prescription}
 
             \begin{figure}[t]
@@ -288,6 +291,7 @@ It is without question that during the implementation small changes were made to
 
             The small module always shows the medication the patient takes of today. This gives the user a way to quickly see the current medication scheme of the patient, without showing too much details. As such, from the small module no prescriptions may be added, edited, or removed.
 
+            \newpage
             \subsubsubsection{Allergy}\label{mod_allergy}
 
             \begin{figure}[t]
@@ -308,6 +312,7 @@ It is without question that during the implementation small changes were made to
 
             This module is very similar to the allergy module. It shows a list of conditions for which the patient is vaccinated. In case a revaccination is scheduled, this date is also shown. For each condition, historical vaccinations can be added via the context menu (figure~\ref{fig:vaadin-comps}, right). These vaccination entries have a description and a date, as shown in figure~\ref{fig:vaccinations}.
 
+            \newpage
             \subsubsubsection{Workflow}\label{mod_workflow}
 
             \begin{figure}[t]
@@ -318,6 +323,7 @@ It is without question that during the implementation small changes were made to
 
             The workflow module was difficult to implement. However, there are no significant changes compared to the design. Figure~\ref{fig:workflow} shows a workflow and also the dialog to create a new one. Whenever the user loads a workflow the layout is saved. The module overrides the \texttt{loadSettings(settings)} and \texttt{getSettings()} functions of the base component to save and load the identifier of the currently loaded workflow. It should be noted that multiple instances of this module may be added to the dashboard, with each showing a different procedure. They will not interfere with each other. Because these workflows can contain a lot of information, no small module was made. Providing a summary in this case is not useful, nor clarifying.
 
+            \newpage
             \subsubsubsection{Checklist}\label{mod_checklist}
 
             \begin{figure}[t]
@@ -328,6 +334,7 @@ It is without question that during the implementation small changes were made to
 
             As a result of the workflow module, a new module not mentioned in the design was made. A checklist module was created which allows the user to add tasks and potential sub-tasks. This checklist is bound to the patient, so if one user checks off a task, it will also be checked for another user. The module was implemented by editing a copy of the workflow module, due to being similar in structure. The result is shown in figure~\ref{fig:checklist}. The button to the left of the remove button resets the entire checklist. A small module was not created for the same reasons one wasn't created for the workflow module.
 
+            \newpage
             \subsubsubsection{History}
 
             \begin{figure}[t]
@@ -338,6 +345,7 @@ It is without question that during the implementation small changes were made to
 
             The history module was added late in development. No significant changes were made to the design. As figure~\ref{fig:history} shows, the wider history module has an extra time column. This was an experiment regarding the resizing functionality to show and hide elements as the component grows or shrinks. Filters are set via the dialog on the right hand side of the figure. Historic entries can not be removed, only read, as they may be examined in an audit. No small module was added, as this can't be summarized in a clear manner. 
 
+            \newpage
             \subsubsubsection{Telemonitoring}\label{mod_tm}
 
             \begin{figure}[t]
