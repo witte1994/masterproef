@@ -23,7 +23,6 @@ This section describes the design process that was followed to create the applic
         \item Many different workflows can be supported by using a combination of modules.
         \item The dashboard can easily adapt to workflow changes by allowing the addition and removal of modules.
         \item Module updates do not affect other modules or the dashboard, preventing total workflow disruption.
-        \item Free placement of modules on a grid allows the dashboard to support many different screen sizes.
     \end{itemize}
 
     \noindent Several of these benefits result in a lower loss of productivity as a result of workflow disruption. To guarantee a streamlined user experience throughout the dashboard, new modules inherit a template which determines its appearance. Changing this template, will change the appearance of all the modules. Also, dashboard will be designed with touch technology in mind to prevent usability issues such as the fat-finger problem and screen clutter. 
@@ -209,18 +208,9 @@ This section describes the design process that was followed to create the applic
             \includegraphics[width=1\textwidth]{chapters/3_design/affinity}
             \caption{The affinity diagram created during the brainstorm session.}\label{fig:affinity}
         \end{figure}
-        This section describes the brainstorm session which intends to group the components described in the previous section to form categories. From these categories we pick several modules which we will then implement in our prototype. An ideal tool for this situation are affinity diagrams.
+        This section describes the brainstorm session which intends to group the components described in the previous section to form categories. From these categories we pick several modules which we will then implement in our prototype. An ideal tool for this situation are affinity diagrams. These diagrams help to categorize and sort a large amount of ideas by grouping the similar ones together and identifying relevant topics~\cite{Affinity}.
 
-        Affinity diagrams help to categorize and sort a large amount of ideas by grouping similar ideas together and identifying relevant topics~\cite{Affinity}. These diagrams are created by following these five steps:
-        \begin{enumerate}
-            \item Generate ideas: all components of the lists mentioned the previous section serve as our ideas. Each component was written down on a post-it note. Duplicates between the lists are not skipped because we will get rid of these in later step.
-            \item Display the ideas: all post-it notes were placed on a table and shuffled around.
-            \item Sort the ideas into related groups: related components were grouped together and duplicates were removed in the process. 
-            \item Create header cards for the groups: these are the names of the categories. We found the following categories: medication, patient information, clinician-specific functions, and administration.
-            \item Draw the finished affinity diagram: figure~\ref{fig:affinity} displays the result.
-        \end{enumerate}
-
-        \paragraph{Result} The following four categories were found:
+        \paragraph{Result} Figure~\ref{fig:affinity} shows the affinity diagram that was created. It highlights the following four categories:
         \begin{itemize}
             \item \textbf{Medication}: all components related to management of medications and prescriptions. These are: adherence, reduce adverse drug effects, drug-drug interaction alerts, drug-allergy interaction alerts, record patient medication list, order prescriptions for pharmacy, drug dosing support, and computerized medication order entry.
             \item \textbf{Patient information}: components that are related to the management of general patient data. These are: patient demographics, smoking status, patient history, medical history, record vital signs data (pulse, blood pressure, temperature, respiration), telemonitoring (cardiovascular disease, diabetes, COPD, cancer), allergy list, problem list, and a current diagnoses list.
