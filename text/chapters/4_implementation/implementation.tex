@@ -54,7 +54,14 @@ It is without question that during the implementation small changes were made to
 
             Node allows developers to easily install a broad selection of packages. We now discuss the packages that were used for the development of the back end. These served many purposes, such as routing, encryption, logging, and request body parsing. 
 
-            \paragraph{Mongoose} Using Node without a library to communicate with MongoDB is very difficult, as data validation and casting must be written manually. By installing Mongoose, a MongoDB object modeling package, this will be taken care of~\cite{Mongoose}. Via this package we can define data schemas and its parameters. Hereafter, a data model is created by compiling the schema. It is now possible to create MongoDB documents in a very similar fashion to object-oriented programming, which encapsulates the more complex inner workings of MongoDB\@. The entire database is constructed via these models.
+            \begin{figure}[h]
+                \centering
+                \includegraphics[width=1\textwidth]{chapters/4_implementation/model}
+                \caption{On the left is the schema of a model. On the right the controller creates a new allergy entry using the model.}\label{fig:mongoose_model}
+            \end{figure}
+        
+
+            \paragraph{Mongoose} Using Node without a library to communicate with MongoDB is very difficult, as data validation and casting must be written manually. By installing Mongoose, a MongoDB object modeling package, this will be taken care of~\cite{Mongoose}. Via this package we can define data schemas and its parameters. Hereafter, a data model is created by compiling the schema. It is now possible to create MongoDB documents in a very similar fashion to object-oriented programming, which encapsulates the more complex inner workings of MongoDB\@. Figure~\ref{fig:mongoose_model} shows an example. The entire database is constructed via these models.
 
             \paragraph{Express} Express is a Node web application framework, which helps with the management of routing, connecting middleware, handling requests, and others~\cite{Express}. It can also be of help with organizing a web application on the server side into a MVC architecture. Furthermore, Express makes the creation of a REST API server a much faster process compared to vanilla Node. Since we need to transfer data from MongoDB to our front end via a REST API, this framework is essential. Section~\ref{backend_structure} goes into detail how Express helped define the structure of the back end of the dashboard application.
 
@@ -62,9 +69,14 @@ It is without question that during the implementation small changes were made to
 
             \paragraph{Other} The body-parser package helps as its name implies with parsing request bodies. This package is connected to Express as middleware, since it captures the request and parses it before it lands into the developer's hands. For example, accessing parameters in the body of a POST request is done with this simple statement: \texttt{request.body.paramName}. Morgan is another helpful package which logs all requests made to the server. As such, it is a helpful debugging tool. Last, but certainly not least, is the nodemon package. Nodemon detects changes in a Node project. If changes are found, nodemon automatically restarts the server to apply these changes.
 
-
         \subsubsection{Structure}\label{backend_structure}
         
+        \begin{figure}[t]
+            \centering
+            \includegraphics[width=0.7\textwidth]{chapters/4_implementation/architecture}
+            \caption{The architecture and interaction flow of a module.}\label{fig:architecture}
+        \end{figure}
+
         As mentioned before, the Express framework can help with organizing a web application into a MVC architecture. As such, the entire dashboard prototype is built around this architecture. A MVC architecture consists of three parts:
         \begin{itemize}
             \item Model: the part that manages the data and receives input from the controller. This is handled by Mongoose.
@@ -72,7 +84,7 @@ It is without question that during the implementation small changes were made to
             \item Controller: the controller handles incoming requests from the view. Hereafter it calls the model to receive the desired data, which it then returns to the view. This is realized on the back end Node server with the help of Express.
         \end{itemize}
 
-        \noindent Every module present in the back end has three files of the same name that are spread across the following three folders: controller, models, and routes. The following example explains how they are connected:
+        \noindent Every module present in the back end has three files of the same name that are spread across the following three folders: controller, models, and routes. Figure~\ref{fig:architecture} visualizes the architecture. The following example explains how the components are connected:
         \begin{myenumerate}
             \item The front end sends a request to a certain route. Express checks this route and sees that the file \texttt{routes/patient.js} uses it. 
             \item \texttt{routes/patient.js} has every possible API endpoint mapped to a controller function which executes certain logic to retrieve data. All these controller functions are found in the \texttt{controller/patient.js} file.
@@ -254,10 +266,9 @@ It is without question that during the implementation small changes were made to
 
         \paragraph{Vaadin context menu} The user can press the right mouse button on certain data to delete or update it. Otherwise, buttons would need to be displayed to provide these actions, which may clutter the screen. The data displayed in the Vaadin grid components can be edited this way. Two examples of such context menus are displayed on the right side of figure~\ref{fig:vaadin-comps}.
 
-            \newpage
             \subsubsubsection{Patient list}
 
-            \begin{figure}[t]
+            \begin{figure}[h]
                 \centering
                 \includegraphics[width=1\textwidth]{chapters/4_implementation/patient-list}
                 \caption{The patient list component.}\label{fig:patient-list}
@@ -265,10 +276,9 @@ It is without question that during the implementation small changes were made to
 
             After successful authentication, the user sees the patient list. This list shows basic information concerning the patients that are in the system. Also, it is possible to sort and search by first or last name. As figure~\ref{fig:patient-list} shows, the user can import patients by pressing the button in the top right corner. This opens a dialog box that accepts raw JSON data. The JSON data must follow the specification from appendix~\ref{json_import}. Also, this module does not extend the base component mentioned in section~\ref{base_components} because it will never be placed on the dashboard.
 
-            \newpage
             \subsubsubsection{Patient information}\label{mod_patient_info}
 
-            \begin{figure}[t]
+            \begin{figure}[h]
                 \centering
                 \includegraphics[width=0.8\textwidth]{chapters/4_implementation/patient-info}
                 \caption{The two possible sizes of the patient information module.}\label{fig:patient-info}
