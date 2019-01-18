@@ -1,0 +1,109 @@
+\documentclass{article}
+\usepackage[dutch]{babel}
+
+\selectlanguage{dutch}
+\title{Nederlandse samenvatting\\---\\Het modulair medisch dashboard: een nieuwe kijk op interoperabiliteit en bruikbaarheid}
+\date{Januari 2019}
+\author{Dennis Cardinaels}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Introductie}
+
+Op de dag van vandaag gebruiken de meeste medische instituties een digitaal systeem om medische gegevens te beheren. Vergeleken met het klassieke papieren dossier, kan een digitaal systeem de kwaliteit van zorgverlening aanzienlijk verhogen. Dit komt onder andere door de volgende elementen:
+\begin{itemize}
+    \item De data wordt accurater en vollediger opgeslagen, dankzij de controle op de input van de gebruiker.
+    \item De data is makkelijker bereikbaar vanuit meerdere plaatsen door meerdere personen.
+    \item De data kan beter worden beveiligd. Wie wat doet met de gegevens kan makkelijker door een digitaal systeem worden gelogd.
+\end{itemize}
+
+\noindent De vooruitgang van mobiele technologie biedt ook de mogelijkheid om zorg te kunnen verlenen op afstand. Dit bespaart zowel de pati\"{e}nt als de zorgverlener tijd en moeite. 
+
+Helaas zijn er ook nadelen verbonden aan een digitaal systeem. De transitie van een papier formaat naar een digitaal is kostelijk aangezien dit veel manueel werk vereist. Ook moeten de geneeskundingen opgeleid worden om met het systeem te kunnen werken. Doordat de data makkelijker bereikbaar is, verhoogt ook de kans dat er onbevoegde toegang plaatsvindt. Tot slot, het is belangrijk dat alle systemen en toestellen effici\"{e}nt kunnen communiceren met elkaar. Zodra mobiele toestellen zich integreren in de medische sector, kan dit problematisch worden.
+
+Het doel van deze thesis is om het huidig gebruik van het elektronisch pati\"{e}ntendossier te verkennen. Op basis van dit onderzoek, wordt een oplossing voor een aantal beschreven problemen voorgesteld. Deze samenvatting beschrijft het proces van het design, de ontwikkeling en de evaluatie van deze oplossing. Hierna worden conclusies getrokken uit de resultaten van de evaluatie.
+
+\section{Het elektronisch pati\"{e}ntendossier}
+
+Digitale medische systemen zijn essentieel geworden voor zorgverlening. Het elektronisch pati\"{e}ntendossier is hier van absoluut belang. Dit dossier bevat alle medische data omtrent de gezondheid van een individu. Een medisch systeem interageert met deze data door allerhande tools te voorzien. Vergeleken met papieren dossiers is dit een serieuze stap vooruit.
+
+Het oude papieren dossier heeft veel limitaties en nadelen. Zo nemen deze dossiers zeer veel plaats in. Elk dossier ligt opgeslagen in een warenhuis en is als gevolg ook maar door \'{e}\'{e}n persoon tegelijk toegankelijk. Het is daarbij ook zeer milieuonvriendelijk. Papier is ook niet interactief. Een geneeskundige moet de data vaak manueel verwerken om inzichten te verkrijgen. Maar wat kan de geneeskundige doen als het dossier niet beschikbaar is? Of als de data onvolledig of verloren is? 
+
+Het elektronisch pati\"{e}ntendossier zorgt ervoor dat er aanzienlijk minder met papier wordt gewerkt in de geneeskunde. Maar toch zijn er nog enkele scenario's waarbij papier een beter middel is om zorg te verlenen vergeleken met het digitaal systeem. Indien het systeem moeilijk is of de manier van werken niet ondersteunt zullen geneeskundigen papier gebruiken om het te omzeilen. Een voorbeeld hiervan is dat een persoon papier gebruikt als checklist omdat het systeem dit niet voorziet. Terwijl dit de effici\"{e}ntie kan verhogen, kan dit ook medische fouten veroorzaken. Veranderingen aan een digitaal systeem kunnen ook leiden tot een vermindering in productiviteit. Bij elke verandering moet de zorgverlener zich aanpassen en opnieuw laten bijscholen.
+
+Twee onderwerpen die later aan bod komen zijn interoperabiliteit en bruikbaarheid. Ten eerste heeft interoperabiliteit betrekking tot de mogelijkheid van software of toestellen om met elkaar te communiceren. Het is belangrijk dat deze systemen gemakkelijk medische data kunnen uitwisselen. Omwille van het feit dat mobiele technologie veel nieuwe toestellen kan toevoegen aan het ecosysteem van de medische sector, is dit onderwerp van toenemend belang. 
+
+De bruikbaarheid, of in andere woorden de gebruiksvriendelijkheid, van het systeem heeft effect of hoe effi\"{e}cient iemand zijn of haar werk kan verrichten. Indien meerdere systemen langs elkaar worden gebruikt met elk een verschillende interface, dan kan verwarring ontstaan. Dit leidt tot verwarring en kan medische fouten veroorzaken.
+
+\section{Design}
+
+Een design is gemaakt om de enkele problemen beschreven in de vorige sectie op te lossen. Deze zijn als volgt:
+\begin{itemize}
+    \item Het digitaal systeem leidt tot een verhoging aan gemaakte medische fouten. Dit was te wijten aan de slechte bruikbaarheid van het systeem.
+    \item De workflow van de geneeskundige wordt abrupt onderbroken door de installatie of updateproces van een digitaal systeem. Dit kan opnieuw medische fouten veroorzaken.
+    \item Telemonitoring vraagt naar goede interoperabiliteit. De effectiviteit van telemonitoring is regelrecht afhankelijk hiervan.
+    \item Het gebruik van meerdere applicaties kan een slechte invloed hebben op de algemene gebruikerservaring.
+\end{itemize}
+
+\noindent Als oplossing wordt een modulair dashboard applicatie voorgesteld waarin de zorgverlener een combinatie van modules vrij kan plaatsen om zijn of haar workflow te ondersteunen. De bruikbaarheid van het systeem komt ten goed door deze personalisatie. Updates aan modules hebben geen effect op andere modules op het dashboard. Zo wordt een workflow niet compleet onderbroken.
+
+De ontwikkelaar kan op een simpele manier eigen modules toevoegen aan het dashboard. Dit verhoogt de interoperabiliteit. Doordat de ontwikkelaar een template moet gebruiken dat door het dashboard wordt opgelegd, zijn alle modules gelijkaardig opgebouwd. Dit is opnieuw voordelig voor de bruikbaarheid, aangezien dit de leercurve minder steil maakt.
+
+Als eerste stap van het design werden persona's en scenario's gemaakt die aantonen hoe het systeem de voorafgaande problemen aanpakt. Hierna is concrete functionaliteit van de applicatie gespecificeerd aan de hand van een brainstorm sessie. Het resultaat bepaalde dat de volgende modules ge\"{i}mplementeerd zouden worden: pati\"{e}nteninformatie, voorschriftenbeheer, allergielijst, vaccinatielijst, workflows beheren, geschiedenis logboek en telemonitoring ondersteuning. Als laatste stap van het design werden mockups gemaakt die dienden als basis voor de interface tijdens de ontwikkelfase.
+
+
+\section{Ontwikkeling}
+
+De eerste belangrijke keuze die gemaakt moest worden bij de start van de implementatiefase was welke soort applicatie ontwikkeld ging worden. Dit was ofwel een web applicatie of een native applicatie. Elk heeft zijn voor- en nadelen, maar uiteindelijk is er gekozen voor de web applicatie. Dit type applicatie is automatisch cross-platform en ondersteunt een update proces dat niet intrusief is. Dit gebeurt namelijk door de web browser te refreshen. Bij native applicaties is dit niet het geval, maar deze applicaties kunnen complexere operaties uitvoeren. Het prototype voorziet echter geen complexe functionaliteit, dus dit is niet vereist van de web applicatie.
+
+De web applicatie bevat twee componenten in zijn architectuur: de back end en de front end. De back end voorziet interactie met de data en geeft deze terug aan de front end. De front end toont de data op een gebruiksvriendelijke manier. Ook laat ze de gebruiker toe om het dashboard te personaliseren. Voor een visualisatie van de structuur kan de thesistekst geraadpleegd worden. We beschrijven in het kort de structuur van beide componenten.
+
+    \subsection{Back end}
+
+    De backend bestaat uit een MongoDB database en een Node.js server. MongoDB is zeer flexibel en maakt het simpel om nieuwe datastructuren toe te voegen. Dit verbetert de interoperabiliteit door het ontwikkelen van nieuwe modules te versimpelen. De voornaamste reden dat Node is gekozen, is vanwege de grote collectie aan packages die het voorziet.
+
+    Met behulp van Mongoose werd er ge\"{i}nterageerd met de database entiteiten. Express.js liet toe om een MVC architectuur te voorzien, die het opnieuw simpel maakt voor een ontwikkelaar om eigen modules te implementeren. Er werd basic beveiliging voorzien met behulp van Bcrypt en JSON Web Tokens. Tijdens de ontwikkeling van de workflow module werd er ook een checklist module toegevoegd, aangezien deze gelijkaardig was qua structuur.
+
+    \subsection{Front end}
+
+    De front end werd ontwikkeld met het Polymer framework. Dit framework maakt het ontwikkelen van web components makkelijker. Bij web component bepaalt elk custom element zijn eigen styling en functionaliteit. Daarbij kunnen deze componenten op een simpele manier toegevoegd worden aan een bestaande web applicatie. Er is een template web component ontwikkeld dat alle modules moeten gebruiken. Deze template voorziet al enkele basisfuncties om het implementatieproces makkelijker te maken voor de ontwikkelaar. Dit komt de interoperabiliteit ten goede. 
+
+    Met behulp van de Packery library is het grid systeem ontwikkeld. Samen met Draggabilly kunnen modules gesleept worden naar de gewenste locatie. Interact.js werd gebruikt om de modules groter en kleiner te kunnen maken. De grafieken in de telemonitoring zijn gegenereerd door de C3 library.
+
+\section{Usability test}
+
+Na het afronden van de implementatie moest het prototype getest worden. Eerst werd een usability opgesteld, waarna enkele testpersonen werden verzameld.
+
+    \subsection{Design}
+
+    Het hoofdzakelijke doel van de test was om de bruikbaarheid van het prototype te evalueren. Hiervoor wilden we zowel kwalitatieve als kwantitatieve data verzamelen. Kwantitatieve data werd verzameld met behulp van twee vragenlijsten: \'{e}\'{e}n voorafgaande de test en \'{e}\'{e}n naderhand. Kwalitatieve data werd verzameld aan de hand van observatie en een interview na de test van het prototype. Tijdens de test doorloopt de testpersoon drie realistische medische scenario's. De test zou ongeveer 40 minuten moeten duren en heeft de volgende structuur:
+    \begin{enumerate}
+        \item Pre-test:
+        \begin{enumerate}
+            \item Brief de testpersoon.
+            \item Vraag voor informed consent.
+            \item De testpersoon vult de voorafgaande vragenlijst in.
+        \end{enumerate}
+        \item De testpersoon evalueert het prototype aan de hand van een stappenplan.
+        \item Post-test:
+        \begin{enumerate}
+            \item De testpersoon vult de tweede vragenlijst in.
+            \item De testpersoon wordt kort ge\"{i}nterviewd. 
+            \item Debrief de testpersoon en overhandig de beloning.
+        \end{enumerate}
+    \end{enumerate}
+
+    \subsection{Resultaten}
+
+    Zes personen met verschillende medische achtergronden hebben het prototype getest. Alle testen zijn vlot verlopen en hebben veel feedback opgeleverd. Alle testpersonen vonden het dashboard zeer gebruiksvriendelijk en zouden graag een kans willen geven, moest het verder ontwikkeld willen worden. Het prototype was makkelijk om te gebruiken. Een laborante zag echter het nut niet in van de personalisatie en was tevreden met het huidige systeem. De testpersonen gaven elk suggesties voor individuele modules, alsook voor het gehele dashboard.
+
+\section{Conclusie}
+
+De resultaten van de usability test gaven aan dat het prototype bruikbaar was. De testpersonen suggereerden een wondzorg, een dripbeheer en een vochtbalansmodule. Ook was er wens naar een notificatiecentrum in het dashboard. Wat in deze studie ontbrak, was een test betreffende het interoperabiliteitsaspect. Dit is een werkpunt voor de toekomst. Voor de verdere ontwikkeling van de dashboard applicatie moet deze over een langere periode getest worden in een realistische klinische setting.
+
+\end{document}
